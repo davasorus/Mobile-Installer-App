@@ -72,9 +72,7 @@ namespace Mobile_App
 
                 Mobile64install();
 
-                MessageBox.Show("done");
-
-                MobileRestart();
+                //MobileRestart();
             }
 
             //run 64bit installer
@@ -83,9 +81,7 @@ namespace Mobile_App
 
                 Mobile64install();
 
-                MessageBox.Show("done");
-
-                MobileRestart();
+                //MobileRestart();
             }
 
             //Run 64bit uninstaller
@@ -93,9 +89,7 @@ namespace Mobile_App
             {
                 Mobile64Uninstall();
 
-                MessageBox.Show("done");
-
-                MobileRestart();
+                //MobileRestart();
             }
 
             //Run combination mobile uninstall and mobile install
@@ -105,9 +99,7 @@ namespace Mobile_App
 
                 Mobile32install();
 
-                MessageBox.Show("done");
-
-                MobileRestart();
+                //MobileRestart();
             }
 
             //Run 32bit installer
@@ -115,9 +107,7 @@ namespace Mobile_App
             {
                 Mobile32install();
 
-                MessageBox.Show("done");
-
-                MobileRestart();
+                //MobileRestart();
             }
 
 
@@ -126,9 +116,7 @@ namespace Mobile_App
             {
                 Mobile32Uninstaller();
 
-                MessageBox.Show("done");
-
-                MobileRestart();
+                //MobileRestart();
             }
         }
 
@@ -220,11 +208,172 @@ namespace Mobile_App
                 string batdir = string.Format(@"C:\Temp\MobileInstaller");
                 proc = new Process();
                 proc.StartInfo.WorkingDirectory = batdir;
-                proc.StartInfo.FileName = "64Installer.bat";
-                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.FileName = "dotNetFx471_Full_setup_Offline.exe";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                 proc.Start();
                 proc.WaitForExit();
-                MessageBox.Show("64bit Mobile Client is Installed");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "SSCERuntime_x86-ENU.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "SSCERuntime_x64-ENU.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "NewWorld.Gis.Components.x86.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "NewWorld.Gis.Components.x64.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "Synchronization-v2.1-x64-ENU.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "ProviderServices-v2.1-x64-ENU.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "DatabaseProviders-v3.1-x64-ENU.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "NewWorld.Management.Updater.msi";
+                proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "ConfigureUpdaterformobileV2.exe";
+                //proc.StartInfo.Arguments = "/quiet";
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                string batdir = string.Format(@"C:\Temp\MobileInstaller");
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = "64folderprep.bat";
+                proc.StartInfo.CreateNoWindow = false;
+                proc.StartInfo.Verb = "runas";
+                proc.Start();
+                proc.WaitForExit();
+                MessageBox.Show("64bit Mobile Client is installed.");
             }
             catch (Exception ex)
             {
@@ -412,5 +561,6 @@ namespace Mobile_App
         {
 
         }
+        
     }
 }
