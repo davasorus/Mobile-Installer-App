@@ -4,7 +4,7 @@ namespace System
 {
     internal class Forms
     {
-        internal class textbox : TextBox
+        internal class Textbox : TextBox
         {
         }
     }

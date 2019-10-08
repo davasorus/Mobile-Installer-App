@@ -42,6 +42,11 @@ namespace Mobile_App
             this.Is32bit = new System.Windows.Forms.CheckBox();
             this.CopyButton = new System.Windows.Forms.Button();
             this.Combo = new System.Windows.Forms.CheckBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.label5 = new System.Windows.Forms.Label();
+            this.MSPServerPath = new System.Windows.Forms.TextBox();
+            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label3
@@ -61,7 +66,6 @@ namespace Mobile_App
             this.UninstallMobile.TabIndex = 1;
             this.UninstallMobile.Text = "Uninstall Mobile Client";
             this.UninstallMobile.UseVisualStyleBackColor = true;
-            this.UninstallMobile.CheckedChanged += new System.EventHandler(this.CheckBox3_CheckedChanged);
             // 
             // InstallMobile
             // 
@@ -72,7 +76,6 @@ namespace Mobile_App
             this.InstallMobile.TabIndex = 3;
             this.InstallMobile.Text = "Install Mobile Client";
             this.InstallMobile.UseVisualStyleBackColor = true;
-            this.InstallMobile.CheckedChanged += new System.EventHandler(this.CheckBox4_CheckedChanged);
             // 
             // Run
             // 
@@ -88,30 +91,29 @@ namespace Mobile_App
             // NwsHoldPath
             // 
             this.NwsHoldPath.AccessibleDescription = "File path to the mobile installer file";
-            this.NwsHoldPath.Location = new System.Drawing.Point(3, 191);
+            this.NwsHoldPath.Location = new System.Drawing.Point(3, 167);
             this.NwsHoldPath.Name = "NwsHoldPath";
-            this.NwsHoldPath.Size = new System.Drawing.Size(302, 20);
+            this.NwsHoldPath.Size = new System.Drawing.Size(150, 20);
             this.NwsHoldPath.TabIndex = 6;
-            this.NwsHoldPath.Text = "\\\\MobileServerName\\C\\NWS Hold\\2017.x\\2017.1 SP1\\64bit";
-            this.NwsHoldPath.TextChanged += new System.EventHandler(this.Serverlocation_txt_TextChanged);
+            this.NwsHoldPath.Text = "\\\\MobileServerName\\C$\\";
             // 
             // FilePath_lbl
             // 
             this.FilePath_lbl.AutoSize = true;
-            this.FilePath_lbl.Location = new System.Drawing.Point(0, 175);
+            this.FilePath_lbl.Location = new System.Drawing.Point(0, 152);
             this.FilePath_lbl.Name = "FilePath_lbl";
-            this.FilePath_lbl.Size = new System.Drawing.Size(162, 13);
+            this.FilePath_lbl.Size = new System.Drawing.Size(164, 13);
             this.FilePath_lbl.TabIndex = 7;
-            this.FilePath_lbl.Text = "File Path to Mobile Install Version";
+            this.FilePath_lbl.Text = "Network Path to the MMS Server";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 9);
+            this.label4.Location = new System.Drawing.Point(-3, 4);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(116, 13);
+            this.label4.Size = new System.Drawing.Size(161, 13);
             this.label4.TabIndex = 8;
-            this.label4.Text = "2017 Mobile Client App";
+            this.label4.Text = "Mobile Client Pre-Req Install App";
             // 
             // Is64Bit
             // 
@@ -122,7 +124,6 @@ namespace Mobile_App
             this.Is64Bit.TabIndex = 9;
             this.Is64Bit.Text = "64 Bit Machine";
             this.Is64Bit.UseVisualStyleBackColor = true;
-            this.Is64Bit.CheckedChanged += new System.EventHandler(this.CheckBox5_CheckedChanged);
             // 
             // Help_BTN
             // 
@@ -164,10 +165,45 @@ namespace Mobile_App
             this.Combo.Text = "Both";
             this.Combo.UseVisualStyleBackColor = true;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ProgressBar});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 227);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(309, 22);
+            this.statusStrip1.TabIndex = 14;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(0, 190);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(162, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Network Path to the MSP Server";
+            // 
+            // MSPServerPath
+            // 
+            this.MSPServerPath.Location = new System.Drawing.Point(3, 207);
+            this.MSPServerPath.Name = "MSPServerPath";
+            this.MSPServerPath.Size = new System.Drawing.Size(150, 20);
+            this.MSPServerPath.TabIndex = 16;
+            this.MSPServerPath.Text = "\\\\MSPServerName\\";
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
             // Form1
             // 
             this.AcceptButton = this.Run;
-            this.ClientSize = new System.Drawing.Size(309, 217);
+            this.ClientSize = new System.Drawing.Size(309, 249);
+            this.Controls.Add(this.MSPServerPath);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.Combo);
             this.Controls.Add(this.CopyButton);
             this.Controls.Add(this.Is32bit);
@@ -183,6 +219,8 @@ namespace Mobile_App
             this.Name = "Form1";
             this.Text = "Mobile Installer App";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +251,10 @@ namespace Mobile_App
         private CheckBox Is32bit;
         private Button CopyButton;
         private CheckBox Combo;
+        private StatusStrip statusStrip1;
+        private Label label5;
+        private TextBox MSPServerPath;
+        private ToolStripProgressBar ProgressBar;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }
