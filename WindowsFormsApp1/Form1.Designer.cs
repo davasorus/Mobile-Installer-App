@@ -43,9 +43,9 @@ namespace Mobile_App
             this.CopyButton = new System.Windows.Forms.Button();
             this.Combo = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.label5 = new System.Windows.Forms.Label();
             this.MSPServerPath = new System.Windows.Forms.TextBox();
-            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,9 +160,9 @@ namespace Mobile_App
             this.Combo.AutoSize = true;
             this.Combo.Location = new System.Drawing.Point(3, 132);
             this.Combo.Name = "Combo";
-            this.Combo.Size = new System.Drawing.Size(48, 17);
+            this.Combo.Size = new System.Drawing.Size(191, 17);
             this.Combo.TabIndex = 13;
-            this.Combo.Text = "Both";
+            this.Combo.Text = "Uninstall/Re-Install Mobile Pre Req";
             this.Combo.UseVisualStyleBackColor = true;
             // 
             // statusStrip1
@@ -174,6 +174,11 @@ namespace Mobile_App
             this.statusStrip1.Size = new System.Drawing.Size(309, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
             // label5
             // 
@@ -191,11 +196,6 @@ namespace Mobile_App
             this.MSPServerPath.Size = new System.Drawing.Size(150, 20);
             this.MSPServerPath.TabIndex = 16;
             this.MSPServerPath.Text = "\\\\MSPServerName\\";
-            // 
-            // ProgressBar
-            // 
-            this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
             // Form1
             // 

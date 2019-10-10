@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Security.AccessControl;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Security.AccessControl;
 using System.Windows.Forms;
 using System.Xml;
+using System.ServiceProcess;
 
 namespace Mobile_App
 {
@@ -229,7 +230,7 @@ namespace Mobile_App
             ts.Text = "Uninstalling GIS - New";
             UninstallProgram("New World GIS Components x64");
 
-            UninstallProgram("New World GIS Components x32");
+            UninstallProgram("New World GIS Components x86");
             ts.Text = "GIS is Uninstalled";
 
             ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
@@ -237,6 +238,16 @@ namespace Mobile_App
 
             UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
             ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+
+            ts.Text = "Uninstalling Nova PDF";
+
+            UninstallProgram("NWPS Enterprise Mobile PDF Printer");
+
+            UninstallProgram("novaPDF 8 Printer Driver");
+
+            UninstallProgram("novaPDF 8 SDK COM (x86)");
+
+            UninstallProgram("novaPDF 8 SDK COM (x64)");
         }
 
         //Mobile 64bit installer
@@ -388,11 +399,21 @@ namespace Mobile_App
             UninstallProgram("New World GIS Components");
 
             ts.Text = "Uninstalling GIS - New";
-            UninstallProgram("New World GIS Components x32");
+            UninstallProgram("New World GIS Components x86");
             ts.Text = "GIS is Uninstalled";
 
             UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
             ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+
+            ts.Text = "Uninstalling Nova PDF";
+
+            UninstallProgram("NWPS Enterprise Mobile PDF Printer");
+
+            UninstallProgram("novaPDF 8 Printer Driver");
+
+            UninstallProgram("novaPDF 8 SDK COM (x86)");
+
+            UninstallProgram("novaPDF 8 SDK COM (x64)");
         }
 
         //Mobile 32bit Installer
@@ -528,6 +549,88 @@ namespace Mobile_App
             File.WriteAllLines(text, newLines);
         }
 
+        //Mobile copy
+        private void MobileCopy(string SourcePath)
+        {
+            //this copies all files within NwsHoldPath.text to C:\Temp\MobileInstaller recursively.
+            //string SourcePath = NwsHoldPath.Text;
+            string TargetPath = @"C:\Temp\MobileInstaller";
+            string[] filepaths = Directory.GetFiles(SourcePath, "*.*");
+            if (NwsHoldPath.Text != "")
+            {
+                foreach (string file in filepaths)
+                {
+                    try
+                    {
+                        string replace = file.Replace(SourcePath, TargetPath);
+                        File.Copy(file, replace, true);
+                        File.SetAttributes(TargetPath, FileAttributes.Normal);
+
+                        bg.ReportProgress(0);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+            }
+        }
+
+        //Folder Related work
+
+        //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
+        private void Temp()
+        {
+            //This was modified on 01/30/2018
+            //This creates a temp folder if the folder does not exist.
+            Directory.CreateDirectory(@"C:\Temp");
+
+            //Deletes all files under C:\Temp
+            DirectoryInfo di = new DirectoryInfo(@"C:\Temp");
+            foreach (FileInfo File in di.GetFiles())
+            {
+                File.Delete();
+            }
+
+            //Deletes all folders under C:\Temp
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            //This was modified on 01/30/2018
+            //This creates the mobile installer inside the the temp
+            Directory.CreateDirectory(@"C:\Temp\MobileInstaller");
+        }
+
+        private void MobileDelete(string dir)
+        {
+            Directory.Delete(dir, true);
+        }
+
+        //Cleans up the temp folder and restarts the machine
+        private void MobileRestart()
+        {
+            //Deletes all files under C:\Temp
+            DirectoryInfo di = new DirectoryInfo(@"C:\Temp");
+            foreach (FileInfo File in di.GetFiles())
+            {
+                File.Delete();
+            }
+
+            //Deletes all folders under C:\Temp
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+
+            Process.Start("Shutdown", "/r");
+
+            Application.Exit();
+        }
+
         //this will give the user role full control for folder permissions
         //this also will modify the all files and sub directories with full control to the user role
         private static bool SetAcl(string destinationDirectory)
@@ -567,92 +670,6 @@ namespace Mobile_App
             Info.SetAccessControl(Security);
 
             return true;
-        }
-
-        //Folder Related work
-
-        //Mobile copy
-        private void MobileCopy(string SourcePath)
-        {
-            //this copies all files within NwsHoldPath.text to C:\Temp\MobileInstaller recursively.
-            //string SourcePath = NwsHoldPath.Text;
-            string TargetPath = @"C:\Temp\MobileInstaller";
-            string[] filepaths = Directory.GetFiles(SourcePath, "*.*");
-            if (NwsHoldPath.Text != "")
-            {
-                foreach (string file in filepaths)
-                {
-                    try
-                    {
-                        string replace = file.Replace(SourcePath, TargetPath);
-                        File.Copy(file, replace, true);
-                        File.SetAttributes(TargetPath, FileAttributes.Normal);
-
-                        bg.ReportProgress(0);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.StackTrace.ToString());
-                    }
-                }
-            }
-        }
-
-        //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
-        private void Temp()
-        {
-            //This was modified on 01/30/2018
-            //This creates a temp folder if the folder does not exist.
-            Directory.CreateDirectory(@"C:\Temp");
-
-            //Deletes all files under C:\Temp
-            DirectoryInfo di = new DirectoryInfo(@"C:\Temp");
-            foreach (FileInfo File in di.GetFiles())
-            {
-                File.Delete();
-            }
-
-            //Deletes all folders under C:\Temp
-            foreach (DirectoryInfo dir in di.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-
-            //This was modified on 01/30/2018
-            //This creates the mobile installer inside the the temp
-            Directory.CreateDirectory(@"C:\Temp\MobileInstaller");
-        }
-
-        //Cleans up the temp folder and restarts the machine
-        private void MobileRestart()
-        {
-            //Deletes all files under C:\Temp
-            DirectoryInfo di = new DirectoryInfo(@"C:\Temp");
-            foreach (FileInfo File in di.GetFiles())
-            {
-                File.Delete();
-            }
-
-            //Deletes all folders under C:\Temp
-            foreach (DirectoryInfo dir in di.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-
-            DirectoryInfo dr = new DirectoryInfo(@"C:\Programdata\New World Systems\New World Updater");
-            foreach (FileInfo File in dr.GetFiles())
-            {
-                File.Delete();
-            }
-
-            foreach (DirectoryInfo dir in dr.GetDirectories())
-            {
-                dir.Delete();
-            }
-
-            Process.Start("Shutdown", "/r");
-
-            Application.Exit();
         }
 
         //Methods to run the pre req executables
@@ -786,24 +803,18 @@ namespace Mobile_App
         //The actual work done
         private void Bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            ts.Text = "Copying DotNet";
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\1 .NET Framework\.NET 4.7.1");
 
-            ts.Text = "Copy GIS Components";
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\5 NWPS GIS Components\GIS Components 1.0.69");
 
-            ts.Text = "Copying SQL Compact";
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 3.5 SP2");
 
-            ts.Text = "Copying Sync Framework";
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\9 Microsoft Sync Framework 2.1\x64");
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\9 Microsoft Sync Framework 2.1\x86");
 
-            ts.Text = "Copying Updater";
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.29");
 
-            ts.Text = "Copying Updater Config";
             MobileCopy(NwsHoldPath.Text + @"NWS Hold\Client Initial Setup and Installation\7  Use updater configuration utility\Configure updater for Mobile V2");
 
             bg.ReportProgress(0);
