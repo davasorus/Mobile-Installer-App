@@ -9,6 +9,7 @@ using System.Management;
 using System.Windows.Forms;
 using System.Xml;
 using System.ServiceProcess;
+using System.Threading;
 
 namespace Mobile_App
 {
@@ -603,6 +604,7 @@ namespace Mobile_App
             Directory.CreateDirectory(@"C:\Temp\MobileInstaller");
         }
 
+        //Deletes folders by path and recursvely deletes sub folders
         private void MobileDelete(string dir)
         {
             Directory.Delete(dir, true);
@@ -611,24 +613,71 @@ namespace Mobile_App
         //Cleans up the temp folder and restarts the machine
         private void MobileRestart()
         {
-            //Deletes all files under C:\Temp
-            DirectoryInfo di = new DirectoryInfo(@"C:\Temp");
-            foreach (FileInfo File in di.GetFiles())
+            StopService("NewWorldUpdaterService");
+            Thread.Sleep(5000);
+            try
             {
-                File.Delete();
+                ts.Text = "Deleting Programdata Updater";
+
+                MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
             }
 
-            //Deletes all folders under C:\Temp
-            foreach (DirectoryInfo dir in di.GetDirectories())
+            try
             {
-                dir.Delete(true);
+                ts.Text = "Deleting Fire Mobile Folder";
+                if (Is64Bit.Checked == true)
+                {
+                    MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile");
+                }
+                else
+                {
+                    MobileDelete(@"C:\Program Files\New World Systems\Aegis Fire Mobile");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
             }
 
-            MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+            try
+            {
+                ts.Text = "Deleting Police Mobile Folder";
+                if (Is64Bit.Checked == true)
+                {
+                    MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Mobile");
+                }
+                else
+                {
+                    MobileDelete(@"C:\Program Files\New World Systems\Aegis Mobile");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            try
+            {
+                ts.Text = "Deleting Pre Req Folder";
+
+                MobileDelete(@"C:\Temp\MobileInstaller");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+
+            StartService("NewWorldUpdaterService");
+
+            ts.Text = "Shutting Down PC";
 
             Process.Start("Shutdown", "/r");
 
-            Application.Exit();
+            //Application.Exit();
         }
 
         //this will give the user role full control for folder permissions
@@ -818,6 +867,40 @@ namespace Mobile_App
             MobileCopy(NwsHoldPath.Text + @"NWS Hold\Client Initial Setup and Installation\7  Use updater configuration utility\Configure updater for Mobile V2");
 
             bg.ReportProgress(0);
+        }
+
+        //Local service work
+
+        //will stop the service by name
+        private void StopService(string name)
+        {
+            ServiceController sc = new ServiceController(name);
+            if (sc.Status.Equals(ServiceControllerStatus.Running))
+            {
+                sc.Stop();
+
+                ts.Text = "Updater Service Stopped";
+            }
+            else
+            {
+                MessageBox.Show("Stoping Error");
+            }
+        }
+
+        //will start the service by name
+        private void StartService(string name)
+        {
+            ServiceController sc = new ServiceController(name);
+            if (sc.Status.Equals(ServiceControllerStatus.Stopped))
+            {
+                sc.Start();
+
+                ts.Text = "Updater Service Started";
+            }
+            else
+            {
+                MessageBox.Show("Starting Error");
+            }
         }
 
         //MISC
