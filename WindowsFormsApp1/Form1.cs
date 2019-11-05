@@ -174,7 +174,7 @@ namespace Mobile_App
             ts.Text = "Copying required files locally";
             //MobileCopy();
             ProgressBar.Value = 0;
-            ProgressBar.Maximum = 16;
+            ProgressBar.Maximum = 23;
             bg.RunWorkerAsync();
         }
 
@@ -191,6 +191,19 @@ namespace Mobile_App
             message += "5. Selecting the Both check box and hitting the run button will uninstall the mobile client -> install the mobile client. \n";
             message += "6. The copy button MUST BE RUN FIRST. The copy button copies the files necessary to installer and/or uninstall the mobile client. \n\n";
             MessageBox.Show(message);
+        }
+
+        //Customizable Install/Uninstall/Triage
+        private void CustomRun_Click(object sender, EventArgs e)
+        {
+            ProgressBar.Visible = false;
+            ProgressBar.Enabled = false;
+
+            CustomUninstallRun();
+
+            CustomInstallRun();
+
+            MobileTriageRun();
         }
 
         //pre req install/uninstall methods
@@ -864,6 +877,14 @@ namespace Mobile_App
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.29");
 
+            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\8 MSP Client");
+
+            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\10 Visual Studio 2010 Tools for Office Runtime");
+
+            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\12 SQL Server CLR Types 2008");
+
+            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client");
+
             MobileCopy(NwsHoldPath.Text + @"NWS Hold\Client Initial Setup and Installation\7  Use updater configuration utility\Configure updater for Mobile V2");
 
             bg.ReportProgress(0);
@@ -903,12 +924,1397 @@ namespace Mobile_App
             }
         }
 
-        //MISC
-
-        //Message to display after the files are copied
-        private void MessageCopy()
+        //itemized uninstall steps
+        private void CustomUninstallRun()
         {
-            MessageBox.Show("The files are copied. Please press the run button.");
+            //uninstall fire mobile
+            if (CustomUninstallOptions.GetItemCheckState(0) == CheckState.Checked)
+            {
+                ts.Text = "Checking to uninstall Fire Mobile";
+                UninstallProgram("Aegis Fire Mobile");
+
+                UninstallProgram("Fire Mobile");
+                ts.Text = "Fire Mobile is Uninstalled";
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //uninstall police mobile
+            if (CustomUninstallOptions.GetItemCheckState(1) == CheckState.Checked)
+            {
+                ts.Text = "Checking to uninstall Police Mobile";
+                UninstallProgram("Aegis Mobile");
+
+                UninstallProgram("Law Enforcement Mobile");
+                ts.Text = "Police Mobile is Uninstalled";
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //uninstall merge
+            if (CustomUninstallOptions.GetItemCheckState(2) == CheckState.Checked)
+            {
+                ts.Text = "Checking to uninstall Mobile Merge";
+                UninstallProgram("Aegis Mobile Merge");
+
+                UninstallProgram("Mobile Merge");
+                ts.Text = "Mobile Merge is Uninstalled";
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //uninstall novaPDF
+            if (CustomUninstallOptions.GetItemCheckState(3) == CheckState.Checked)
+            {
+                ts.Text = "Uninstalling Nova PDF";
+
+                UninstallProgram("NWPS Enterprise Mobile PDF Printer");
+
+                UninstallProgram("novaPDF 8 Printer Driver");
+
+                UninstallProgram("novaPDF 8 SDK COM (x86)");
+
+                UninstallProgram("novaPDF 8 SDK COM (x64)");
+
+                ts.Text = "NOVA PDF is Uninstalled";
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //uninstall GIS
+            if (CustomUninstallOptions.GetItemCheckState(4) == CheckState.Checked)
+            {
+                ts.Text = "Uninstalling GIS - Old";
+                UninstallProgram("New World GIS Components");
+
+                ts.Text = "Uninstalling GIS - New";
+                UninstallProgram("New World GIS Components x64");
+
+                UninstallProgram("New World GIS Components x86");
+                ts.Text = "GIS is Uninstalled";
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //Uninstall SQL Compact
+            if (CustomUninstallOptions.GetItemCheckState(5) == CheckState.Checked)
+            {
+                ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
+                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
+
+                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
+                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //delete client folders
+            if (CustomUninstallOptions.GetItemCheckState(6) == CheckState.Checked)
+            {
+                StopService("NewWorldUpdaterService");
+
+                Thread.Sleep(5000);
+
+                //delete programdata updater
+                try
+                {
+                    ts.Text = "Deleting Programdata Updater";
+
+                    MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                //delete fire mobile folder
+                try
+                {
+                    ts.Text = "Deleting Fire Mobile Folder";
+                    if (Is64Bit.Checked == true)
+                    {
+                        MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile");
+                    }
+                    else
+                    {
+                        MobileDelete(@"C:\Program Files\New World Systems\Aegis Fire Mobile");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                //delete police mobile folder
+                try
+                {
+                    ts.Text = "Deleting Police Mobile Folder";
+                    if (Is64Bit.Checked == true)
+                    {
+                        MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Mobile");
+                    }
+                    else
+                    {
+                        MobileDelete(@"C:\Program Files\New World Systems\Aegis Mobile");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                StartService("NewWorldUpdaterService");
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //remove mobile related updater entries
+            if (CustomUninstallOptions.GetItemCheckState(7) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Modifying Mobile Updater Entries";
+                    FileWork64Bit();
+                    UpdaterWork64Bit();
+                    ts.Text = "Mobile Updater Entries are removed";
+                }
+                else
+                {
+                    ts.Text = "Modifying Mobile Updater Entries";
+                    FileWork32Bit();
+                    UpdaterWork32Bit();
+                    ts.Text = "Mobile Updater Entries are removed";
+                }
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //Uninstall MSP or CAD
+            if (CustomUninstallOptions.GetItemCheckState(8) == CheckState.Checked)
+            {
+                //64 bit
+                if (Is64Bit.Checked == true)
+                {
+                    string title = "MSP uninstall Dialog";
+                    string message = "would you like to uninstall MSP";
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show(message, title, buttons);
+
+                    //if some wants to uninstall MSP first
+                    if (result == DialogResult.Yes)
+                    {
+                        ts.Text = "uninstalling MSP";
+
+                        UninstallProgram("New World MSP Client");
+
+                        ts.Text = "test MSP uninstall";
+
+                        //if someone wants to uninstall CAD second
+                        string title1 = "Cad uninstall Dialog";
+                        string message1 = "would you like to uninstall CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result == DialogResult.Yes)
+                        {
+                            ts.Text = "uninstalling CAD";
+
+                            UninstallProgram("New World  Enterprise CAD Client");
+
+                            ts.Text = "Test CAD uninstall";
+                        }
+                    }
+
+                    //if someone wants to uninstall CAD but not MSP
+                    else if (result == DialogResult.No)
+                    {
+                        string title1 = "Cad uninstall Dialog";
+                        string message1 = "would you like to uninstall CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result == DialogResult.Yes)
+                        {
+                            ts.Text = "uninstalling CAD";
+
+                            UninstallProgram("New World  Enterprise CAD Client");
+
+                            ts.Text = "Test CAD uninstall";
+                        }
+                    }
+                }
+
+                //32 bit
+                else
+                {
+                    //if someone wants to uninstall MSP first
+                    string title = "MSP uninstall Dialog";
+                    string message = "would you like to uninstall MSP";
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show(message, title, buttons);
+                    if (result == DialogResult.Yes)
+                    {
+                        ts.Text = "uninstalling MSP";
+
+                        UninstallProgram("New World MSP Client");
+
+                        ts.Text = "test MSP uninstall";
+
+                        //if someone wants to uninstall CAD second
+                        string title1 = "Cad uninstall Dialog";
+                        string message1 = "would you like to uninstall CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result == DialogResult.Yes)
+                        {
+                            ts.Text = "uninstalling CAD";
+
+                            UninstallProgram("New World  Enterprise CAD Client");
+
+                            ts.Text = "Test CAD uninstall";
+                        }
+                    }
+
+                    //if someone wants to uninstall CAD
+                    else if (result == DialogResult.No)
+                    {
+                        string title1 = "Cad uninstall Dialog";
+                        string message1 = "would you like to uninstall CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result == DialogResult.Yes)
+                        {
+                            ts.Text = "uninstalling CAD";
+
+                            UninstallProgram("New World  Enterprise CAD Client");
+
+                            ts.Text = "Test CAD uninstall";
+                        }
+                    }
+                }
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //Restart Machine
+            if (CustomUninstallOptions.GetItemCheckState(9) == CheckState.Checked)
+            {
+                ts.Text = "Shutting Down PC";
+
+                Process.Start("Shutdown", "/r");
+            }
+        }
+
+        //itemized install steps
+        private void CustomInstallRun()
+        {
+            //install .net
+            if (CustomInstallOption.GetItemCheckState(0) == CheckState.Checked)
+            {
+                ts.Text = "Running 4.7.1 .Net";
+                try
+                {
+                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //install SQL Runtime
+            if (CustomInstallOption.GetItemCheckState(1) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Running 32bit SQL Runtime";
+                    try
+                    {
+                        InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+
+                    ts.Text = "Running 64 bit SQL Runtime";
+                    try
+                    {
+                        InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+                else
+                {
+                    ts.Text = "Running 32bit SQL Runtime";
+                    try
+                    {
+                        InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //install GIS components
+            if (CustomInstallOption.GetItemCheckState(2) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Running 32 bit GIS Components";
+                    try
+                    {
+                        InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+
+                    ts.Text = "Running 64 bit GIS Components";
+                    try
+                    {
+                        InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+                else
+                {
+                    ts.Text = "Running 32 bit GIS Components";
+                    try
+                    {
+                        InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //install DB Provider services
+            if (CustomInstallOption.GetItemCheckState(3) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Running 64 bit Synchronization";
+                    try
+                    {
+                        InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+
+                    ts.Text = "Running 64 bit Provider Services";
+                    try
+                    {
+                        InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+
+                    ts.Text = "Running 64 bit DB Providers";
+                    try
+                    {
+                        InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+                else
+                {
+                    ts.Text = "Running 32 bit Synchronization";
+                    try
+                    {
+                        InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+
+                    ts.Text = "Running 32 bit Provider Services";
+                    try
+                    {
+                        InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+
+                    ts.Text = "Running 32 bit DB Providers";
+                    try
+                    {
+                        InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //install Updater
+            if (CustomInstallOption.GetItemCheckState(4) == CheckState.Checked)
+            {
+                ts.Text = "Installing Updater";
+                try
+                {
+                    InstallProgram(@"NewWorld.Management.Updater.msi");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //Running Updater Config form
+            if (CustomInstallOption.GetItemCheckState(5) == CheckState.Checked)
+            {
+                ts.Text = "Running Mobile Updater Config form";
+                try
+                {
+                    RunProgram(@"Configure Updater for mobile V2.exe");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //Setting Folder Permissions
+            if (CustomInstallOption.GetItemCheckState(6) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Prepping folder permissions";
+                    try
+                    {
+                        SetAcl(@"C:\Program Files (x86)\New World Systems");
+                        SetAcl(@"C:\ProgramData\New World Systems");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+                else
+                {
+                    ts.Text = "Prepping folder permissions";
+                    try
+                    {
+                        SetAcl(@"C:\Program Files\New World Systems");
+                        SetAcl(@"C:\ProgramData\New World Systems");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //install MSP/CAD
+            if (CustomInstallOption.GetItemCheckState(7) == CheckState.Checked)
+            {
+                //64 bit MSP and CAD
+                if (Is64Bit.Checked == true)
+                {
+                    string title = "MSP Install Dialog";
+                    string message = "would you like to Install MSP";
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show(message, title, buttons);
+
+                    //if msp install first
+                    if (result == DialogResult.Yes)
+                    {
+                        ts.Text = "Running 4.7.1 .Net";
+                        try
+                        {
+                            InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Running 32bit SQL Runtime";
+                        try
+                        {
+                            InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Running 64 bit SQL Runtime";
+                        try
+                        {
+                            InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Running 32 bit GIS Components";
+                        try
+                        {
+                            InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Running 64 bit GIS Components";
+                        try
+                        {
+                            InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Installing Updater";
+                        try
+                        {
+                            InstallProgram(@"NewWorld.Management.Updater.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Installing MSP";
+                        try
+                        {
+                            RunProgram("NewWorldMSPClient.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Prepping folder permissions";
+                        try
+                        {
+                            SetAcl(@"C:\Program Files (x86)\New World Systems");
+                            SetAcl(@"C:\ProgramData\New World Systems");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        string title1 = "Cad Install Dialog";
+                        string message1 = "would you like to Install CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+
+                        //if install CAD second
+                        if (result1 == DialogResult.Yes)
+                        {
+                            ts.Text = "Running 4.7.1 .Net";
+                            try
+                            {
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32bit SQL Runtime";
+                            try
+                            {
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit SQL Runtime";
+                            try
+                            {
+                                InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit GIS Components";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit GIS Components";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit Synchronization";
+                            try
+                            {
+                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit Provider Services";
+                            try
+                            {
+                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit DB Providers";
+                            try
+                            {
+                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing Updater";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running Primary Interop Assemblies for Office";
+                            try
+                            {
+                                InstallProgram(@"vstor_redist.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "SQL Server CLR Types 2008";
+                            try
+                            {
+                                InstallProgram(@"SQLSysClrTypesx86.msi");
+                                InstallProgram(@"SQLSysClrTypesx64.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing CAD";
+                            try
+                            {
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Prepping folder permissions";
+                            try
+                            {
+                                SetAcl(@"C:\Program Files (x86)\New World Systems");
+                                SetAcl(@"C:\ProgramData\New World Systems");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+                        }
+                    }
+
+                    //if cad install and not MSP
+                    else if (result == DialogResult.No)
+                    {
+                        string title1 = "Cad Install Dialog";
+                        string message1 = "would you like to Install CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result1 == DialogResult.Yes)
+                        {
+                            ts.Text = "Running 4.7.1 .Net";
+                            try
+                            {
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32bit SQL Runtime";
+                            try
+                            {
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit SQL Runtime";
+                            try
+                            {
+                                InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit GIS Components";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit GIS Components";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit Synchronization";
+                            try
+                            {
+                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit Provider Services";
+                            try
+                            {
+                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 64 bit DB Providers";
+                            try
+                            {
+                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing Updater";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running Primary Interop Assemblies for Office";
+                            try
+                            {
+                                InstallProgram(@"vstor_redist.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "SQL Server CLR Types 2008";
+                            try
+                            {
+                                InstallProgram(@"SQLSysClrTypesx86.msi");
+                                InstallProgram(@"SQLSysClrTypesx64.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing CAD";
+                            try
+                            {
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Prepping folder permissions";
+                            try
+                            {
+                                SetAcl(@"C:\Program Files (x86)\New World Systems");
+                                SetAcl(@"C:\ProgramData\New World Systems");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+                        }
+                    }
+                }
+
+                //32 bit MSP and CAD
+                else
+                {
+                    string title = "MSP Install Dialog";
+                    string message = "would you like to Install MSP";
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show(message, title, buttons);
+
+                    //if msp install first
+                    if (result == DialogResult.Yes)
+                    {
+                        ts.Text = "Running 4.7.1 .Net";
+                        try
+                        {
+                            InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Running 32bit SQL Runtime";
+                        try
+                        {
+                            InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Running 32 bit GIS Components";
+                        try
+                        {
+                            InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Installing Updater";
+                        try
+                        {
+                            InstallProgram(@"NewWorld.Management.Updater.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Installing MSP";
+                        try
+                        {
+                            RunProgram("NewWorldMSPClient.msi");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        ts.Text = "Prepping folder permissions";
+                        try
+                        {
+                            SetAcl(@"C:\Program Files\New World Systems");
+                            SetAcl(@"C:\ProgramData\New World Systems");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+
+                        string title1 = "Cad Install Dialog";
+                        string message1 = "would you like to Install CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+
+                        //if install CAD second
+                        if (result1 == DialogResult.Yes)
+                        {
+                            ts.Text = "Running 4.7.1 .Net";
+                            try
+                            {
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32bit SQL Runtime";
+                            try
+                            {
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit GIS Components";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit Synchronization";
+                            try
+                            {
+                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit Provider Services";
+                            try
+                            {
+                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit DB Providers";
+                            try
+                            {
+                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing Updater";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running Primary Interop Assemblies for Office";
+                            try
+                            {
+                                InstallProgram(@"vstor_redist.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "SQL Server CLR Types 2008";
+                            try
+                            {
+                                InstallProgram(@"SQLSysClrTypesx86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing CAD";
+                            try
+                            {
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Prepping folder permissions";
+                            try
+                            {
+                                SetAcl(@"C:\Program Files\New World Systems");
+                                SetAcl(@"C:\ProgramData\New World Systems");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+                        }
+                    }
+
+                    //if cad install and not MSP
+                    else if (result == DialogResult.No)
+                    {
+                        string title1 = "Cad Install Dialog";
+                        string message1 = "would you like to Install CAD";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result1 == DialogResult.Yes)
+                        {
+                            ts.Text = "Running 4.7.1 .Net";
+                            try
+                            {
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32bit SQL Runtime";
+                            try
+                            {
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit GIS Components";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit Synchronization";
+                            try
+                            {
+                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit Provider Services";
+                            try
+                            {
+                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running 32 bit DB Providers";
+                            try
+                            {
+                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing Updater";
+                            try
+                            {
+                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Running Primary Interop Assemblies for Office";
+                            try
+                            {
+                                InstallProgram(@"vstor_redist.exe");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "SQL Server CLR Types 2008";
+                            try
+                            {
+                                InstallProgram(@"SQLSysClrTypesx86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Installing CAD";
+                            try
+                            {
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+
+                            ts.Text = "Prepping folder permissions";
+                            try
+                            {
+                                SetAcl(@"C:\Program Files\New World Systems");
+                                SetAcl(@"C:\ProgramData\New World Systems");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.StackTrace.ToString());
+                            }
+                        }
+                    }
+                }
+
+                ts.Text = "Install Complete";
+            }
+
+            //Restart Machine
+            if (CustomInstallOption.GetItemCheckState(8) == CheckState.Checked)
+            {
+                ts.Text = "Shutting Down PC";
+
+                Process.Start("Shutdown", "/r");
+            }
+        }
+
+        //itemized typical triage steps
+        private void MobileTriageRun()
+        {
+            //set folder permissions
+            if (MobileTriage.GetItemCheckState(0) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Prepping folder permissions";
+                    try
+                    {
+                        SetAcl(@"C:\Program Files (x86)\New World Systems");
+                        SetAcl(@"C:\ProgramData\New World Systems");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+                else
+                {
+                    ts.Text = "Prepping folder permissions";
+                    try
+                    {
+                        SetAcl(@"C:\Program Files\New World Systems");
+                        SetAcl(@"C:\ProgramData\New World Systems");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+                    }
+                }
+
+                ts.Text = "Triage Complete";
+            }
+
+            //stop and restart the updater service
+            if (MobileTriage.GetItemCheckState(1) == CheckState.Checked)
+            {
+                StopService("NewWorldUpdaterService");
+
+                Thread.Sleep(5000);
+
+                StartService("NewWorldUpdaterService");
+
+                ts.Text = "Triage Complete";
+            }
+
+            //reset the updater folder under programdata
+            if (MobileTriage.GetItemCheckState(2) == CheckState.Checked)
+            {
+                StopService("NewWorldUpdaterService");
+
+                Thread.Sleep(5000);
+
+                try
+                {
+                    ts.Text = "Deleting Programdata Updater";
+
+                    MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                StartService("NewWorldUpdaterService");
+
+                ts.Text = "Triage Complete";
+            }
+
+            //deletes the fire mobile, police mobile, and updater folder under programdata
+            if (MobileTriage.GetItemCheckState(3) == CheckState.Checked)
+            {
+                StopService("NewWorldUpdaterService");
+
+                Thread.Sleep(5000);
+
+                try
+                {
+                    ts.Text = "Deleting Programdata Updater";
+
+                    MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                try
+                {
+                    ts.Text = "Deleting Fire Mobile Folder";
+                    if (Is64Bit.Checked == true)
+                    {
+                        MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile");
+                    }
+                    else
+                    {
+                        MobileDelete(@"C:\Program Files\New World Systems\Aegis Fire Mobile");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                try
+                {
+                    ts.Text = "Deleting Police Mobile Folder";
+                    if (Is64Bit.Checked == true)
+                    {
+                        MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Mobile");
+                    }
+                    else
+                    {
+                        MobileDelete(@"C:\Program Files\New World Systems\Aegis Mobile");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+                }
+
+                StartService("NewWorldUpdaterService");
+
+                ts.Text = "Triage Complete";
+            }
+
+            //will check to see if the Mobile Client Interface tester is in the MobileInstaller folder
+            //if it is the program is run otherwise an exception is thrown
+            if (MobileTriage.GetItemCheckState(4) == CheckState.Checked)
+            {
+                ts.Text = "Checking to see if Utility is in the proper location";
+                if (File.Exists(@"C:\Temp\MobileInstaller\AegisMobileClientInterfaceTester.exe"))
+                {
+                    ts.Text = "Running Mobile Client Interface tester Utility";
+                    RunProgram("AegisMobileClientInterfaceTester.exe");
+                }
+                else
+                {
+                    ts.Text = "Error see exception message";
+                    throw new ArgumentException(@"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
+                    //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+                }
+                ts.Text = "Triage Complete";
+            }
+
+            //will check to see if the Device tester is in the MobileInstaller folder
+            //if it is the program is run otherwise an exception is thrown
+            if (MobileTriage.GetItemCheckState(5) == CheckState.Checked)
+            {
+                ts.Text = "Checking to see if Utility is in the proper location";
+                if (File.Exists(@"C:\Temp\MobileInstaller\DeviceTester.exe"))
+                {
+                    ts.Text = "Running Device tester Utility";
+                    RunProgram("DeviceTester.exe");
+                }
+                else
+                {
+                    ts.Text = "Error see exception message";
+                    throw new ArgumentException(@"ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
+                    //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+                }
+
+                ts.Text = "Triage Complete";
+            }
         }
     }
 }
