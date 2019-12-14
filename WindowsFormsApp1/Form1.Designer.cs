@@ -292,7 +292,7 @@ namespace Mobile_App
             "Run Mobile Device Tester Utilty"});
             this.MobileTriage.Location = new System.Drawing.Point(9, 172);
             this.MobileTriage.Name = "MobileTriage";
-            this.MobileTriage.Size = new System.Drawing.Size(266, 64);
+            this.MobileTriage.Size = new System.Drawing.Size(290, 64);
             this.MobileTriage.TabIndex = 4;
             // 
             // CustomInstallOption

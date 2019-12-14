@@ -166,6 +166,9 @@ namespace Mobile_App
         //Copy Button
         private void CopyFiles_Click(object sender, EventArgs e)
         {
+            ProgressBar.Visible = true;
+            ProgressBar.Enabled = true;
+
             ts.Text = "prepping Temp Folder";
             Temp();
 
@@ -174,7 +177,7 @@ namespace Mobile_App
             ts.Text = "Copying required files locally";
             //MobileCopy();
             ProgressBar.Value = 0;
-            ProgressBar.Maximum = 23;
+            ProgressBar.Maximum = 30;
             bg.RunWorkerAsync();
         }
 
@@ -574,12 +577,13 @@ namespace Mobile_App
             {
                 foreach (string file in filepaths)
                 {
+                    string replace = file.Replace(SourcePath, TargetPath);
+                    File.Copy(file, replace, true);
+                    File.SetAttributes(TargetPath, FileAttributes.Normal);
+
+                    bg.ReportProgress(0);
                     try
                     {
-                        string replace = file.Replace(SourcePath, TargetPath);
-                        File.Copy(file, replace, true);
-                        File.SetAttributes(TargetPath, FileAttributes.Normal);
-
                         bg.ReportProgress(0);
                     }
                     catch (Exception ex)
@@ -876,6 +880,7 @@ namespace Mobile_App
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\9 Microsoft Sync Framework 2.1\x86");
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.29");
+            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.23");
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\8 MSP Client");
 
@@ -885,7 +890,7 @@ namespace Mobile_App
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client");
 
-            MobileCopy(NwsHoldPath.Text + @"NWS Hold\Client Initial Setup and Installation\7  Use updater configuration utility\Configure updater for Mobile V2");
+            MobileCopy(NwsHoldPath.Text + @"\NWS Hold\Client Initial Setup and Installation\8  Edit the Updater Config File");
 
             bg.ReportProgress(0);
         }
@@ -1107,6 +1112,8 @@ namespace Mobile_App
 
                         UninstallProgram("New World MSP Client");
 
+                        UninstallProgram("New World Aegis Client");
+
                         ts.Text = "test MSP uninstall";
 
                         //if someone wants to uninstall CAD second
@@ -1155,6 +1162,8 @@ namespace Mobile_App
                         ts.Text = "uninstalling MSP";
 
                         UninstallProgram("New World MSP Client");
+
+                        UninstallProgram("New World Aegis Client");
 
                         ts.Text = "test MSP uninstall";
 
@@ -2136,7 +2145,6 @@ namespace Mobile_App
                         }
                     }
                 }
-
                 ts.Text = "Install Complete";
             }
 
