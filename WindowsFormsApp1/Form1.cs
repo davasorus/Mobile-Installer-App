@@ -869,28 +869,28 @@ namespace Mobile_App
         //The actual work done
         private void Bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\1 .NET Framework\.NET 4.7.1");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\5 NWPS GIS Components\GIS Components 1.0.69");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 3.5 SP2");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\9 Microsoft Sync Framework 2.1\x64");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\9 Microsoft Sync Framework 2.1\x86");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.29");
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.23");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\8 MSP Client");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\8 MSP Client");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\10 Visual Studio 2010 Tools for Office Runtime");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\10 Visual Studio 2010 Tools for Office Runtime");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\12 SQL Server CLR Types 2008");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\12 SQL Server CLR Types 2008");
 
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client");
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
 
-            MobileCopy(NwsHoldPath.Text + @"\NWS Hold\Client Initial Setup and Installation\8  Edit the Updater Config File");
+            MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\\Client Initial Setup and Installation\\8  Edit the Updater Config File");
 
             bg.ReportProgress(0);
         }
