@@ -175,9 +175,9 @@ namespace Mobile_App
             SaveStartupSettings();
 
             ts.Text = "Copying required files locally";
-            //MobileCopy();
+
             ProgressBar.Value = 0;
-            ProgressBar.Maximum = 30;
+            ProgressBar.Maximum = 24;
             bg.RunWorkerAsync();
         }
 
@@ -186,13 +186,21 @@ namespace Mobile_App
         {
             var message = "Help Button \n\n";
             message += "If you didn't run this as Administrator close and re-run as Admin (Right click run as admin.) \n\n";
-            message += "1. Fill in the network path from this computer to the mobile server C Drive. \n";
-            message += "   1a. Fill in the network path from this computer to the msp server. \n";
+            message += "TAB 1: INSTALL/UNINSTALL OPTIONS \n\n";
+            message += "1. Fill in the network path from this computer to the mobile server C Drive. E.X." + @" \\NWPSMMSPROD\C$" + "\n";
+            message += "   1a. Fill in the network path from this computer to the msp server. E.X" + @" \\NWPSMSPPROD" + "\n";
             message += "2. Select the specific operation you'd like to perform. \n";
             message += "3. Uninstalling the mobile client will uninstall the mobile client AND all non-updater pre-reqs. \n";
-            message += "4. Installing the mobile client will install all pre-regs necessary to run the mobile client. \n";
+            message += "4. Installing the mobile client will install all pre regs necessary to run the mobile client. \n";
             message += "5. Selecting the Both check box and hitting the run button will uninstall the mobile client -> install the mobile client. \n";
             message += "6. The copy button MUST BE RUN FIRST. The copy button copies the files necessary to installer and/or uninstall the mobile client. \n\n";
+            message += "TAB 2: INSTALL/UNINSTALL CUSTOM OPTIONS  \n\n";
+            message += "1. Uninstall Options  \n\n";
+            message += "   1a. Broken up into customizable uninstalling: Uninstalling the clients you want, and pre reqs you want. Instead of the entire client/pre req suite. \n\n";
+            message += "2. Install Options \n\n";
+            message += "   2a. Broken up into customizable Installing: Installing the clients you want, and pre reqs you want. Instead of the entire client/pre req suite. \n\n";
+            message += "3. Triage Options \n\n";
+            message += "   3a. Typical Triage for the mobile client instead of having to do them by hand. \n\n";
             MessageBox.Show(message);
         }
 
@@ -572,23 +580,16 @@ namespace Mobile_App
             //this copies all files within NwsHoldPath.text to C:\Temp\MobileInstaller recursively.
             //string SourcePath = NwsHoldPath.Text;
             string TargetPath = @"C:\Temp\MobileInstaller";
-            string[] filepaths = Directory.GetFiles(SourcePath, "*.*");
+            IEnumerable<string> filepaths = Directory.EnumerateFiles(SourcePath, "*.*");
             if (NwsHoldPath.Text != "")
             {
                 foreach (string file in filepaths)
                 {
-                    try
-                    {
-                        string replace = file.Replace(SourcePath, TargetPath);
-                        File.Copy(file, replace, true);
-                        File.SetAttributes(TargetPath, FileAttributes.Normal);
+                    string replace = file.Replace(SourcePath, TargetPath);
+                    File.Copy(file, replace, true);
+                    File.SetAttributes(TargetPath, FileAttributes.Normal);
 
-                        bg.ReportProgress(0);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
+                    bg.ReportProgress(0);
                 }
             }
         }
@@ -878,11 +879,14 @@ namespace Mobile_App
 
             MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");// works
 
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"); //works
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23"); //works
-
-            ts.Text = "Sleep";
-            Thread.Sleep(1000);
+            if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"))
+            {
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"); //works
+            }
+            else
+            {
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23"); //works
+            }
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client");
 
@@ -892,7 +896,7 @@ namespace Mobile_App
 
             MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
 
-            MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\\Client Initial Setup and Installation\\7 Edit the Updater Config File");
+            MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\7  Edit the Updater Config File");
 
             bg.ReportProgress(0);
         }
