@@ -50,16 +50,29 @@ namespace Mobile_App
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CustomRun = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.MobileTriage = new System.Windows.Forms.CheckedListBox();
             this.CustomInstallOption = new System.Windows.Forms.CheckedListBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.CustomUninstallOptions = new System.Windows.Forms.CheckedListBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.UpdaterAppend = new System.Windows.Forms.Button();
+            this.MergeClient = new System.Windows.Forms.CheckBox();
+            this.FireClient = new System.Windows.Forms.CheckBox();
+            this.PoliceClient = new System.Windows.Forms.CheckBox();
+            this.MobileServer = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.GenerateNumber = new System.Windows.Forms.TextBox();
+            this.FieldGenerateButton = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label3
@@ -182,7 +195,7 @@ namespace Mobile_App
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 264);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 277);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(416, 22);
             this.statusStrip1.TabIndex = 14;
@@ -215,10 +228,11 @@ namespace Mobile_App
             this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(3, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(413, 265);
+            this.tabControl1.Size = new System.Drawing.Size(413, 273);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
@@ -240,7 +254,7 @@ namespace Mobile_App
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(405, 236);
+            this.tabPage1.Size = new System.Drawing.Size(405, 244);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Install/Uninstall Options";
             // 
@@ -248,7 +262,7 @@ namespace Mobile_App
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage2.Controls.Add(this.CustomRun);
-            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label20);
             this.tabPage2.Controls.Add(this.MobileTriage);
             this.tabPage2.Controls.Add(this.CustomInstallOption);
             this.tabPage2.Controls.Add(this.label7);
@@ -257,7 +271,7 @@ namespace Mobile_App
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(405, 236);
+            this.tabPage2.Size = new System.Drawing.Size(405, 244);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Install/Uninstall Custom Options";
             // 
@@ -271,14 +285,14 @@ namespace Mobile_App
             this.CustomRun.UseVisualStyleBackColor = true;
             this.CustomRun.Click += new System.EventHandler(this.CustomRun_Click);
             // 
-            // label8
+            // label20
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 153);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(137, 13);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Typical Mobile Client Triage";
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(7, 153);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(137, 13);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "Typical Mobile Client Triage";
             // 
             // MobileTriage
             // 
@@ -350,10 +364,134 @@ namespace Mobile_App
             this.CustomUninstallOptions.Size = new System.Drawing.Size(202, 124);
             this.CustomUninstallOptions.TabIndex = 0;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.UpdaterAppend);
+            this.tabPage3.Controls.Add(this.MergeClient);
+            this.tabPage3.Controls.Add(this.FireClient);
+            this.tabPage3.Controls.Add(this.PoliceClient);
+            this.tabPage3.Controls.Add(this.MobileServer);
+            this.tabPage3.Controls.Add(this.label11);
+            this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Controls.Add(this.label8);
+            this.tabPage3.Controls.Add(this.GenerateNumber);
+            this.tabPage3.Controls.Add(this.FieldGenerateButton);
+            this.tabPage3.Controls.Add(this.textBox1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(405, 244);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Configure Updater Util";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // UpdaterAppend
+            // 
+            this.UpdaterAppend.Location = new System.Drawing.Point(7, 202);
+            this.UpdaterAppend.Name = "UpdaterAppend";
+            this.UpdaterAppend.Size = new System.Drawing.Size(84, 42);
+            this.UpdaterAppend.TabIndex = 10;
+            this.UpdaterAppend.Text = "Append";
+            this.UpdaterAppend.UseVisualStyleBackColor = true;
+            this.UpdaterAppend.Click += new System.EventHandler(this.UpdaterAppend_Click);
+            // 
+            // MergeClient
+            // 
+            this.MergeClient.AutoSize = true;
+            this.MergeClient.Location = new System.Drawing.Point(9, 184);
+            this.MergeClient.Name = "MergeClient";
+            this.MergeClient.Size = new System.Drawing.Size(85, 17);
+            this.MergeClient.TabIndex = 9;
+            this.MergeClient.Text = "Merge Client";
+            this.MergeClient.UseVisualStyleBackColor = true;
+            // 
+            // FireClient
+            // 
+            this.FireClient.AutoSize = true;
+            this.FireClient.Location = new System.Drawing.Point(9, 160);
+            this.FireClient.Name = "FireClient";
+            this.FireClient.Size = new System.Drawing.Size(72, 17);
+            this.FireClient.TabIndex = 8;
+            this.FireClient.Text = "Fire Client";
+            this.FireClient.UseVisualStyleBackColor = true;
+            // 
+            // PoliceClient
+            // 
+            this.PoliceClient.AutoSize = true;
+            this.PoliceClient.Location = new System.Drawing.Point(10, 137);
+            this.PoliceClient.Name = "PoliceClient";
+            this.PoliceClient.Size = new System.Drawing.Size(84, 17);
+            this.PoliceClient.TabIndex = 7;
+            this.PoliceClient.Text = "Police Client";
+            this.PoliceClient.UseVisualStyleBackColor = true;
+            // 
+            // MobileServer
+            // 
+            this.MobileServer.Location = new System.Drawing.Point(7, 111);
+            this.MobileServer.Name = "MobileServer";
+            this.MobileServer.Size = new System.Drawing.Size(146, 20);
+            this.MobileServer.TabIndex = 6;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 95);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(72, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Mobile Server";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(328, 7);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(37, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "FDIDs";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(221, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(31, 13);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "ORIs";
+            // 
+            // GenerateNumber
+            // 
+            this.GenerateNumber.Location = new System.Drawing.Point(89, 69);
+            this.GenerateNumber.Name = "GenerateNumber";
+            this.GenerateNumber.Size = new System.Drawing.Size(64, 20);
+            this.GenerateNumber.TabIndex = 2;
+            this.GenerateNumber.Text = "0";
+            // 
+            // FieldGenerateButton
+            // 
+            this.FieldGenerateButton.Location = new System.Drawing.Point(7, 69);
+            this.FieldGenerateButton.Name = "FieldGenerateButton";
+            this.FieldGenerateButton.Size = new System.Drawing.Size(75, 23);
+            this.FieldGenerateButton.TabIndex = 1;
+            this.FieldGenerateButton.Text = "Generate";
+            this.FieldGenerateButton.UseVisualStyleBackColor = true;
+            this.FieldGenerateButton.Click += new System.EventHandler(this.ORIGenerate_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 4);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(172, 61);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "Please enter the desired amount of ORI/FDID Fields and press the generate button." +
+    "";
+            // 
             // Form1
             // 
             this.AcceptButton = this.Run;
-            this.ClientSize = new System.Drawing.Size(416, 286);
+            this.ClientSize = new System.Drawing.Size(416, 299);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
@@ -367,6 +505,8 @@ namespace Mobile_App
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -404,13 +544,25 @@ namespace Mobile_App
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private Label label8;
+        private Label label20;
         private CheckedListBox MobileTriage;
         private CheckedListBox CustomInstallOption;
         private Label label7;
         private Label label6;
         private CheckedListBox CustomUninstallOptions;
         private Button CustomRun;
+        private TabPage tabPage3;
+        private TextBox textBox1;
+        private Button FieldGenerateButton;
+        private Label label9;
+        private Label label8;
+        private TextBox GenerateNumber;
+        private TextBox MobileServer;
+        private Label label11;
+        private CheckBox FireClient;
+        private CheckBox PoliceClient;
+        private CheckBox MergeClient;
+        private Button UpdaterAppend;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -10,6 +11,7 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Mobile_App
 {
@@ -21,10 +23,14 @@ namespace Mobile_App
 
     partial class Form1 : Form
     {
+        private XmlDocument UpdaterConfig = new XmlDocument();
         private XmlDocument StartupSettings = new XmlDocument();
         private string SourcePath = @"";
 
         public string MSPServerName { get; private set; }
+        private bool PoliceClientExists = false;
+        private bool FireClientExists = false;
+        private bool MergeClientExists = false;
 
         private string TargetPath = @"";
         private bool is64bit = false;
@@ -57,6 +63,29 @@ namespace Mobile_App
                 Is64Bit.Checked = false;
                 Is32bit.Checked = true;
             }
+
+            //will utilize prior configuration for mobile updater form if it exists
+            try
+            {
+                if (GenerateNumber.Text != " ")
+                {
+                    if (GenerateNumber.Text != "")
+                    {
+                        int num = int.Parse(GenerateNumber.Text);
+                        if (num > 0)
+                        {
+                            ORIGenerate_Click(sender, e);
+                        }
+                        else
+                        {
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
         }
 
         public Form1()
@@ -81,6 +110,22 @@ namespace Mobile_App
             //run combination mobile uninstall an mobile install
             if (Combo.Checked && Is64Bit.Checked == true)
             {
+                if (GenerateNumber.Text == "0")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
                 ts.Text = "Modifying Mobile Updater Entries";
                 FileWork64Bit();
                 UpdaterWork64Bit();
@@ -100,6 +145,22 @@ namespace Mobile_App
             //run 64bit installer
             if (Is64Bit.Checked && InstallMobile.Checked == true)
             {
+                if (GenerateNumber.Text == "0")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
                 ts.Text = "Going to Install mobile";
                 Mobile64install();
 
@@ -124,6 +185,22 @@ namespace Mobile_App
             //Run combination mobile uninstall and mobile install
             if (Combo.Checked && Is32bit.Checked == true)
             {
+                if (GenerateNumber.Text == "0")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
                 ts.Text = "Modifying Mobile Updater Entries";
                 FileWork32Bit();
                 UpdaterWork32Bit();
@@ -141,6 +218,22 @@ namespace Mobile_App
             //Run 32bit installer
             if (Is32bit.Checked && InstallMobile.Checked == true)
             {
+                if (GenerateNumber.Text == "0")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
                 ts.Text = "installing Mobile";
                 Mobile32install();
 
@@ -371,7 +464,15 @@ namespace Mobile_App
             ts.Text = "Running Mobile Updater Config form";
             try
             {
-                RunProgram(@"Configure Updater for mobile V2.exe");
+                if (GenerateNumber.Text == "0")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured and attempt again.";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else
+                {
+                    UpdaterAppend_Click(new object(), new EventArgs());
+                }
             }
             catch (Exception ex)
             {
@@ -811,41 +912,201 @@ namespace Mobile_App
             if (File.Exists("MobileInstallApp.xml"))
             {
                 StartupSettings.Load("MobileInstallApp.xml");
+
                 NwsHoldPath.Text = StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText;
+
+                GenerateNumber.Text = StartupSettings.GetElementsByTagName("GenerateNumber")[0].InnerText;
+
+                MobileServer.Text = StartupSettings.GetElementsByTagName("MobileServerName")[0].InnerText;
+
                 MSPServerPath.Text = StartupSettings.GetElementsByTagName("MSPServerPath")[0].InnerText;
+
+                if (StartupSettings.GetElementsByTagName("PC")[0].InnerText.Equals("True"))
+                {
+                    PoliceClient.Checked = true;
+                }
+
+                if (StartupSettings.GetElementsByTagName("FC")[0].InnerText.Equals("True"))
+                {
+                    FireClient.Checked = true;
+                }
+
+                if (StartupSettings.GetElementsByTagName("MC")[0].InnerText.Equals("True"))
+                {
+                    MergeClient.Checked = true;
+                }
+
                 TargetPath = @"C:\Temp\MobileInstaller";
             }
             //Creation of a new MobileInstallApp.xml if one does not already exist.
             else
             {
-                SourcePath = NwsHoldPath.Text;
-                MSPServerName = MSPServerPath.Text;
-
-                //root of the XML
-                XmlNode root = StartupSettings.CreateElement("root");
-                StartupSettings.AppendChild(root);
-
-                //NWS HOLD PATH
-                XmlNode NwsPathNode = StartupSettings.CreateElement("SourcePath");
-                NwsPathNode.InnerText = @"File Path to Mobile Pre-reqs";
-                root.AppendChild(NwsPathNode);
-
-                //NWS MSP Server
-                XmlNode MSPPathNode = StartupSettings.CreateElement("MSPServerPath");
-                MSPPathNode.InnerText = @"FIle Path to MSP Client Install Folder";
-                root.AppendChild(MSPPathNode);
+                XmlWriterSettings settings = new XmlWriterSettings
+                {
+                    Indent = true,
+                    IndentChars = ("   "),
+                    CloseOutput = true,
+                    OmitXmlDeclaration = true
+                };
+                using (XmlWriter writer = XmlWriter.Create("MobileInstallApp.xml", settings))
+                {
+                    writer.WriteStartElement("root");
+                    writer.WriteElementString("SourcePath", @"\\MobileServerName\C$\");
+                    writer.WriteElementString("MobileServerName", "Mobile Server Name");
+                    writer.WriteElementString("MSPServerPath", @"\\MSPServerName\ ");
+                    writer.WriteElementString("GenerateNumber", "0");
+                    writer.WriteElementString("PC", "false");
+                    writer.WriteElementString("FC", "False");
+                    writer.WriteElementString("MC", "False");
+                    writer.WriteEndElement();
+                    writer.Flush();
+                    writer.Close();
+                }
             }
         }
 
         //When the xml is modified once it is changed for all other uses with that xml.
         private void SaveStartupSettings()
         {
+            StartupSettings.Load("MobileInstallApp.xml");
+
             StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText = NwsHoldPath.Text;
+
             StartupSettings.GetElementsByTagName("MSPServerPath")[0].InnerText = MSPServerPath.Text;
-            StartupSettings.Save("MobileInstallApp.xml");
+
+            StartupSettings.GetElementsByTagName("GenerateNumber")[0].InnerText = GenerateNumber.Text;
+
+            StartupSettings.GetElementsByTagName("MobileServerName")[0].InnerText = MobileServer.Text;
+
+            if (PoliceClient.Checked == true)
+            {
+                StartupSettings.GetElementsByTagName("PC")[0].InnerText = "True";
+            }
+            else
+            {
+                StartupSettings.GetElementsByTagName("PC")[0].InnerText = "False";
+            }
+
+            if (FireClient.Checked == true)
+            {
+                StartupSettings.GetElementsByTagName("FC")[0].InnerText = "True";
+            }
+            else
+            {
+                StartupSettings.GetElementsByTagName("FC")[0].InnerText = "False";
+            }
+
+            if (MergeClient.Checked == true)
+            {
+                StartupSettings.GetElementsByTagName("MC")[0].InnerText = "True";
+            }
+            else
+            {
+                StartupSettings.GetElementsByTagName("MC")[0].InnerText = "False";
+            }
 
             //Save the start up settings
             StartupSettings.Save("MobileInstallApp.xml");
+        }
+
+        //this will remove ORI entries from the Mobile Install App xml
+        private void UpdateXMLORI()
+        {
+            string text = "MobileInstallApp.xml";
+
+            string[] Lines = File.ReadAllLines(text);
+            IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"ORI"));
+            File.WriteAllLines(text, newLines);
+        }
+
+        //this will remove FDID entries from the Mobile Install App xml
+        private void UpdateXMLFDID()
+        {
+            string text = "MobileInstallApp.xml";
+
+            string[] Lines = File.ReadAllLines(text);
+            IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"FDID"));
+            File.WriteAllLines(text, newLines);
+        }
+
+        //this saves ORI entries to the xml to be used again
+        private void CreateXMLORI(string ORI, string name)
+        {
+            XDocument xDocument = XDocument.Load("MobileInstallApp.xml");
+
+            var doc = xDocument.Root.Element("root");
+
+            xDocument.Root.Add(new XElement(name, ORI));
+
+            xDocument.Save("MobileInstallApp.xml");
+        }
+
+        //this saves FDID entries to the xml to be used again
+        private void CreateXMLFDID(string FDID, string name)
+        {
+            XDocument xDocument = XDocument.Load("MobileInstallApp.xml");
+
+            var doc = xDocument.Root.Element("root");
+
+            xDocument.Root.Add(new XElement(name, FDID));
+
+            xDocument.Save("MobileInstallApp.xml");
+        }
+
+        //will load old/prior ORI config in xml
+        private void LoadORIXML()
+        {
+            StartupSettings.Load("MobileInstallApp.xml");
+
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("ORI"))
+                {
+                    if (StartupSettings.GetElementsByTagName(c.Name).Count > 0)
+                    {
+                        try
+                        {
+                            c.Text = StartupSettings.GetElementsByTagName(c.Name)[0].InnerText;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        //will load old/prior FDID onfig in xml
+        private void LoadFDIDXML()
+        {
+            StartupSettings.Load("MobileInstallApp.xml");
+
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("FDID"))
+                {
+                    if (StartupSettings.GetElementsByTagName(c.Name).Count > 0)
+                    {
+                        try
+                        {
+                            c.Text = StartupSettings.GetElementsByTagName(c.Name)[0].InnerText;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.StackTrace.ToString());
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         //Background Worker code
@@ -896,7 +1157,14 @@ namespace Mobile_App
 
             MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
 
-            MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\7  Edit the Updater Config File");
+            if (Directory.Exists(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\7  Edit the Updater Config File"))
+            {
+                MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\7  Edit the Updater Config File");
+            }
+            else
+            {
+                MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\8  Edit the Updater Config File");
+            }
 
             bg.ReportProgress(0);
         }
@@ -1412,14 +1680,31 @@ namespace Mobile_App
                 ts.Text = "Running Mobile Updater Config form";
                 try
                 {
-                    RunProgram(@"Configure Updater for mobile V2.exe");
+                    if (GenerateNumber.Text == "0")
+                    {
+                        ts.Text = "Please Verify the Updater portion is configured";
+                        throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                    }
+                    else if (GenerateNumber.Text == " ")
+                    {
+                        ts.Text = "Please Verify the Updater portion is configured";
+                        throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                    }
+                    else if (GenerateNumber.Text == "")
+                    {
+                        ts.Text = "Please Verify the Updater portion is configured";
+                        throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                    }
+                    else
+                    {
+                        UpdaterAppend_Click(new object(), new EventArgs());
+                        ts.Text = "ORI/FDID Update Complete";
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
                 }
-
-                ts.Text = "Install Complete";
             }
 
             //Setting Folder Permissions
@@ -2328,6 +2613,450 @@ namespace Mobile_App
                 }
 
                 ts.Text = "Triage Complete";
+            }
+        }
+
+        //Updater utility code
+
+        //work done when the append button is pressed
+        private void UpdaterAppend_Click(object sender, EventArgs e)
+        {
+            if (Is64Bit.Checked == true)
+            {
+                UpdaterConfig.Load(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+            if (Is32bit.Checked == true)
+            {
+                UpdaterConfig.Load(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+
+            SeeIfNodesExist();
+
+            UpdateXMLORI();
+
+            UpdateXMLFDID();
+
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("ORI"))
+                {
+                    if (c.Text != "")
+                    {
+                        ts.Text = "ORIs Added";
+                        string ORI = c.Text;
+                        string Name = c.Name;
+
+                        CreateXMLORI(ORI, Name);
+
+                        ORISub(ORI);
+                    }
+                }
+            }
+
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("FDID"))
+                {
+                    if (c.Text != "")
+                    {
+                        ts.Text = "FDIDs Added";
+                        string FDID = c.Text;
+                        string Name = c.Name;
+
+                        CreateXMLFDID(FDID, Name);
+
+                        FDIDSub(FDID);
+                    }
+                }
+            }
+
+            if (PoliceClient.Checked && PoliceClientExists == false)
+            {
+                PoliceClientSub();
+            }
+
+            if (FireClient.Checked && FireClientExists == false)
+            {
+                FireClientSub();
+            }
+
+            if (MergeClient.Checked && MergeClientExists == false)
+            {
+                MergeClientSub();
+            }
+
+            NewWorldUpdaterSub();
+
+            if (Is64Bit.Checked == true)
+            {
+                UpdaterConfig.Save(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+            if (Is32bit.Checked == true)
+            {
+                UpdaterConfig.Save(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+
+            ServiceController myService = new ServiceController
+            {
+                ServiceName = "NewWorldUpdaterService"
+            };
+
+            string svcStatus = myService.Status.ToString();
+
+            if (svcStatus == "Running")
+            {
+                myService.Stop();
+                myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                myService.Start();
+            }
+            else if (svcStatus == "Stopped")
+            {
+                myService.Start();
+            }
+            else
+            {
+                myService.Stop();
+                myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                myService.Start();
+            }
+
+            SaveStartupSettings();
+        }
+
+        //work done when the generate button is pressed
+        private void ORIGenerate_Click(object sender, EventArgs e)
+        {
+            label20.Visible = true;
+            label8.Visible = true;
+
+            FieldGenerateButton.Visible = true;
+            GenerateNumber.Visible = true;
+            textBox1.Visible = true;
+            //creates ORIs
+            try
+            {
+                int txtno = int.Parse(GenerateNumber.Text);
+                int pointX = 190;
+                int pointY = 30;
+
+                for (int i = 0; i < txtno; i++)
+                {
+                    TextBox a = new TextBox
+                    {
+                        Name = "ORI" + (i + 1)
+                    };
+                    a.Tag = a.Name;
+
+                    a.Location = new Point(pointX, pointY);
+
+                    tabPage3.Controls.Add(a);
+                    tabPage3.Show();
+                    pointY += 20;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+            LoadORIXML();
+
+            //Creates FDIDs
+            try
+            {
+                int txtno = int.Parse(GenerateNumber.Text);
+                int pointX = 295;
+                int pointY = 30;
+
+                for (int i = 0; i < txtno; i++)
+                {
+                    TextBox a = new TextBox
+                    {
+                        Name = "FDID" + (i + 1)
+                    };
+
+                    a.Location = new Point(pointX, pointY);
+
+                    tabPage3.Controls.Add(a);
+                    tabPage3.Show();
+                    pointY += 20;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+            LoadFDIDXML();
+        }
+
+        //work done to add the police client to the updater config file
+        private void PoliceClientSub()
+        {
+            XmlNodeList Applications = UpdaterConfig.GetElementsByTagName("applications");
+
+            XmlNode nodeAdd = UpdaterConfig.CreateElement("add");
+
+            XmlAttribute id = UpdaterConfig.CreateAttribute("id");
+            id.Value = "Police Client";
+
+            XmlAttribute uri = UpdaterConfig.CreateAttribute("manifestUri");
+            uri.Value = "http://" + MobileServer.Text + "/MobileUpdates/Police Client/Update.xml";
+
+            XmlAttribute location = UpdaterConfig.CreateAttribute("location");
+
+            if (Is64Bit.Checked == true)
+            {
+                location.Value = @"C:\Program Files (x86)\New World Systems\Aegis Mobile\";
+            }
+            else
+            {
+                location.Value = @"C:\Program Files\New World Systems\Aegis Mobile\";
+            }
+
+            nodeAdd.Attributes.Append(id);
+            nodeAdd.Attributes.Append(uri);
+            nodeAdd.Attributes.Append(location);
+
+            Applications[0].AppendChild(nodeAdd);
+        }
+
+        //work done to add the fire client to the updater config file
+        private void FireClientSub()
+        {
+            XmlNodeList Applications = UpdaterConfig.GetElementsByTagName("applications");
+
+            XmlNode nodeAdd = UpdaterConfig.CreateElement("add");
+
+            XmlAttribute id = UpdaterConfig.CreateAttribute("id");
+            id.Value = "Fire Client";
+
+            XmlAttribute uri = UpdaterConfig.CreateAttribute("manifestUri");
+            uri.Value = "http://" + MobileServer.Text + "/MobileUpdates/Fire Client/Update.xml";
+
+            XmlAttribute location = UpdaterConfig.CreateAttribute("location");
+
+            if (Is64Bit.Checked == true)
+            {
+                location.Value = @"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile\";
+            }
+            else
+            {
+                location.Value = @"C:\Program Files\New World Systems\Aegis Fire Mobile\";
+            }
+
+            nodeAdd.Attributes.Append(id);
+            nodeAdd.Attributes.Append(uri);
+            nodeAdd.Attributes.Append(location);
+
+            Applications[0].AppendChild(nodeAdd);
+        }
+
+        //work done to add the merge client to the updater config file
+        private void MergeClientSub()
+        {
+            XmlNodeList Applications = UpdaterConfig.GetElementsByTagName("applications");
+
+            XmlNode nodeAdd = UpdaterConfig.CreateElement("add");
+
+            XmlAttribute id = UpdaterConfig.CreateAttribute("id");
+            id.Value = "Merge Client";
+
+            XmlAttribute uri = UpdaterConfig.CreateAttribute("manifestUri");
+            uri.Value = "http://" + MobileServer.Text + "/MobileUpdates/Merge Client/Update.xml";
+
+            XmlAttribute location = UpdaterConfig.CreateAttribute("location");
+
+            if (Is64Bit.Checked == true)
+            {
+                location.Value = @"C:\Program Files (x86)\New World Systems\Aegis Mobile\";
+            }
+            else
+            {
+                location.Value = @"C:\Program Files\New World Systems\Aegis Mobile\";
+            }
+
+            nodeAdd.Attributes.Append(id);
+            nodeAdd.Attributes.Append(uri);
+            nodeAdd.Attributes.Append(location);
+
+            Applications[0].AppendChild(nodeAdd);
+        }
+
+        //work done to add the updater to the updater config file
+        private void NewWorldUpdaterSub()
+        {
+            XmlNodeList Applications = UpdaterConfig.GetElementsByTagName("applications");
+
+            XmlNode nodeAdd = UpdaterConfig.CreateElement("add");
+
+            XmlAttribute id = UpdaterConfig.CreateAttribute("id");
+            id.Value = "NWS Updater";
+
+            XmlAttribute uri = UpdaterConfig.CreateAttribute("manifestUri");
+            uri.Value = "http://" + MobileServer.Text + "/MobileUpdates/NWS Updater/Update.xml";
+
+            XmlAttribute location = UpdaterConfig.CreateAttribute("location");
+
+            if (Is64Bit.Checked == true)
+            {
+                location.Value = @"C:\Program Files (x86)\New World Systems\New World Automatic Updater";
+            }
+            else
+            {
+                location.Value = @"C:\Program Files\New World Systems\Aegis Mobile\New World Automatic Updater";
+            }
+
+            nodeAdd.Attributes.Append(id);
+            nodeAdd.Attributes.Append(uri);
+            nodeAdd.Attributes.Append(location);
+
+            Applications[0].AppendChild(nodeAdd);
+        }
+
+        //work done per filled in ORI field to add them to the updater config file
+        private void ORISub(string ORI)
+        {
+            XmlNodeList Applications = UpdaterConfig.GetElementsByTagName("applications");
+
+            XmlNode nodeAdd = UpdaterConfig.CreateElement("add");
+
+            XmlAttribute id = UpdaterConfig.CreateAttribute("id");
+
+            id.Value = ORI.ToUpper();
+
+            XmlAttribute uri = UpdaterConfig.CreateAttribute("manifestUri");
+            uri.Value = "http://" + MobileServer.Text + "/MobileUpdates/" + ORI + "/Update.xml";
+
+            XmlAttribute location = UpdaterConfig.CreateAttribute("location");
+
+            if (Is64Bit.Checked)
+            {
+                location.Value = @"C:\Program Files (x86)\New World Systems\Aegis Mobile\";
+            }
+            else
+            {
+                location.Value = @"C:\Program Files\New World Systems\Aegis Mobile\";
+            }
+
+            nodeAdd.Attributes.Append(id);
+            nodeAdd.Attributes.Append(uri);
+            nodeAdd.Attributes.Append(location);
+
+            Applications[0].AppendChild(nodeAdd);
+        }
+
+        //work done per filled in fdid field to added them to the updater config file
+        private void FDIDSub(string FDID)
+        {
+            XmlNodeList Applications = UpdaterConfig.GetElementsByTagName("applications");
+
+            XmlNode nodeAdd = UpdaterConfig.CreateElement("add");
+
+            XmlAttribute id = UpdaterConfig.CreateAttribute("id");
+            id.Value = FDID;
+
+            XmlAttribute uri = UpdaterConfig.CreateAttribute("manifestUri");
+            uri.Value = "http://" + MobileServer.Text + "/MobileUpdates/" + FDID + "/Update.xml";
+
+            XmlAttribute location = UpdaterConfig.CreateAttribute("location");
+
+            if (Is64Bit.Checked)
+            {
+                location.Value = @"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile\";
+            }
+            else
+            {
+                location.Value = @"C:\Program Files\New World Systems\Aegis Fire Mobile\";
+            }
+
+            nodeAdd.Attributes.Append(id);
+            nodeAdd.Attributes.Append(uri);
+            nodeAdd.Attributes.Append(location);
+
+            Applications[0].AppendChild(nodeAdd);
+        }
+
+        //work done to compare information already in the updater config file to information that is in the utility
+        //the information that is already present does not get added
+        private void SeeIfNodesExist()
+        {
+            XmlNodeList PoliceClientNode = UpdaterConfig.GetElementsByTagName("add");
+            List<XmlNode> toRemove = new List<XmlNode>();
+
+            //try{
+            foreach (XmlNode AddNode in PoliceClientNode)
+            {
+                XmlAttributeCollection attrColl = AddNode.Attributes;
+                XmlAttribute AttrID = attrColl["id"];
+                XmlAttribute AttrURI = attrColl["manifestUri"];
+
+                if (AttrID != null)
+                {
+                    if ((AttrID.Value == "Police Client"))// && (AttrURI.Value == "http://" + MobileServer.Text + "/MobileUpdates/Police Client/Update.xml"))
+                    {
+                        toRemove.Add(AddNode);
+                    }
+
+                    if ((AttrID.Value == "Fire Client"))// && (AttrURI.Value == "http://" + MobileServer.Text + "/MobileUpdates/Fire Client/Update.xml"))
+                    {
+                        toRemove.Add(AddNode);
+                    }
+
+                    if ((AttrID.Value == "Merge Client"))// && (AttrURI.Value == "http://" + MobileServer.Text + "/MobileUpdates/Merge Client/Update.xml"))
+                    {
+                        toRemove.Add(AddNode);
+                    }
+
+                    if ((AttrID.Value == "NWS Updater"))// && (AttrURI.Value == "http://" + MobileServer.Text + "/MobileUpdates/Merge Client/Update.xml"))
+                    {
+                        toRemove.Add(AddNode);
+                    }
+
+                    foreach (Control c in tabPage3.Controls)
+                    {
+                        if (c.Name.Contains("ORI"))
+                        {
+                            if (c.Text != "")
+                            {
+                                string upperORI = c.Text.ToUpper();
+                                if ((AttrID.Value == upperORI))// && (AttrURI.Value == "http://" + MobileServer.Text + "/MobileUpdates/" + ORI + "/Update.xml"))
+                                {
+                                    toRemove.Add(AddNode);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (Control c in tabPage3.Controls)
+                    {
+                        if (c.Name.Contains("FDID"))
+                        {
+                            if (c.Text != "")
+                            {
+                                if ((AttrID.Value == c.Text))// && (AttrURI.Value == "http://" + MobileServer.Text + "/MobileUpdates/" + FDID + "/Update.xml"))
+                                {
+                                    toRemove.Add(AddNode);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            } //foreach (XmlNode AddNode in PoliceClientNode)
+
+            foreach (XmlNode xmlElement in toRemove)
+            {
+                try
+                {
+                    XmlNode node = xmlElement.ParentNode;
+                    node.RemoveChild(xmlElement);
+                }
+                catch
+                {
+                    MessageBox.Show("ORI's and FDID's should not be the same");
+                }
             }
         }
     }
