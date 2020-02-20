@@ -1157,15 +1157,6 @@ namespace Mobile_App
 
             MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
 
-            if (Directory.Exists(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\7  Edit the Updater Config File"))
-            {
-                MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\7  Edit the Updater Config File");
-            }
-            else
-            {
-                MobileCopy(NwsHoldPath.Text + @"\\NWS Hold\Client Initial Setup and Installation\8  Edit the Updater Config File");
-            }
-
             bg.ReportProgress(0);
         }
 
