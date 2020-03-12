@@ -310,6 +310,180 @@ namespace Mobile_App
             MobileTriageRun();
         }
 
+        //work done when the append button is pressed
+        private void UpdaterAppend_Click(object sender, EventArgs e)
+        {
+            if (Is64Bit.Checked == true)
+            {
+                UpdaterConfig.Load(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+            if (Is32bit.Checked == true)
+            {
+                UpdaterConfig.Load(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+
+            SeeIfNodesExist();
+
+            UpdateXMLORI();
+
+            UpdateXMLFDID();
+
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("ORI"))
+                {
+                    if (c.Text != "")
+                    {
+                        ts.Text = "ORIs Added";
+                        string ORI = c.Text;
+                        string Name = c.Name;
+
+                        CreateXMLORI(ORI, Name);
+
+                        ORISub(ORI);
+                    }
+                }
+            }
+
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("FDID"))
+                {
+                    if (c.Text != "")
+                    {
+                        ts.Text = "FDIDs Added";
+                        string FDID = c.Text;
+                        string Name = c.Name;
+
+                        CreateXMLFDID(FDID, Name);
+
+                        FDIDSub(FDID);
+                    }
+                }
+            }
+
+            if (PoliceClient.Checked && PoliceClientExists == false)
+            {
+                PoliceClientSub();
+            }
+
+            if (FireClient.Checked && FireClientExists == false)
+            {
+                FireClientSub();
+            }
+
+            if (MergeClient.Checked && MergeClientExists == false)
+            {
+                MergeClientSub();
+            }
+
+            NewWorldUpdaterSub();
+
+            if (Is64Bit.Checked == true)
+            {
+                UpdaterConfig.Save(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+            if (Is32bit.Checked == true)
+            {
+                UpdaterConfig.Save(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+            }
+
+            ServiceController myService = new ServiceController
+            {
+                ServiceName = "NewWorldUpdaterService"
+            };
+
+            string svcStatus = myService.Status.ToString();
+
+            if (svcStatus == "Running")
+            {
+                myService.Stop();
+                myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                myService.Start();
+            }
+            else if (svcStatus == "Stopped")
+            {
+                myService.Start();
+            }
+            else
+            {
+                myService.Stop();
+                myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                myService.Start();
+            }
+
+            SaveStartupSettings();
+        }
+
+        //work done when the generate button is pressed
+        private void ORIGenerate_Click(object sender, EventArgs e)
+        {
+            label20.Visible = true;
+            label8.Visible = true;
+
+            RemoveFormEntries();
+
+            FieldGenerateButton.Visible = true;
+            GenerateNumber.Visible = true;
+            textBox1.Visible = true;
+            //creates ORIs
+            try
+            {
+                int txtno = int.Parse(GenerateNumber.Text);
+                int pointX = 190;
+                int pointY = 30;
+
+                for (int i = 0; i < txtno; i++)
+                {
+                    TextBox a = new TextBox
+                    {
+                        Name = "ORI" + (i + 1)
+                    };
+                    a.Tag = a.Name;
+
+                    a.Location = new Point(pointX, pointY);
+
+                    tabPage3.Controls.Add(a);
+                    tabPage3.Show();
+                    pointY += 20;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+            LoadORIXML();
+
+            //Creates FDIDs
+            try
+            {
+                int txtno = int.Parse(GenerateNumber.Text);
+                int pointX = 295;
+                int pointY = 30;
+
+                for (int i = 0; i < txtno; i++)
+                {
+                    TextBox a = new TextBox
+                    {
+                        Name = "FDID" + (i + 1)
+                    };
+
+                    a.Location = new Point(pointX, pointY);
+
+                    tabPage3.Controls.Add(a);
+                    tabPage3.Show();
+                    pointY += 20;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+            LoadFDIDXML();
+        }
+
         //pre req install/uninstall methods
 
         //Mobile 64bit uninstaller
@@ -1114,6 +1288,8 @@ namespace Mobile_App
         //Declairs the background worker
         private BackgroundWorker bg;
 
+        private int j;
+
         //What to do when the Background worker is completed
         private void Bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1278,8 +1454,16 @@ namespace Mobile_App
                 ts.Text = "Uninstall Complete";
             }
 
-            //delete client folders
+            //Uninstall Updater client folders
             if (CustomUninstallOptions.GetItemCheckState(6) == CheckState.Checked)
+            {
+                UninstallProgram("New World Automatic Updater");
+
+                ts.Text = "Uninstall Complete";
+            }
+
+            //delete client folders
+            if (CustomUninstallOptions.GetItemCheckState(7) == CheckState.Checked)
             {
                 StopService("NewWorldUpdaterService");
 
@@ -1339,7 +1523,7 @@ namespace Mobile_App
             }
 
             //remove mobile related updater entries
-            if (CustomUninstallOptions.GetItemCheckState(7) == CheckState.Checked)
+            if (CustomUninstallOptions.GetItemCheckState(8) == CheckState.Checked)
             {
                 if (Is64Bit.Checked == true)
                 {
@@ -1360,7 +1544,7 @@ namespace Mobile_App
             }
 
             //Uninstall MSP or CAD
-            if (CustomUninstallOptions.GetItemCheckState(8) == CheckState.Checked)
+            if (CustomUninstallOptions.GetItemCheckState(9) == CheckState.Checked)
             {
                 //64 bit
                 if (Is64Bit.Checked == true)
@@ -1469,7 +1653,7 @@ namespace Mobile_App
             }
 
             //Restart Machine
-            if (CustomUninstallOptions.GetItemCheckState(9) == CheckState.Checked)
+            if (CustomUninstallOptions.GetItemCheckState(10) == CheckState.Checked)
             {
                 ts.Text = "Shutting Down PC";
 
@@ -2609,178 +2793,6 @@ namespace Mobile_App
 
         //Updater utility code
 
-        //work done when the append button is pressed
-        private void UpdaterAppend_Click(object sender, EventArgs e)
-        {
-            if (Is64Bit.Checked == true)
-            {
-                UpdaterConfig.Load(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-            if (Is32bit.Checked == true)
-            {
-                UpdaterConfig.Load(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-
-            SeeIfNodesExist();
-
-            UpdateXMLORI();
-
-            UpdateXMLFDID();
-
-            foreach (Control c in tabPage3.Controls)
-            {
-                if (c.Name.Contains("ORI"))
-                {
-                    if (c.Text != "")
-                    {
-                        ts.Text = "ORIs Added";
-                        string ORI = c.Text;
-                        string Name = c.Name;
-
-                        CreateXMLORI(ORI, Name);
-
-                        ORISub(ORI);
-                    }
-                }
-            }
-
-            foreach (Control c in tabPage3.Controls)
-            {
-                if (c.Name.Contains("FDID"))
-                {
-                    if (c.Text != "")
-                    {
-                        ts.Text = "FDIDs Added";
-                        string FDID = c.Text;
-                        string Name = c.Name;
-
-                        CreateXMLFDID(FDID, Name);
-
-                        FDIDSub(FDID);
-                    }
-                }
-            }
-
-            if (PoliceClient.Checked && PoliceClientExists == false)
-            {
-                PoliceClientSub();
-            }
-
-            if (FireClient.Checked && FireClientExists == false)
-            {
-                FireClientSub();
-            }
-
-            if (MergeClient.Checked && MergeClientExists == false)
-            {
-                MergeClientSub();
-            }
-
-            NewWorldUpdaterSub();
-
-            if (Is64Bit.Checked == true)
-            {
-                UpdaterConfig.Save(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-            if (Is32bit.Checked == true)
-            {
-                UpdaterConfig.Save(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-
-            ServiceController myService = new ServiceController
-            {
-                ServiceName = "NewWorldUpdaterService"
-            };
-
-            string svcStatus = myService.Status.ToString();
-
-            if (svcStatus == "Running")
-            {
-                myService.Stop();
-                myService.WaitForStatus(ServiceControllerStatus.Stopped);
-                myService.Start();
-            }
-            else if (svcStatus == "Stopped")
-            {
-                myService.Start();
-            }
-            else
-            {
-                myService.Stop();
-                myService.WaitForStatus(ServiceControllerStatus.Stopped);
-                myService.Start();
-            }
-
-            SaveStartupSettings();
-        }
-
-        //work done when the generate button is pressed
-        private void ORIGenerate_Click(object sender, EventArgs e)
-        {
-            label20.Visible = true;
-            label8.Visible = true;
-
-            FieldGenerateButton.Visible = true;
-            GenerateNumber.Visible = true;
-            textBox1.Visible = true;
-            //creates ORIs
-            try
-            {
-                int txtno = int.Parse(GenerateNumber.Text);
-                int pointX = 190;
-                int pointY = 30;
-
-                for (int i = 0; i < txtno; i++)
-                {
-                    TextBox a = new TextBox
-                    {
-                        Name = "ORI" + (i + 1)
-                    };
-                    a.Tag = a.Name;
-
-                    a.Location = new Point(pointX, pointY);
-
-                    tabPage3.Controls.Add(a);
-                    tabPage3.Show();
-                    pointY += 20;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(e.ToString());
-            }
-
-            LoadORIXML();
-
-            //Creates FDIDs
-            try
-            {
-                int txtno = int.Parse(GenerateNumber.Text);
-                int pointX = 295;
-                int pointY = 30;
-
-                for (int i = 0; i < txtno; i++)
-                {
-                    TextBox a = new TextBox
-                    {
-                        Name = "FDID" + (i + 1)
-                    };
-
-                    a.Location = new Point(pointX, pointY);
-
-                    tabPage3.Controls.Add(a);
-                    tabPage3.Show();
-                    pointY += 20;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(e.ToString());
-            }
-
-            LoadFDIDXML();
-        }
-
         //work done to add the police client to the updater config file
         private void PoliceClientSub()
         {
@@ -3047,6 +3059,43 @@ namespace Mobile_App
                 catch
                 {
                     MessageBox.Show("ORI's and FDID's should not be the same");
+                }
+            }
+        }
+
+        // this will count and remove the ORI and FDID text boxes on the third tab page
+        private void RemoveFormEntries()
+        {
+            //this does the counting
+            foreach (Control c in tabPage3.Controls)
+            {
+                if (c.Name.Contains("ORI"))
+                {
+                    j++;
+                }
+            }
+
+            //this will remove
+            for (int i = 0; i <= j; i++)
+            {
+                //ORI specific
+                foreach (Control c in tabPage3.Controls)
+                {
+                    if (c.Name.Contains("ORI"))
+                    {
+                        tabPage3.Controls.Remove(c);
+                        break;
+                    }
+                }
+
+                //FDID Specific
+                foreach (Control c in tabPage3.Controls)
+                {
+                    if (c.Name.Contains("FDID"))
+                    {
+                        tabPage3.Controls.Remove(c);
+                        break;
+                    }
                 }
             }
         }

@@ -355,6 +355,7 @@ namespace Mobile_App
             "Remove novaPDF",
             "Remove GIS Components",
             "Remove SQL Compact 3.5",
+            "Remove Updater",
             "Remove Client Folders",
             "Remove Mobile Client Updater entries",
             "Uninstall MSP/CAD",
