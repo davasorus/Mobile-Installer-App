@@ -21,17 +21,17 @@ namespace Mobile_App
 
     //Changed .net requirement from 4.6.1 to 4.5 02/05/2018
 
-    partial class Form1 : Form
+    partial class NWPSPreReqInstaller : Form
     {
         private XmlDocument UpdaterConfig = new XmlDocument();
         private XmlDocument StartupSettings = new XmlDocument();
         private string SourcePath = @"";
-
+        private BackgroundWorker bg;
         public string MSPServerName { get; private set; }
         private bool PoliceClientExists = false;
         private bool FireClientExists = false;
         private bool MergeClientExists = false;
-
+        private int j;
         private string TargetPath = @"";
         private bool is64bit = false;
         private bool installmobile = false;
@@ -88,7 +88,7 @@ namespace Mobile_App
             }
         }
 
-        public Form1()
+        public NWPSPreReqInstaller()
         {
             InitializeComponent();
 
@@ -1285,11 +1285,6 @@ namespace Mobile_App
 
         //Background Worker code
 
-        //Declairs the background worker
-        private BackgroundWorker bg;
-
-        private int j;
-
         //What to do when the Background worker is completed
         private void Bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1574,7 +1569,7 @@ namespace Mobile_App
                         {
                             ts.Text = "uninstalling CAD";
 
-                            UninstallProgram("New World  Enterprise CAD Client");
+                            UninstallProgram("New World Enterprise CAD Client");
 
                             ts.Text = "Test CAD uninstall";
                         }
@@ -1587,7 +1582,7 @@ namespace Mobile_App
                         string message1 = "would you like to uninstall CAD";
                         MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
-                        if (result == DialogResult.Yes)
+                        if (result1 == DialogResult.Yes)
                         {
                             ts.Text = "uninstalling CAD";
 
@@ -1621,11 +1616,11 @@ namespace Mobile_App
                         string message1 = "would you like to uninstall CAD";
                         MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
-                        if (result == DialogResult.Yes)
+                        if (result1 == DialogResult.Yes)
                         {
                             ts.Text = "uninstalling CAD";
 
-                            UninstallProgram("New World  Enterprise CAD Client");
+                            UninstallProgram("New World Enterprise CAD Client");
 
                             ts.Text = "Test CAD uninstall";
                         }

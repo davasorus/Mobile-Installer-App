@@ -2,7 +2,7 @@
 
 namespace Mobile_App
 {
-    partial class Form1
+    partial class NWPSPreReqInstaller
     {
         /// <summary>
         /// Required designer variable.
@@ -195,9 +195,9 @@ namespace Mobile_App
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 277);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 274);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(416, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(427, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -232,7 +232,7 @@ namespace Mobile_App
             this.tabControl1.Location = new System.Drawing.Point(3, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(413, 273);
+            this.tabControl1.Size = new System.Drawing.Size(424, 273);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
@@ -254,7 +254,7 @@ namespace Mobile_App
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(405, 244);
+            this.tabPage1.Size = new System.Drawing.Size(434, 244);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Install/Uninstall Options";
             // 
@@ -271,7 +271,7 @@ namespace Mobile_App
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(405, 244);
+            this.tabPage2.Size = new System.Drawing.Size(434, 244);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Install/Uninstall Custom Options";
             // 
@@ -367,6 +367,8 @@ namespace Mobile_App
             // 
             // tabPage3
             // 
+            this.tabPage3.AllowDrop = true;
+            this.tabPage3.AutoScroll = true;
             this.tabPage3.Controls.Add(this.UpdaterAppend);
             this.tabPage3.Controls.Add(this.MergeClient);
             this.tabPage3.Controls.Add(this.FireClient);
@@ -381,7 +383,7 @@ namespace Mobile_App
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(405, 244);
+            this.tabPage3.Size = new System.Drawing.Size(416, 244);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Configure Updater Util";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -489,14 +491,14 @@ namespace Mobile_App
             this.textBox1.Text = "Please enter the desired amount of ORI/FDID Fields and press the generate button." +
     "";
             // 
-            // Form1
+            // NWPSPreReqInstaller
             // 
             this.AcceptButton = this.Run;
-            this.ClientSize = new System.Drawing.Size(416, 299);
+            this.ClientSize = new System.Drawing.Size(427, 296);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
-            this.Name = "Form1";
+            this.Name = "NWPSPreReqInstaller";
             this.Text = "Mobile Installer App";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
@@ -528,7 +530,7 @@ namespace Mobile_App
         private System.Windows.Forms.Label FilePath_lbl;
         private System.Windows.Forms.Label label4;
 
-        public Form1(Label label2)
+        public NWPSPreReqInstaller(Label label2)
         {
             this.label2 = label2 ?? throw new System.ArgumentNullException(nameof(label2));
         }
