@@ -44,7 +44,7 @@ namespace Mobile_App
         public string SourcePath1 { get => SourcePath; set => SourcePath = value; }
         private ToolStripLabel ts = new ToolStripLabel();
 
-        //what the form does when it initializes every time.
+        //what the form does when it initializes every time
         private void Form1_Load(object sender, EventArgs e)
         {
             InitialLoadofXML();
@@ -64,7 +64,8 @@ namespace Mobile_App
                 Is32bit.Checked = true;
             }
 
-            //will utilize prior configuration for mobile updater form if it exists
+            // will utilize prior configuration for mobile updater form if it exists
+            //if there is a non 0 number in the configuration xml there will that many ORI and FDID fields created on startup
             try
             {
                 if (GenerateNumber.Text != " ")
@@ -101,7 +102,8 @@ namespace Mobile_App
 
         //Button Click events
 
-        //run button
+        //run button for TabPage1
+        //used when doing mobile client upgrade/removal/install
         private void Button2_Click(object sender, EventArgs e)
         {
             ProgressBar.Visible = false;
@@ -110,6 +112,8 @@ namespace Mobile_App
             //run combination mobile uninstall an mobile install
             if (Combo.Checked && Is64Bit.Checked == true)
             {
+                //an exception thrown if the generate number text box is 0
+                //exceptions also thrown for null and non-null/not numerical entries
                 if (GenerateNumber.Text == "0")
                 {
                     ts.Text = "Please Verify the Updater portion is configured";
@@ -145,6 +149,7 @@ namespace Mobile_App
             //run 64bit installer
             if (Is64Bit.Checked && InstallMobile.Checked == true)
             {
+                //this accounts for the GenerateNumber Textbox being blank/Null
                 if (GenerateNumber.Text == "0")
                 {
                     ts.Text = "Please Verify the Updater portion is configured";
@@ -274,7 +279,7 @@ namespace Mobile_App
             bg.RunWorkerAsync();
         }
 
-        //Help button logic on button click
+        //Help button logic on button click - WIP
         private void Button3_Click(object sender, EventArgs e)
         {
             var message = "Help Button \n\n";
@@ -297,7 +302,8 @@ namespace Mobile_App
             MessageBox.Show(message);
         }
 
-        //Customizable Install/Uninstall/Triage
+        //Customizable Install/Uninstall/Triage Run Button
+        //this is pressed when uninstalling/Installing certain portions of the software suite
         private void CustomRun_Click(object sender, EventArgs e)
         {
             ProgressBar.Visible = false;
@@ -311,6 +317,8 @@ namespace Mobile_App
         }
 
         //work done when the append button is pressed
+        //this will modify the updater configuration file for mobile
+        //this has been enhanced from the Updater Config tool V2 to account for dynamically changing run conditions
         private void UpdaterAppend_Click(object sender, EventArgs e)
         {
             if (Is64Bit.Checked == true)
@@ -328,6 +336,8 @@ namespace Mobile_App
 
             UpdateXMLFDID();
 
+            //this creates the ORI text boxes
+            //this also modifies the pre req installer config xml for each ORI
             foreach (Control c in tabPage3.Controls)
             {
                 if (c.Name.Contains("ORI"))
@@ -345,6 +355,8 @@ namespace Mobile_App
                 }
             }
 
+            //this creates the ORI text boxes
+            //this also modifies the pre req installer config xml for each FDID
             foreach (Control c in tabPage3.Controls)
             {
                 if (c.Name.Contains("FDID"))
@@ -416,6 +428,7 @@ namespace Mobile_App
         }
 
         //work done when the generate button is pressed
+        //the button that actually does the drawing and naming of text boxes used to append the updater config file
         private void ORIGenerate_Click(object sender, EventArgs e)
         {
             label20.Visible = true;
@@ -487,6 +500,7 @@ namespace Mobile_App
         //pre req install/uninstall methods
 
         //Mobile 64bit uninstaller
+        //this will uninstall NWPS Mobile, NWS Mobile, Pre Reqs for 64bit mobile
         private void Mobile64Uninstall()
         {
             ts.Text = "Checking to uninstall Police Mobile";
@@ -543,6 +557,7 @@ namespace Mobile_App
         }
 
         //Mobile 64bit installer
+        //this will install the Pre Reqs required for 64bit mobile, ensure folder permissions are correct, and that the updater is configured for mobile.
         private void Mobile64install()
         {
             ts.Text = "Running 4.7.1 .Net";
@@ -666,6 +681,7 @@ namespace Mobile_App
         }
 
         //Mobile 32bit uninstaller
+        //this will uninstall NWPS Mobile, NWS Mobile, Pre Reqs for 32bit mobile
         private void Mobile32Uninstaller()
         {
             ts.Text = "Checking to uninstall Police Mobile";
@@ -717,6 +733,7 @@ namespace Mobile_App
         }
 
         //Mobile 32bit Installer
+        //this will install the Pre Reqs required for 32bit mobile, ensure folder permissions are correct, and that the updater is configured for mobile.
         private void Mobile32install()
         {
             ts.Text = "Running 4.7.1 .Net";
@@ -813,7 +830,7 @@ namespace Mobile_App
 
         //File related work
 
-        //will look into the updater config file and will replace any text that contains MobileUpdates with DeleteMe - 64 bit version
+        //will look into the updater config file and will replace any text that contains MobileUpdates with DeleteMe
         private void FileWork64Bit()
         {
             string text = File.ReadAllText(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
@@ -821,7 +838,7 @@ namespace Mobile_App
             File.WriteAllText(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config", text);
         }
 
-        //will look into the updater config file and remove any lines that contain DeleteMe - 64 bit version
+        //will look into the updater config file and remove any lines that contain DeleteMe
         private void UpdaterWork64Bit()
         {
             string text = @"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config";
@@ -831,7 +848,7 @@ namespace Mobile_App
             File.WriteAllLines(text, newLines);
         }
 
-        //Will look into the updater config file and will replace any text that contains MobileUpdates with DeleteMe - 32 bit version
+        //Will look into the updater config file and will replace any text that contains MobileUpdates with DeleteMe
         private void FileWork32Bit()
         {
             string text = File.ReadAllText(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
@@ -839,7 +856,7 @@ namespace Mobile_App
             File.WriteAllText(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config", text);
         }
 
-        //will look into the updater config file and remove any lines that contain DeleteMe - 32 bit version
+        //will look into the updater config file and remove any lines that contain DeleteMe
         private void UpdaterWork32Bit()
         {
             string text = @"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config";
@@ -849,11 +866,12 @@ namespace Mobile_App
             File.WriteAllLines(text, newLines);
         }
 
+        //Folder Related work
+
         //Mobile copy
+        //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
         private void MobileCopy(string SourcePath)
         {
-            //this copies all files within NwsHoldPath.text to C:\Temp\MobileInstaller recursively.
-            //string SourcePath = NwsHoldPath.Text;
             string TargetPath = @"C:\Temp\MobileInstaller";
             IEnumerable<string> filepaths = Directory.EnumerateFiles(SourcePath, "*.*");
             if (NwsHoldPath.Text != "")
@@ -868,8 +886,6 @@ namespace Mobile_App
                 }
             }
         }
-
-        //Folder Related work
 
         //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
         private void Temp()
@@ -902,7 +918,10 @@ namespace Mobile_App
             Directory.Delete(dir, true);
         }
 
-        //Cleans up the temp folder and restarts the machine
+        //This will delete all downloaded files from the MobileInstaller Folder in C:\Temp
+        //this also removes the updater folder under C:\Programdata
+        //this also outright removes the application folders under C:\Program files or C:\program files (x86)
+        //CAUTION: THIS IS ONLY DONE WHEN UTILIZING TABPAGE1 RUN BUTTON - 03/13/2020
         private void MobileRestart()
         {
             StopService("NewWorldUpdaterService");
@@ -1013,7 +1032,7 @@ namespace Mobile_App
             return true;
         }
 
-        //Methods to run the pre req executables
+        //Program Interaction work
 
         //This is will run any/all programs that need user interaction by name
         private void RunProgram(string ProgramName)
@@ -1082,10 +1101,10 @@ namespace Mobile_App
         //XML Related information. Broken up between loading prior XML information OR creating a new XML with placeholder server location.
         private void InitialLoadofXML()
         {
-            //Checking if the MobileInstallApp.xml exists, and loading the data if it does.
-            if (File.Exists("MobileInstallApp.xml"))
+            //Checking if the PreReqAppSettings.xml exists, and loading the data if it does.
+            if (File.Exists("PreReqAppSettings.xml"))
             {
-                StartupSettings.Load("MobileInstallApp.xml");
+                StartupSettings.Load("PreReqAppSettings.xml");
 
                 NwsHoldPath.Text = StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText;
 
@@ -1112,7 +1131,7 @@ namespace Mobile_App
 
                 TargetPath = @"C:\Temp\MobileInstaller";
             }
-            //Creation of a new MobileInstallApp.xml if one does not already exist.
+            //Creation of a new PreReqAppSettings.xml if one does not already exist.
             else
             {
                 XmlWriterSettings settings = new XmlWriterSettings
@@ -1122,7 +1141,7 @@ namespace Mobile_App
                     CloseOutput = true,
                     OmitXmlDeclaration = true
                 };
-                using (XmlWriter writer = XmlWriter.Create("MobileInstallApp.xml", settings))
+                using (XmlWriter writer = XmlWriter.Create("PreReqAppSettings.xml", settings))
                 {
                     writer.WriteStartElement("root");
                     writer.WriteElementString("SourcePath", @"\\MobileServerName\C$\");
@@ -1142,7 +1161,7 @@ namespace Mobile_App
         //When the xml is modified once it is changed for all other uses with that xml.
         private void SaveStartupSettings()
         {
-            StartupSettings.Load("MobileInstallApp.xml");
+            StartupSettings.Load("PreReqAppSettings.xml");
 
             StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText = NwsHoldPath.Text;
 
@@ -1180,13 +1199,13 @@ namespace Mobile_App
             }
 
             //Save the start up settings
-            StartupSettings.Save("MobileInstallApp.xml");
+            StartupSettings.Save("PreReqAppSettings.xml");
         }
 
         //this will remove ORI entries from the Mobile Install App xml
         private void UpdateXMLORI()
         {
-            string text = "MobileInstallApp.xml";
+            string text = "PreReqAppSettings.xml";
 
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"ORI"));
@@ -1196,7 +1215,7 @@ namespace Mobile_App
         //this will remove FDID entries from the Mobile Install App xml
         private void UpdateXMLFDID()
         {
-            string text = "MobileInstallApp.xml";
+            string text = "PreReqAppSettings.xml";
 
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"FDID"));
@@ -1206,31 +1225,32 @@ namespace Mobile_App
         //this saves ORI entries to the xml to be used again
         private void CreateXMLORI(string ORI, string name)
         {
-            XDocument xDocument = XDocument.Load("MobileInstallApp.xml");
+            XDocument xDocument = XDocument.Load("PreReqAppSettings.xml");
 
             var doc = xDocument.Root.Element("root");
 
             xDocument.Root.Add(new XElement(name, ORI));
 
-            xDocument.Save("MobileInstallApp.xml");
+            xDocument.Save("PreReqAppSettings.xml");
         }
 
         //this saves FDID entries to the xml to be used again
         private void CreateXMLFDID(string FDID, string name)
         {
-            XDocument xDocument = XDocument.Load("MobileInstallApp.xml");
+            XDocument xDocument = XDocument.Load("PreReqAppSettings.xml");
 
             var doc = xDocument.Root.Element("root");
 
             xDocument.Root.Add(new XElement(name, FDID));
 
-            xDocument.Save("MobileInstallApp.xml");
+            xDocument.Save("PreReqAppSettings.xml");
         }
 
         //will load old/prior ORI config in xml
+        //this is will use the text from the xml file that corresponds to the ORI text fields in the application
         private void LoadORIXML()
         {
-            StartupSettings.Load("MobileInstallApp.xml");
+            StartupSettings.Load("PreReqAppSettings.xml");
 
             foreach (Control c in tabPage3.Controls)
             {
@@ -1255,10 +1275,11 @@ namespace Mobile_App
             }
         }
 
-        //will load old/prior FDID onfig in xml
+        //will load old/prior FDID config in xml
+        //this is will use the text from the xml file that corresponds to the FDID text fields in the application
         private void LoadFDIDXML()
         {
-            StartupSettings.Load("MobileInstallApp.xml");
+            StartupSettings.Load("PreReqAppSettings.xml");
 
             foreach (Control c in tabPage3.Controls)
             {
@@ -1295,29 +1316,29 @@ namespace Mobile_App
         private void Bg_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             ProgressBar.Value += 1;
-            //label.Content = e.ProgressPercentage;
         }
 
         //The actual work done
         private void Bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1"); //works
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1");
 
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69"); //works
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69");
 
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2"); //works
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2");
 
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64"); //works
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64");
 
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");// works
+            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");
 
+            //exists to be cross version combatable: will download the updater msi provided it is a known version
             if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"))
             {
-                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"); //works
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29");
             }
             else
             {
-                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23"); //works
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23");
             }
 
             MobileCopy(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client");
@@ -1334,6 +1355,7 @@ namespace Mobile_App
         //Local service work
 
         //will stop the service by name
+        //currently only used for the Updater Service
         private void StopService(string name)
         {
             ServiceController sc = new ServiceController(name);
@@ -1350,6 +1372,7 @@ namespace Mobile_App
         }
 
         //will start the service by name
+        //currently only used for the Updater Service
         private void StartService(string name)
         {
             ServiceController sc = new ServiceController(name);
@@ -1369,6 +1392,7 @@ namespace Mobile_App
         private void CustomUninstallRun()
         {
             //uninstall fire mobile
+            //will uninstall fire mobile for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(0) == CheckState.Checked)
             {
                 ts.Text = "Checking to uninstall Fire Mobile";
@@ -1381,6 +1405,7 @@ namespace Mobile_App
             }
 
             //uninstall police mobile
+            //will uninstall police mobile for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(1) == CheckState.Checked)
             {
                 ts.Text = "Checking to uninstall Police Mobile";
@@ -1393,6 +1418,7 @@ namespace Mobile_App
             }
 
             //uninstall merge
+            //will uninstall the merge client for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(2) == CheckState.Checked)
             {
                 ts.Text = "Checking to uninstall Mobile Merge";
@@ -1538,7 +1564,7 @@ namespace Mobile_App
                 ts.Text = "Uninstall Complete";
             }
 
-            //Uninstall MSP or CAD
+            //Uninstall MSP or CAD for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(9) == CheckState.Checked)
             {
                 //64 bit
@@ -2624,6 +2650,7 @@ namespace Mobile_App
             //set folder permissions
             if (MobileTriage.GetItemCheckState(0) == CheckState.Checked)
             {
+                //this will set the correct folder permissions for 64 bit or 32 bit depending on the OS version
                 if (Is64Bit.Checked == true)
                 {
                     ts.Text = "Prepping folder permissions";
@@ -2657,10 +2684,14 @@ namespace Mobile_App
             //stop and restart the updater service
             if (MobileTriage.GetItemCheckState(1) == CheckState.Checked)
             {
+                //will stop the New World Updater Service
                 StopService("NewWorldUpdaterService");
 
+                //will make the application be non-responsive for 5 seconds
+                //this will allow the new world service to stop
                 Thread.Sleep(5000);
 
+                //this will start the new world service
                 StartService("NewWorldUpdaterService");
 
                 ts.Text = "Triage Complete";
@@ -2669,14 +2700,17 @@ namespace Mobile_App
             //reset the updater folder under programdata
             if (MobileTriage.GetItemCheckState(2) == CheckState.Checked)
             {
+                //this will stop the new world updater service
                 StopService("NewWorldUpdaterService");
 
+                //this will cause the application to become unresponsive for 5 seconds
                 Thread.Sleep(5000);
 
                 try
                 {
                     ts.Text = "Deleting Programdata Updater";
 
+                    //this will delete the new world updater folder under programdata
                     MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
                 }
                 catch (Exception ex)
@@ -2684,6 +2718,7 @@ namespace Mobile_App
                     Console.WriteLine(ex.StackTrace.ToString());
                 }
 
+                //this will start the new world updater service
                 StartService("NewWorldUpdaterService");
 
                 ts.Text = "Triage Complete";
@@ -2692,14 +2727,17 @@ namespace Mobile_App
             //deletes the fire mobile, police mobile, and updater folder under programdata
             if (MobileTriage.GetItemCheckState(3) == CheckState.Checked)
             {
+                //this will stop the new world updater service
                 StopService("NewWorldUpdaterService");
 
+                //this will cause the application to hang for 5 seconds
                 Thread.Sleep(5000);
 
                 try
                 {
                     ts.Text = "Deleting Programdata Updater";
 
+                    //this will attempt to delete the new world updater folder under programdata
                     MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
                 }
                 catch (Exception ex)
@@ -2712,10 +2750,12 @@ namespace Mobile_App
                     ts.Text = "Deleting Fire Mobile Folder";
                     if (Is64Bit.Checked == true)
                     {
+                        //this will delete the aegis fire mobile folder for 64 bit OS
                         MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile");
                     }
                     else
                     {
+                        //this will delete the aegis fire mobile folder for 32 bit OS
                         MobileDelete(@"C:\Program Files\New World Systems\Aegis Fire Mobile");
                     }
                 }
@@ -2729,10 +2769,12 @@ namespace Mobile_App
                     ts.Text = "Deleting Police Mobile Folder";
                     if (Is64Bit.Checked == true)
                     {
+                        //this will try to delete the aegis mobile folder for 64 bit OS
                         MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Mobile");
                     }
                     else
                     {
+                        //this will try to delete the aegis mobile folder for 32 bit OS
                         MobileDelete(@"C:\Program Files\New World Systems\Aegis Mobile");
                     }
                 }
@@ -2750,6 +2792,7 @@ namespace Mobile_App
             //if it is the program is run otherwise an exception is thrown
             if (MobileTriage.GetItemCheckState(4) == CheckState.Checked)
             {
+                //this will run the Mobile Client Interface Tester utility if it is present, and if not display a custom error message
                 ts.Text = "Checking to see if Utility is in the proper location";
                 if (File.Exists(@"C:\Temp\MobileInstaller\AegisMobileClientInterfaceTester.exe"))
                 {
@@ -2769,6 +2812,7 @@ namespace Mobile_App
             //if it is the program is run otherwise an exception is thrown
             if (MobileTriage.GetItemCheckState(5) == CheckState.Checked)
             {
+                //this will run the Mobile Client Device Tester utility if it is present, and if not display a custom error message
                 ts.Text = "Checking to see if Utility is in the proper location";
                 if (File.Exists(@"C:\Temp\MobileInstaller\DeviceTester.exe"))
                 {
@@ -3058,7 +3102,7 @@ namespace Mobile_App
             }
         }
 
-        // this will count and remove the ORI and FDID text boxes on the third tab page
+        //this will count and remove the ORI and FDID text boxes on the third tab page
         private void RemoveFormEntries()
         {
             //this does the counting
