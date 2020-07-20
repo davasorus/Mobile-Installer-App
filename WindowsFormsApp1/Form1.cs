@@ -47,6 +47,23 @@ namespace Mobile_App
         //what the form does when it initializes every time
         private void Form1_Load(object sender, EventArgs e)
         {
+            string LogEntry = @"----------- Start of log file" + " " + DateTime.Now + "-----------";
+
+            if (File.Exists("MobileInstalLog.txt"))
+            {
+                using (StreamWriter file = new StreamWriter(("MobileInstallLog.txt"), true))
+                {
+                    file.WriteLine(LogEntry);
+                }
+            }
+            else
+            {
+                using (StreamWriter file = new StreamWriter(("MobileInstallLog.txt"), true))
+                {
+                    file.WriteLine(LogEntry);
+                }
+            }
+
             InitialLoadofXML();
 
             statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
@@ -86,6 +103,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry1 = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry1);
             }
         }
 
@@ -134,13 +155,33 @@ namespace Mobile_App
                 FileWork64Bit();
                 UpdaterWork64Bit();
 
+                string LogEntry1 = DateTime.Now + " 64Bit Mobile Updater Entry Removal Completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 64Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
                 ts.Text = "Uninstalling Mobile";
                 Mobile64Uninstall();
+
+                string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
+
+                LogEntryWriter(LogEntry3);
+
+                string LogEntry4 = DateTime.Now + " 64Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry4);
 
                 ts.Text = "Installing Mobile";
                 Mobile64install();
 
-                MessageBox.Show("Mobile has been Installed");
+                string LogEntry5 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
+
+                LogEntryWriter(LogEntry5);
+
+                MessageBox.Show("Mobile Pre Reqs have been Installed");
 
                 ts.Text = "Restarting PC";
                 MobileRestart();
@@ -166,8 +207,16 @@ namespace Mobile_App
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
 
+                string LogEntry1 = DateTime.Now + " 64Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry1);
+
                 ts.Text = "Going to Install mobile";
                 Mobile64install();
+
+                string LogEntry2 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
+
+                LogEntryWriter(LogEntry2);
 
                 ts.Text = "Restarting PC";
                 MobileRestart();
@@ -180,8 +229,20 @@ namespace Mobile_App
                 FileWork64Bit();
                 UpdaterWork64Bit();
 
+                string LogEntry1 = DateTime.Now + " 64Bit Mobile Updater Entry Removal Completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 64Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
                 ts.Text = "Going to Uninstall mobile";
                 Mobile64Uninstall();
+
+                string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
+
+                LogEntryWriter(LogEntry3);
 
                 ts.Text = "Restarting PC";
                 MobileRestart();
@@ -210,11 +271,31 @@ namespace Mobile_App
                 FileWork32Bit();
                 UpdaterWork32Bit();
 
+                string LogEntry1 = DateTime.Now + " 32Bit Mobile Updater Entries removal completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 32Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
                 ts.Text = "Uninstalling Mobile";
                 Mobile32Uninstaller();
 
+                string LogEntry3 = DateTime.Now + " 32Bit Mobile Sucessfully uninstalled";
+
+                LogEntryWriter(LogEntry3);
+
+                string LogEntry4 = DateTime.Now + " 32Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry4);
+
                 ts.Text = "Going to Install mobile";
                 Mobile32install();
+
+                string LogEntry5 = DateTime.Now + " 32Bit Mobile Sucessfully Installed";
+
+                LogEntryWriter(LogEntry5);
 
                 ts.Text = "Restarting PC";
                 MobileRestart();
@@ -239,8 +320,16 @@ namespace Mobile_App
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
 
+                string LogEntry2 = DateTime.Now + " 32Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry2);
+
                 ts.Text = "installing Mobile";
                 Mobile32install();
+
+                string LogEntry3 = DateTime.Now + " 32Bit Mobile Sucessfully Installed";
+
+                LogEntryWriter(LogEntry3);
 
                 ts.Text = "Restarting PC";
                 MobileRestart();
@@ -253,8 +342,20 @@ namespace Mobile_App
                 FileWork32Bit();
                 UpdaterWork32Bit();
 
+                string LogEntry1 = DateTime.Now + " 32 Bit Mobile Updater Entries removal completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 32Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
                 ts.Text = "Uninstalling Mobile";
                 Mobile32Uninstaller();
+
+                string LogEntry3 = DateTime.Now + " 32Bit Mobile Sucessfully uninstalled";
+
+                LogEntryWriter(LogEntry3);
 
                 ts.Text = "Restarting PC";
                 MobileRestart();
@@ -273,6 +374,10 @@ namespace Mobile_App
             SaveStartupSettings();
 
             ts.Text = "Copying required files locally";
+
+            string LogEntry1 = DateTime.Now + " File Copy Initiated";
+
+            LogEntryWriter(LogEntry1);
 
             ProgressBar.Value = 0;
             ProgressBar.Maximum = 24;
@@ -459,11 +564,19 @@ namespace Mobile_App
                     tabPage3.Controls.Add(a);
                     tabPage3.Show();
                     pointY += 20;
+
+                    string logEntry = DateTime.Now + " ORI/FDID" + (i + 1) + " added ";
+
+                    LogEntryWriter(logEntry);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show(ex.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             LoadORIXML();
@@ -489,9 +602,13 @@ namespace Mobile_App
                     pointY += 20;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show(ex.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             LoadFDIDXML();
@@ -568,6 +685,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32bit SQL Runtime";
@@ -578,6 +699,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 64 bit SQL Runtime";
@@ -588,6 +713,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32 bit GIS Components";
@@ -598,6 +727,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 64 bit GIS Components";
@@ -608,6 +741,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 64 bit Synchronization";
@@ -618,6 +755,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 64 bit Provider Services";
@@ -628,6 +769,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 64 bit DB Providers";
@@ -638,6 +783,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Installing Updater";
@@ -648,6 +797,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running Mobile Updater Config form";
@@ -666,13 +819,25 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Prepping folder permissions";
             try
             {
                 SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                string LogEntry = DateTime.Now + " ProgramFiles X86-New World Systems has the correct User Permissions";
+
+                LogEntryWriter(LogEntry);
                 SetAcl(@"C:\ProgramData\New World Systems");
+
+                string LogEntry1 = DateTime.Now + " ProgramData-New World Systems has the correct User Permissions";
+
+                LogEntryWriter(LogEntry1);
             }
             catch (Exception ex)
             {
@@ -744,6 +909,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32bit SQL Runtime";
@@ -754,6 +923,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32 bit GIS Components";
@@ -764,6 +937,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32 bit Synchronization";
@@ -774,6 +951,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32 bit Provider Services";
@@ -784,6 +965,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running 32 bit DB Providers";
@@ -794,6 +979,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Installing Updater";
@@ -804,6 +993,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Running Mobile Updater Config form";
@@ -814,17 +1007,34 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             ts.Text = "Prepping folder permissions";
             try
             {
                 SetAcl(@"C:\Program Files\New World Systems");
+
+                string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+
+                LogEntryWriter(LogEntry);
+
                 SetAcl(@"C:\ProgramData\New World Systems");
+
+                string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+
+                LogEntryWriter(LogEntry1);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -836,6 +1046,10 @@ namespace Mobile_App
             string text = File.ReadAllText(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
             text = text.Replace(@"MobileUpdates", "DeleteMe");
             File.WriteAllText(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config", text);
+
+            string EntryLog = DateTime.Now + " Updater config file modified";
+
+            LogEntryWriter(EntryLog);
         }
 
         //will look into the updater config file and remove any lines that contain DeleteMe
@@ -846,6 +1060,10 @@ namespace Mobile_App
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"/DeleteMe/"));
             File.WriteAllLines(text, newLines);
+
+            string EntryLog = DateTime.Now + " mobile updater file entries removed";
+
+            LogEntryWriter(EntryLog);
         }
 
         //Will look into the updater config file and will replace any text that contains MobileUpdates with DeleteMe
@@ -854,6 +1072,10 @@ namespace Mobile_App
             string text = File.ReadAllText(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
             text = text.Replace(@"MobileUpdates", "DeleteMe");
             File.WriteAllText(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config", text);
+
+            string EntryLog = DateTime.Now + " Updater config file modified";
+
+            LogEntryWriter(EntryLog);
         }
 
         //will look into the updater config file and remove any lines that contain DeleteMe
@@ -864,6 +1086,10 @@ namespace Mobile_App
             var Lines = File.ReadAllLines(text);
             var newLines = Lines.Where(line => !line.Contains(@"/DeleteMe/"));
             File.WriteAllLines(text, newLines);
+
+            string EntryLog = DateTime.Now + " mobile updater file entries removed";
+
+            LogEntryWriter(EntryLog);
         }
 
         //Folder Related work
@@ -883,6 +1109,10 @@ namespace Mobile_App
                     File.SetAttributes(TargetPath, FileAttributes.Normal);
 
                     bg.ReportProgress(0);
+
+                    string LogEntry = DateTime.Now + " " + file + " has been copied.";
+
+                    LogEntryWriter(LogEntry);
                 }
             }
         }
@@ -916,6 +1146,10 @@ namespace Mobile_App
         private void MobileDelete(string dir)
         {
             Directory.Delete(dir, true);
+
+            string LogEntry = DateTime.Now + " " + dir + " has been deleted.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //This will delete all downloaded files from the MobileInstaller Folder in C:\Temp
@@ -935,6 +1169,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             try
@@ -952,6 +1190,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             try
@@ -969,6 +1211,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             try
@@ -980,6 +1226,10 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry);
             }
 
             StartService("NewWorldUpdaterService");
@@ -1044,6 +1294,11 @@ namespace Mobile_App
             proc.StartInfo.WorkingDirectory = batdir;
             proc.StartInfo.FileName = ProgramName;
             //proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+            string LogEntry1 = DateTime.Now + " " + ProgramName + " has was run";
+
+            LogEntryWriter(LogEntry1);
+
             proc.Start();
             proc.WaitForExit();
         }
@@ -1059,6 +1314,11 @@ namespace Mobile_App
             proc.StartInfo.FileName = PreReqName;
             proc.StartInfo.Arguments = "/quiet";
             proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+            string LogEntry1 = DateTime.Now + " attempting to install " + PreReqName;
+
+            LogEntryWriter(LogEntry1);
+
             proc.Start();
             proc.WaitForExit();
         }
@@ -1077,14 +1337,27 @@ namespace Mobile_App
                         if (mo["Name"].ToString() == ProgramName)
                         {
                             object hr = mo.InvokeMethod("Uninstall", null);
+
+                            string LogEntry1 = DateTime.Now + " " + ProgramName + " has been uninstalled";
+
+                            LogEntryWriter(LogEntry1);
+
                             return (bool)hr;
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
+
+                        string LogEntry2 = DateTime.Now + " " + ex.ToString();
+
+                        LogEntryWriter(LogEntry2);
                     }
                 }
+
+                string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It either was not installed or detected.";
+
+                LogEntryWriter(LogEntry3);
 
                 //was not found...
                 return false;
@@ -1092,6 +1365,11 @@ namespace Mobile_App
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+
+                string LogEntry4 = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry4);
+
                 return false;
             }
         }
@@ -1130,6 +1408,10 @@ namespace Mobile_App
                 }
 
                 TargetPath = @"C:\Temp\MobileInstaller";
+
+                string LogEntry = DateTime.Now + " Prior Settings Loaded";
+
+                LogEntryWriter(LogEntry);
             }
             //Creation of a new PreReqAppSettings.xml if one does not already exist.
             else
@@ -1155,6 +1437,9 @@ namespace Mobile_App
                     writer.Flush();
                     writer.Close();
                 }
+                string LogEntry = DateTime.Now + " a new Pre Req App Settingd XML was created.";
+
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -1200,6 +1485,10 @@ namespace Mobile_App
 
             //Save the start up settings
             StartupSettings.Save("PreReqAppSettings.xml");
+
+            string LogEntry = DateTime.Now + " App Setting XML Updated";
+
+            LogEntryWriter(LogEntry);
         }
 
         //this will remove ORI entries from the Mobile Install App xml
@@ -1210,6 +1499,10 @@ namespace Mobile_App
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"ORI"));
             File.WriteAllLines(text, newLines);
+
+            string LogEntry = DateTime.Now + " ORI/s Added to XML.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //this will remove FDID entries from the Mobile Install App xml
@@ -1220,6 +1513,10 @@ namespace Mobile_App
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"FDID"));
             File.WriteAllLines(text, newLines);
+
+            string LogEntry = DateTime.Now + " FDID/s added to XML";
+
+            LogEntryWriter(LogEntry);
         }
 
         //this saves ORI entries to the xml to be used again
@@ -1265,6 +1562,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry1 = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry1);
                         }
                     }
                     else
@@ -1273,6 +1574,10 @@ namespace Mobile_App
                     }
                 }
             }
+
+            string LogEntry = DateTime.Now + " ORIs Loaded from XML.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //will load old/prior FDID config in xml
@@ -1294,6 +1599,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry1 = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry1);
                         }
                     }
                     else
@@ -1302,6 +1611,10 @@ namespace Mobile_App
                     }
                 }
             }
+
+            string LogEntry = DateTime.Now + " FDIDs loaded from XML.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //Background Worker code
@@ -1363,11 +1676,19 @@ namespace Mobile_App
             {
                 sc.Stop();
 
-                ts.Text = "Updater Service Stopped";
+                string LogEntry = DateTime.Now + " " + name + " has been stopped.";
+
+                LogEntryWriter(LogEntry);
+
+                ts.Text = name + "Service Stopped";
             }
             else
             {
-                MessageBox.Show("Stoping Error");
+                ts.Text = name + " Service had an issue stopping";
+
+                string LogEntry = DateTime.Now + " " + name + " Service is not currently Started. Cannot stop a stopped Service";
+
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -1380,11 +1701,19 @@ namespace Mobile_App
             {
                 sc.Start();
 
-                ts.Text = "Updater Service Started";
+                string LogEntry = DateTime.Now + " " + name + " has been started.";
+
+                LogEntryWriter(LogEntry);
+
+                ts.Text = name + " Service Started";
             }
             else
             {
-                MessageBox.Show("Starting Error");
+                ts.Text = name + " Service had an issue starting";
+
+                string LogEntry = DateTime.Now + " " + name + " Service is not currently stopped. Cannot Start a started Service";
+
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -1500,6 +1829,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 //delete fire mobile folder
@@ -1518,6 +1851,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 //delete police mobile folder
@@ -1536,6 +1873,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 StartService("NewWorldUpdaterService");
@@ -1584,20 +1925,20 @@ namespace Mobile_App
 
                         UninstallProgram("New World Aegis Client");
 
-                        ts.Text = "test MSP uninstall";
+                        ts.Text = "MSP has been uninstalled";
 
                         //if someone wants to uninstall CAD second
                         string title1 = "Cad uninstall Dialog";
                         string message1 = "would you like to uninstall CAD";
                         MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
-                        if (result == DialogResult.Yes)
+                        if (result1 == DialogResult.Yes)
                         {
                             ts.Text = "uninstalling CAD";
 
                             UninstallProgram("New World Enterprise CAD Client");
 
-                            ts.Text = "Test CAD uninstall";
+                            ts.Text = "CAD has been uninstalled";
                         }
                     }
 
@@ -1614,7 +1955,7 @@ namespace Mobile_App
 
                             UninstallProgram("New World  Enterprise CAD Client");
 
-                            ts.Text = "Test CAD uninstall";
+                            ts.Text = "CAD has been uninstalled";
                         }
                     }
                 }
@@ -1635,7 +1976,7 @@ namespace Mobile_App
 
                         UninstallProgram("New World Aegis Client");
 
-                        ts.Text = "test MSP uninstall";
+                        ts.Text = "MSP has been uninstalled";
 
                         //if someone wants to uninstall CAD second
                         string title1 = "Cad uninstall Dialog";
@@ -1648,7 +1989,7 @@ namespace Mobile_App
 
                             UninstallProgram("New World Enterprise CAD Client");
 
-                            ts.Text = "Test CAD uninstall";
+                            ts.Text = "CAD has been uninstalled";
                         }
                     }
 
@@ -1659,13 +2000,13 @@ namespace Mobile_App
                         string message1 = "would you like to uninstall CAD";
                         MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
-                        if (result == DialogResult.Yes)
+                        if (result1 == DialogResult.Yes)
                         {
                             ts.Text = "uninstalling CAD";
 
                             UninstallProgram("New World  Enterprise CAD Client");
 
-                            ts.Text = "Test CAD uninstall";
+                            ts.Text = "CAD has been uninstalled";
                         }
                     }
                 }
@@ -1679,6 +2020,10 @@ namespace Mobile_App
                 ts.Text = "Shutting Down PC";
 
                 Process.Start("Shutdown", "/r");
+
+                string LogEntry = DateTime.Now + @" Restart Initiated";
+
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -1696,6 +2041,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 ts.Text = "Install Complete";
@@ -1724,6 +2073,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
                 else
@@ -1736,6 +2089,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
 
@@ -1755,6 +2112,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
 
                     ts.Text = "Running 64 bit GIS Components";
@@ -1765,6 +2126,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
                 else
@@ -1777,6 +2142,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
 
@@ -1796,6 +2165,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
 
                     ts.Text = "Running 64 bit Provider Services";
@@ -1806,6 +2179,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
 
                     ts.Text = "Running 64 bit DB Providers";
@@ -1816,6 +2193,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
                 else
@@ -1828,6 +2209,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
 
                     ts.Text = "Running 32 bit Provider Services";
@@ -1838,6 +2223,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
 
                     ts.Text = "Running 32 bit DB Providers";
@@ -1848,6 +2237,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
 
@@ -1865,6 +2258,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 ts.Text = "Install Complete";
@@ -1900,6 +2297,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
             }
 
@@ -1912,11 +2313,20 @@ namespace Mobile_App
                     try
                     {
                         SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                        string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry);
+
                         SetAcl(@"C:\ProgramData\New World Systems");
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry1);
                     }
                 }
                 else
@@ -1925,11 +2335,24 @@ namespace Mobile_App
                     try
                     {
                         SetAcl(@"C:\Program Files\New World Systems");
+
+                        string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry);
+
                         SetAcl(@"C:\ProgramData\New World Systems");
+
+                        string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry1);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
 
@@ -1958,6 +2381,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Running 32bit SQL Runtime";
@@ -1968,6 +2395,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Running 64 bit SQL Runtime";
@@ -1978,6 +2409,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Running 32 bit GIS Components";
@@ -1988,6 +2423,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Running 64 bit GIS Components";
@@ -1998,6 +2437,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Installing Updater";
@@ -2008,6 +2451,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Installing MSP";
@@ -2018,17 +2465,34 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Prepping folder permissions";
                         try
                         {
                             SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                            string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+
+                            LogEntryWriter(LogEntry);
+
                             SetAcl(@"C:\ProgramData\New World Systems");
+
+                            string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+
+                            LogEntryWriter(LogEntry1);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         string title1 = "Cad Install Dialog";
@@ -2047,6 +2511,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32bit SQL Runtime";
@@ -2057,6 +2525,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit SQL Runtime";
@@ -2067,6 +2539,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit GIS Components";
@@ -2077,6 +2553,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit GIS Components";
@@ -2087,6 +2567,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit Synchronization";
@@ -2097,6 +2581,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit Provider Services";
@@ -2107,6 +2595,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit DB Providers";
@@ -2117,6 +2609,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing Updater";
@@ -2127,6 +2623,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running Primary Interop Assemblies for Office";
@@ -2137,6 +2637,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "SQL Server CLR Types 2008";
@@ -2148,6 +2652,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing CAD";
@@ -2158,17 +2666,34 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Prepping folder permissions";
                             try
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                                string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry);
+
                                 SetAcl(@"C:\ProgramData\New World Systems");
+
+                                string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry1);
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
                         }
                     }
@@ -2190,6 +2715,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32bit SQL Runtime";
@@ -2200,6 +2729,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit SQL Runtime";
@@ -2210,6 +2743,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit GIS Components";
@@ -2220,6 +2757,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit GIS Components";
@@ -2230,6 +2771,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit Synchronization";
@@ -2240,6 +2785,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit Provider Services";
@@ -2250,6 +2799,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 64 bit DB Providers";
@@ -2260,6 +2813,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing Updater";
@@ -2270,6 +2827,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running Primary Interop Assemblies for Office";
@@ -2280,6 +2841,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "SQL Server CLR Types 2008";
@@ -2291,6 +2856,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing CAD";
@@ -2301,17 +2870,34 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Prepping folder permissions";
                             try
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                                string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry);
+
                                 SetAcl(@"C:\ProgramData\New World Systems");
+
+                                string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry1);
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
                         }
                     }
@@ -2336,6 +2922,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Running 32bit SQL Runtime";
@@ -2346,6 +2936,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Running 32 bit GIS Components";
@@ -2356,6 +2950,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Installing Updater";
@@ -2366,6 +2964,10 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Installing MSP";
@@ -2376,17 +2978,34 @@ namespace Mobile_App
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         ts.Text = "Prepping folder permissions";
                         try
                         {
                             SetAcl(@"C:\Program Files\New World Systems");
+
+                            string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+
+                            LogEntryWriter(LogEntry);
+
                             SetAcl(@"C:\ProgramData\New World Systems");
+
+                            string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+
+                            LogEntryWriter(LogEntry1);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
+
+                            string LogEntry = DateTime.Now + ex.ToString();
+
+                            LogEntryWriter(LogEntry);
                         }
 
                         string title1 = "Cad Install Dialog";
@@ -2405,6 +3024,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32bit SQL Runtime";
@@ -2415,6 +3038,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit GIS Components";
@@ -2425,6 +3052,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit Synchronization";
@@ -2435,6 +3066,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit Provider Services";
@@ -2445,6 +3080,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit DB Providers";
@@ -2455,6 +3094,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing Updater";
@@ -2465,6 +3108,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running Primary Interop Assemblies for Office";
@@ -2475,6 +3122,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "SQL Server CLR Types 2008";
@@ -2485,6 +3136,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing CAD";
@@ -2495,17 +3150,34 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Prepping folder permissions";
                             try
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
+
+                                string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry);
+
                                 SetAcl(@"C:\ProgramData\New World Systems");
+
+                                string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry1);
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
                         }
                     }
@@ -2527,6 +3199,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32bit SQL Runtime";
@@ -2537,6 +3213,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit GIS Components";
@@ -2547,6 +3227,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit Synchronization";
@@ -2557,6 +3241,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit Provider Services";
@@ -2567,6 +3255,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running 32 bit DB Providers";
@@ -2577,6 +3269,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing Updater";
@@ -2587,6 +3283,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Running Primary Interop Assemblies for Office";
@@ -2597,6 +3297,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "SQL Server CLR Types 2008";
@@ -2607,6 +3311,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Installing CAD";
@@ -2617,17 +3325,34 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
 
                             ts.Text = "Prepping folder permissions";
                             try
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
+
+                                string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry);
+
                                 SetAcl(@"C:\ProgramData\New World Systems");
+
+                                string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+
+                                LogEntryWriter(LogEntry1);
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
                         }
                     }
@@ -2641,6 +3366,10 @@ namespace Mobile_App
                 ts.Text = "Shutting Down PC";
 
                 Process.Start("Shutdown", "/r");
+
+                string LogEntry = DateTime.Now + @" Restart Initiated";
+
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -2657,11 +3386,24 @@ namespace Mobile_App
                     try
                     {
                         SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                        string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry);
+
                         SetAcl(@"C:\ProgramData\New World Systems");
+
+                        string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry1);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
                 else
@@ -2670,11 +3412,24 @@ namespace Mobile_App
                     try
                     {
                         SetAcl(@"C:\Program Files\New World Systems");
+
+                        string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry);
+
                         SetAcl(@"C:\ProgramData\New World Systems");
+
+                        string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+
+                        LogEntryWriter(LogEntry1);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
                 }
 
@@ -2716,6 +3471,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 //this will start the new world updater service
@@ -2743,6 +3502,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 try
@@ -2762,6 +3525,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 try
@@ -2781,6 +3548,10 @@ namespace Mobile_App
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
                 }
 
                 StartService("NewWorldUpdaterService");
@@ -2797,11 +3568,21 @@ namespace Mobile_App
                 if (File.Exists(@"C:\Temp\MobileInstaller\AegisMobileClientInterfaceTester.exe"))
                 {
                     ts.Text = "Running Mobile Client Interface tester Utility";
+
+                    string LogEntry = DateTime.Now + @" Mobile Client Interface Tester Started";
+
+                    LogEntryWriter(LogEntry);
+
                     RunProgram("AegisMobileClientInterfaceTester.exe");
                 }
                 else
                 {
                     ts.Text = "Error see exception message";
+
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+
+                    LogEntryWriter(LogEntry);
+
                     throw new ArgumentException(@"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
                     //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
                 }
@@ -2817,11 +3598,21 @@ namespace Mobile_App
                 if (File.Exists(@"C:\Temp\MobileInstaller\DeviceTester.exe"))
                 {
                     ts.Text = "Running Device tester Utility";
+
+                    string LogEntry = DateTime.Now + " Device Tester Utility Started";
+
+                    LogEntryWriter(LogEntry);
+
                     RunProgram("DeviceTester.exe");
                 }
                 else
                 {
                     ts.Text = "Error see exception message";
+
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+
+                    LogEntryWriter(LogEntry);
+
                     throw new ArgumentException(@"ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
                     //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
                 }
@@ -2861,6 +3652,10 @@ namespace Mobile_App
             nodeAdd.Attributes.Append(location);
 
             Applications[0].AppendChild(nodeAdd);
+
+            string LogEntry = DateTime.Now + " Police Client" + " has been added to Updater Config.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //work done to add the fire client to the updater config file
@@ -2892,6 +3687,10 @@ namespace Mobile_App
             nodeAdd.Attributes.Append(location);
 
             Applications[0].AppendChild(nodeAdd);
+
+            string LogEntry = DateTime.Now + " Fire Client" + " has been added to Updater Config.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //work done to add the merge client to the updater config file
@@ -2923,6 +3722,10 @@ namespace Mobile_App
             nodeAdd.Attributes.Append(location);
 
             Applications[0].AppendChild(nodeAdd);
+
+            string LogEntry = DateTime.Now + " Merge Client" + " has been added to Updater Config.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //work done to add the updater to the updater config file
@@ -2954,6 +3757,10 @@ namespace Mobile_App
             nodeAdd.Attributes.Append(location);
 
             Applications[0].AppendChild(nodeAdd);
+
+            string LogEntry = DateTime.Now + " NWS Updater" + " has been added to Updater Config.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //work done per filled in ORI field to add them to the updater config file
@@ -2986,6 +3793,10 @@ namespace Mobile_App
             nodeAdd.Attributes.Append(location);
 
             Applications[0].AppendChild(nodeAdd);
+
+            string LogEntry = DateTime.Now + " " + ORI + " Has Been Added to Updater Config.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //work done per filled in fdid field to added them to the updater config file
@@ -3017,6 +3828,10 @@ namespace Mobile_App
             nodeAdd.Attributes.Append(location);
 
             Applications[0].AppendChild(nodeAdd);
+
+            string LogEntry = DateTime.Now + " " + FDID + " Has Been Added to Updater Config.";
+
+            LogEntryWriter(LogEntry);
         }
 
         //work done to compare information already in the updater config file to information that is in the utility
@@ -3136,6 +3951,14 @@ namespace Mobile_App
                         break;
                     }
                 }
+            }
+        }
+
+        private void LogEntryWriter(string LogEntry)
+        {
+            using (StreamWriter file = new StreamWriter(("MobileInstallLog.txt"), true))
+            {
+                file.WriteLine(LogEntry);
             }
         }
     }
