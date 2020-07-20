@@ -49,6 +49,7 @@ namespace Mobile_App
         {
             string LogEntry = @"----------- Start of log file" + " " + DateTime.Now + "-----------";
 
+            //this will put the current date of application start per run. This allows for easier readability.
             if (File.Exists("MobileInstalLog.txt"))
             {
                 using (StreamWriter file = new StreamWriter(("MobileInstallLog.txt"), true))
@@ -2351,17 +2352,21 @@ namespace Mobile_App
                     {
                         SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                        string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+                        string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry);
 
                         SetAcl(@"C:\ProgramData\New World Systems");
+
+                        string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
+
+                        LogEntryWriter(LogEntry1);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+                        string LogEntry1 = DateTime.Now + ex.ToString();
 
                         LogEntryWriter(LogEntry1);
                     }
@@ -2373,13 +2378,13 @@ namespace Mobile_App
                     {
                         SetAcl(@"C:\Program Files\New World Systems");
 
-                        string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+                        string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry);
 
                         SetAcl(@"C:\ProgramData\New World Systems");
 
-                        string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+                        string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry1);
                     }
@@ -2513,13 +2518,13 @@ namespace Mobile_App
                         {
                             SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                            string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+                            string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry);
 
                             SetAcl(@"C:\ProgramData\New World Systems");
 
-                            string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+                            string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry1);
                         }
@@ -2714,13 +2719,13 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                                string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+                                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
 
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -2918,13 +2923,13 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                                string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+                                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
 
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -3026,13 +3031,13 @@ namespace Mobile_App
                         {
                             SetAcl(@"C:\Program Files\New World Systems");
 
-                            string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+                            string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry);
 
                             SetAcl(@"C:\ProgramData\New World Systems");
 
-                            string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+                            string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry1);
                         }
@@ -3198,13 +3203,13 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
 
-                                string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+                                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
 
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -3373,13 +3378,13 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
 
-                                string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+                                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
 
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -3991,6 +3996,7 @@ namespace Mobile_App
             }
         }
 
+        //this writes to the mobile pre req installer logfile
         private void LogEntryWriter(string LogEntry)
         {
             using (StreamWriter file = new StreamWriter(("MobileInstallLog.txt"), true))
