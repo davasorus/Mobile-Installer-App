@@ -830,12 +830,12 @@ namespace Mobile_App
             {
                 SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                string LogEntry = DateTime.Now + " ProgramFiles X86-New World Systems has the correct User Permissions";
+                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has Usere permissions set.";
 
                 LogEntryWriter(LogEntry);
                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                string LogEntry1 = DateTime.Now + " ProgramData-New World Systems has the correct User Permissions";
+                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
 
                 LogEntryWriter(LogEntry1);
             }
@@ -1018,13 +1018,13 @@ namespace Mobile_App
             {
                 SetAcl(@"C:\Program Files\New World Systems");
 
-                string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set";
 
                 LogEntryWriter(LogEntry);
 
                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                 LogEntryWriter(LogEntry1);
             }
@@ -1295,12 +1295,26 @@ namespace Mobile_App
             proc.StartInfo.FileName = ProgramName;
             //proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
-            string LogEntry1 = DateTime.Now + " " + ProgramName + " has was run";
+            string LogEntry1 = DateTime.Now + " " + ProgramName + " has been run";
 
             LogEntryWriter(LogEntry1);
 
             proc.Start();
             proc.WaitForExit();
+
+            if (proc.ExitCode == 0)
+            {
+                string LogEntry2 = DateTime.Now + " " + ProgramName + " was ran successfully.";
+
+                LogEntryWriter(LogEntry2);
+            }
+            else
+            {
+                string errorcode = proc.ExitCode.ToString();
+                string LogEntry2 = DateTime.Now + " " + ProgramName + " failed to run. Error code: " + errorcode;
+
+                LogEntryWriter(LogEntry2);
+            }
         }
 
         //This is the actual method to silently install pre-reqs by name
@@ -1321,6 +1335,20 @@ namespace Mobile_App
 
             proc.Start();
             proc.WaitForExit();
+
+            if (proc.ExitCode == 0)
+            {
+                string LogEntry2 = DateTime.Now + " " + PreReqName + " has been installed successfully";
+
+                LogEntryWriter(LogEntry2);
+            }
+            else
+            {
+                string errorcode = proc.ExitCode.ToString();
+                string LogEntry2 = DateTime.Now + " " + PreReqName + " failed to install. Error code: " + errorcode;
+
+                LogEntryWriter(LogEntry2);
+            }
         }
 
         //This is the method that will silently uninstall pre - reqs by name
@@ -1344,6 +1372,15 @@ namespace Mobile_App
 
                             return (bool)hr;
                         }
+                    }
+                    catch (InvalidCastException ex)
+                    {
+                        Console.WriteLine(ex);
+
+                        string LogEntry2 = DateTime.Now + " Invalid Cast Exception occurred during the uninstall of " + ProgramName +
+                            ". The Operating System took too long to respond. The program will circle back and attempt this uninstall again if needed.";
+
+                        LogEntryWriter(LogEntry2);
                     }
                     catch (Exception ex)
                     {
@@ -3387,13 +3424,13 @@ namespace Mobile_App
                     {
                         SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                        string LogEntry = DateTime.Now + " Program Files X86-New World Systems has correct user rights";
+                        string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry);
 
                         SetAcl(@"C:\ProgramData\New World Systems");
 
-                        string LogEntry1 = DateTime.Now + " Program Data-New World Systems has correct user rights";
+                        string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry1);
                     }
@@ -3413,13 +3450,13 @@ namespace Mobile_App
                     {
                         SetAcl(@"C:\Program Files\New World Systems");
 
-                        string LogEntry = DateTime.Now + " Program Files-New World Systems has correct user rights";
+                        string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry);
 
                         SetAcl(@"C:\ProgramData\New World Systems");
 
-                        string LogEntry1 = DateTime.Now + " Program Date-New World Systems has correct user rights";
+                        string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User Permissions Set.";
 
                         LogEntryWriter(LogEntry1);
                     }
