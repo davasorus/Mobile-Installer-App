@@ -300,10 +300,10 @@ namespace Mobile_App
             this.MobileTriage.Items.AddRange(new object[] {
             "Set Folder Permissions",
             "Restart Updater Service",
-            "Force Redownload of Updater Files",
+            "Force Re-download of Updater Files",
             "Wipe out mobile client/Updater Files/Client Folders",
             "Run Mobile Interface Tester Utility",
-            "Run Mobile Device Tester Utilty"});
+            "Run Mobile Device Tester Utility"});
             this.MobileTriage.Location = new System.Drawing.Point(9, 172);
             this.MobileTriage.Name = "MobileTriage";
             this.MobileTriage.Size = new System.Drawing.Size(290, 64);

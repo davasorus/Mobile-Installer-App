@@ -831,12 +831,12 @@ namespace Mobile_App
             {
                 SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has Usere permissions set.";
+                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                 LogEntryWriter(LogEntry);
                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                 LogEntryWriter(LogEntry1);
             }
@@ -1143,11 +1143,11 @@ namespace Mobile_App
             }
 
             //This was modified on 01/30/2018
-            //This creates the mobile installer inside the the temp
+            //This creates the mobile installer inside the temp
             Directory.CreateDirectory(@"C:\Temp\MobileInstaller");
         }
 
-        //Deletes folders by path and recursvely deletes sub folders
+        //Deletes folders by path and recursively deletes sub folders
         private void MobileDelete(string dir)
         {
             Directory.Delete(dir, true);
@@ -1479,7 +1479,7 @@ namespace Mobile_App
                     writer.Flush();
                     writer.Close();
                 }
-                string LogEntry = DateTime.Now + " a new Pre Req App Settingd XML was created.";
+                string LogEntry = DateTime.Now + " a new Pre Req App Settings XML was created.";
 
                 LogEntryWriter(LogEntry);
             }
@@ -2539,13 +2539,13 @@ namespace Mobile_App
                         {
                             SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                            string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has Usere permissions set.";
+                            string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry);
 
                             SetAcl(@"C:\ProgramData\New World Systems");
 
-                            string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                            string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry1);
                         }
@@ -2740,13 +2740,13 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has Usere permissions set.";
+                                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
 
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -2944,13 +2944,13 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
 
-                                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has Usere permissions set.";
+                                string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
 
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -3052,12 +3052,12 @@ namespace Mobile_App
                         {
                             SetAcl(@"C:\Program Files\New World Systems");
 
-                            string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has Usere permissions set.";
+                            string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry);
                             SetAcl(@"C:\ProgramData\New World Systems");
 
-                            string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                            string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                             LogEntryWriter(LogEntry1);
                         }
@@ -3223,12 +3223,12 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
 
-                                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has Usere permissions set.";
+                                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
@@ -3393,12 +3393,12 @@ namespace Mobile_App
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
 
-                                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has Usere permissions set.";
+                                string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry);
                                 SetAcl(@"C:\ProgramData\New World Systems");
 
-                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has Useer permissions set.";
+                                string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
 
                                 LogEntryWriter(LogEntry1);
                             }
