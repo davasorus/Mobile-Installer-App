@@ -1150,11 +1150,20 @@ namespace Mobile_App
         //Deletes folders by path and recursively deletes sub folders
         private void MobileDelete(string dir)
         {
-            Directory.Delete(dir, true);
+            try
+            {
+                Directory.Delete(dir, true);
 
-            string LogEntry = DateTime.Now + " " + dir + " has been deleted.";
+                string LogEntry = DateTime.Now + " " + dir + " has been deleted.";
 
-            LogEntryWriter(LogEntry);
+                LogEntryWriter(LogEntry);
+            }
+            catch (IOException)
+            {
+                string LogEntry = DateTime.Now + " " + dir + " was not found and therefore could not deleted.";
+
+                LogEntryWriter(LogEntry);
+            }
         }
 
         //This will delete all downloaded files from the MobileInstaller Folder in C:\Temp
@@ -1347,6 +1356,14 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry2);
             }
+            else if (proc.ExitCode == 3010)
+            {
+                string errorcode = proc.ExitCode.ToString();
+                string LogEntry2 = DateTime.Now + " " + PreReqName + " has exited with code: " + errorcode +
+                    " which means it the machine needs to restart to finish the install process. You will need to restart the install process after the restart.";
+
+                LogEntryWriter(LogEntry2);
+            }
             else
             {
                 string errorcode = proc.ExitCode.ToString();
@@ -1378,14 +1395,8 @@ namespace Mobile_App
                             return (bool)hr;
                         }
                     }
-                    catch (InvalidCastException ex)
+                    catch (InvalidCastException)
                     {
-                        Console.WriteLine(ex);
-
-                        string LogEntry2 = DateTime.Now + " Invalid Cast Exception occurred during the uninstall of " + ProgramName +
-                            ". The Operating System took too long to respond. The program will circle back and attempt this uninstall again if needed.";
-
-                        LogEntryWriter(LogEntry2);
                     }
                     catch (Exception ex)
                     {
@@ -1397,7 +1408,7 @@ namespace Mobile_App
                     }
                 }
 
-                string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It either was not installed or detected.";
+                string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It was either not installed or detected.";
 
                 LogEntryWriter(LogEntry3);
 
@@ -1863,7 +1874,7 @@ namespace Mobile_App
                 ts.Text = "Uninstall Complete";
             }
 
-            //Uninstall Updater client folders
+            //Uninstall Updater client
             if (CustomUninstallOptions.GetItemCheckState(6) == CheckState.Checked)
             {
                 UninstallProgram("New World Automatic Updater");
@@ -1889,7 +1900,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -1911,7 +1922,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -1933,7 +1944,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -1983,6 +1994,8 @@ namespace Mobile_App
                         UninstallProgram("New World MSP Client");
 
                         UninstallProgram("New World Aegis Client");
+
+                        UninstallProgram("New World Aegis MSP Client");
 
                         ts.Text = "MSP has been uninstalled";
 
@@ -2034,6 +2047,8 @@ namespace Mobile_App
                         UninstallProgram("New World MSP Client");
 
                         UninstallProgram("New World Aegis Client");
+
+                        UninstallProgram("New World Aegis MSP Client");
 
                         ts.Text = "MSP has been uninstalled";
 
@@ -3520,9 +3535,51 @@ namespace Mobile_App
                 try
                 {
                     ts.Text = "Deleting Programdata Updater";
+                    if (Directory.Exists(@"C:\Programdata\New World Systems\New World Updater"))
+                    {
+                        //this will delete the new world updater folder under programdata
+                        MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+                    }
+                    else
+                    {
+                        string LogEntry = DateTime.Now + " New World Updater Folder cannot be found and was not removed.";
 
-                    //this will delete the new world updater folder under programdata
-                    MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
+                        LogEntryWriter(LogEntry);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                try
+                {
+                    if (Directory.Exists(@"C:\Programdata\New World Systems\GIS\Prod"))
+                    {
+                        MobileDelete(@"C:\Programdata\New World Systems\GIS\Prod");
+                    }
+                    else if (Directory.Exists(@"C:\Programdata\New World Systems\GIS\Test"))
+                    {
+                        MobileDelete(@"C:\Programdata\New World Systems\GIS\Test");
+                    }
+                    else if (Directory.Exists(@"C:\Programdata\New World Systems\GIS\Prd"))
+                    {
+                        MobileDelete(@"C:\Programdata\New World Systems\GIS\Prd");
+                    }
+                    else if (Directory.Exists(@"C:\Programdata\New World Systems\GIS\Tst"))
+                    {
+                        MobileDelete(@"C:\Programdata\New World Systems\GIS\Tst");
+                    }
+                    else
+                    {
+                        string LogEntry = DateTime.Now + " the GIS instance folder was not found, make sure that the client have their GIS data installed.";
+
+                        LogEntryWriter(LogEntry);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -3850,7 +3907,7 @@ namespace Mobile_App
 
             Applications[0].AppendChild(nodeAdd);
 
-            string LogEntry = DateTime.Now + " " + ORI + " Has Been Added to Updater Config.";
+            string LogEntry = DateTime.Now + " " + ORI + " has been added to Updater Config.";
 
             LogEntryWriter(LogEntry);
         }
@@ -3885,7 +3942,7 @@ namespace Mobile_App
 
             Applications[0].AppendChild(nodeAdd);
 
-            string LogEntry = DateTime.Now + " " + FDID + " Has Been Added to Updater Config.";
+            string LogEntry = DateTime.Now + " " + FDID + " has been added to Updater Config.";
 
             LogEntryWriter(LogEntry);
         }
