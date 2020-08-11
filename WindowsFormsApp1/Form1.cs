@@ -1122,6 +1122,43 @@ namespace Mobile_App
             }
         }
 
+        //Mobile copy
+        //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
+        private void MobileCopy1()
+        {
+            string SourcePath = MSPServerPath.Text;
+            string TargetPath = @"C:\Temp\MobileInstaller";
+            string[] filepaths = Directory.GetFiles(SourcePath, "*.*");
+            if (MSPServerPath.Text != "")
+            {
+                foreach (string file in filepaths)
+                {
+                    try
+                    {
+                        string replace = file.Replace(SourcePath, TargetPath);
+                        File.Copy(file, replace, true);
+                        File.SetAttributes(TargetPath, FileAttributes.Normal);
+
+                        bg.ReportProgress(0);
+
+                        string LogEntry = DateTime.Now + " " + file + " has been copied.";
+
+                        LogEntryWriter(LogEntry);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
+                    }
+                }
+            }
+
+            SaveStartupSettings();
+        }
+
         //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
         private void Temp()
         {
@@ -1676,6 +1713,10 @@ namespace Mobile_App
         private void Bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             ts.Text = "Files Copied Locally";
+
+            string LogEntry1 = DateTime.Now + " File Copy Finished";
+
+            LogEntryWriter(LogEntry1);
         }
 
         //What to do when progress is made
@@ -1687,33 +1728,40 @@ namespace Mobile_App
         //The actual work done
         private void Bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");
-
-            //exists to be cross version combatable: will download the updater msi provided it is a known version
-            if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"))
+            if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
             {
-                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29");
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");
+
+                //exists to be cross version combatable: will download the updater msi provided it is a known version
+                if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"))
+                {
+                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29");
+                }
+                else
+                {
+                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23");
+                }
+
+                MobileCopy(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\10 Visual Studio 2010 Tools for Office Runtime");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\12 SQL Server CLR Types 2008");
+
+                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
             }
             else
             {
-                MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23");
+                MobileCopy1();
             }
-
-            MobileCopy(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\10 Visual Studio 2010 Tools for Office Runtime");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\12 SQL Server CLR Types 2008");
-
-            MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
 
             bg.ReportProgress(0);
         }

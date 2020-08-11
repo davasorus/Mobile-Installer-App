@@ -213,13 +213,14 @@ namespace Mobile_App
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(3, 185);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(162, 13);
+            this.label5.Size = new System.Drawing.Size(272, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "Network Path to the MSP Server";
+            this.label5.Text = "File Path to Pre Req or Network Path to the MSP Server";
             // 
             // MSPServerPath
             // 
             this.MSPServerPath.Location = new System.Drawing.Point(6, 202);
+            this.MSPServerPath.Multiline = true;
             this.MSPServerPath.Name = "MSPServerPath";
             this.MSPServerPath.Size = new System.Drawing.Size(150, 20);
             this.MSPServerPath.TabIndex = 16;
