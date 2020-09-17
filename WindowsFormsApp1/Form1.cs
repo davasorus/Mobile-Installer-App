@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobileInstallApp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -43,6 +44,7 @@ namespace Mobile_App
         public string ClientPath1 { get => TargetPath; set => TargetPath = value; }
         public string SourcePath1 { get => SourcePath; set => SourcePath = value; }
         public object AddonCopyText { get; private set; }
+        private Form2 secondForm = new Form2();
 
         private ToolStripLabel ts = new ToolStripLabel();
 
@@ -3786,38 +3788,7 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    Label mylab = new Label();
-                    TextBox myText = new TextBox();
-                    Button myBut = new Button();
-
-                    Form f = new Form
-                    {
-                        Name = "DeviceTesterDownload",
-                        BackColor = Color.Black,
-                        FormBorderStyle = FormBorderStyle.FixedDialog,
-                        Bounds = Screen.PrimaryScreen.Bounds,
-                        TopMost = true,
-
-                        Size = new System.Drawing.Size(400, 200)
-                    };
-
-                    mylab.Text = "File Path to NWS Addons Folder";
-                    mylab.Location = new Point(22, 10);
-                    mylab.AutoSize = true;
-
-                    myText.Location = new Point(22, 30);
-                    myText.Name = "Test";
-                    myText.ToString();
-
-                    myBut.Location = new Point(22, 80);
-                    myBut.AutoSize = true;
-                    myBut.Click += new EventHandler(CopyButtonClick);
-
-                    //f.Controls.Add(CloseBut);
-                    f.Controls.Add(myBut);
-                    f.Controls.Add(myText);
-                    f.Controls.Add(mylab);
-                    f.Show();
+                    secondForm.Show();
 
                     //throw new ArgumentException(@"ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
                     //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
@@ -4167,10 +4138,6 @@ namespace Mobile_App
             {
                 file.WriteLine(LogEntry);
             }
-        }
-
-        private void CopyButtonClick(object sender, EventArgs e)
-        {
         }
     }
 }
