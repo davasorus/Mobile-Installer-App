@@ -42,6 +42,8 @@ namespace Mobile_App
         public bool Uninstallmobile { get => uninstallmobile; set => uninstallmobile = value; }
         public string ClientPath1 { get => TargetPath; set => TargetPath = value; }
         public string SourcePath1 { get => SourcePath; set => SourcePath = value; }
+        public object AddonCopyText { get; private set; }
+
         private ToolStripLabel ts = new ToolStripLabel();
 
         //what the form does when it initializes every time
@@ -111,6 +113,7 @@ namespace Mobile_App
             }
         }
 
+        //background worker and component initialize
         public NWPSPreReqInstaller()
         {
             InitializeComponent();
@@ -1007,7 +1010,7 @@ namespace Mobile_App
             ts.Text = "Running Mobile Updater Config form";
             try
             {
-                RunProgram(@"Configure Updater for mobile V2.exe");
+                RunProgram(@"Configure Updater for mobile V2.exe", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -1103,7 +1106,7 @@ namespace Mobile_App
         //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
         private void MobileCopy(string SourcePath)
         {
-            string TargetPath = @"C:\Temp\MobileInstaller";
+            string TargetPath = @"C:\Temp\MobileInstaller\";
             IEnumerable<string> filepaths = Directory.EnumerateFiles(SourcePath, "*.*");
             if (NwsHoldPath.Text != "")
             {
@@ -1124,39 +1127,22 @@ namespace Mobile_App
 
         //Mobile copy
         //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
-        private void MobileCopy1()
+        private void MobileCopy1(string SourcePath)
         {
-            string SourcePath = MSPServerPath.Text;
-            string TargetPath = @"C:\Temp\MobileInstaller";
-            string[] filepaths = Directory.GetFiles(SourcePath, "*.*");
-            if (MSPServerPath.Text != "")
-            {
-                foreach (string file in filepaths)
-                {
-                    try
-                    {
-                        string replace = file.Replace(SourcePath, TargetPath);
-                        File.Copy(file, replace, true);
-                        File.SetAttributes(TargetPath, FileAttributes.Normal);
+            string TargetPath = @"C:\Temp\MobileInstaller\NWS Addons";
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(SourcePath, "*",
+                SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(SourcePath, TargetPath));
 
-                        bg.ReportProgress(0);
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(SourcePath, "*.*",
+                SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(SourcePath, TargetPath), true);
 
-                        string LogEntry = DateTime.Now + " " + file + " has been copied.";
+            string LogEntry = DateTime.Now + "NWS Addon Folder Copied " + "has been copied.";
 
-                        LogEntryWriter(LogEntry);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.StackTrace.ToString());
-
-                        string LogEntry = DateTime.Now + ex.ToString();
-
-                        LogEntryWriter(LogEntry);
-                    }
-                }
-            }
-
-            SaveStartupSettings();
+            LogEntryWriter(LogEntry);
         }
 
         //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
@@ -1166,6 +1152,7 @@ namespace Mobile_App
             //This creates a temp folder if the folder does not exist.
             Directory.CreateDirectory(@"C:\Temp");
 
+            /*
             //Deletes all files under C:\Temp
             DirectoryInfo di = new DirectoryInfo(@"C:\Temp");
             foreach (FileInfo File in di.GetFiles())
@@ -1179,6 +1166,7 @@ namespace Mobile_App
                 dir.Delete(true);
             }
 
+            */
             //This was modified on 01/30/2018
             //This creates the mobile installer inside the temp
             Directory.CreateDirectory(@"C:\Temp\MobileInstaller");
@@ -1336,11 +1324,11 @@ namespace Mobile_App
         //Program Interaction work
 
         //This is will run any/all programs that need user interaction by name
-        private void RunProgram(string ProgramName)
+        private void RunProgram(string ProgramName, string Location)
         {
             Process proc = null;
 
-            string batdir = string.Format(@"C:\Temp\MobileInstaller");
+            string batdir = string.Format(Location);
             proc = new Process();
             proc.StartInfo.WorkingDirectory = batdir;
             proc.StartInfo.FileName = ProgramName;
@@ -1397,7 +1385,7 @@ namespace Mobile_App
             {
                 string errorcode = proc.ExitCode.ToString();
                 string LogEntry2 = DateTime.Now + " " + PreReqName + " has exited with code: " + errorcode +
-                    " which means it the machine needs to restart to finish the install process. You will need to restart the install process after the restart.";
+                    " which means the machine needs to restart to finish the install process. You will need to restart the install process after the restart.";
 
                 LogEntryWriter(LogEntry2);
             }
@@ -1450,6 +1438,10 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry3);
 
                 //was not found...
+                return false;
+            }
+            catch (InvalidCastException)
+            {
                 return false;
             }
             catch (Exception ex)
@@ -1758,9 +1750,13 @@ namespace Mobile_App
 
                 MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
             }
+            else if (Directory.Exists(MSPServerPath.Text + @"\\DeviceTester\"))
+            {
+                MobileCopy1(MSPServerPath.Text);
+            }
             else
             {
-                MobileCopy1();
+                MobileCopy(MSPServerPath.Text);
             }
 
             bg.ReportProgress(0);
@@ -2586,7 +2582,7 @@ namespace Mobile_App
                         ts.Text = "Installing MSP";
                         try
                         {
-                            RunProgram("NewWorldMSPClient.msi");
+                            RunProgram("NewWorldMSPClient.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2787,7 +2783,7 @@ namespace Mobile_App
                             ts.Text = "Installing CAD";
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2991,7 +2987,7 @@ namespace Mobile_App
                             ts.Text = "Installing CAD";
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3099,7 +3095,7 @@ namespace Mobile_App
                         ts.Text = "Installing MSP";
                         try
                         {
-                            RunProgram("NewWorldMSPClient.msi");
+                            RunProgram("NewWorldMSPClient.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -3270,7 +3266,7 @@ namespace Mobile_App
                             ts.Text = "Installing CAD";
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3440,7 +3436,7 @@ namespace Mobile_App
                             ts.Text = "Installing CAD";
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3671,6 +3667,22 @@ namespace Mobile_App
 
                 try
                 {
+                    ts.Text = "Deleting Programdata Aegis Mobile";
+
+                    //this will attempt to delete the new world updater folder under programdata
+                    MobileDelete(@"C:\Programdata\New World Systems\Aegis Mobile");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                try
+                {
                     ts.Text = "Deleting Fire Mobile Folder";
                     if (Is64Bit.Checked == true)
                     {
@@ -3734,7 +3746,7 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    RunProgram("AegisMobileClientInterfaceTester.exe");
+                    RunProgram("AegisMobileClientInterfaceTester.exe", @"C:\Temp\MobileInstaller");
                 }
                 else
                 {
@@ -3756,7 +3768,7 @@ namespace Mobile_App
             {
                 //this will run the Mobile Client Device Tester utility if it is present, and if not display a custom error message
                 ts.Text = "Checking to see if Utility is in the proper location";
-                if (File.Exists(@"C:\Temp\MobileInstaller\DeviceTester.exe"))
+                if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\DeviceTester\DeviceTester.exe"))
                 {
                     ts.Text = "Running Device tester Utility";
 
@@ -3764,17 +3776,50 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    RunProgram("DeviceTester.exe");
+                    RunProgram("DeviceTester.exe", @"C:\Temp\MobileInstaller\NWS Addons\DeviceTester");
                 }
                 else
                 {
                     ts.Text = "Error see exception message";
 
-                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller\NWS Addons\DeviceTester and try again.";
 
                     LogEntryWriter(LogEntry);
 
-                    throw new ArgumentException(@"ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
+                    Label mylab = new Label();
+                    TextBox myText = new TextBox();
+                    Button myBut = new Button();
+
+                    Form f = new Form
+                    {
+                        Name = "DeviceTesterDownload",
+                        BackColor = Color.Black,
+                        FormBorderStyle = FormBorderStyle.FixedDialog,
+                        Bounds = Screen.PrimaryScreen.Bounds,
+                        TopMost = true,
+
+                        Size = new System.Drawing.Size(400, 200)
+                    };
+
+                    mylab.Text = "File Path to NWS Addons Folder";
+                    mylab.Location = new Point(22, 10);
+                    mylab.AutoSize = true;
+
+                    myText.Location = new Point(22, 30);
+                    myText.Name = "Test";
+                    myText.ToString();
+
+                    myBut.Location = new Point(22, 80);
+                    myBut.AutoSize = true;
+                    myBut.Click += new EventHandler(CopyButtonClick);
+
+                    //f.Controls.Add(CloseBut);
+                    f.Controls.Add(myBut);
+                    f.Controls.Add(myText);
+                    f.Controls.Add(mylab);
+                    f.Show();
+
+                    //throw new ArgumentException(@"ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
                     //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
                 }
 
@@ -4122,6 +4167,10 @@ namespace Mobile_App
             {
                 file.WriteLine(LogEntry);
             }
+        }
+
+        private void CopyButtonClick(object sender, EventArgs e)
+        {
         }
     }
 }

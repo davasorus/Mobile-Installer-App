@@ -222,7 +222,7 @@ namespace Mobile_App
             this.MSPServerPath.Location = new System.Drawing.Point(6, 202);
             this.MSPServerPath.Multiline = true;
             this.MSPServerPath.Name = "MSPServerPath";
-            this.MSPServerPath.Size = new System.Drawing.Size(150, 20);
+            this.MSPServerPath.Size = new System.Drawing.Size(269, 36);
             this.MSPServerPath.TabIndex = 16;
             this.MSPServerPath.Text = "\\\\MSPServerName\\";
             // 
