@@ -306,7 +306,9 @@ namespace Mobile_App
             "Force Re-download of Updater Files",
             "Wipe out mobile client/Updater Files/Client Folders",
             "Run Mobile Interface Tester Utility",
-            "Run Mobile Device Tester Utility"});
+            "Run Mobile Device Tester Utility",
+            "GPS Tester",
+            "UBlox Work Around"});
             this.MobileTriage.Location = new System.Drawing.Point(9, 172);
             this.MobileTriage.Name = "MobileTriage";
             this.MobileTriage.Size = new System.Drawing.Size(290, 64);

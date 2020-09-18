@@ -686,7 +686,7 @@ namespace Mobile_App
             ts.Text = "Running 4.7.1 .Net";
             try
             {
-                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -700,7 +700,7 @@ namespace Mobile_App
             ts.Text = "Running 32bit SQL Runtime";
             try
             {
-                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -714,7 +714,7 @@ namespace Mobile_App
             ts.Text = "Running 64 bit SQL Runtime";
             try
             {
-                InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -728,7 +728,7 @@ namespace Mobile_App
             ts.Text = "Running 32 bit GIS Components";
             try
             {
-                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -742,7 +742,7 @@ namespace Mobile_App
             ts.Text = "Running 64 bit GIS Components";
             try
             {
-                InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -756,7 +756,7 @@ namespace Mobile_App
             ts.Text = "Running 64 bit Synchronization";
             try
             {
-                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -770,7 +770,7 @@ namespace Mobile_App
             ts.Text = "Running 64 bit Provider Services";
             try
             {
-                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -784,7 +784,7 @@ namespace Mobile_App
             ts.Text = "Running 64 bit DB Providers";
             try
             {
-                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -798,7 +798,7 @@ namespace Mobile_App
             ts.Text = "Installing Updater";
             try
             {
-                InstallProgram(@"NewWorld.Management.Updater.msi");
+                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -914,7 +914,7 @@ namespace Mobile_App
             ts.Text = "Running 4.7.1 .Net";
             try
             {
-                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -928,7 +928,7 @@ namespace Mobile_App
             ts.Text = "Running 32bit SQL Runtime";
             try
             {
-                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -942,7 +942,7 @@ namespace Mobile_App
             ts.Text = "Running 32 bit GIS Components";
             try
             {
-                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -956,7 +956,7 @@ namespace Mobile_App
             ts.Text = "Running 32 bit Synchronization";
             try
             {
-                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -970,7 +970,7 @@ namespace Mobile_App
             ts.Text = "Running 32 bit Provider Services";
             try
             {
-                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -984,7 +984,7 @@ namespace Mobile_App
             ts.Text = "Running 32 bit DB Providers";
             try
             {
-                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -998,7 +998,7 @@ namespace Mobile_App
             ts.Text = "Installing Updater";
             try
             {
-                InstallProgram(@"NewWorld.Management.Updater.msi");
+                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -1359,11 +1359,11 @@ namespace Mobile_App
         }
 
         //This is the actual method to silently install pre-reqs by name
-        private void InstallProgram(string PreReqName)
+        private void InstallProgram(string PreReqName, string InstallLocation)
         {
             Process proc = null;
 
-            string batdir = string.Format(@"C:\Temp\MobileInstaller");
+            string batdir = string.Format(InstallLocation);
             proc = new Process();
             proc.StartInfo.WorkingDirectory = batdir;
             proc.StartInfo.FileName = PreReqName;
@@ -2156,7 +2156,7 @@ namespace Mobile_App
                 ts.Text = "Running 4.7.1 .Net";
                 try
                 {
-                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                 }
                 catch (Exception ex)
                 {
@@ -2178,7 +2178,7 @@ namespace Mobile_App
                     ts.Text = "Running 32bit SQL Runtime";
                     try
                     {
-                        InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                        InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2188,7 +2188,7 @@ namespace Mobile_App
                     ts.Text = "Running 64 bit SQL Runtime";
                     try
                     {
-                        InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                        InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2204,7 +2204,7 @@ namespace Mobile_App
                     ts.Text = "Running 32bit SQL Runtime";
                     try
                     {
-                        InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                        InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2227,7 +2227,7 @@ namespace Mobile_App
                     ts.Text = "Running 32 bit GIS Components";
                     try
                     {
-                        InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                        InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2241,7 +2241,7 @@ namespace Mobile_App
                     ts.Text = "Running 64 bit GIS Components";
                     try
                     {
-                        InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                        InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2257,7 +2257,7 @@ namespace Mobile_App
                     ts.Text = "Running 32 bit GIS Components";
                     try
                     {
-                        InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                        InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2280,7 +2280,7 @@ namespace Mobile_App
                     ts.Text = "Running 64 bit Synchronization";
                     try
                     {
-                        InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                        InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2294,7 +2294,7 @@ namespace Mobile_App
                     ts.Text = "Running 64 bit Provider Services";
                     try
                     {
-                        InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                        InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2308,7 +2308,7 @@ namespace Mobile_App
                     ts.Text = "Running 64 bit DB Providers";
                     try
                     {
-                        InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                        InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2324,7 +2324,7 @@ namespace Mobile_App
                     ts.Text = "Running 32 bit Synchronization";
                     try
                     {
-                        InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                        InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2338,7 +2338,7 @@ namespace Mobile_App
                     ts.Text = "Running 32 bit Provider Services";
                     try
                     {
-                        InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                        InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2352,7 +2352,7 @@ namespace Mobile_App
                     ts.Text = "Running 32 bit DB Providers";
                     try
                     {
-                        InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                        InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                     }
                     catch (Exception ex)
                     {
@@ -2373,7 +2373,7 @@ namespace Mobile_App
                 ts.Text = "Installing Updater";
                 try
                 {
-                    InstallProgram(@"NewWorld.Management.Updater.msi");
+                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                 }
                 catch (Exception ex)
                 {
@@ -2500,7 +2500,7 @@ namespace Mobile_App
                         ts.Text = "Running 4.7.1 .Net";
                         try
                         {
-                            InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                            InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2514,7 +2514,7 @@ namespace Mobile_App
                         ts.Text = "Running 32bit SQL Runtime";
                         try
                         {
-                            InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2528,7 +2528,7 @@ namespace Mobile_App
                         ts.Text = "Running 64 bit SQL Runtime";
                         try
                         {
-                            InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                            InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2542,7 +2542,7 @@ namespace Mobile_App
                         ts.Text = "Running 32 bit GIS Components";
                         try
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2556,7 +2556,7 @@ namespace Mobile_App
                         ts.Text = "Running 64 bit GIS Components";
                         try
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                            InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2570,7 +2570,7 @@ namespace Mobile_App
                         ts.Text = "Installing Updater";
                         try
                         {
-                            InstallProgram(@"NewWorld.Management.Updater.msi");
+                            InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -2630,7 +2630,7 @@ namespace Mobile_App
                             ts.Text = "Running 4.7.1 .Net";
                             try
                             {
-                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2644,7 +2644,7 @@ namespace Mobile_App
                             ts.Text = "Running 32bit SQL Runtime";
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2658,7 +2658,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit SQL Runtime";
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2672,7 +2672,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit GIS Components";
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2686,7 +2686,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit GIS Components";
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2700,7 +2700,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit Synchronization";
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2714,7 +2714,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit Provider Services";
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2728,7 +2728,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit DB Providers";
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2742,7 +2742,7 @@ namespace Mobile_App
                             ts.Text = "Installing Updater";
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2756,7 +2756,7 @@ namespace Mobile_App
                             ts.Text = "Running Primary Interop Assemblies for Office";
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe");
+                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2770,8 +2770,8 @@ namespace Mobile_App
                             ts.Text = "SQL Server CLR Types 2008";
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi");
-                                InstallProgram(@"SQLSysClrTypesx64.msi");
+                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2834,7 +2834,7 @@ namespace Mobile_App
                             ts.Text = "Running 4.7.1 .Net";
                             try
                             {
-                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2848,7 +2848,7 @@ namespace Mobile_App
                             ts.Text = "Running 32bit SQL Runtime";
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2862,7 +2862,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit SQL Runtime";
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x64-ENU.msi");
+                                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2876,7 +2876,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit GIS Components";
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2890,7 +2890,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit GIS Components";
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x64.msi");
+                                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2904,7 +2904,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit Synchronization";
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi");
+                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2918,7 +2918,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit Provider Services";
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi");
+                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2932,7 +2932,7 @@ namespace Mobile_App
                             ts.Text = "Running 64 bit DB Providers";
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi");
+                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2946,7 +2946,7 @@ namespace Mobile_App
                             ts.Text = "Installing Updater";
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2960,7 +2960,7 @@ namespace Mobile_App
                             ts.Text = "Running Primary Interop Assemblies for Office";
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe");
+                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -2974,8 +2974,8 @@ namespace Mobile_App
                             ts.Text = "SQL Server CLR Types 2008";
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi");
-                                InstallProgram(@"SQLSysClrTypesx64.msi");
+                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3041,7 +3041,7 @@ namespace Mobile_App
                         ts.Text = "Running 4.7.1 .Net";
                         try
                         {
-                            InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                            InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -3055,7 +3055,7 @@ namespace Mobile_App
                         ts.Text = "Running 32bit SQL Runtime";
                         try
                         {
-                            InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -3069,7 +3069,7 @@ namespace Mobile_App
                         ts.Text = "Running 32 bit GIS Components";
                         try
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -3083,7 +3083,7 @@ namespace Mobile_App
                         ts.Text = "Installing Updater";
                         try
                         {
-                            InstallProgram(@"NewWorld.Management.Updater.msi");
+                            InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                         }
                         catch (Exception ex)
                         {
@@ -3142,7 +3142,7 @@ namespace Mobile_App
                             ts.Text = "Running 4.7.1 .Net";
                             try
                             {
-                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3156,7 +3156,7 @@ namespace Mobile_App
                             ts.Text = "Running 32bit SQL Runtime";
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3170,7 +3170,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit GIS Components";
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3184,7 +3184,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit Synchronization";
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3198,7 +3198,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit Provider Services";
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3212,7 +3212,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit DB Providers";
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3226,7 +3226,7 @@ namespace Mobile_App
                             ts.Text = "Installing Updater";
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3240,7 +3240,7 @@ namespace Mobile_App
                             ts.Text = "Running Primary Interop Assemblies for Office";
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe");
+                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3254,7 +3254,7 @@ namespace Mobile_App
                             ts.Text = "SQL Server CLR Types 2008";
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi");
+                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3312,7 +3312,7 @@ namespace Mobile_App
                             ts.Text = "Running 4.7.1 .Net";
                             try
                             {
-                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe");
+                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3326,7 +3326,7 @@ namespace Mobile_App
                             ts.Text = "Running 32bit SQL Runtime";
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi");
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3340,7 +3340,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit GIS Components";
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi");
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3354,7 +3354,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit Synchronization";
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi");
+                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3368,7 +3368,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit Provider Services";
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi");
+                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3382,7 +3382,7 @@ namespace Mobile_App
                             ts.Text = "Running 32 bit DB Providers";
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi");
+                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3396,7 +3396,7 @@ namespace Mobile_App
                             ts.Text = "Installing Updater";
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi");
+                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3410,7 +3410,7 @@ namespace Mobile_App
                             ts.Text = "Running Primary Interop Assemblies for Office";
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe");
+                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3424,7 +3424,7 @@ namespace Mobile_App
                             ts.Text = "SQL Server CLR Types 2008";
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi");
+                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3738,9 +3738,9 @@ namespace Mobile_App
             //if it is the program is run otherwise an exception is thrown
             if (MobileTriage.GetItemCheckState(4) == CheckState.Checked)
             {
-                //this will run the Mobile Client Interface Tester utility if it is present, and if not display a custom error message
+                //this will run the Mobile Client Interface Tester utility if it is present, and prompt a new window to download if not.
                 ts.Text = "Checking to see if Utility is in the proper location";
-                if (File.Exists(@"C:\Temp\MobileInstaller\AegisMobileClientInterfaceTester.exe"))
+                if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)\AegisMobileClientInterfaceTester.exe"))
                 {
                     ts.Text = "Running Mobile Client Interface tester Utility";
 
@@ -3748,18 +3748,17 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    RunProgram("AegisMobileClientInterfaceTester.exe", @"C:\Temp\MobileInstaller");
+                    RunProgram("AegisMobileClientInterfaceTester.exe", @"C:\Temp\MobileInstaller\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)");
                 }
                 else
                 {
                     ts.Text = "Error see exception message";
 
-                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Attempting to download.";
 
                     LogEntryWriter(LogEntry);
 
-                    throw new ArgumentException(@"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
-                    //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+                    secondForm.Show();
                 }
                 ts.Text = "Triage Complete";
             }
@@ -3784,7 +3783,7 @@ namespace Mobile_App
                 {
                     ts.Text = "Error see exception message";
 
-                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller\NWS Addons\DeviceTester and try again.";
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Attempting to download.";
 
                     LogEntryWriter(LogEntry);
 
@@ -3792,6 +3791,93 @@ namespace Mobile_App
 
                     //throw new ArgumentException(@"ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.");
                     //ts.Text = @"ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Please make sure it in C:\Temp\MobileInstaller and try again.";
+                }
+
+                ts.Text = "Triage Complete";
+            }
+
+            //will check to see if the Device tester is in the MobileInstaller folder
+            //if it is the program is run otherwise an exception is thrown
+            if (MobileTriage.GetItemCheckState(6) == CheckState.Checked)
+            {
+                //this will run the Mobile Client GPS Test utility if it is present, and if not display a custom error message
+                ts.Text = "Checking to see if Utility is in the proper location";
+                if (File.Exists(@"C:\Program Files (x86)\Mobile GPS Tester\MobileTools.GpsTester.exe"))
+                {
+                    ts.Text = "Running Mobile GPS Tester";
+
+                    string LogEntry = DateTime.Now + " Device Tester Utility Started";
+
+                    LogEntryWriter(LogEntry);
+
+                    RunProgram("MobileTools.GpsTester.exe", @"C:\Program Files (x86)\Mobile GPS Tester\");
+                }
+                else if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\MobileGpsTesterSetup.msi"))
+                {
+                    InstallProgram("MobileGpsTesterSetup.msi", @"C:\Temp\MobileInstaller");
+                }
+                else
+                {
+                    ts.Text = "Error see exception message";
+
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE GPS TESTER UTILITY. Attempting to Download";
+
+                    LogEntryWriter(LogEntry);
+
+                    secondForm.Show();
+                }
+
+                ts.Text = "Triage Complete";
+            }
+
+            //will check to see if the Device tester is in the MobileInstaller folder
+            //if it is the program is run otherwise an exception is thrown
+            if (MobileTriage.GetItemCheckState(7) == CheckState.Checked)
+            {
+                //this will run the Mobile Client Device Tester utility if it is present, and if not display a custom error message
+                ts.Text = "Checking to see if Utility is in the proper location";
+                if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Remove\install.exe"))
+                {
+                    if (!File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\UBloxRemoveCompleted.txt"))
+                    {
+                        ts.Text = "Removing UBlox Configuration";
+
+                        string LogEntry = DateTime.Now + " UBlox Configuration Removable Started";
+
+                        LogEntryWriter(LogEntry);
+
+                        RunProgram("install.exe", @"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Remove");
+
+                        string path = @"C:\Temp\MobileInstaller\NWS Addons\UBloxRemoveCompleted.txt";
+
+#pragma warning disable CS0642 // Possible mistaken empty statement
+                        using (StreamWriter sw = File.CreateText(path)) ;
+#pragma warning restore CS0642 // Possible mistaken empty statement
+
+                        Process.Start("Shutdown", "/s");
+
+                        MessageBox.Show("The machine must shut down during this process. Please turn machine back on and re run this process when you log back in.");
+                    }
+                    else
+                    {
+                        ts.Text = "Removing UBlox Configuration";
+
+                        string LogEntry = DateTime.Now + " UBlox Configuration Setting Started";
+
+                        LogEntryWriter(LogEntry);
+
+                        RunProgram("install.exe", @"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Set");
+                    }
+                }
+                else
+                {
+                    ts.Text = "Error see exception message";
+
+                    string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE UBLOX WORK AROUND FILES. ATTEMPTING TO DOWNLOAD";
+
+                    LogEntryWriter(LogEntry);
+
+                    secondForm.Show();
                 }
 
                 ts.Text = "Triage Complete";

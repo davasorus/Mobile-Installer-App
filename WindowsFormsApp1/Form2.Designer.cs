@@ -37,7 +37,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 34);
+            this.label1.Location = new System.Drawing.Point(13, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(155, 13);
             this.label1.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // CopyButton
             // 
-            this.CopyButton.Location = new System.Drawing.Point(287, 50);
+            this.CopyButton.Location = new System.Drawing.Point(287, 23);
             this.CopyButton.Name = "CopyButton";
             this.CopyButton.Size = new System.Drawing.Size(75, 27);
             this.CopyButton.TabIndex = 17;
@@ -55,7 +55,7 @@
             // 
             // MSPServerPath
             // 
-            this.MSPServerPath.Location = new System.Drawing.Point(12, 50);
+            this.MSPServerPath.Location = new System.Drawing.Point(12, 23);
             this.MSPServerPath.Multiline = true;
             this.MSPServerPath.Name = "MSPServerPath";
             this.MSPServerPath.Size = new System.Drawing.Size(269, 36);
@@ -64,7 +64,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 113);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 69);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(375, 22);
             this.statusStrip1.TabIndex = 20;
@@ -74,7 +74,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 135);
+            this.ClientSize = new System.Drawing.Size(375, 91);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.MSPServerPath);
             this.Controls.Add(this.CopyButton);

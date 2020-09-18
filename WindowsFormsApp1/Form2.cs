@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MobileInstallApp
@@ -17,9 +10,16 @@ namespace MobileInstallApp
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            string LogEntry = @"----------- Start of Sub log file" + " " + DateTime.Now + "-----------";
+
+            statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
+            ts.Text = "Ready";
         }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
         public Form2()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             InitializeComponent();
         }
@@ -46,7 +46,7 @@ namespace MobileInstallApp
 
             LogEntryWriter(LogEntry);
 
-            ts.Text = "Copy Complete";
+            ts.Text = "Copy Complete. Please Close Window and Press the Run button again.";
         }
 
         //this writes to the mobile pre req installer logfile
