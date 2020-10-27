@@ -30,6 +30,7 @@ namespace Mobile_App
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NWPSPreReqInstaller));
             this.label3 = new System.Windows.Forms.Label();
             this.UninstallMobile = new System.Windows.Forms.CheckBox();
             this.InstallMobile = new System.Windows.Forms.CheckBox();
@@ -240,7 +241,7 @@ namespace Mobile_App
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage1.Controls.Add(this.InstallMobile);
             this.tabPage1.Controls.Add(this.MSPServerPath);
             this.tabPage1.Controls.Add(this.UninstallMobile);
@@ -254,6 +255,7 @@ namespace Mobile_App
             this.tabPage1.Controls.Add(this.Is32bit);
             this.tabPage1.Controls.Add(this.Is64Bit);
             this.tabPage1.Controls.Add(this.Help_BTN);
+            this.tabPage1.ForeColor = System.Drawing.SystemColors.Desktop;
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -263,7 +265,7 @@ namespace Mobile_App
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.BackColor = System.Drawing.Color.LightGray;
             this.tabPage2.Controls.Add(this.CustomRun);
             this.tabPage2.Controls.Add(this.label20);
             this.tabPage2.Controls.Add(this.MobileTriage);
@@ -307,8 +309,8 @@ namespace Mobile_App
             "Wipe out mobile client/Updater Files/Client Folders",
             "Run Mobile Interface Tester Utility",
             "Run Mobile Device Tester Utility",
-            "GPS Tester",
-            "UBlox Work Around"});
+            "Run Mobile GPS Tester Utility",
+            "Run UBlox Virtual GPS  Work Around"});
             this.MobileTriage.Location = new System.Drawing.Point(9, 172);
             this.MobileTriage.Name = "MobileTriage";
             this.MobileTriage.Size = new System.Drawing.Size(290, 64);
@@ -326,6 +328,9 @@ namespace Mobile_App
             "Run Updater Config Utility",
             "Set Folder Permissions",
             "Install CAD/MSP",
+            "Install Incident Observer",
+            "Install CAD Management Client",
+            "Install ScenePD",
             "Restart Machine"});
             this.CustomInstallOption.Location = new System.Drawing.Point(215, 24);
             this.CustomInstallOption.Name = "CustomInstallOption";
@@ -374,6 +379,7 @@ namespace Mobile_App
             // 
             this.tabPage3.AllowDrop = true;
             this.tabPage3.AutoScroll = true;
+            this.tabPage3.BackColor = System.Drawing.Color.LightGray;
             this.tabPage3.Controls.Add(this.UpdaterAppend);
             this.tabPage3.Controls.Add(this.MergeClient);
             this.tabPage3.Controls.Add(this.FireClient);
@@ -391,7 +397,6 @@ namespace Mobile_App
             this.tabPage3.Size = new System.Drawing.Size(416, 244);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Configure Updater Util";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // UpdaterAppend
             // 
@@ -499,10 +504,12 @@ namespace Mobile_App
             // NWPSPreReqInstaller
             // 
             this.AcceptButton = this.Run;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(427, 296);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NWPSPreReqInstaller";
             this.Text = "Mobile Installer App";
             this.Load += new System.EventHandler(this.Form1_Load);

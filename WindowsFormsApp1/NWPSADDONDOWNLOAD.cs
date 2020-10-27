@@ -4,21 +4,21 @@ using System.Windows.Forms;
 
 namespace MobileInstallApp
 {
-    public partial class Form2 : Form
+    public partial class NWPSADDONDOWNLOAD : Form
     {
-        private ToolStripLabel ts = new ToolStripLabel();
+        private ToolStripLabel ts1 = new ToolStripLabel();
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            string LogEntry = @"----------- Start of Sub log file" + " " + DateTime.Now + "-----------";
+            //string LogEntry = @"----------- Start of Sub log file" + " " + DateTime.Now + "-----------";
 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
-            ts.Text = "Ready";
+            StatusStrip1.Items.AddRange(new ToolStripItem[] { ts1 });
+            ts1.Text = "Ready";
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-        public Form2()
+        public NWPSADDONDOWNLOAD()
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             InitializeComponent();
@@ -42,17 +42,17 @@ namespace MobileInstallApp
                 SearchOption.AllDirectories))
                 File.Copy(newPath, newPath.Replace(SourcePath, TargetPath), true);
 
-            string LogEntry = DateTime.Now + "NWS Addon Folder Copied " + "has been copied.";
+            string LogEntry = DateTime.Now + " " + SourcePath + " Folder " + "has been copied.";
 
             LogEntryWriter(LogEntry);
 
-            ts.Text = "Copy Complete. Please Close Window and Press the Run button again.";
+            ts1.Text = "Copy Complete. Please Close Window and Press the Run button again.";
         }
 
         //this writes to the mobile pre req installer logfile
         private void LogEntryWriter(string LogEntry)
         {
-            using (StreamWriter file = new StreamWriter(("MobileInstallLog.txt"), true))
+            using (StreamWriter file = new StreamWriter(("NWPSAPPLog.txt"), true))
             {
                 file.WriteLine(LogEntry);
             }
