@@ -1789,9 +1789,9 @@ namespace Mobile_App
             if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
             {
                 //20.1 and Up IMS download and check
-                if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.8"))
+                if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\1 .NET Framework\.NET 4.8"))
                 {
-                    MobileCopy(MSPServerPath.Text + @"\_Client-Installation\1 .NET Framework\.NET 4.8");
+                    MobileCopy(MSPServerPath.Text + @"\_Client-Installation\1 .NET Framework\.NET 4.8\");
 
                     MobileCopy(MSPServerPath.Text + @"\_Client-Installation\5 NWPS GIS Components");
 
@@ -2007,16 +2007,12 @@ namespace Mobile_App
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
                 UninstallProgram("NWPS Enterprise Mobile PDF Printer");
-                
 
                 UninstallProgram("novaPDF 8 Printer Driver");
-                
 
                 UninstallProgram("novaPDF 8 SDK COM (x86)");
-                
 
                 UninstallProgram("novaPDF 8 SDK COM (x64)");
-                
 
                 ts.Text = "NOVA PDF was Uninstalled/Check Completed";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -2034,7 +2030,7 @@ namespace Mobile_App
                 UninstallProgram("New World GIS Components x64");
 
                 UninstallProgram("New World GIS Components x86");
-                
+
                 ts.Text = "GIS Components are Uninstalled/Check Complete";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
             }
@@ -2057,7 +2053,7 @@ namespace Mobile_App
             //Uninstall Updater client
             if (CustomUninstallOptions.GetItemCheckState(6) == CheckState.Checked)
             {
-                ts.Text="Uninstalling New World Automatic Updater";
+                ts.Text = "Uninstalling New World Automatic Updater";
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
                 UninstallProgram("New World Automatic Updater");
@@ -3928,7 +3924,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                ts.Text="Incident Observer is installed";
+                ts.Text = "Incident Observer is installed";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
             }
 
@@ -3948,7 +3944,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                ts.Text="CAD Management Client is Installed";
+                ts.Text = "CAD Management Client is Installed";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
             }
 
@@ -4049,7 +4045,7 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                 }
-                
+
                 //this will check in the NWS Addons folder for scene pd 6
                 else if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\SPD6-4-8993.exe"))
                 {
@@ -4140,7 +4136,7 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                 }
-                
+
                 //if scene pd is not found at all it must be moved by the user to a displayed location
                 else
                 {
@@ -4488,8 +4484,6 @@ namespace Mobile_App
 
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Attempting to download.";
 
-                    
-
                     string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
 
                     LogEntryWriter(LogEntry1);
@@ -4603,8 +4597,6 @@ namespace Mobile_App
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE UBLOX WORK AROUND FILES. ATTEMPTING TO DOWNLOAD";
 
                     LogEntryWriter(LogEntry);
-
-                    
 
                     string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
 
