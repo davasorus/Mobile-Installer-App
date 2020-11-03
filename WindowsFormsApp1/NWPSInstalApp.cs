@@ -4066,6 +4066,7 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
 
                         RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller\NWS Addons");
+                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
 
@@ -4094,6 +4095,7 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
 
                                 RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller\NWS Addons\");
+                                RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
 
                                 string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
@@ -4128,6 +4130,7 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
 
                         RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
