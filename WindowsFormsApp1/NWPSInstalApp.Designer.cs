@@ -241,7 +241,7 @@ namespace Mobile_App
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage1.BackColor = System.Drawing.Color.LightGray;
             this.tabPage1.Controls.Add(this.InstallMobile);
             this.tabPage1.Controls.Add(this.MSPServerPath);
             this.tabPage1.Controls.Add(this.UninstallMobile);

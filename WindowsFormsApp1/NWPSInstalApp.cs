@@ -380,6 +380,7 @@ namespace Mobile_App
 
             SaveStartupSettings();
 
+            ts.ForeColor = Color.DarkSlateBlue;
             ts.Text = "Copying required files locally";
 
             string LogEntry1 = DateTime.Now + " File Copy Initiated";
