@@ -388,7 +388,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry1);
 
             ProgressBar.Value = 0;
-            ProgressBar.Maximum = 25;
+            ProgressBar.Maximum = 26;
             bg.RunWorkerAsync();
         }
 
@@ -3974,10 +3974,13 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
 
                         RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller");
+                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller");
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
+                        string LogEntry2 = DateTime.Now + @"ScenePD ActiveX Installed";
 
                         LogEntryWriter(LogEntry1);
+                        LogEntryWriter(LogEntry2);
 
                         ts.Text = "ScenePD 6 Installed";
                         ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -4069,8 +4072,10 @@ namespace Mobile_App
                         RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
+                        string LogEntry2 = DateTime.Now + @" ScenePD ActiveX installed";
 
                         LogEntryWriter(LogEntry1);
+                        LogEntryWriter(LogEntry2);
 
                         ts.Text = "ScenePD 6 Installed";
                         ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -4130,7 +4135,6 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
 
                         RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
-                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
