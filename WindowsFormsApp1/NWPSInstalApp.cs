@@ -1839,6 +1839,7 @@ namespace Mobile_App
                     else
                     {
                         string LogEntry1 = "COPY ERROR: Sync Framework 2.1 - 32Bit Was not Found - Could Not Be Downloaded";
+                        LogEntryWriter(LogEntry1);
                     }
 
                     //exists to be cross version combatable: will download the updater msi provided it is a known version
