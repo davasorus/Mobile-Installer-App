@@ -1939,37 +1939,129 @@ namespace Mobile_App
                 //19.2 and - download and check
                 else if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1"))
                 {
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1");
+                    }
+                    else
+                    {
+                        string Logentry1 = DateTime.Now + " COPY ERROR: .Net 4.7.1 was not Found - Could not Download";
+                        LogEntryWriter(Logentry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\5 NWPS GIS Components\\GIS Components 1.0.69");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: GIS Components was not Found - Could Not Download.";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\3 SQL Compact Edition 3.5 SP2");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 3.5 SP2 was not Found - Could not Download.";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x64");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Sync Framework 2.1 - 64Bit  was not Found - Could not Download";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\9 Microsoft Sync Framework 2.1\\x86");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Sync Framework 2.1 -32Bit was not Found - Could not Download";
+                        LogEntryWriter(LogEntry1);
+                    }
 
                     //exists to be cross version combatable: will download the updater msi provided it is a known version
                     if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"))
                     {
                         MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29");
                     }
-                    else
+                    else if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23"))
                     {
                         MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.23");
                     }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: New World Updater was not Found - Could Not Download";
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client");
+                    if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: MSP Client installer was not found - Could Not Download";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\10 Visual Studio 2010 Tools for Office Runtime");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\10 Visual Studio 2010 Tools for Office Runtime"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\10 Visual Studio 2010 Tools for Office Runtime");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " VS 2010 Tools was not found - Could not Download";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\12 SQL Server CLR Types 2008");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\12 SQL Server CLR Types 2008"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\12 SQL Server CLR Types 2008");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " 2008 SQL Server CLR Types was not found - could not Download.";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
+                    if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\13 Enterprise CAD Client");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " Enterprise CAD Client installer was not found - Could not Download.";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client\CAD Incident Observer (Optional)");
+                    if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client\CAD Incident Observer (Optional)"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client\CAD Incident Observer (Optional)");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " CAD Incident Observer installer was not found - could not Download.";
+                        LogEntryWriter(LogEntry1);
+                    }
 
-                    MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client\CAD Management Client (Optional)");
+                    if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client\CAD Management Client (Optional)"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\13 Enterprise CAD Client\CAD Management Client (Optional)");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " CAD Management Client Installer was not found - Could not Download";
+                        LogEntryWriter(LogEntry1);
+                    }
                 }
             }
             //nwps addon download and check
