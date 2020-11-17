@@ -1798,7 +1798,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: .Net 4.8 Not found - Could Not be Copied.";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: .Net 4.8 Not found - Could Not be Copied.";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1808,7 +1808,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: GIS Components Not Found - Could Not be Copied.";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: GIS Components Not Found - Could Not be Copied.";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1818,7 +1818,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: SQL Compact 3.5 SP2 was not Found - Could not be Downloaded.";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 3.5 SP2 was not Found - Could not be Downloaded.";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1828,7 +1828,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: Sync Framwork 2.1 - 64Bit was not Found - Could Not be Downloaded";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Sync Framwork 2.1 - 64Bit was not Found - Could Not be Downloaded";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1838,7 +1838,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: Sync Framework 2.1 - 32Bit Was not Found - Could Not Be Downloaded";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Sync Framework 2.1 - 32Bit Was not Found - Could Not Be Downloaded";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1853,7 +1853,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: Updater Not Found - could not download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Updater Not Found - could not download";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1863,7 +1863,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: the MSP Client installer was not found - Could Not Download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: the MSP Client installer was not found - Could Not Download";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1871,13 +1871,13 @@ namespace Mobile_App
                     {
                         MobileCopy(MSPServerPath.Text + @"\_Client-Installation\12 Visual Studio 2010 Tools for Office Runtime");
                     }
-                    else if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\12 Visual Studio 2010 Tools for Office Runtime (Not required for Mobile"))
+                    else if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\12 Visual Studio 2010 Tools for Office Runtime (Not required for Mobile)"))
                     {
-                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\12 Visual Studio 2010 Tools for Office Runtime (Not Required for Mobile)");
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\12 Visual Studio 2010 Tools for Office Runtime (Not required for Mobile)");
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: Visual Studio 2010 Tools was not founod - Could not Download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Visual Studio 2010 Tools was not founod - Could not Download";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1885,13 +1885,13 @@ namespace Mobile_App
                     {
                         MobileCopy(MSPServerPath.Text + @"\_Client-Installation\8 SQL Server CLR Types 2008");
                     }
-                    else if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\8 SQL Server CLR Types 2008 (Not required for Mobile"))
+                    else if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\8 SQL Server CLR Types 2008 (Not required for Mobile)"))
                     {
-                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\8 SQL Server CLR Types 2008 (Not Required for Mobile");
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\8 SQL Server CLR Types 2008 (Not required for Mobile)");
                     }
                     else
                     {
-                        string LogEntry1 = "SQL Server CLR Types Not Found - could not download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Server CLR Types Not Found - could not download";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1901,7 +1901,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: Enterprise CAD Client was Not Found - Could Not Download.";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Enterprise CAD Client was Not Found - Could Not Download.";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1911,7 +1911,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: CAD Incident Observer was not found - Could Not Download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: CAD Incident Observer was not found - Could Not Download";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1921,7 +1921,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: CAD Management Client was not found - Could not be Downloaded";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: CAD Management Client was not found - Could not be Downloaded";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -1931,7 +1931,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = "COPY ERROR: ScenePD Was not found - Could Not Download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: ScenePD Was not found - Could Not Download";
                         LogEntryWriter(LogEntry1);
                     }
                 }
