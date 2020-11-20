@@ -110,7 +110,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry1 = DateTime.Now + ex.ToString();
+                string LogEntry1 = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry1);
             }
@@ -582,7 +582,7 @@ namespace Mobile_App
             {
                 MessageBox.Show(ex.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -614,7 +614,7 @@ namespace Mobile_App
             {
                 MessageBox.Show(ex.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -697,7 +697,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -717,7 +717,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -736,7 +736,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -751,7 +751,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -766,7 +766,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -781,7 +781,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -796,7 +796,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -811,7 +811,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -826,7 +826,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -841,7 +841,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -864,7 +864,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -888,7 +888,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -962,7 +962,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -983,7 +983,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -1002,7 +1002,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1017,7 +1017,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1032,7 +1032,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1047,7 +1047,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1062,7 +1062,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1077,7 +1077,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1092,7 +1092,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1117,7 +1117,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1272,7 +1272,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1710,7 +1710,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry1 = DateTime.Now + ex.ToString();
+                            string LogEntry1 = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry1);
                         }
@@ -1747,7 +1747,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry1 = DateTime.Now + ex.ToString();
+                            string LogEntry1 = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry1);
                         }
@@ -1936,7 +1936,7 @@ namespace Mobile_App
                     }
                 }
 
-                //19.2 and - download and check
+                //19.2 and Below - download and check
                 else if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1"))
                 {
                     if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\1 .NET Framework\\.NET 4.7.1"))
@@ -2541,7 +2541,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2562,7 +2562,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2586,6 +2586,10 @@ namespace Mobile_App
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
                     }
 
                     ts.Text = "Running 64 bit SQL Runtime";
@@ -2598,7 +2602,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2614,7 +2618,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2639,7 +2643,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2654,7 +2658,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2670,7 +2674,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2695,7 +2699,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2710,7 +2714,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2725,7 +2729,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2742,7 +2746,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2757,7 +2761,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2772,7 +2776,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2795,7 +2799,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -2837,7 +2841,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -2868,7 +2872,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry1 = DateTime.Now + ex.ToString();
+                        string LogEntry1 = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry1);
                     }
@@ -2887,7 +2891,7 @@ namespace Mobile_App
 
                         SetAcl(@"C:\ProgramData\New World Systems");
 
-                        string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
+                        string LogEntry1 = DateTime.Now + " " + @" C:\ProgramData\New World Systems has User permissions set.";
 
                         LogEntryWriter(LogEntry1);
                     }
@@ -2895,7 +2899,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -2931,7 +2935,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -2952,7 +2956,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -2971,7 +2975,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -2986,7 +2990,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3001,7 +3005,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3016,7 +3020,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3031,7 +3035,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3046,7 +3050,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
 
@@ -3074,7 +3078,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3099,7 +3103,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3120,7 +3124,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3139,7 +3143,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3154,7 +3158,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3169,7 +3173,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3184,7 +3188,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3199,7 +3203,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3214,7 +3218,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3229,7 +3233,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3244,7 +3248,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3259,7 +3263,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3275,7 +3279,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3290,7 +3294,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
 
@@ -3318,7 +3322,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3346,7 +3350,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3366,7 +3370,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3385,7 +3389,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3400,7 +3404,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3415,7 +3419,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3430,7 +3434,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3445,7 +3449,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3460,7 +3464,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3475,7 +3479,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3490,7 +3494,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3505,7 +3509,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3521,7 +3525,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3536,7 +3540,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3561,7 +3565,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3592,7 +3596,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3613,7 +3617,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3632,7 +3636,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3647,7 +3651,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3662,7 +3666,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3677,7 +3681,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3701,7 +3705,7 @@ namespace Mobile_App
                         {
                             Console.WriteLine(ex.StackTrace.ToString());
 
-                            string LogEntry = DateTime.Now + ex.ToString();
+                            string LogEntry = DateTime.Now + " " + ex.ToString();
 
                             LogEntryWriter(LogEntry);
                         }
@@ -3726,7 +3730,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3747,7 +3751,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3766,7 +3770,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3781,7 +3785,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3796,7 +3800,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3811,7 +3815,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3826,7 +3830,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3841,7 +3845,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3856,7 +3860,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3871,7 +3875,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3886,7 +3890,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3909,6 +3913,10 @@ namespace Mobile_App
                             catch (Exception ex)
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
+
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                                LogEntryWriter(LogEntry);
                             }
                         }
                     }
@@ -3934,7 +3942,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3955,7 +3963,7 @@ namespace Mobile_App
                                 {
                                     Console.WriteLine(ex.StackTrace.ToString());
 
-                                    string LogEntry = DateTime.Now + ex.ToString();
+                                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                     LogEntryWriter(LogEntry);
                                 }
@@ -3974,7 +3982,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -3989,7 +3997,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4004,7 +4012,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4019,7 +4027,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4034,7 +4042,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4049,7 +4057,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4064,7 +4072,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4079,7 +4087,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4094,7 +4102,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4118,7 +4126,7 @@ namespace Mobile_App
                             {
                                 Console.WriteLine(ex.StackTrace.ToString());
 
-                                string LogEntry = DateTime.Now + ex.ToString();
+                                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
@@ -4426,7 +4434,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -4453,7 +4461,7 @@ namespace Mobile_App
                     {
                         Console.WriteLine(ex.StackTrace.ToString());
 
-                        string LogEntry = DateTime.Now + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
                     }
@@ -4509,7 +4517,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -4543,7 +4551,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -4576,7 +4584,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -4593,7 +4601,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -4617,7 +4625,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
@@ -4641,7 +4649,7 @@ namespace Mobile_App
                 {
                     Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + ex.ToString();
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
                     LogEntryWriter(LogEntry);
                 }
