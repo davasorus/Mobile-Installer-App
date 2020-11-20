@@ -1294,7 +1294,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1315,7 +1315,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -1331,7 +1331,7 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -2084,24 +2084,42 @@ namespace Mobile_App
         //currently only used for the Updater Service
         private void StopService(string name)
         {
-            ServiceController sc = new ServiceController(name);
-            if (sc.Status.Equals(ServiceControllerStatus.Running))
+            try
             {
-                sc.Stop();
+                ServiceController sc = new ServiceController(name);
+                if (sc.Status.Equals(ServiceControllerStatus.Running))
+                {
+                    sc.Stop();
 
-                string LogEntry = DateTime.Now + " " + name + " has been stopped.";
+                    string LogEntry = DateTime.Now + " " + name + " has been stopped.";
 
-                LogEntryWriter(LogEntry);
+                    LogEntryWriter(LogEntry);
 
-                ts.Text = name + "Service Stopped";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    ts.Text = name + "Service Stopped";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                else
+                {
+                    ts.Text = name + " Service had an issue stopping";
+                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+
+                    string LogEntry = DateTime.Now + " " + name + " Service is not currently Started. Cannot stop a stopped Service";
+
+                    LogEntryWriter(LogEntry);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ts.Text = name + " Service had an issue stopping";
-                ts.ForeColor = System.Drawing.Color.OrangeRed;
+                Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry = DateTime.Now + " " + name + " Service is not currently Started. Cannot stop a stopped Service";
+                string LogEntry1 = DateTime.Now + ex.ToString();
+
+                LogEntryWriter(LogEntry1);
+
+                ts.Text = name + " Service had an issue stopping";
+
+                string LogEntry = DateTime.Now + " " + name + " Could not be stopped. It likely is not installed, " +
+                    "or could not be stopped since the Program was not run as an admin OR under an admin account.";
 
                 LogEntryWriter(LogEntry);
             }
@@ -2145,7 +2163,8 @@ namespace Mobile_App
 
                 ts.Text = name + " Service had an issue starting";
 
-                string LogEntry = DateTime.Now + " " + name + " Service is not currently stopped. Cannot Start a started Service";
+                string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
+                    "or could not be stopped since the Program was not run as an admin OR under an admin account.";
 
                 LogEntryWriter(LogEntry);
             }
