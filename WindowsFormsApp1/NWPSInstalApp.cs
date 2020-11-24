@@ -1466,59 +1466,44 @@ namespace Mobile_App
         //This is the method that will silently uninstall pre - reqs by name
         private bool UninstallProgram(string ProgramName)
         {
-            try
+            ManagementObjectSearcher mos = new ManagementObjectSearcher(
+                  @"SELECT * FROM Win32_Product WHERE Name = '" + ProgramName + "'");
+            foreach (ManagementObject mo in mos.Get())
             {
-                ManagementObjectSearcher mos = new ManagementObjectSearcher(
-                  "SELECT * FROM Win32_Product WHERE Name = '" + ProgramName + "'");
-                foreach (ManagementObject mo in mos.Get())
+                try
                 {
-                    try
+                    if (mo["Name"].ToString() == ProgramName)
                     {
-                        if (mo["Name"].ToString() == ProgramName)
-                        {
-                            object hr = mo.InvokeMethod("Uninstall", null);
+                        object hr = mo.InvokeMethod("Uninstall", null);
 
+
+                        // //not pretty but fixes the invalid cast exception :/
+                        if (hr.Equals(hr))
+                        {
                             string LogEntry1 = DateTime.Now + " " + ProgramName + " has been uninstalled";
 
                             LogEntryWriter(LogEntry1);
-
-                            return (bool)hr;
+                            return true;
                         }
-                    }
-                    catch (InvalidCastException)
-                    {
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
 
-                        string LogEntry2 = DateTime.Now + " " + ex.ToString();
-
-                        LogEntryWriter(LogEntry2);
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
 
-                string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It was either not installed or detected.";
+                    string LogEntry2 = DateTime.Now + " " + ex.ToString();
 
-                LogEntryWriter(LogEntry3);
-
-                //was not found...
-                return false;
+                    LogEntryWriter(LogEntry2);
+                }
             }
-            catch (InvalidCastException)
-            {
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
 
-                string LogEntry4 = DateTime.Now + " " + ex.ToString();
+            string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It was either not installed or detected.";
 
-                LogEntryWriter(LogEntry4);
+            LogEntryWriter(LogEntry3);
 
-                return false;
-            }
+            //not found
+            return false;
         }
 
         //XML related controls
@@ -5183,6 +5168,47 @@ namespace Mobile_App
             {
                 file.WriteLine(LogEntry);
             }
+        }
+
+        //pre pre checker code
+        private bool PreReqChecker(string ProgramName)
+        {
+            ManagementObjectSearcher mos = new ManagementObjectSearcher(
+                @"SELECT * FROM Win32_Product WHERE Name = '" + ProgramName + "'");
+            foreach (ManagementObject mo in mos.Get())
+            {
+                try
+                {
+                    if (mo["Name"].ToString() == ProgramName)
+                    {
+                        object hr = mo.InvokeMethod("Uninstall", null);
+
+                        //not pretty but fixes the invalid cast exception :/
+                        if (hr.Equals(hr))
+                        {
+                            string LogEntry1 = DateTime.Now + " " + ProgramName + " has been uninstalled";
+
+                            LogEntryWriter(LogEntry1);
+                            return true;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+
+                    string LogEntry2 = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry2);
+                }
+            }
+
+            string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It was either not installed or detected.";
+
+            LogEntryWriter(LogEntry3);
+
+            //no found
+            return false;
         }
     }
 }
