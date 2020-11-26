@@ -85,7 +85,6 @@ namespace Mobile_App
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.SPD = new System.Windows.Forms.Label();
-            this.VST2010 = new System.Windows.Forms.Label();
             this.SQLCP364 = new System.Windows.Forms.Label();
             this.SQLCP332 = new System.Windows.Forms.Label();
             this.CLR64 = new System.Windows.Forms.Label();
@@ -548,7 +547,6 @@ namespace Mobile_App
             this.tabPage4.Controls.Add(this.label27);
             this.tabPage4.Controls.Add(this.label26);
             this.tabPage4.Controls.Add(this.SPD);
-            this.tabPage4.Controls.Add(this.VST2010);
             this.tabPage4.Controls.Add(this.SQLCP364);
             this.tabPage4.Controls.Add(this.SQLCP332);
             this.tabPage4.Controls.Add(this.CLR64);
@@ -695,20 +693,11 @@ namespace Mobile_App
             // SPD
             // 
             this.SPD.AutoSize = true;
-            this.SPD.Location = new System.Drawing.Point(7, 139);
+            this.SPD.Location = new System.Drawing.Point(7, 126);
             this.SPD.Name = "SPD";
             this.SPD.Size = new System.Drawing.Size(56, 13);
             this.SPD.TabIndex = 14;
             this.SPD.Text = "Scene PD";
-            // 
-            // VST2010
-            // 
-            this.VST2010.AutoSize = true;
-            this.VST2010.Location = new System.Drawing.Point(6, 126);
-            this.VST2010.Name = "VST2010";
-            this.VST2010.Size = new System.Drawing.Size(97, 13);
-            this.VST2010.TabIndex = 13;
-            this.VST2010.Text = "Visual Studio Tools";
             // 
             // SQLCP364
             // 
@@ -901,7 +890,6 @@ namespace Mobile_App
         private Label label27;
         private Label label26;
         private Label SPD;
-        private Label VST2010;
         private Label SQLCP364;
         private Label SQLCP332;
         private Label CLR64;

@@ -388,7 +388,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry1);
 
             ProgressBar.Value = 0;
-            ProgressBar.Maximum = 26;
+            ProgressBar.Maximum = 29;
             bg.RunWorkerAsync();
         }
 
@@ -879,29 +879,6 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            //Visual Studio 2010 Tools check
-            try
-            {
-                ts.Text = "Checking for Visual Studio 2010 Tools";
-
-                if (PreReqChecker("Microsoft Visual C++ 2010 x86 Redistributable - 10.0.40219") == true)
-                {
-                    label35.Text = "Found";
-                }
-                else
-                {
-                    label35.Text = "Not Found";
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
             //scene PD check
             try
             {
@@ -913,20 +890,20 @@ namespace Mobile_App
 
                     if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
                     {
-                        label36.Text = "Scene PD 6, Active X Found";
+                        label36.Text = "Scene PD 6, ActiveX Found";
                     }
                     else
                     {
-                        label36.Text = "Scene PD 6 Found, active X was not";
+                        label35.Text = "Scene PD 6 Found, ActiveX not";
                     }
                 }
                 else if (PreReqChecker("ScenePD 4") == true)
                 {
-                    label36.Text = "ScenePD 4 Found";
+                    label35.Text = "ScenePD 4 Found";
                 }
                 else
                 {
-                    label36.Text = "Not Found";
+                    label35.Text = "Not Found";
                 }
             }
             catch (Exception ex)
@@ -1571,6 +1548,12 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry);
             }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
         }
 
         //This will delete all downloaded files from the MobileInstaller Folder in C:\Temp
@@ -2122,6 +2105,42 @@ namespace Mobile_App
                     else
                     {
                         string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 3.5 SP2 was not Found - Could not be Downloaded.";
+                        LogEntryWriter(LogEntry1);
+                    }
+
+                    if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 4.0"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 4.0");
+
+                        // Source file to be renamed
+                        string sourceFile = @"C:\Temp\MobileInstaller\SSCERuntime_x86-ENU.exe";
+                        // Create a FileInfo
+                        FileInfo fi = new FileInfo(sourceFile);
+                        // Check if file is there
+                        if (fi.Exists)
+                        {
+                            // Move file with a new name. Hence renamed.
+                            fi.MoveTo(@"C:\Temp\MobileInstaller\SSCERuntime_x86-ENU-4.0.exe");
+
+                            string LogEntry2 = DateTime.Now + " " + sourceFile + " was renamed to SSCERuntime_x86-ENU-4.0.exe";
+                            LogEntryWriter(LogEntry2);
+                        }
+                        string sourceFile1 = @"C:\Temp\MobileInstaller\SSCERuntime_x64-ENU.exe";
+                        // Create a FileInfo
+                        System.IO.FileInfo fi1 = new FileInfo(sourceFile1);
+                        // Check if file is there
+                        if (fi1.Exists)
+                        {
+                            // Move file with a new name. Hence renamed.
+                            fi1.MoveTo(@"C:\Temp\MobileInstaller\SSCERuntime_x64-ENU-4.0.exe");
+
+                            string LogEntry3 = DateTime.Now + " " + sourceFile1 + " was renamed to SSCERuntime_x64-ENU-4.0.exe";
+                            LogEntryWriter(LogEntry3);
+                        }
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 4.0 was not Found - Could not be Downloaded.";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -3436,26 +3455,11 @@ namespace Mobile_App
                                 ts.ForeColor = System.Drawing.Color.ForestGreen;
                             }
 
-                            ts.Text = "Running 32bit SQL Runtime";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
-                            try
-                            {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
                             ts.Text = "Running 64 bit SQL Runtime";
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -3682,26 +3686,11 @@ namespace Mobile_App
                                 ts.ForeColor = System.Drawing.Color.ForestGreen;
                             }
 
-                            ts.Text = "Running 32bit SQL Runtime";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
-                            try
-                            {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
                             ts.Text = "Running 64 bit SQL Runtime";
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -4067,7 +4056,7 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
@@ -4279,7 +4268,7 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
