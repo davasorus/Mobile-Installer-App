@@ -69,11 +69,39 @@ namespace Mobile_App
             this.GenerateNumber = new System.Windows.Forms.TextBox();
             this.FieldGenerateButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.SPD = new System.Windows.Forms.Label();
+            this.VST2010 = new System.Windows.Forms.Label();
+            this.SQLCP364 = new System.Windows.Forms.Label();
+            this.SQLCP332 = new System.Windows.Forms.Label();
+            this.CLR64 = new System.Windows.Forms.Label();
+            this.CLR32 = new System.Windows.Forms.Label();
+            this.GIS64 = new System.Windows.Forms.Label();
+            this.GIS32 = new System.Windows.Forms.Label();
+            this.Updater = new System.Windows.Forms.Label();
+            this.SQLCP4 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.PreReqCheck = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // label3
@@ -233,6 +261,7 @@ namespace Mobile_App
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(3, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -501,6 +530,277 @@ namespace Mobile_App
             this.textBox1.Text = "Please enter the desired amount of ORI/FDID Fields and press the generate button." +
     "";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage4.Controls.Add(this.label39);
+            this.tabPage4.Controls.Add(this.label38);
+            this.tabPage4.Controls.Add(this.label37);
+            this.tabPage4.Controls.Add(this.label36);
+            this.tabPage4.Controls.Add(this.label35);
+            this.tabPage4.Controls.Add(this.label34);
+            this.tabPage4.Controls.Add(this.label33);
+            this.tabPage4.Controls.Add(this.label32);
+            this.tabPage4.Controls.Add(this.label31);
+            this.tabPage4.Controls.Add(this.label30);
+            this.tabPage4.Controls.Add(this.label29);
+            this.tabPage4.Controls.Add(this.label28);
+            this.tabPage4.Controls.Add(this.label27);
+            this.tabPage4.Controls.Add(this.label26);
+            this.tabPage4.Controls.Add(this.SPD);
+            this.tabPage4.Controls.Add(this.VST2010);
+            this.tabPage4.Controls.Add(this.SQLCP364);
+            this.tabPage4.Controls.Add(this.SQLCP332);
+            this.tabPage4.Controls.Add(this.CLR64);
+            this.tabPage4.Controls.Add(this.CLR32);
+            this.tabPage4.Controls.Add(this.GIS64);
+            this.tabPage4.Controls.Add(this.GIS32);
+            this.tabPage4.Controls.Add(this.Updater);
+            this.tabPage4.Controls.Add(this.SQLCP4);
+            this.tabPage4.Controls.Add(this.label10);
+            this.tabPage4.Controls.Add(this.PreReqCheck);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(416, 244);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Pre Req Checker";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(248, 177);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(100, 13);
+            this.label39.TabIndex = 28;
+            this.label39.Text = "Waiting Initialization";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(248, 164);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(100, 13);
+            this.label38.TabIndex = 27;
+            this.label38.Text = "Waiting Initialization";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(248, 151);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(100, 13);
+            this.label37.TabIndex = 26;
+            this.label37.Text = "Waiting Initialization";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(248, 138);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(100, 13);
+            this.label36.TabIndex = 25;
+            this.label36.Text = "Waiting Initialization";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(248, 126);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(100, 13);
+            this.label35.TabIndex = 24;
+            this.label35.Text = "Waiting Initialization";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(248, 113);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(100, 13);
+            this.label34.TabIndex = 23;
+            this.label34.Text = "Waiting Initialization";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(248, 100);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(100, 13);
+            this.label33.TabIndex = 22;
+            this.label33.Text = "Waiting Initialization";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(248, 87);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(100, 13);
+            this.label32.TabIndex = 21;
+            this.label32.Text = "Waiting Initialization";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(248, 74);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(100, 13);
+            this.label31.TabIndex = 20;
+            this.label31.Text = "Waiting Initialization";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(248, 61);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(100, 13);
+            this.label30.TabIndex = 19;
+            this.label30.Text = "Waiting Initialization";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(248, 48);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(100, 13);
+            this.label29.TabIndex = 18;
+            this.label29.Text = "Waiting Initialization";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(248, 35);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(100, 13);
+            this.label28.TabIndex = 17;
+            this.label28.Text = "Waiting Initialization";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(248, 22);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(100, 13);
+            this.label27.TabIndex = 16;
+            this.label27.Text = "Waiting Initialization";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(248, 3);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(37, 13);
+            this.label26.TabIndex = 15;
+            this.label26.Text = "Status";
+            // 
+            // SPD
+            // 
+            this.SPD.AutoSize = true;
+            this.SPD.Location = new System.Drawing.Point(7, 139);
+            this.SPD.Name = "SPD";
+            this.SPD.Size = new System.Drawing.Size(56, 13);
+            this.SPD.TabIndex = 14;
+            this.SPD.Text = "Scene PD";
+            // 
+            // VST2010
+            // 
+            this.VST2010.AutoSize = true;
+            this.VST2010.Location = new System.Drawing.Point(6, 126);
+            this.VST2010.Name = "VST2010";
+            this.VST2010.Size = new System.Drawing.Size(97, 13);
+            this.VST2010.TabIndex = 13;
+            this.VST2010.Text = "Visual Studio Tools";
+            // 
+            // SQLCP364
+            // 
+            this.SQLCP364.AutoSize = true;
+            this.SQLCP364.Location = new System.Drawing.Point(6, 113);
+            this.SQLCP364.Name = "SQLCP364";
+            this.SQLCP364.Size = new System.Drawing.Size(141, 13);
+            this.SQLCP364.TabIndex = 10;
+            this.SQLCP364.Text = "64Bit SQL Compact 3.5 SP2";
+            // 
+            // SQLCP332
+            // 
+            this.SQLCP332.AutoSize = true;
+            this.SQLCP332.Location = new System.Drawing.Point(6, 100);
+            this.SQLCP332.Name = "SQLCP332";
+            this.SQLCP332.Size = new System.Drawing.Size(144, 13);
+            this.SQLCP332.TabIndex = 9;
+            this.SQLCP332.Text = "32 Bit SQL Compact 3.5 SP2";
+            // 
+            // CLR64
+            // 
+            this.CLR64.AutoSize = true;
+            this.CLR64.Location = new System.Drawing.Point(5, 87);
+            this.CLR64.Name = "CLR64";
+            this.CLR64.Size = new System.Drawing.Size(114, 13);
+            this.CLR64.TabIndex = 8;
+            this.CLR64.Text = "64 Bit SQL CLR Types";
+            // 
+            // CLR32
+            // 
+            this.CLR32.AutoSize = true;
+            this.CLR32.Location = new System.Drawing.Point(6, 74);
+            this.CLR32.Name = "CLR32";
+            this.CLR32.Size = new System.Drawing.Size(114, 13);
+            this.CLR32.TabIndex = 7;
+            this.CLR32.Text = "32 Bit SQL CLR Types";
+            // 
+            // GIS64
+            // 
+            this.GIS64.AutoSize = true;
+            this.GIS64.Location = new System.Drawing.Point(5, 61);
+            this.GIS64.Name = "GIS64";
+            this.GIS64.Size = new System.Drawing.Size(117, 13);
+            this.GIS64.TabIndex = 6;
+            this.GIS64.Text = "64 Bit GIS Components";
+            // 
+            // GIS32
+            // 
+            this.GIS32.AutoSize = true;
+            this.GIS32.Location = new System.Drawing.Point(6, 48);
+            this.GIS32.Name = "GIS32";
+            this.GIS32.Size = new System.Drawing.Size(117, 13);
+            this.GIS32.TabIndex = 5;
+            this.GIS32.Text = "32 Bit GIS Components";
+            // 
+            // Updater
+            // 
+            this.Updater.AutoSize = true;
+            this.Updater.Location = new System.Drawing.Point(7, 22);
+            this.Updater.Name = "Updater";
+            this.Updater.Size = new System.Drawing.Size(45, 13);
+            this.Updater.TabIndex = 4;
+            this.Updater.Text = "Updater";
+            // 
+            // SQLCP4
+            // 
+            this.SQLCP4.AutoSize = true;
+            this.SQLCP4.Location = new System.Drawing.Point(6, 35);
+            this.SQLCP4.Name = "SQLCP4";
+            this.SQLCP4.Size = new System.Drawing.Size(126, 13);
+            this.SQLCP4.TabIndex = 3;
+            this.SQLCP4.Text = "SQL Compact Edition 4.0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(51, 13);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Pre Reqs";
+            // 
+            // PreReqCheck
+            // 
+            this.PreReqCheck.Location = new System.Drawing.Point(338, 221);
+            this.PreReqCheck.Name = "PreReqCheck";
+            this.PreReqCheck.Size = new System.Drawing.Size(75, 23);
+            this.PreReqCheck.TabIndex = 0;
+            this.PreReqCheck.Text = "Check";
+            this.PreReqCheck.UseVisualStyleBackColor = true;
+            this.PreReqCheck.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // NWPSPreReqInstaller
             // 
             this.AcceptButton = this.Run;
@@ -522,6 +822,8 @@ namespace Mobile_App
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -578,6 +880,33 @@ namespace Mobile_App
         private CheckBox PoliceClient;
         private CheckBox MergeClient;
         private Button UpdaterAppend;
+        private TabPage tabPage4;
+        private Button PreReqCheck;
+        private Label GIS32;
+        private Label Updater;
+        private Label SQLCP4;
+        private Label label10;
+        private Label label39;
+        private Label label38;
+        private Label label37;
+        private Label label36;
+        private Label label35;
+        private Label label34;
+        private Label label33;
+        private Label label32;
+        private Label label31;
+        private Label label30;
+        private Label label29;
+        private Label label28;
+        private Label label27;
+        private Label label26;
+        private Label SPD;
+        private Label VST2010;
+        private Label SQLCP364;
+        private Label SQLCP332;
+        private Label CLR64;
+        private Label CLR32;
+        private Label GIS64;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }

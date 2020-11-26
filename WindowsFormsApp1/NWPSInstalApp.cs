@@ -622,6 +622,326 @@ namespace Mobile_App
             LoadFDIDXML();
         }
 
+        //PreReqChecker code
+        //this is a dedicated tab to check for prior installed/uninstalled
+        //if someone presses the button it will check, if people use the normal install/uninstall process it will update as they run.
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            ProgressBar.Visible = false;
+            ProgressBar.Enabled = false;
+
+            label27.Text = "Pending";
+            label27.Refresh();
+            label28.Text = "Pending";
+            label28.Refresh();
+            label29.Text = "Pending";
+            label29.Refresh();
+            label30.Text = "Pending";
+            label30.Refresh();
+            label31.Text = "Pending";
+            label31.Refresh();
+            label32.Text = "Pending";
+            label32.Refresh();
+            label33.Text = "Pending";
+            label33.Refresh();
+            label34.Text = "Pending";
+            label34.Refresh();
+            label35.Text = "Pending";
+            label35.Refresh();
+            label36.Text = "Pending";
+            label36.Refresh();
+            label37.Text = "Pending";
+            label37.Refresh();
+            label38.Text = "Pending";
+            label38.Refresh();
+            label39.Text = "Pending";
+            label39.Refresh();
+
+            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            ts.Text = "Running Pre Req Checker";
+
+            //hidden until finding clients is needed
+            /*
+            ts.Text = "Checking to uninstall Police Mobile";
+            PreReqChecker("Aegis Mobile");
+
+            PreReqChecker("Law Enforcement Mobile");
+            ts.Text = "Police Mobile is Uninstalled";
+
+            ts.Text = "Checking to uninstall Fire Mobile";
+            PreReqChecker("Aegis Fire Mobile");
+
+            PreReqChecker("Fire Mobile");
+            ts.Text = "Fire Mobile is Uninstalled";
+
+            ts.Text = "Checking to uninstall Mobile Merge";
+            PreReqChecker("Aegis Mobile Merge");
+
+            PreReqChecker("Mobile Merge");
+            ts.Text = "Mobile Merge is Uninstalled";
+            */
+
+            //updater check
+            try
+            {
+                ts.Text = "Checking for Updater";
+
+                if (PreReqChecker("New World Automatic Updater") == true)
+                {
+                    label27.Text = "Found";
+                }
+                else
+                {
+                    label27.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //SQL Server COmpact 4.0 Check
+            try
+            {
+                ts.Text = "Checking for SQL Server Compact 4.0";
+
+                if (Is64Bit.Checked == true)
+                {
+                    if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
+                    {
+                        label28.Text = "Found";
+                    }
+                    else
+                    {
+                        label28.Text = "Not Found";
+                    }
+                }
+                else
+                {
+                    if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
+                    {
+                        label28.Text = "Found";
+                    }
+                    else
+                    {
+                        label28.Text = "Not Found";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //32 bit GIS check
+            try
+            {
+                ts.Text = "Checking for 32bit GIS Components";
+
+                if (PreReqChecker("New World GIS Components x86") == true)
+                {
+                    label29.Text = "Found";
+                }
+                else
+                {
+                    label29.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //64bit GIS Check
+            try
+            {
+                ts.Text = "Checking for 64bit GIS Components";
+
+                if (PreReqChecker("New World GIS Components x64") == true)
+                {
+                    label30.Text = "Found";
+                }
+                else
+                {
+                    label30.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //32bit SQL Server 3.5 SP2 check
+            try
+            {
+                ts.Text = "Checking for 32bit  SQL Server CLR Types";
+
+                if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
+                {
+                    label31.Text = "Found";
+                }
+                else
+                {
+                    label31.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //32bit SQL ServerCLR Types check
+            try
+            {
+                ts.Text = "Checking for 64bit  SQL Server CLR Types";
+
+                if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
+                {
+                    label32.Text = "Found";
+                }
+                else
+                {
+                    label32.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //64bit SQL ServerCLR Types check
+            try
+            {
+                ts.Text = "Checking for 32bit  SQL Server Compact 3.5 SP2";
+
+                if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
+                {
+                    label33.Text = "Found";
+                }
+                else
+                {
+                    label33.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //64 SQL server 3.5 sp2 check
+            try
+            {
+                ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
+
+                if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
+                {
+                    label34.Text = "Found";
+                }
+                else
+                {
+                    label34.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //Visual Studio 2010 Tools check
+            try
+            {
+                ts.Text = "Checking for Visual Studio 2010 Tools";
+
+                if (PreReqChecker("Microsoft Visual C++ 2010 x86 Redistributable - 10.0.40219") == true)
+                {
+                    label35.Text = "Found";
+                }
+                else
+                {
+                    label35.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //scene PD check
+            try
+            {
+                ts.Text = "Checking for ScenePD";
+
+                if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
+                {
+                    label36.Text = "Scene PD 6 Found";
+
+                    if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
+                    {
+                        label36.Text = "Scene PD 6, Active X Found";
+                    }
+                    else
+                    {
+                        label36.Text = "Scene PD 6 Found, active X was not";
+                    }
+                }
+                else if (PreReqChecker("ScenePD 4") == true)
+                {
+                    label36.Text = "ScenePD 4 Found";
+                }
+                else
+                {
+                    label36.Text = "Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            ts.Text = "Pre Req Checker is Complete";
+            ts.ForeColor = System.Drawing.Color.ForestGreen;
+        }
+
         //pre req install/uninstall methods
 
         //Mobile 64bit uninstaller
@@ -1476,7 +1796,6 @@ namespace Mobile_App
                     {
                         object hr = mo.InvokeMethod("Uninstall", null);
 
-
                         // //not pretty but fixes the invalid cast exception :/
                         if (hr.Equals(hr))
                         {
@@ -1485,7 +1804,6 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry1);
                             return true;
                         }
-
                     }
                 }
                 catch (Exception ex)
@@ -5181,16 +5499,10 @@ namespace Mobile_App
                 {
                     if (mo["Name"].ToString() == ProgramName)
                     {
-                        object hr = mo.InvokeMethod("Uninstall", null);
+                        string LogEntry1 = DateTime.Now + " " + ProgramName + " was found by the PreReqChecker";
 
-                        //not pretty but fixes the invalid cast exception :/
-                        if (hr.Equals(hr))
-                        {
-                            string LogEntry1 = DateTime.Now + " " + ProgramName + " has been uninstalled";
-
-                            LogEntryWriter(LogEntry1);
-                            return true;
-                        }
+                        LogEntryWriter(LogEntry1);
+                        return true;
                     }
                 }
                 catch (Exception ex)
@@ -5203,7 +5515,7 @@ namespace Mobile_App
                 }
             }
 
-            string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It was either not installed or detected.";
+            string LogEntry3 = DateTime.Now + " " + ProgramName + " was not found by the PreReqChecker.";
 
             LogEntryWriter(LogEntry3);
 
