@@ -640,11 +640,13 @@ namespace Mobile_App
             if (label27.Text == "Waiting Initialization")
             {
                 label27.Text = "Pending";
+                label27.ForeColor = Color.DarkSlateBlue;
                 label27.Refresh();
             }
             else if (label27.Text == "Uninstalled")
             {
                 label27.Text = "Pending";
+                label27.ForeColor = Color.DarkSlateBlue;
                 label27.Refresh();
             }
             else
@@ -657,11 +659,13 @@ namespace Mobile_App
             if (label28.Text == "Waiting Initialization")
             {
                 label28.Text = "Pending";
+                label28.ForeColor = Color.DarkSlateBlue;
                 label28.Refresh();
             }
             else if (label28.Text == "Uninstalled")
             {
                 label28.Text = "Pending";
+                label28.ForeColor = Color.DarkSlateBlue;
                 label28.Refresh();
             }
             else
@@ -674,11 +678,13 @@ namespace Mobile_App
             if (label29.Text == "Waiting Initialization")
             {
                 label29.Text = "Pending";
+                label29.ForeColor = Color.DarkSlateBlue;
                 label29.Refresh();
             }
             else if (label29.Text == "Uninstalled")
             {
                 label29.Text = "Pending";
+                label29.ForeColor = Color.DarkSlateBlue;
                 label29.Refresh();
             }
             else
@@ -691,11 +697,13 @@ namespace Mobile_App
             if (label30.Text == "Waiting Initialization")
             {
                 label30.Text = "Pending";
+                label30.ForeColor = Color.DarkSlateBlue;
                 label30.Refresh();
             }
             else if (label30.Text == "Uninstalled")
             {
                 label30.Text = "Pending";
+                label30.ForeColor = Color.DarkSlateBlue;
                 label30.Refresh();
             }
             else
@@ -708,11 +716,13 @@ namespace Mobile_App
             if (label31.Text == "Waiting Initialization")
             {
                 label31.Text = "Pending";
+                label31.ForeColor = Color.DarkSlateBlue;
                 label31.Refresh();
             }
             else if (label31.Text == "Uninstalled")
             {
                 label31.Text = "Pending";
+                label31.ForeColor = Color.DarkSlateBlue;
                 label31.Refresh();
             }
             else
@@ -725,11 +735,13 @@ namespace Mobile_App
             if (label32.Text == "Waiting Initialization")
             {
                 label32.Text = "Pending";
+                label32.ForeColor = Color.DarkSlateBlue;
                 label32.Refresh();
             }
             else if (label32.Text == "Uninstalled")
             {
                 label32.Text = "Pending";
+                label32.ForeColor = Color.DarkSlateBlue;
                 label32.Refresh();
             }
             else
@@ -742,11 +754,13 @@ namespace Mobile_App
             if (label33.Text == "Waiting Initialization")
             {
                 label33.Text = "Pending";
+                label33.ForeColor = Color.DarkSlateBlue;
                 label33.Refresh();
             }
             else if (label33.Text == "Uninstalled")
             {
                 label33.Text = "Pending";
+                label33.ForeColor = Color.DarkSlateBlue;
                 label33.Refresh();
             }
             else
@@ -759,11 +773,13 @@ namespace Mobile_App
             if (label34.Text == "Waiting Initialization")
             {
                 label34.Text = "Pending";
+                label34.ForeColor = Color.DarkSlateBlue;
                 label34.Refresh();
             }
             else if (label34.Text == "Uninstalled")
             {
                 label34.Text = "Pending";
+                label34.ForeColor = Color.DarkSlateBlue;
                 label34.Refresh();
             }
             else
@@ -776,11 +792,13 @@ namespace Mobile_App
             if (label35.Text == "Waiting Initialization")
             {
                 label35.Text = "Pending";
+                label35.ForeColor = Color.DarkSlateBlue;
                 label35.Refresh();
             }
             else if (label35.Text == "Uninstalled")
             {
                 label35.Text = "Pending";
+                label35.ForeColor = Color.DarkSlateBlue;
                 label35.Refresh();
             }
             else
@@ -889,27 +907,33 @@ namespace Mobile_App
                 if (label27.Text == "Pending")
                 {
                     ts.Text = "Checking for Updater";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
                         label27.Text = "Installed";
+                        label27.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label27.Text = "Uninstalled";
+                        label27.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label27.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for Updater";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
                         label27.Text = "Installed";
+                        label27.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label27.Text = "Uninstalled";
+                        label27.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -933,16 +957,19 @@ namespace Mobile_App
                 if (label28.Text == "Pending")
                 {
                     ts.Text = "Checking for SQL Server Compact 4.0";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (Is64Bit.Checked == true)
                     {
                         if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
                         {
                             label28.Text = "Installed";
+                            label28.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                         else
                         {
                             label28.Text = "Uninstalled";
+                            label28.ForeColor = System.Drawing.Color.OrangeRed;
                         }
                     }
                     else
@@ -950,10 +977,12 @@ namespace Mobile_App
                         if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
                         {
                             label28.Text = "Installed";
+                            label28.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                         else
                         {
                             label28.Text = "Uninstalled";
+                            label28.ForeColor = System.Drawing.Color.OrangeRed;
                         }
                     }
                 }
@@ -964,10 +993,12 @@ namespace Mobile_App
                         if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
                         {
                             label28.Text = "Installed";
+                            label28.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                         else
                         {
                             label28.Text = "Uninstalled";
+                            label28.ForeColor = System.Drawing.Color.OrangeRed;
                         }
                     }
                     else
@@ -975,10 +1006,12 @@ namespace Mobile_App
                         if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
                         {
                             label28.Text = "Installed";
+                            label28.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                         else
                         {
                             label28.Text = "Uninstalled";
+                            label28.ForeColor = System.Drawing.Color.OrangeRed;
                         }
                     }
                 }
@@ -1003,27 +1036,33 @@ namespace Mobile_App
                 if (label29.Text == "Pending")
                 {
                     ts.Text = "Checking for 32bit GIS Components";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("New World GIS Components x86") == true)
                     {
                         label29.Text = "Installed";
+                        label29.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label29.Text = "Uninstalled";
+                        label29.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label29.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for Updater";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
-                        label27.Text = "Installed";
+                        label29.Text = "Installed";
+                        label29.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
-                        label27.Text = "Uninstalled";
+                        label29.Text = "Uninstalled";
+                        label29.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1047,27 +1086,33 @@ namespace Mobile_App
                 if (label30.Text == "Pending")
                 {
                     ts.Text = "Checking for 32bit GIS Components";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("New World GIS Components x86") == true)
                     {
                         label30.Text = "Installed";
+                        label30.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label30.Text = "Uninstalled";
+                        label30.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label30.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for Updater";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
                         label30.Text = "Installed";
+                        label30.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label30.Text = "Uninstalled";
+                        label30.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1091,27 +1136,33 @@ namespace Mobile_App
                 if (label31.Text == "Pending")
                 {
                     ts.Text = "Checking for 32bit  SQL Server CLR Types";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
                     {
                         label31.Text = "Installed";
+                        label31.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label31.Text = "Uninstalled";
+                        label31.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label31.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for 32bit  SQL Server CLR Types";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
                     {
                         label31.Text = "Installed";
+                        label31.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label31.Text = "Uninstalled";
+                        label31.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1135,14 +1186,17 @@ namespace Mobile_App
                 if (label32.Text == "Pending")
                 {
                     ts.Text = "Checking for 64bit  SQL Server CLR Types";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
                     {
                         label32.Text = "Installed";
+                        label32.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label32.Text = "Uninstalled";
+                        label32.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label32.Text == "Uninstalled")
@@ -1152,10 +1206,12 @@ namespace Mobile_App
                     if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
                     {
                         label32.Text = "Installed";
+                        label32.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label32.Text = "Uninstalled";
+                        label32.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1179,27 +1235,33 @@ namespace Mobile_App
                 if (label33.Text == "Pending")
                 {
                     ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
                     {
                         label33.Text = "Installed";
+                        label33.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label33.Text = "Uninstalled";
+                        label33.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label33.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
                     {
                         label33.Text = "Installed";
+                        label33.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label33.Text = "Uninstalled";
+                        label33.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1223,27 +1285,33 @@ namespace Mobile_App
                 if (label34.Text == "Pending")
                 {
                     ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
                     {
                         label34.Text = "Installed";
+                        label34.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label34.Text = "Uninstalled";
+                        label34.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label34.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
                     {
                         label34.Text = "Installed";
+                        label34.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label34.Text = "Uninstalled";
+                        label34.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1267,53 +1335,65 @@ namespace Mobile_App
                 if (label35.Text == "Pending")
                 {
                     ts.Text = "Checking for ScenePD";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
                     {
                         label35.Text = "Scene PD 6 Installed";
+                        label35.ForeColor = System.Drawing.Color.ForestGreen;
 
                         if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
                         {
                             label35.Text = "Scene PD 6, ActiveX Installed";
+                            label35.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                         else
                         {
                             label35.Text = "Scene PD 6 Installed, ActiveX not";
+                            label35.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                     }
                     else if (PreReqChecker("ScenePD 4") == true)
                     {
                         label35.Text = "ScenePD 4 Installed";
+                        label35.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label35.Text = "Uninstalled";
+                        label35.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else if (label35.Text == "Uninstalled")
                 {
                     ts.Text = "Checking for ScenePD";
+                    ts.ForeColor = Color.DarkSlateBlue;
 
                     if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
                     {
                         label35.Text = "Scene PD 6 Installed";
+                        label35.ForeColor = System.Drawing.Color.ForestGreen;
 
                         if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
                         {
                             label35.Text = "Scene PD 6, ActiveX Installed";
+                            label35.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                         else
                         {
                             label35.Text = "Scene PD 6 Installed, ActiveX not";
+                            label35.ForeColor = System.Drawing.Color.ForestGreen;
                         }
                     }
                     else if (PreReqChecker("ScenePD 4") == true)
                     {
                         label35.Text = "ScenePD 4 Installed";
+                        label35.ForeColor = System.Drawing.Color.ForestGreen;
                     }
                     else
                     {
                         label35.Text = "Uninstalled";
+                        label35.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
                 else
@@ -1379,24 +1459,45 @@ namespace Mobile_App
             else
             {
                 ts.Text = "64bit GIS Compnents already Uninstalled";
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
-            if (label28.Text != "")
+            if (label28.Text != "Uninstalled")
             {
                 UninstallProgram("New World GIS Components x86");
                 ts.Text = "GIS is Uninstalled";
             }
             else
             {
+                ts.Text = "32bit GIS Compnents already Uninstalled";
+                string logentry1 = DateTime.Now + " 32 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
 
             ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
-            UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
+            if (label34.Text != "Uninstalled")
+            {
+                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
+            }
+            else
+            {
+                ts.Text = "64bit GIS Compnents already Uninstalled";
+                string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
 
-            UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
-            ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+            if (label33.Text != "Uninstalled")
+            {
+                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
+                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+            }
+            else
+            {
+                ts.Text = "64bit GIS Compnents already Uninstalled";
+                string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
 
             ts.Text = "Uninstalling Nova PDF";
 
@@ -1458,7 +1559,20 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                if (label33.Text != "Installed")
+                {
+                    InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                else
+                {
+                    ts.Text = "32 bit SQL Compact 3.5 SP2 was already installed";
+
+                    string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
+                    LogEntryWriter(logentry1);
+                }
             }
             catch (Exception ex)
             {
@@ -6095,6 +6209,7 @@ namespace Mobile_App
                 try
                 {
                     label27.Text = "Uninstalled";
+                    label27.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for Automatic Updater - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6111,6 +6226,7 @@ namespace Mobile_App
                 try
                 {
                     label28.Text = "Uninstalled";
+                    label28.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for SQL Compact 4.0 64bit - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6127,6 +6243,7 @@ namespace Mobile_App
                 try
                 {
                     label28.Text = "Uninstalled";
+                    label28.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for SQL Compact 4.0 32bit - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6143,6 +6260,7 @@ namespace Mobile_App
                 try
                 {
                     label29.Text = "Uninstalled";
+                    label29.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit GIS Components - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6159,6 +6277,7 @@ namespace Mobile_App
                 try
                 {
                     label30.Text = "Uninstalled";
+                    label30.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit GIS Components - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6175,6 +6294,7 @@ namespace Mobile_App
                 try
                 {
                     label31.Text = "Uninstalled";
+                    label31.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Server CLR Types - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6191,6 +6311,7 @@ namespace Mobile_App
                 try
                 {
                     label32.Text = "Uninstalled";
+                    label32.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Server CLR Types - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6207,6 +6328,7 @@ namespace Mobile_App
                 try
                 {
                     label33.Text = "Uninstalled";
+                    label33.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Server Compact 3.5 SP2 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6223,6 +6345,7 @@ namespace Mobile_App
                 try
                 {
                     label34.Text = "Uninstalled";
+                    label34.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Server Compact 3.5 SP2 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6239,6 +6362,7 @@ namespace Mobile_App
                 try
                 {
                     label35.Text = "Uninstalled";
+                    label35.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6255,6 +6379,7 @@ namespace Mobile_App
                 try
                 {
                     label35.Text = "Uninstalled";
+                    label35.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 ActiveX Control - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6271,6 +6396,7 @@ namespace Mobile_App
                 try
                 {
                     label35.Text = "Uninstalled";
+                    label35.ForeColor = System.Drawing.Color.OrangeRed;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 4 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6291,6 +6417,7 @@ namespace Mobile_App
                 try
                 {
                     label27.Text = "Installed";
+                    label27.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for Automatic Updater - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6307,6 +6434,7 @@ namespace Mobile_App
                 try
                 {
                     label28.Text = "Installed";
+                    label28.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Compact 4.0 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6323,6 +6451,7 @@ namespace Mobile_App
                 try
                 {
                     label28.Text = "Installed";
+                    label28.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Compact 4.0 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6339,6 +6468,7 @@ namespace Mobile_App
                 try
                 {
                     label29.Text = "Installed";
+                    label29.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit GIS Components - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6355,6 +6485,7 @@ namespace Mobile_App
                 try
                 {
                     label30.Text = "Installed";
+                    label30.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit GIS Components - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6371,6 +6502,7 @@ namespace Mobile_App
                 try
                 {
                     label31.Text = "Installed";
+                    label31.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL CLR Types - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6387,6 +6519,7 @@ namespace Mobile_App
                 try
                 {
                     label32.Text = "Installed";
+                    label32.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL CLR Types - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6403,6 +6536,7 @@ namespace Mobile_App
                 try
                 {
                     label33.Text = "Installed";
+                    label33.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Compact 3.5 SP2 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6419,6 +6553,7 @@ namespace Mobile_App
                 try
                 {
                     label34.Text = "Installed";
+                    label34.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Compact 3.5 SP2 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6435,6 +6570,7 @@ namespace Mobile_App
                 try
                 {
                     label35.Text = "Installed";
+                    label35.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6451,6 +6587,7 @@ namespace Mobile_App
                 try
                 {
                     label35.Text = "Installed";
+                    label35.ForeColor = System.Drawing.Color.ForestGreen;
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 AcetiveX Controller - INSTALLED";
                     LogEntryWriter(logentry1);

@@ -572,7 +572,7 @@ namespace Mobile_App
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(170, 177);
+            this.label39.Location = new System.Drawing.Point(170, 224);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(100, 13);
             this.label39.TabIndex = 28;
@@ -582,7 +582,7 @@ namespace Mobile_App
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(170, 164);
+            this.label38.Location = new System.Drawing.Point(170, 211);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(100, 13);
             this.label38.TabIndex = 27;
@@ -592,7 +592,7 @@ namespace Mobile_App
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(170, 151);
+            this.label37.Location = new System.Drawing.Point(170, 198);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(100, 13);
             this.label37.TabIndex = 26;
@@ -602,7 +602,7 @@ namespace Mobile_App
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(170, 138);
+            this.label36.Location = new System.Drawing.Point(170, 185);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(100, 13);
             this.label36.TabIndex = 25;
