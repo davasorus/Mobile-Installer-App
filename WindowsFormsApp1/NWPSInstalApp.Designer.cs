@@ -357,8 +357,9 @@ namespace Mobile_App
             "Set Folder Permissions",
             "Install CAD/MSP",
             "Install Incident Observer",
-            "Install CAD Management Client",
             "Install ScenePD",
+            "Install SQL Compact 4.0",
+            "Instal 2010 Visual Studio Tools",
             "Restart Machine"});
             this.CustomInstallOption.Location = new System.Drawing.Point(215, 24);
             this.CustomInstallOption.Name = "CustomInstallOption";
@@ -397,6 +398,10 @@ namespace Mobile_App
             "Remove Client Folders",
             "Remove Mobile Client Updater entries",
             "Uninstall MSP/CAD",
+            "Remove SQL Compact 4.0",
+            "Remove Scene PD",
+            "Remove CAD Incident Observer",
+            "Remove SQL CLR Types",
             "Restart Machine"});
             this.CustomUninstallOptions.Location = new System.Drawing.Point(7, 24);
             this.CustomUninstallOptions.Name = "CustomUninstallOptions";
@@ -567,43 +572,47 @@ namespace Mobile_App
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(248, 177);
+            this.label39.Location = new System.Drawing.Point(170, 177);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(100, 13);
             this.label39.TabIndex = 28;
             this.label39.Text = "Waiting Initialization";
+            this.label39.Visible = false;
             // 
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(248, 164);
+            this.label38.Location = new System.Drawing.Point(170, 164);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(100, 13);
             this.label38.TabIndex = 27;
             this.label38.Text = "Waiting Initialization";
+            this.label38.Visible = false;
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(248, 151);
+            this.label37.Location = new System.Drawing.Point(170, 151);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(100, 13);
             this.label37.TabIndex = 26;
             this.label37.Text = "Waiting Initialization";
+            this.label37.Visible = false;
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(248, 138);
+            this.label36.Location = new System.Drawing.Point(170, 138);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(100, 13);
             this.label36.TabIndex = 25;
             this.label36.Text = "Waiting Initialization";
+            this.label36.Visible = false;
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(248, 126);
+            this.label35.Location = new System.Drawing.Point(170, 126);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(100, 13);
             this.label35.TabIndex = 24;
@@ -612,7 +621,7 @@ namespace Mobile_App
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(248, 113);
+            this.label34.Location = new System.Drawing.Point(170, 113);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(100, 13);
             this.label34.TabIndex = 23;
@@ -621,7 +630,7 @@ namespace Mobile_App
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(248, 100);
+            this.label33.Location = new System.Drawing.Point(170, 100);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(100, 13);
             this.label33.TabIndex = 22;
@@ -630,7 +639,7 @@ namespace Mobile_App
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(248, 87);
+            this.label32.Location = new System.Drawing.Point(170, 87);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(100, 13);
             this.label32.TabIndex = 21;
@@ -639,7 +648,7 @@ namespace Mobile_App
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(248, 74);
+            this.label31.Location = new System.Drawing.Point(170, 74);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(100, 13);
             this.label31.TabIndex = 20;
@@ -648,7 +657,7 @@ namespace Mobile_App
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(248, 61);
+            this.label30.Location = new System.Drawing.Point(170, 61);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(100, 13);
             this.label30.TabIndex = 19;
@@ -657,7 +666,7 @@ namespace Mobile_App
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(248, 48);
+            this.label29.Location = new System.Drawing.Point(170, 48);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(100, 13);
             this.label29.TabIndex = 18;
@@ -666,7 +675,7 @@ namespace Mobile_App
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(248, 35);
+            this.label28.Location = new System.Drawing.Point(170, 35);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(100, 13);
             this.label28.TabIndex = 17;
@@ -675,7 +684,7 @@ namespace Mobile_App
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(248, 22);
+            this.label27.Location = new System.Drawing.Point(170, 22);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(100, 13);
             this.label27.TabIndex = 16;
@@ -684,7 +693,7 @@ namespace Mobile_App
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(248, 3);
+            this.label26.Location = new System.Drawing.Point(170, 3);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(37, 13);
             this.label26.TabIndex = 15;
@@ -693,7 +702,7 @@ namespace Mobile_App
             // SPD
             // 
             this.SPD.AutoSize = true;
-            this.SPD.Location = new System.Drawing.Point(7, 126);
+            this.SPD.Location = new System.Drawing.Point(5, 126);
             this.SPD.Name = "SPD";
             this.SPD.Size = new System.Drawing.Size(56, 13);
             this.SPD.TabIndex = 14;
@@ -702,7 +711,7 @@ namespace Mobile_App
             // SQLCP364
             // 
             this.SQLCP364.AutoSize = true;
-            this.SQLCP364.Location = new System.Drawing.Point(6, 113);
+            this.SQLCP364.Location = new System.Drawing.Point(5, 113);
             this.SQLCP364.Name = "SQLCP364";
             this.SQLCP364.Size = new System.Drawing.Size(141, 13);
             this.SQLCP364.TabIndex = 10;
@@ -711,7 +720,7 @@ namespace Mobile_App
             // SQLCP332
             // 
             this.SQLCP332.AutoSize = true;
-            this.SQLCP332.Location = new System.Drawing.Point(6, 100);
+            this.SQLCP332.Location = new System.Drawing.Point(5, 100);
             this.SQLCP332.Name = "SQLCP332";
             this.SQLCP332.Size = new System.Drawing.Size(144, 13);
             this.SQLCP332.TabIndex = 9;
@@ -738,7 +747,7 @@ namespace Mobile_App
             // GIS64
             // 
             this.GIS64.AutoSize = true;
-            this.GIS64.Location = new System.Drawing.Point(5, 61);
+            this.GIS64.Location = new System.Drawing.Point(6, 61);
             this.GIS64.Name = "GIS64";
             this.GIS64.Size = new System.Drawing.Size(117, 13);
             this.GIS64.TabIndex = 6;
@@ -756,7 +765,7 @@ namespace Mobile_App
             // Updater
             // 
             this.Updater.AutoSize = true;
-            this.Updater.Location = new System.Drawing.Point(7, 22);
+            this.Updater.Location = new System.Drawing.Point(5, 22);
             this.Updater.Name = "Updater";
             this.Updater.Size = new System.Drawing.Size(45, 13);
             this.Updater.TabIndex = 4;
@@ -765,7 +774,7 @@ namespace Mobile_App
             // SQLCP4
             // 
             this.SQLCP4.AutoSize = true;
-            this.SQLCP4.Location = new System.Drawing.Point(6, 35);
+            this.SQLCP4.Location = new System.Drawing.Point(5, 35);
             this.SQLCP4.Name = "SQLCP4";
             this.SQLCP4.Size = new System.Drawing.Size(126, 13);
             this.SQLCP4.TabIndex = 3;

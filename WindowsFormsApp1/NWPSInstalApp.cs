@@ -630,32 +630,230 @@ namespace Mobile_App
             ProgressBar.Visible = false;
             ProgressBar.Enabled = false;
 
-            label27.Text = "Pending";
-            label27.Refresh();
-            label28.Text = "Pending";
-            label28.Refresh();
-            label29.Text = "Pending";
-            label29.Refresh();
-            label30.Text = "Pending";
-            label30.Refresh();
-            label31.Text = "Pending";
-            label31.Refresh();
-            label32.Text = "Pending";
-            label32.Refresh();
-            label33.Text = "Pending";
-            label33.Refresh();
-            label34.Text = "Pending";
-            label34.Refresh();
-            label35.Text = "Pending";
-            label35.Refresh();
-            label36.Text = "Pending";
-            label36.Refresh();
-            label37.Text = "Pending";
-            label37.Refresh();
-            label38.Text = "Pending";
-            label38.Refresh();
-            label39.Text = "Pending";
-            label39.Refresh();
+            //
+            //the below code block checks if the current known status is either "Waiting Initialization" (which is default" or "Uninstalled"
+            //if the status is NOT either of these the check will not happen.
+            //NOTE: IF THE INSTALL ERRORS AND THE INSTALLED STATUS IS A FALSE POSITIVE THE ONLY WORK AROUND IS TO REINSTALL THE PRE REQ.
+            //
+
+            //Updater Status Check
+            if (label27.Text == "Waiting Initialization")
+            {
+                label27.Text = "Pending";
+                label27.Refresh();
+            }
+            else if (label27.Text == "Uninstalled")
+            {
+                label27.Text = "Pending";
+                label27.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //SQL Compact 4.0 Status Check
+            if (label28.Text == "Waiting Initialization")
+            {
+                label28.Text = "Pending";
+                label28.Refresh();
+            }
+            else if (label28.Text == "Uninstalled")
+            {
+                label28.Text = "Pending";
+                label28.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //32 bit GIS Status Check
+            if (label29.Text == "Waiting Initialization")
+            {
+                label29.Text = "Pending";
+                label29.Refresh();
+            }
+            else if (label29.Text == "Uninstalled")
+            {
+                label29.Text = "Pending";
+                label29.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //64 bit GIS Status Check
+            if (label30.Text == "Waiting Initialization")
+            {
+                label30.Text = "Pending";
+                label30.Refresh();
+            }
+            else if (label30.Text == "Uninstalled")
+            {
+                label30.Text = "Pending";
+                label30.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //32 bit SQL CLR Status Check
+            if (label31.Text == "Waiting Initialization")
+            {
+                label31.Text = "Pending";
+                label31.Refresh();
+            }
+            else if (label31.Text == "Uninstalled")
+            {
+                label31.Text = "Pending";
+                label31.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //64 bit SQL CLR Status Check
+            if (label32.Text == "Waiting Initialization")
+            {
+                label32.Text = "Pending";
+                label32.Refresh();
+            }
+            else if (label32.Text == "Uninstalled")
+            {
+                label32.Text = "Pending";
+                label32.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //32 bit SQL Compact 3.5 Status Check
+            if (label33.Text == "Waiting Initialization")
+            {
+                label33.Text = "Pending";
+                label33.Refresh();
+            }
+            else if (label33.Text == "Uninstalled")
+            {
+                label33.Text = "Pending";
+                label33.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //64 bit SQL Compact 3.5 Status Check
+            if (label34.Text == "Waiting Initialization")
+            {
+                label34.Text = "Pending";
+                label34.Refresh();
+            }
+            else if (label34.Text == "Uninstalled")
+            {
+                label34.Text = "Pending";
+                label34.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //ScenePD Status Check
+            if (label35.Text == "Waiting Initialization")
+            {
+                label35.Text = "Pending";
+                label35.Refresh();
+            }
+            else if (label35.Text == "Uninstalled")
+            {
+                label35.Text = "Pending";
+                label35.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //Hidden
+            if (label36.Text == "Waiting Initialization")
+            {
+                label36.Text = "Pending";
+                label36.Refresh();
+            }
+            else if (label36.Text == "Uninstalled")
+            {
+                label36.Text = "Pending";
+                label36.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //Hidden
+            if (label37.Text == "Waiting Initialization")
+            {
+                label37.Text = "Pending";
+                label37.Refresh();
+            }
+            else if (label37.Text == "Uninstalled")
+            {
+                label37.Text = "Pending";
+                label37.Refresh();
+            }
+            else
+            {
+            }
+
+            ////Hidden
+            if (label38.Text == "Waiting Initialization")
+            {
+                label38.Text = "Pending";
+                label38.Refresh();
+            }
+            else if (label38.Text == "Uninstalled")
+            {
+                label38.Text = "Pending";
+                label38.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            ////Hidden
+            if (label39.Text == "Waiting Initialization")
+            {
+                label39.Text = "Pending";
+                label39.Refresh();
+            }
+            else if (label39.Text == "Uninstalled")
+            {
+                label39.Text = "Pending";
+                label39.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
 
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             ts.Text = "Running Pre Req Checker";
@@ -681,18 +879,43 @@ namespace Mobile_App
             ts.Text = "Mobile Merge is Uninstalled";
             */
 
+            //
+            //The below code block does the actual checking and updating of the status on button click
+            //
+
             //updater check
             try
             {
-                ts.Text = "Checking for Updater";
-
-                if (PreReqChecker("New World Automatic Updater") == true)
+                if (label27.Text == "Pending")
                 {
-                    label27.Text = "Found";
+                    ts.Text = "Checking for Updater";
+
+                    if (PreReqChecker("New World Automatic Updater") == true)
+                    {
+                        label27.Text = "Installed";
+                    }
+                    else
+                    {
+                        label27.Text = "Uninstalled";
+                    }
+                }
+                else if (label27.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for Updater";
+
+                    if (PreReqChecker("New World Automatic Updater") == true)
+                    {
+                        label27.Text = "Installed";
+                    }
+                    else
+                    {
+                        label27.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label27.Text = "Not Found";
+                    ts.Text = "Updater is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -704,32 +927,65 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            //SQL Server COmpact 4.0 Check
+            //SQL Server Compact 4.0 Check
             try
             {
-                ts.Text = "Checking for SQL Server Compact 4.0";
-
-                if (Is64Bit.Checked == true)
+                if (label28.Text == "Pending")
                 {
-                    if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
+                    ts.Text = "Checking for SQL Server Compact 4.0";
+
+                    if (Is64Bit.Checked == true)
                     {
-                        label28.Text = "Found";
+                        if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
+                        {
+                            label28.Text = "Installed";
+                        }
+                        else
+                        {
+                            label28.Text = "Uninstalled";
+                        }
                     }
                     else
                     {
-                        label28.Text = "Not Found";
+                        if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
+                        {
+                            label28.Text = "Installed";
+                        }
+                        else
+                        {
+                            label28.Text = "Uninstalled";
+                        }
+                    }
+                }
+                else if (label28.Text == "Uninstalled")
+                {
+                    if (Is64Bit.Checked == true)
+                    {
+                        if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
+                        {
+                            label28.Text = "Installed";
+                        }
+                        else
+                        {
+                            label28.Text = "Uninstalled";
+                        }
+                    }
+                    else
+                    {
+                        if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
+                        {
+                            label28.Text = "Installed";
+                        }
+                        else
+                        {
+                            label28.Text = "Uninstalled";
+                        }
                     }
                 }
                 else
                 {
-                    if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
-                    {
-                        label28.Text = "Found";
-                    }
-                    else
-                    {
-                        label28.Text = "Not Found";
-                    }
+                    ts.Text = "SQL Compact 4.0 already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -744,15 +1000,36 @@ namespace Mobile_App
             //32 bit GIS check
             try
             {
-                ts.Text = "Checking for 32bit GIS Components";
-
-                if (PreReqChecker("New World GIS Components x86") == true)
+                if (label29.Text == "Pending")
                 {
-                    label29.Text = "Found";
+                    ts.Text = "Checking for 32bit GIS Components";
+
+                    if (PreReqChecker("New World GIS Components x86") == true)
+                    {
+                        label29.Text = "Installed";
+                    }
+                    else
+                    {
+                        label29.Text = "Uninstalled";
+                    }
+                }
+                else if (label29.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for Updater";
+
+                    if (PreReqChecker("New World Automatic Updater") == true)
+                    {
+                        label27.Text = "Installed";
+                    }
+                    else
+                    {
+                        label27.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label29.Text = "Not Found";
+                    ts.Text = "32bit GIS is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -767,15 +1044,36 @@ namespace Mobile_App
             //64bit GIS Check
             try
             {
-                ts.Text = "Checking for 64bit GIS Components";
-
-                if (PreReqChecker("New World GIS Components x64") == true)
+                if (label30.Text == "Pending")
                 {
-                    label30.Text = "Found";
+                    ts.Text = "Checking for 32bit GIS Components";
+
+                    if (PreReqChecker("New World GIS Components x86") == true)
+                    {
+                        label30.Text = "Installed";
+                    }
+                    else
+                    {
+                        label30.Text = "Uninstalled";
+                    }
+                }
+                else if (label30.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for Updater";
+
+                    if (PreReqChecker("New World Automatic Updater") == true)
+                    {
+                        label30.Text = "Installed";
+                    }
+                    else
+                    {
+                        label30.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label30.Text = "Not Found";
+                    ts.Text = "64bit GIS is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -787,41 +1085,39 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            //32bit SQL Server 3.5 SP2 check
+            //32bit SQL Server CLR Types check
             try
             {
-                ts.Text = "Checking for 32bit  SQL Server CLR Types";
-
-                if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
+                if (label31.Text == "Pending")
                 {
-                    label31.Text = "Found";
+                    ts.Text = "Checking for 32bit  SQL Server CLR Types";
+
+                    if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
+                    {
+                        label31.Text = "Installed";
+                    }
+                    else
+                    {
+                        label31.Text = "Uninstalled";
+                    }
+                }
+                else if (label31.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for 32bit  SQL Server CLR Types";
+
+                    if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
+                    {
+                        label31.Text = "Installed";
+                    }
+                    else
+                    {
+                        label31.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label31.Text = "Not Found";
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //32bit SQL ServerCLR Types check
-            try
-            {
-                ts.Text = "Checking for 64bit  SQL Server CLR Types";
-
-                if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
-                {
-                    label32.Text = "Found";
-                }
-                else
-                {
-                    label32.Text = "Not Found";
+                    ts.Text = "32bit SQL CLR Types is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -836,15 +1132,36 @@ namespace Mobile_App
             //64bit SQL ServerCLR Types check
             try
             {
-                ts.Text = "Checking for 32bit  SQL Server Compact 3.5 SP2";
-
-                if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
+                if (label32.Text == "Pending")
                 {
-                    label33.Text = "Found";
+                    ts.Text = "Checking for 64bit  SQL Server CLR Types";
+
+                    if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
+                    {
+                        label32.Text = "Installed";
+                    }
+                    else
+                    {
+                        label32.Text = "Uninstalled";
+                    }
+                }
+                else if (label32.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for 64bit  SQL Server CLR Types";
+
+                    if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
+                    {
+                        label32.Text = "Installed";
+                    }
+                    else
+                    {
+                        label32.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label33.Text = "Not Found";
+                    ts.Text = "64 bit SQL CLR Types is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -856,18 +1173,83 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            //64 SQL server 3.5 sp2 check
+            //32bit SQL Server 3.5 SP2 check
             try
             {
-                ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
-
-                if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
+                if (label33.Text == "Pending")
                 {
-                    label34.Text = "Found";
+                    ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
+
+                    if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
+                    {
+                        label33.Text = "Installed";
+                    }
+                    else
+                    {
+                        label33.Text = "Uninstalled";
+                    }
+                }
+                else if (label33.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
+
+                    if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
+                    {
+                        label33.Text = "Installed";
+                    }
+                    else
+                    {
+                        label33.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label34.Text = "Not Found";
+                    ts.Text = "32 bit SQL Server 3.5 SP2 is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            //64 SQL server 3.5 SP2 check
+            try
+            {
+                if (label34.Text == "Pending")
+                {
+                    ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
+
+                    if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
+                    {
+                        label34.Text = "Installed";
+                    }
+                    else
+                    {
+                        label34.Text = "Uninstalled";
+                    }
+                }
+                else if (label34.Text == "Uninstalled")
+                {
+                    ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
+
+                    if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
+                    {
+                        label34.Text = "Installed";
+                    }
+                    else
+                    {
+                        label34.Text = "Uninstalled";
+                    }
+                }
+                else
+                {
+                    ts.Text = "64 bit SQL Server 3.5 SP2 is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -882,28 +1264,62 @@ namespace Mobile_App
             //scene PD check
             try
             {
-                ts.Text = "Checking for ScenePD";
-
-                if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
+                if (label35.Text == "Pending")
                 {
-                    label36.Text = "Scene PD 6 Found";
+                    ts.Text = "Checking for ScenePD";
 
-                    if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
+                    if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
                     {
-                        label36.Text = "Scene PD 6, ActiveX Found";
+                        label35.Text = "Scene PD 6 Installed";
+
+                        if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
+                        {
+                            label35.Text = "Scene PD 6, ActiveX Installed";
+                        }
+                        else
+                        {
+                            label35.Text = "Scene PD 6 Installed, ActiveX not";
+                        }
+                    }
+                    else if (PreReqChecker("ScenePD 4") == true)
+                    {
+                        label35.Text = "ScenePD 4 Installed";
                     }
                     else
                     {
-                        label35.Text = "Scene PD 6 Found, ActiveX not";
+                        label35.Text = "Uninstalled";
                     }
                 }
-                else if (PreReqChecker("ScenePD 4") == true)
+                else if (label35.Text == "Uninstalled")
                 {
-                    label35.Text = "ScenePD 4 Found";
+                    ts.Text = "Checking for ScenePD";
+
+                    if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
+                    {
+                        label35.Text = "Scene PD 6 Installed";
+
+                        if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
+                        {
+                            label35.Text = "Scene PD 6, ActiveX Installed";
+                        }
+                        else
+                        {
+                            label35.Text = "Scene PD 6 Installed, ActiveX not";
+                        }
+                    }
+                    else if (PreReqChecker("ScenePD 4") == true)
+                    {
+                        label35.Text = "ScenePD 4 Installed";
+                    }
+                    else
+                    {
+                        label35.Text = "Uninstalled";
+                    }
                 }
                 else
                 {
-                    label35.Text = "Not Found";
+                    ts.Text = "ScenePD is already installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
             }
             catch (Exception ex)
@@ -1709,6 +2125,8 @@ namespace Mobile_App
             proc.Start();
             proc.WaitForExit();
 
+            InstallChecker(ProgramName);
+
             if (proc.ExitCode == 0)
             {
                 string LogEntry2 = DateTime.Now + " " + ProgramName + " was ran successfully.";
@@ -1742,6 +2160,8 @@ namespace Mobile_App
 
             proc.Start();
             proc.WaitForExit();
+
+            InstallChecker(PreReqName);
 
             if (proc.ExitCode == 0)
             {
@@ -1785,6 +2205,8 @@ namespace Mobile_App
                             string LogEntry1 = DateTime.Now + " " + ProgramName + " has been uninstalled";
 
                             LogEntryWriter(LogEntry1);
+
+                            UninstallChecker(ProgramName);
                             return true;
                         }
                     }
@@ -1799,9 +2221,11 @@ namespace Mobile_App
                 }
             }
 
-            string LogEntry3 = DateTime.Now + " " + ProgramName + " was not uninstalled. It was either not installed or detected.";
+            string LogEntry3 = DateTime.Now + " " + ProgramName + " was not found. It was either not installed or detected.";
 
             LogEntryWriter(LogEntry3);
+
+            UninstallChecker(ProgramName);
 
             //not found
             return false;
@@ -2112,30 +2536,38 @@ namespace Mobile_App
                     {
                         MobileCopy(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 4.0");
 
-                        // Source file to be renamed
-                        string sourceFile = @"C:\Temp\MobileInstaller\SSCERuntime_x86-ENU.exe";
-                        // Create a FileInfo
-                        FileInfo fi = new FileInfo(sourceFile);
-                        // Check if file is there
-                        if (fi.Exists)
+                        try
                         {
-                            // Move file with a new name. Hence renamed.
-                            fi.MoveTo(@"C:\Temp\MobileInstaller\SSCERuntime_x86-ENU-4.0.exe");
+                            // Source file to be renamed
+                            string sourceFile = @"C:\Temp\MobileInstaller\SSCERuntime_x86-ENU.exe";
+                            // Create a FileInfo
+                            FileInfo fi = new FileInfo(sourceFile);
+                            // Check if file is there
+                            if (fi.Exists)
+                            {
+                                // Move file with a new name. Hence renamed.
+                                fi.MoveTo(@"C:\Temp\MobileInstaller\SSCERuntime_x86-ENU-4.0.exe");
 
-                            string LogEntry2 = DateTime.Now + " " + sourceFile + " was renamed to SSCERuntime_x86-ENU-4.0.exe";
-                            LogEntryWriter(LogEntry2);
+                                string LogEntry2 = DateTime.Now + " " + sourceFile + " was renamed to SSCERuntime_x86-ENU-4.0.exe";
+                                LogEntryWriter(LogEntry2);
+                            }
+                            string sourceFile1 = @"C:\Temp\MobileInstaller\SSCERuntime_x64-ENU.exe";
+                            // Create a FileInfo
+                            System.IO.FileInfo fi1 = new FileInfo(sourceFile1);
+                            // Check if file is there
+                            if (fi1.Exists)
+                            {
+                                // Move file with a new name. Hence renamed.
+                                fi1.MoveTo(@"C:\Temp\MobileInstaller\SSCERuntime_x64-ENU-4.0.exe");
+
+                                string LogEntry3 = DateTime.Now + " " + sourceFile1 + " was renamed to SSCERuntime_x64-ENU-4.0.exe";
+                                LogEntryWriter(LogEntry3);
+                            }
                         }
-                        string sourceFile1 = @"C:\Temp\MobileInstaller\SSCERuntime_x64-ENU.exe";
-                        // Create a FileInfo
-                        System.IO.FileInfo fi1 = new FileInfo(sourceFile1);
-                        // Check if file is there
-                        if (fi1.Exists)
+                        catch (Exception ex)
                         {
-                            // Move file with a new name. Hence renamed.
-                            fi1.MoveTo(@"C:\Temp\MobileInstaller\SSCERuntime_x64-ENU-4.0.exe");
-
-                            string LogEntry3 = DateTime.Now + " " + sourceFile1 + " was renamed to SSCERuntime_x64-ENU-4.0.exe";
-                            LogEntryWriter(LogEntry3);
+                            string LogEntry1 = DateTime.Now + " " + ex.ToString();
+                            LogEntryWriter(LogEntry1);
                         }
                     }
                     else
@@ -2492,6 +2924,8 @@ namespace Mobile_App
             }
         }
 
+        //Tab2 Code
+
         //itemized uninstall steps
         private void CustomUninstallRun()
         {
@@ -2586,10 +3020,8 @@ namespace Mobile_App
                 UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
 
                 UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
-                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
 
-                ts.Text = "SQL Service Compact is Uninstalled/Check Complete";
+                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
             }
 
@@ -2600,6 +3032,7 @@ namespace Mobile_App
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
                 UninstallProgram("New World Automatic Updater");
+                label27.Text = "Uninstalled";
 
                 ts.Text = "Updater was Uninstalled/Check Complete";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -2831,8 +3264,86 @@ namespace Mobile_App
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
             }
 
-            //Restart Machine
+            //remove SQL compact 4.0
             if (CustomUninstallOptions.GetItemCheckState(10) == CheckState.Checked)
+            {
+                //64 bit
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "uninstalling SQL Server Compact 4.0 x64";
+                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+
+                    UninstallProgram("Microsoft SQL Server Compact 4.0 x64 ENU");
+
+                    ts.Text = "SQL Compact 4.0 was Uninstalled";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+
+                //32 bit
+                else
+                {
+                    ts.Text = "uninstalling SQL Server Compact 4.0 x86";
+                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+
+                    UninstallProgram("Microsoft SQL Server Compact 4.0 ENU");
+
+                    ts.Text = "SQL Compact 4.0 was Uninstalled";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+            }
+
+            //uninstall scene pd and active x controller
+            if (CustomUninstallOptions.GetItemCheckState(11) == CheckState.Checked)
+            {
+                ts.Text = "uninstalling ScenePD";
+                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+
+                UninstallProgram("ScenePD 6 ActiveX Control");
+                UninstallProgram("ScenePD 6 Desktop Edition");
+
+                ts.Text = "ScenePD has been Uninstalled";
+                ts.ForeColor = System.Drawing.Color.ForestGreen;
+            }
+
+            //Uninstall CAD Incident Observer
+            if (CustomUninstallOptions.GetItemCheckState(12) == CheckState.Checked)
+            {
+                ts.Text = "uninstalling CAD Incident Observer Client";
+                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+
+                UninstallProgram("New World Enterprise CAD Incident Observer Client");
+
+                ts.Text = "CAD Incident Observer has been Uninstalled";
+                ts.ForeColor = System.Drawing.Color.ForestGreen;
+            }
+
+            //Uninstall SQL CLR Types
+            if (CustomUninstallOptions.GetItemCheckState(13) == CheckState.Checked)
+            {
+                ts.Text = "uninstalling SQL CLR Types";
+                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+
+                //64 bit
+                if (Is64Bit.Checked == true)
+                {
+                    UninstallProgram("Microsoft SQL Server System CLR Types (x64)");
+
+                    UninstallProgram("Microsoft SQL Server System CLR Types");
+
+                    ts.Text = "SQL CLR Types has been Uninstalled";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                else
+                {
+                    UninstallProgram("Microsoft SQL Server System CLR Types");
+
+                    ts.Text = "SQL CLR Types has been Uninstalled";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+            }
+
+            //Restart Machine
+            if (CustomUninstallOptions.GetItemCheckState(14) == CheckState.Checked)
             {
                 ts.Text = "Shutting Down PC";
                 ts.ForeColor = System.Drawing.Color.OrangeRed;
@@ -3269,7 +3780,7 @@ namespace Mobile_App
                         else
                         {
                             ts.Text = "Running 4.8 .Net";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
                                 InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -4449,29 +4960,9 @@ namespace Mobile_App
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
             }
 
-            //Install CAD Management Client
-            if (CustomInstallOption.GetItemCheckState(9) == CheckState.Checked)
-            {
-                ts.Text = "Installing CAD Management Client";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
-
-                string LogEntry = DateTime.Now + @" Attempting to install the CAD Management Client";
-
-                LogEntryWriter(LogEntry);
-
-                InstallProgram("NewWorld.Enterprise.CAD.ManagementClient.x64.msi", @"C:\Temp\MobileInstaller");
-
-                string LogEntry1 = DateTime.Now + @" CAD Management Client Installed";
-
-                LogEntryWriter(LogEntry1);
-
-                ts.Text = "CAD Management Client is Installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
-            }
-
             //Install ScenePD
             //this will show a prompt to install scene pd
-            if (CustomInstallOption.GetItemCheckState(10) == CheckState.Checked)
+            if (CustomInstallOption.GetItemCheckState(9) == CheckState.Checked)
             {
                 //will check for scene pd 6 before displaying install prompt
                 // If scenepd 6 install is denied this will check for scene pd 4 before displaying install prompt
@@ -4683,8 +5174,77 @@ namespace Mobile_App
                 }
             }
 
-            //Restart Machine
+            //Install SQL Compact 4.0
+            //this will show a prompt to install SQL Compact 4.0
+            if (CustomInstallOption.GetItemCheckState(10) == CheckState.Checked)
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    ts.Text = "Running 64 bit SQL Runtime";
+                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    try
+                    {
+                        RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+
+                        ts.Text = "SQL Compact 4.0 Installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
+                    }
+                }
+                else
+                {
+                    ts.Text = "Running 32bit SQL Runtime";
+                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    try
+                    {
+                        RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+
+                        ts.Text = "ScenePD 6 Installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
+                    }
+                }
+            }
+
+            //Install VS 2010
+            //this will install VS 2010 tools
             if (CustomInstallOption.GetItemCheckState(11) == CheckState.Checked)
+            {
+                ts.Text = "Running Primary Interop Assemblies for Office";
+                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                try
+                {
+                    InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "VS 2010 Tools Installed Installed";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+
+            //Restart Machine
+            if (CustomInstallOption.GetItemCheckState(12) == CheckState.Checked)
             {
                 ts.Text = "Shutting Down PC";
                 ts.ForeColor = System.Drawing.Color.OrangeRed;
@@ -5135,7 +5695,7 @@ namespace Mobile_App
             }
         }
 
-        //Updater utility code
+        //Updater utility code - Tab 3
 
         //work done to add the police client to the updater config file
         private void PoliceClientSub()
@@ -5510,6 +6070,393 @@ namespace Mobile_App
 
             //no found
             return false;
+        }
+
+        //used to modify the pre req checker tab from the Uninstall function
+        private void UninstallChecker(string ProgramName)
+        {
+            if (ProgramName.ToString() == "New World Automatic Updater")
+            {
+                try
+                {
+                    label27.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for Automatic Updater - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "Microsoft SQL Server Compact 4.0 x64 ENU")
+            {
+                try
+                {
+                    label28.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for SQL Compact 4.0 64bit - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "Microsoft SQL Server Compact 4.0 ENU")
+            {
+                try
+                {
+                    label28.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for SQL Compact 4.0 32bit - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "New World GIS Components x86")
+            {
+                try
+                {
+                    label29.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit GIS Components - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "New World GIS Components x64")
+            {
+                try
+                {
+                    label30.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit GIS Components - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "Microsoft SQL Server System CLR Types")
+            {
+                try
+                {
+                    label31.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Server CLR Types - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "Microsoft SQL Server System CLR Types (x64)")
+            {
+                try
+                {
+                    label32.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Server CLR Types - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "Microsoft SQL Server Compact 3.5 SP2 ENU")
+            {
+                try
+                {
+                    label33.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Server Compact 3.5 SP2 - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "Microsoft SQL Server Compact 3.5 SP2 x64 ENU")
+            {
+                try
+                {
+                    label34.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Server Compact 3.5 SP2 - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "ScenePD 6 Desktop Edition")
+            {
+                try
+                {
+                    label35.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "ScenePD 6 ActiveX Control")
+            {
+                try
+                {
+                    label35.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 ActiveX Control - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "ScenePD 4")
+            {
+                try
+                {
+                    label35.Text = "Uninstalled";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 4 - UNINSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+        }
+
+        //designed to modify the pre req checker tab from the run/install function
+        private void InstallChecker(string ProgramName)
+        {
+            if (ProgramName.ToString() == "NewWorld.Management.Updater.msi")
+            {
+                try
+                {
+                    label27.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for Automatic Updater - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SSCERuntime_x64-ENU-4.0.exe")
+            {
+                try
+                {
+                    label28.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Compact 4.0 - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SSCERuntime_x86-ENU-4.0.exe")
+            {
+                try
+                {
+                    label28.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Compact 4.0 - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "NewWorld.Gis.Components.x86.msi")
+            {
+                try
+                {
+                    label29.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit GIS Components - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "NewWorld.Gis.Components.x64.msi")
+            {
+                try
+                {
+                    label30.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit GIS Components - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SQLSysClrTypesx86.msi")
+            {
+                try
+                {
+                    label31.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL CLR Types - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SQLSysClrTypesx64.msi")
+            {
+                try
+                {
+                    label32.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL CLR Types - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SSCERuntime_x86-ENU.msi")
+            {
+                try
+                {
+                    label33.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Compact 3.5 SP2 - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SSCERuntime_x64-ENU.msi")
+            {
+                try
+                {
+                    label34.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Compact 3.5 SP2 - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "SPD6-4-8993.exe")
+            {
+                try
+                {
+                    label35.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+
+            if (ProgramName.ToString() == "NewWorld.Management.Updater.msi")
+            {
+                try
+                {
+                    label35.Text = "Installed";
+
+                    string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 AcetiveX Controller - INSTALLED";
+                    LogEntryWriter(logentry1);
+                }
+                catch (Exception ex)
+                {
+                    string logentry2 = DateTime.Now + " " + ex.ToString();
+                    LogEntryWriter(logentry2);
+                }
+            }
+        }
+
+        private void PreInstallChcker(string ProgramName)
+        {
+            /*
+             *
+             * this code block will be for installation processes to reference the known status of pre reqs.
+             * If status is unknown installs will work as normal
+             *
+             *
+             */
         }
     }
 }
