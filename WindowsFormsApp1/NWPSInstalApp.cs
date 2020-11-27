@@ -649,7 +649,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " New World Automatic Updater is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -666,7 +666,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " SQL Compact 4.0 is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -683,7 +683,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -700,7 +700,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 64 bit GIS Components is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -717,7 +717,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 32 bit SQL CLR Types is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -734,7 +734,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 64 bit SQL CLR Tyes is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -751,7 +751,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -768,7 +768,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 64 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -785,7 +785,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " ScenePD is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -1372,10 +1372,25 @@ namespace Mobile_App
             UninstallProgram("New World GIS Components");
 
             ts.Text = "Uninstalling GIS - New";
-            UninstallProgram("New World GIS Components x64");
+            if (label29.Text != "Uninstalled")
+            {
+                UninstallProgram("New World GIS Components x64");
+            }
+            else
+            {
+                ts.Text = "64bit GIS Compnents already Uninstalled";
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
 
-            UninstallProgram("New World GIS Components x86");
-            ts.Text = "GIS is Uninstalled";
+            if (label28.Text != "")
+            {
+                UninstallProgram("New World GIS Components x86");
+                ts.Text = "GIS is Uninstalled";
+            }
+            else
+            {
+            }
 
             ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
             UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
