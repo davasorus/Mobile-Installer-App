@@ -630,272 +630,10 @@ namespace Mobile_App
             ProgressBar.Visible = false;
             ProgressBar.Enabled = false;
 
-            //
-            //the below code block checks if the current known status is either "Waiting Initialization" (which is default" or "Uninstalled"
-            //if the status is NOT either of these the check will not happen.
-            //NOTE: IF THE INSTALL ERRORS AND THE INSTALLED STATUS IS A FALSE POSITIVE THE ONLY WORK AROUND IS TO REINSTALL THE PRE REQ.
-            //
-
-            //Updater Status Check
-            if (label27.Text == "Waiting Initialization")
-            {
-                label27.Text = "Pending";
-                label27.ForeColor = Color.DarkSlateBlue;
-                label27.Refresh();
-            }
-            else if (label27.Text == "Uninstalled")
-            {
-                label27.Text = "Pending";
-                label27.ForeColor = Color.DarkSlateBlue;
-                label27.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " New World Automatic Updater is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //SQL Compact 4.0 Status Check
-            if (label28.Text == "Waiting Initialization")
-            {
-                label28.Text = "Pending";
-                label28.ForeColor = Color.DarkSlateBlue;
-                label28.Refresh();
-            }
-            else if (label28.Text == "Uninstalled")
-            {
-                label28.Text = "Pending";
-                label28.ForeColor = Color.DarkSlateBlue;
-                label28.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " SQL Compact 4.0 is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //32 bit GIS Status Check
-            if (label29.Text == "Waiting Initialization")
-            {
-                label29.Text = "Pending";
-                label29.ForeColor = Color.DarkSlateBlue;
-                label29.Refresh();
-            }
-            else if (label29.Text == "Uninstalled")
-            {
-                label29.Text = "Pending";
-                label29.ForeColor = Color.DarkSlateBlue;
-                label29.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //64 bit GIS Status Check
-            if (label30.Text == "Waiting Initialization")
-            {
-                label30.Text = "Pending";
-                label30.ForeColor = Color.DarkSlateBlue;
-                label30.Refresh();
-            }
-            else if (label30.Text == "Uninstalled")
-            {
-                label30.Text = "Pending";
-                label30.ForeColor = Color.DarkSlateBlue;
-                label30.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " 64 bit GIS Components is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //32 bit SQL CLR Status Check
-            if (label31.Text == "Waiting Initialization")
-            {
-                label31.Text = "Pending";
-                label31.ForeColor = Color.DarkSlateBlue;
-                label31.Refresh();
-            }
-            else if (label31.Text == "Uninstalled")
-            {
-                label31.Text = "Pending";
-                label31.ForeColor = Color.DarkSlateBlue;
-                label31.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " 32 bit SQL CLR Types is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //64 bit SQL CLR Status Check
-            if (label32.Text == "Waiting Initialization")
-            {
-                label32.Text = "Pending";
-                label32.ForeColor = Color.DarkSlateBlue;
-                label32.Refresh();
-            }
-            else if (label32.Text == "Uninstalled")
-            {
-                label32.Text = "Pending";
-                label32.ForeColor = Color.DarkSlateBlue;
-                label32.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " 64 bit SQL CLR Tyes is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //32 bit SQL Compact 3.5 Status Check
-            if (label33.Text == "Waiting Initialization")
-            {
-                label33.Text = "Pending";
-                label33.ForeColor = Color.DarkSlateBlue;
-                label33.Refresh();
-            }
-            else if (label33.Text == "Uninstalled")
-            {
-                label33.Text = "Pending";
-                label33.ForeColor = Color.DarkSlateBlue;
-                label33.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //64 bit SQL Compact 3.5 Status Check
-            if (label34.Text == "Waiting Initialization")
-            {
-                label34.Text = "Pending";
-                label34.ForeColor = Color.DarkSlateBlue;
-                label34.Refresh();
-            }
-            else if (label34.Text == "Uninstalled")
-            {
-                label34.Text = "Pending";
-                label34.ForeColor = Color.DarkSlateBlue;
-                label34.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " 64 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //ScenePD Status Check
-            if (label35.Text == "Waiting Initialization")
-            {
-                label35.Text = "Pending";
-                label35.ForeColor = Color.DarkSlateBlue;
-                label35.Refresh();
-            }
-            else if (label35.Text == "Uninstalled")
-            {
-                label35.Text = "Pending";
-                label35.ForeColor = Color.DarkSlateBlue;
-                label35.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " ScenePD is already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //Hidden
-            if (label36.Text == "Waiting Initialization")
-            {
-                label36.Text = "Pending";
-                label36.Refresh();
-            }
-            else if (label36.Text == "Uninstalled")
-            {
-                label36.Text = "Pending";
-                label36.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            //Hidden
-            if (label37.Text == "Waiting Initialization")
-            {
-                label37.Text = "Pending";
-                label37.Refresh();
-            }
-            else if (label37.Text == "Uninstalled")
-            {
-                label37.Text = "Pending";
-                label37.Refresh();
-            }
-            else
-            {
-            }
-
-            ////Hidden
-            if (label38.Text == "Waiting Initialization")
-            {
-                label38.Text = "Pending";
-                label38.Refresh();
-            }
-            else if (label38.Text == "Uninstalled")
-            {
-                label38.Text = "Pending";
-                label38.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
-
-            ////Hidden
-            if (label39.Text == "Waiting Initialization")
-            {
-                label39.Text = "Pending";
-                label39.Refresh();
-            }
-            else if (label39.Text == "Uninstalled")
-            {
-                label39.Text = "Pending";
-                label39.Refresh();
-            }
-            else
-            {
-                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
-                LogEntryWriter(logentry1);
-            }
+            PreInstallChcker();
 
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             ts.Text = "Running Pre Req Checker";
-
-            //hidden until finding clients is needed
-            /*
-            ts.Text = "Checking to uninstall Police Mobile";
-            PreReqChecker("Aegis Mobile");
-
-            PreReqChecker("Law Enforcement Mobile");
-            ts.Text = "Police Mobile is Uninstalled";
-
-            ts.Text = "Checking to uninstall Fire Mobile";
-            PreReqChecker("Aegis Fire Mobile");
-
-            PreReqChecker("Fire Mobile");
-            ts.Text = "Fire Mobile is Uninstalled";
-
-            ts.Text = "Checking to uninstall Mobile Merge";
-            PreReqChecker("Aegis Mobile Merge");
-
-            PreReqChecker("Mobile Merge");
-            ts.Text = "Mobile Merge is Uninstalled";
-            */
 
             //
             //The below code block does the actual checking and updating of the status on button click
@@ -1088,7 +826,7 @@ namespace Mobile_App
                     ts.Text = "Checking for 32bit GIS Components";
                     ts.ForeColor = Color.DarkSlateBlue;
 
-                    if (PreReqChecker("New World GIS Components x86") == true)
+                    if (PreReqChecker("New World GIS Components x64") == true)
                     {
                         label30.Text = "Installed";
                         label30.ForeColor = System.Drawing.Color.ForestGreen;
@@ -6600,15 +6338,270 @@ namespace Mobile_App
             }
         }
 
-        private void PreInstallChcker(string ProgramName)
+        private void PreInstallChcker()
         {
+            //hidden until finding clients is needed
             /*
-             *
-             * this code block will be for installation processes to reference the known status of pre reqs.
-             * If status is unknown installs will work as normal
-             *
-             *
-             */
+            ts.Text = "Checking to uninstall Police Mobile";
+            PreReqChecker("Aegis Mobile");
+
+            PreReqChecker("Law Enforcement Mobile");
+            ts.Text = "Police Mobile is Uninstalled";
+
+            ts.Text = "Checking to uninstall Fire Mobile";
+            PreReqChecker("Aegis Fire Mobile");
+
+            PreReqChecker("Fire Mobile");
+            ts.Text = "Fire Mobile is Uninstalled";
+
+            ts.Text = "Checking to uninstall Mobile Merge";
+            PreReqChecker("Aegis Mobile Merge");
+
+            PreReqChecker("Mobile Merge");
+            ts.Text = "Mobile Merge is Uninstalled";
+            */
+            //
+            //the below code block checks if the current known status is either "Waiting Initialization" (which is default" or "Uninstalled"
+            //if the status is NOT either of these the check will not happen.
+            //NOTE: IF THE INSTALL ERRORS AND THE INSTALLED STATUS IS A FALSE POSITIVE THE ONLY WORK AROUND IS TO REINSTALL THE PRE REQ.
+            //
+
+            //Updater Status Check
+            if (label27.Text == "Waiting Initialization")
+            {
+                label27.Text = "Pending";
+                label27.ForeColor = Color.DarkSlateBlue;
+                label27.Refresh();
+            }
+            else if (label27.Text == "Uninstalled")
+            {
+                label27.Text = "Pending";
+                label27.ForeColor = Color.DarkSlateBlue;
+                label27.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " New World Automatic Updater is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //SQL Compact 4.0 Status Check
+            if (label28.Text == "Waiting Initialization")
+            {
+                label28.Text = "Pending";
+                label28.ForeColor = Color.DarkSlateBlue;
+                label28.Refresh();
+            }
+            else if (label28.Text == "Uninstalled")
+            {
+                label28.Text = "Pending";
+                label28.ForeColor = Color.DarkSlateBlue;
+                label28.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " SQL Compact 4.0 is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //32 bit GIS Status Check
+            if (label29.Text == "Waiting Initialization")
+            {
+                label29.Text = "Pending";
+                label29.ForeColor = Color.DarkSlateBlue;
+                label29.Refresh();
+            }
+            else if (label29.Text == "Uninstalled")
+            {
+                label29.Text = "Pending";
+                label29.ForeColor = Color.DarkSlateBlue;
+                label29.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //64 bit GIS Status Check
+            if (label30.Text == "Waiting Initialization")
+            {
+                label30.Text = "Pending";
+                label30.ForeColor = Color.DarkSlateBlue;
+                label30.Refresh();
+            }
+            else if (label30.Text == "Uninstalled")
+            {
+                label30.Text = "Pending";
+                label30.ForeColor = Color.DarkSlateBlue;
+                label30.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " 64 bit GIS Components is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //32 bit SQL CLR Status Check
+            if (label31.Text == "Waiting Initialization")
+            {
+                label31.Text = "Pending";
+                label31.ForeColor = Color.DarkSlateBlue;
+                label31.Refresh();
+            }
+            else if (label31.Text == "Uninstalled")
+            {
+                label31.Text = "Pending";
+                label31.ForeColor = Color.DarkSlateBlue;
+                label31.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " 32 bit SQL CLR Types is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //64 bit SQL CLR Status Check
+            if (label32.Text == "Waiting Initialization")
+            {
+                label32.Text = "Pending";
+                label32.ForeColor = Color.DarkSlateBlue;
+                label32.Refresh();
+            }
+            else if (label32.Text == "Uninstalled")
+            {
+                label32.Text = "Pending";
+                label32.ForeColor = Color.DarkSlateBlue;
+                label32.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " 64 bit SQL CLR Tyes is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //32 bit SQL Compact 3.5 Status Check
+            if (label33.Text == "Waiting Initialization")
+            {
+                label33.Text = "Pending";
+                label33.ForeColor = Color.DarkSlateBlue;
+                label33.Refresh();
+            }
+            else if (label33.Text == "Uninstalled")
+            {
+                label33.Text = "Pending";
+                label33.ForeColor = Color.DarkSlateBlue;
+                label33.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //64 bit SQL Compact 3.5 Status Check
+            if (label34.Text == "Waiting Initialization")
+            {
+                label34.Text = "Pending";
+                label34.ForeColor = Color.DarkSlateBlue;
+                label34.Refresh();
+            }
+            else if (label34.Text == "Uninstalled")
+            {
+                label34.Text = "Pending";
+                label34.ForeColor = Color.DarkSlateBlue;
+                label34.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " 64 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //ScenePD Status Check
+            if (label35.Text == "Waiting Initialization")
+            {
+                label35.Text = "Pending";
+                label35.ForeColor = Color.DarkSlateBlue;
+                label35.Refresh();
+            }
+            else if (label35.Text == "Uninstalled")
+            {
+                label35.Text = "Pending";
+                label35.ForeColor = Color.DarkSlateBlue;
+                label35.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " ScenePD is already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //Hidden
+            if (label36.Text == "Waiting Initialization")
+            {
+                label36.Text = "Pending";
+                label36.Refresh();
+            }
+            else if (label36.Text == "Uninstalled")
+            {
+                label36.Text = "Pending";
+                label36.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            //Hidden
+            if (label37.Text == "Waiting Initialization")
+            {
+                label37.Text = "Pending";
+                label37.Refresh();
+            }
+            else if (label37.Text == "Uninstalled")
+            {
+                label37.Text = "Pending";
+                label37.Refresh();
+            }
+            else
+            {
+            }
+
+            ////Hidden
+            if (label38.Text == "Waiting Initialization")
+            {
+                label38.Text = "Pending";
+                label38.Refresh();
+            }
+            else if (label38.Text == "Uninstalled")
+            {
+                label38.Text = "Pending";
+                label38.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
+
+            ////Hidden
+            if (label39.Text == "Waiting Initialization")
+            {
+                label39.Text = "Pending";
+                label39.Refresh();
+            }
+            else if (label39.Text == "Uninstalled")
+            {
+                label39.Text = "Pending";
+                label39.Refresh();
+            }
+            else
+            {
+                string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
         }
     }
 }
