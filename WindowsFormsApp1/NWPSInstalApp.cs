@@ -1325,7 +1325,13 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                if (label34.Text != "Installed")
+                {
+                    InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "64 bit SQL Compact 3.5 SP2 has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
             }
             catch (Exception ex)
             {
@@ -1340,7 +1346,13 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                if (label29.Text != "Installed")
+                {
+                    InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "32 bit GIS has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
             }
             catch (Exception ex)
             {
@@ -1355,7 +1367,13 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                if (label30.Text != "Installed")
+                {
+                    InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "64 bit GIS has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
             }
             catch (Exception ex)
             {
@@ -1415,7 +1433,13 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                if (label27.Text != "Installed")
+                {
+                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "Installer has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
             }
             catch (Exception ex)
             {
@@ -2871,9 +2895,25 @@ namespace Mobile_App
 
                 ts.Text = "Uninstalling GIS - New";
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
-                UninstallProgram("New World GIS Components x64");
+                if (label30.Text != "Uninstalled")
+                {
+                    UninstallProgram("New World GIS Components x64");
+                }
+                else
+                {
+                    string Logentry1 = DateTime.Now + " New World GIS Components x64 is already uninstalled. This step was skipped.";
+                    LogEntryWriter(Logentry1);
+                }
 
-                UninstallProgram("New World GIS Components x86");
+                if (label29.Text != "Uninstalled")
+                {
+                    UninstallProgram("New World GIS Components x86");
+                }
+                else
+                {
+                    string Logentry2 = DateTime.Now + " New World GIS Components x86 is already Uninstalled. This step as skipped.";
+                    LogEntryWriter(Logentry2);
+                }
 
                 ts.Text = "GIS Components are Uninstalled/Check Complete";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -2884,9 +2924,25 @@ namespace Mobile_App
             {
                 ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
-                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
+                if (label34.Text != "Uninstalled")
+                {
+                    UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
+                }
+                else
+                {
+                    string Logentry1 = DateTime.Now + "64 bit SQL Compact 4.5 is already uninstalled. This step was skipped.";
+                    LogEntryWriter(Logentry1);
+                }
 
-                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
+                if (label33.Text != "Uninstalled")
+                {
+                    UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
+                }
+                else
+                {
+                    string Logentry2 = DateTime.Now + "32bit SQL Compact 3.5 is already uninstalled. This step was skipped.";
+                    LogEntryWriter(Logentry2);
+                }
 
                 ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -2898,8 +2954,15 @@ namespace Mobile_App
                 ts.Text = "Uninstalling New World Automatic Updater";
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
-                UninstallProgram("New World Automatic Updater");
-                label27.Text = "Uninstalled";
+                if (label27.Text != "Uninstalled")
+                {
+                    UninstallProgram("New World Automatic Updater");
+                }
+                else
+                {
+                    string Logentry1 = DateTime.Now + "New World Automatic Updater is already uninstalled. This step was skipped.";
+                    LogEntryWriter(Logentry1);
+                }
 
                 ts.Text = "Updater was Uninstalled/Check Complete";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -3140,7 +3203,15 @@ namespace Mobile_App
                     ts.Text = "uninstalling SQL Server Compact 4.0 x64";
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
-                    UninstallProgram("Microsoft SQL Server Compact 4.0 x64 ENU");
+                    if (label28.Text != "Uninstalled")
+                    {
+                        UninstallProgram("Microsoft SQL Server Compact 4.0 x64 ENU");
+                    }
+                    else
+                    {
+                        string Logentry1 = DateTime.Now + "64bit SQL Compact 4.0 is already uninstalled. This step was skipped.";
+                        LogEntryWriter(Logentry1);
+                    }
 
                     ts.Text = "SQL Compact 4.0 was Uninstalled";
                     ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -3152,7 +3223,15 @@ namespace Mobile_App
                     ts.Text = "uninstalling SQL Server Compact 4.0 x86";
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
-                    UninstallProgram("Microsoft SQL Server Compact 4.0 ENU");
+                    if (label28.Text != "Uninstalled")
+                    {
+                        UninstallProgram("Microsoft SQL Server Compact 4.0 ENU");
+                    }
+                    else
+                    {
+                        string Logentry1 = DateTime.Now + "32bit SQL Compact 4.0 is already uninstalled. This step was skipped.";
+                        LogEntryWriter(Logentry1);
+                    }
 
                     ts.Text = "SQL Compact 4.0 was Uninstalled";
                     ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -3165,8 +3244,11 @@ namespace Mobile_App
                 ts.Text = "uninstalling ScenePD";
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
 
-                UninstallProgram("ScenePD 6 ActiveX Control");
-                UninstallProgram("ScenePD 6 Desktop Edition");
+                if (label35.Text != "Uninstalled")
+                {
+                    UninstallProgram("ScenePD 6 ActiveX Control");
+                    UninstallProgram("ScenePD 6 Desktop Edition");
+                }
 
                 ts.Text = "ScenePD has been Uninstalled";
                 ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -3193,16 +3275,34 @@ namespace Mobile_App
                 //64 bit
                 if (Is64Bit.Checked == true)
                 {
-                    UninstallProgram("Microsoft SQL Server System CLR Types (x64)");
+                    if (label32.Text != "Uninstalled")
+                    {
+                        UninstallProgram("Microsoft SQL Server System CLR Types (x64)");
+                    }
+                    else
+                    {
+                        string Logentry1 = DateTime.Now + "64bit SQL CLR Types is already uninstalled. This step was skipped.";
+                        LogEntryWriter(Logentry1);
+                    }
 
-                    UninstallProgram("Microsoft SQL Server System CLR Types");
+                    if (label31.Text != "Uninstalled")
+                    {
+                        UninstallProgram("Microsoft SQL Server System CLR Types");
+                    }
+                    string Logentry2 = DateTime.Now + "32bit SQL CLR Types is already uninstalled. This step was skipped.";
+                    LogEntryWriter(Logentry2);
 
                     ts.Text = "SQL CLR Types has been Uninstalled";
                     ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
                 else
                 {
-                    UninstallProgram("Microsoft SQL Server System CLR Types");
+                    if (label31.Text != "Uninstalled")
+                    {
+                        UninstallProgram("Microsoft SQL Server System CLR Types");
+                    }
+                    string Logentry2 = DateTime.Now + "32bit SQL CLR Types is already uninstalled. This step was skipped.";
+                    LogEntryWriter(Logentry2);
 
                     ts.Text = "SQL CLR Types has been Uninstalled";
                     ts.ForeColor = System.Drawing.Color.ForestGreen;
@@ -3281,7 +3381,15 @@ namespace Mobile_App
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                     try
                     {
-                        InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        if (label33.Text != "Installed")
+                        {
+                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry1 = DateTime.Now + " 32 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                            LogEntryWriter(logentry1);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -3296,7 +3404,15 @@ namespace Mobile_App
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                     try
                     {
-                        InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                        if (label34.Text != "Installed")
+                        {
+                            InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry2 = DateTime.Now + " 64 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                            LogEntryWriter(logentry2);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -3312,7 +3428,15 @@ namespace Mobile_App
                     ts.Text = "Running 32bit SQL Runtime";
                     try
                     {
-                        InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        if (label33.Text != "Installed")
+                        {
+                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry1 = DateTime.Now + " 32 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                            LogEntryWriter(logentry1);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -3337,7 +3461,15 @@ namespace Mobile_App
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                     try
                     {
-                        InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                        if (label29.Text != "Installed")
+                        {
+                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. This step was skipped.";
+                            LogEntryWriter(logentry1);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -3352,7 +3484,15 @@ namespace Mobile_App
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                     try
                     {
-                        InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                        if (label30.Text != "Installed")
+                        {
+                            InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry2 = DateTime.Now + " 64 bit GIS Components is already installed. This step was skipped.";
+                            LogEntryWriter(logentry2);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -3368,7 +3508,15 @@ namespace Mobile_App
                     ts.Text = "Running 32 bit GIS Components";
                     try
                     {
-                        InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                        if (label29.Text != "Installed")
+                        {
+                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. This step was skipped.";
+                            LogEntryWriter(logentry1);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -3493,7 +3641,15 @@ namespace Mobile_App
                 ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                 try
                 {
-                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                    if (label27.Text != "Installed")
+                    {
+                        InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                    }
+                    else
+                    {
+                        string logentry1 = DateTime.Now + " New World Updater is already installed. This step was skipped.";
+                        LogEntryWriter(logentry1);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -4851,8 +5007,16 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry);
 
-                        RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller");
-                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller");
+                        if (label35.Text != "Installed")
+                        {
+                            RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller");
+                            RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry3 = DateTime.Now + " ScenePD6 is already already installed. This step was skipped.";
+                            LogEntryWriter(logentry3);
+                        }
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
                         string LogEntry2 = DateTime.Now + @"ScenePD ActiveX Installed";
@@ -4882,7 +5046,15 @@ namespace Mobile_App
 
                                 LogEntryWriter(LogEntry);
 
-                                RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                                if (label35.Text != "Installed")
+                                {
+                                    RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry4 = DateTime.Now + " ScenePD4 is already installed. This Step was skipped.";
+                                    LogEntryWriter(logentry4);
+                                }
 
                                 string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
@@ -4917,7 +5089,15 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry);
 
-                        RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                        if (label35.Text != "Installed")
+                        {
+                            RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry4 = DateTime.Now + " ScenePD4 is already installed. This Step was skipped.";
+                            LogEntryWriter(logentry4);
+                        }
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
@@ -4946,8 +5126,16 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry);
 
-                        RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller\NWS Addons");
-                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
+                        if (label35.Text != "Installed")
+                        {
+                            RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller");
+                            RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry3 = DateTime.Now + " ScenePD6 is already already installed. This step was skipped.";
+                            LogEntryWriter(logentry3);
+                        }
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
                         string LogEntry2 = DateTime.Now + @" ScenePD ActiveX installed";
@@ -4976,9 +5164,16 @@ namespace Mobile_App
                                 string LogEntry = DateTime.Now + @" Attempting to install ScenePD 4";
 
                                 LogEntryWriter(LogEntry);
-
-                                RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller\NWS Addons\");
-                                RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
+                                if (label35.Text != "Installed")
+                                {
+                                    RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                                    RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
+                                }
+                                else
+                                {
+                                    string logentry4 = DateTime.Now + " ScenePD4 is already installed. This Step was skipped.";
+                                    LogEntryWriter(logentry4);
+                                }
 
                                 string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
@@ -5012,7 +5207,15 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry);
 
-                        RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                        if (label35.Text != "Installed")
+                        {
+                            RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                        }
+                        else
+                        {
+                            string logentry4 = DateTime.Now + " ScenePD4 is already installed. This Step was skipped.";
+                            LogEntryWriter(logentry4);
+                        }
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
 
@@ -5051,10 +5254,18 @@ namespace Mobile_App
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                     try
                     {
-                        RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                        if (label28.Text != "Installed")
+                        {
+                            RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
 
-                        ts.Text = "SQL Compact 4.0 Installed";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            ts.Text = "SQL Compact 4.0 Installed";
+                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            string logentry2 = DateTime.Now + " 64bit SQL Compact 4.0 is already installed. This step was skipped";
+                            LogEntryWriter(logentry2);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -5071,7 +5282,18 @@ namespace Mobile_App
                     ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                     try
                     {
-                        RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                        if (label28.Text != "Installed")
+                        {
+                            RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+
+                            ts.Text = "SQL Compact 4.0 Installed";
+                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            string logentry2 = DateTime.Now + " 32bit SQL Compact 4.0 is already installed. This step was skipped";
+                            LogEntryWriter(logentry2);
+                        }
 
                         ts.Text = "ScenePD 6 Installed";
                         ts.ForeColor = System.Drawing.Color.ForestGreen;
