@@ -88,7 +88,7 @@ namespace Mobile_App
             }
 
             // will utilize prior configuration for mobile updater form if it exists
-            //if there is a non 0 number in the configuration xml there will that many ORI and FDID fields created on startup
+            //if there is a non 0 number in the configuration XML there will that many ORI and FDID fields created on startup
             try
             {
                 if (GenerateNumber.Text != " ")
@@ -197,7 +197,7 @@ namespace Mobile_App
             //run 64bit installer
             if (Is64Bit.Checked && InstallMobile.Checked == true)
             {
-                //this accounts for the GenerateNumber Textbox being blank/Null
+                //this accounts for the GenerateNumber Text box being blank/Null
                 if (GenerateNumber.Text == "0")
                 {
                     ts.Text = "Please Verify the Updater portion is configured";
@@ -450,7 +450,7 @@ namespace Mobile_App
             UpdateXMLFDID();
 
             //this creates the ORI text boxes
-            //this also modifies the pre req installer config xml for each ORI
+            //this also modifies the pre req installer config XML for each ORI
             foreach (Control c in tabPage3.Controls)
             {
                 if (c.Name.Contains("ORI"))
@@ -469,7 +469,7 @@ namespace Mobile_App
             }
 
             //this creates the ORI text boxes
-            //this also modifies the pre req installer config xml for each FDID
+            //this also modifies the pre req installer config XML for each FDID
             foreach (Control c in tabPage3.Controls)
             {
                 if (c.Name.Contains("FDID"))
@@ -1196,7 +1196,7 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "64bit GIS Compnents already Uninstalled";
+                ts.Text = "64bit GIS Components already Uninstalled";
                 string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
@@ -1208,7 +1208,7 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "32bit GIS Compnents already Uninstalled";
+                ts.Text = "32bit GIS Components already Uninstalled";
                 string logentry1 = DateTime.Now + " 32 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
@@ -1220,7 +1220,7 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "64bit GIS Compnents already Uninstalled";
+                ts.Text = "64bit GIS Components already Uninstalled";
                 string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
@@ -1232,7 +1232,7 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "64bit GIS Compnents already Uninstalled";
+                ts.Text = "64bit GIS Components already Uninstalled";
                 string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
@@ -2191,7 +2191,7 @@ namespace Mobile_App
             }
         }
 
-        //When the xml is modified once it is changed for all other uses with that xml.
+        //When the XML is modified once it is changed for all other uses with that XML.
         private void SaveStartupSettings()
         {
             StartupSettings.Load("NWPSInstallApp.xml");
@@ -2239,7 +2239,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry);
         }
 
-        //this will remove ORI entries from the Mobile Install App xml
+        //this will remove ORI entries from the Mobile Install App XML
         private void UpdateXMLORI()
         {
             string text = "NWPSInstallApp.xml";
@@ -2253,7 +2253,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry);
         }
 
-        //this will remove FDID entries from the Mobile Install App xml
+        //this will remove FDID entries from the Mobile Install App XML
         private void UpdateXMLFDID()
         {
             string text = "NWPSInstallApp.xml";
@@ -2267,7 +2267,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry);
         }
 
-        //this saves ORI entries to the xml to be used again
+        //this saves ORI entries to the XML to be used again
         private void CreateXMLORI(string ORI, string name)
         {
             XDocument xDocument = XDocument.Load("NWPSInstallApp.xml");
@@ -2279,7 +2279,7 @@ namespace Mobile_App
             xDocument.Save("NWPSInstallApp.xml");
         }
 
-        //this saves FDID entries to the xml to be used again
+        //this saves FDID entries to the XML to be used again
         private void CreateXMLFDID(string FDID, string name)
         {
             XDocument xDocument = XDocument.Load("NWPSInstallApp.xml");
@@ -2291,8 +2291,8 @@ namespace Mobile_App
             xDocument.Save("NWPSInstallApp.xml");
         }
 
-        //will load old/prior ORI config in xml
-        //this is will use the text from the xml file that corresponds to the ORI text fields in the application
+        //will load old/prior ORI config in XML
+        //this is will use the text from the XML file that corresponds to the ORI text fields in the application
         private void LoadORIXML()
         {
             StartupSettings.Load("NWPSInstallApp.xml");
@@ -2328,8 +2328,8 @@ namespace Mobile_App
             LogEntryWriter(LogEntry);
         }
 
-        //will load old/prior FDID config in xml
-        //this is will use the text from the xml file that corresponds to the FDID text fields in the application
+        //will load old/prior FDID config in XML
+        //this is will use the text from the XML file that corresponds to the FDID text fields in the application
         private void LoadFDIDXML()
         {
             StartupSettings.Load("NWPSInstallApp.xml");
@@ -2473,7 +2473,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = DateTime.Now + " COPY ERROR: Sync Framwork 2.1 - 64Bit was not Found - Could Not be Downloaded";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Sync Framework 2.1 - 64Bit was not Found - Could Not be Downloaded";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -2487,7 +2487,7 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry1);
                     }
 
-                    //exists to be cross version combatable: will download the updater msi provided it is a known version
+                    //exists to be cross version compatible: will download the updater msi provided it is a known version
                     if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.29"))
                     {
                         MobileCopy(MSPServerPath.Text + @"\_Client-Installation\4 NWPS Updater\Updater 1.5.29");
@@ -2522,7 +2522,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string LogEntry1 = DateTime.Now + " COPY ERROR: Visual Studio 2010 Tools was not founod - Could not Download";
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: Visual Studio 2010 Tools was not found - Could not Download";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -2634,7 +2634,7 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry1);
                     }
 
-                    //exists to be cross version combatable: will download the updater msi provided it is a known version
+                    //exists to be cross version compatible: will download the updater msi provided it is a known version
                     if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29"))
                     {
                         MobileCopy(MSPServerPath.Text + @"\\_Client-Installation\\4 NWPS Updater\\Updater 1.5.29");
@@ -5014,7 +5014,7 @@ namespace Mobile_App
                         }
                         else
                         {
-                            string logentry3 = DateTime.Now + " ScenePD6 is already already installed. This step was skipped.";
+                            string logentry3 = DateTime.Now + " ScenePD6 is already installed. This step was skipped.";
                             LogEntryWriter(logentry3);
                         }
 
@@ -5133,7 +5133,7 @@ namespace Mobile_App
                         }
                         else
                         {
-                            string logentry3 = DateTime.Now + " ScenePD6 is already already installed. This step was skipped.";
+                            string logentry3 = DateTime.Now + " ScenePD6 is already installed. This step was skipped.";
                             LogEntryWriter(logentry3);
                         }
 
@@ -5319,7 +5319,7 @@ namespace Mobile_App
                 {
                     InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "VS 2010 Tools Installed Installed";
+                    ts.Text = "VS 2010 Tools Installed";
                     ts.ForeColor = System.Drawing.Color.ForestGreen;
                 }
                 catch (Exception ex)
@@ -6117,7 +6117,7 @@ namespace Mobile_App
             }
         }
 
-        //this writes to the mobile pre req installer logfile
+        //this writes to the mobile pre req installer log file
         private void LogEntryWriter(string LogEntry)
         {
             using (StreamWriter file = new StreamWriter(("NWPSAppLog.txt"), true))
@@ -6126,7 +6126,7 @@ namespace Mobile_App
             }
         }
 
-        //pre pre checker code
+        //pre checker code
         private bool PreReqChecker(string ProgramName)
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher(
@@ -6698,7 +6698,7 @@ namespace Mobile_App
             }
             else
             {
-                string logentry1 = DateTime.Now + " 64 bit SQL CLR Tyes is already installed. Pre Req Checker not modified.";
+                string logentry1 = DateTime.Now + " 64 bit SQL CLR Types is already installed. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 

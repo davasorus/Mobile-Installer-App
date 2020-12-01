@@ -359,7 +359,7 @@ namespace Mobile_App
             "Install Incident Observer",
             "Install ScenePD",
             "Install SQL Compact 4.0",
-            "Instal 2010 Visual Studio Tools",
+            "Install 2010 Visual Studio Tools",
             "Restart Machine"});
             this.CustomInstallOption.Location = new System.Drawing.Point(215, 24);
             this.CustomInstallOption.Name = "CustomInstallOption";

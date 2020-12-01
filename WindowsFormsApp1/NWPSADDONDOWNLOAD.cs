@@ -49,7 +49,7 @@ namespace MobileInstallApp
             ts1.Text = "Copy Complete. Please Close Window and Press the Run button again.";
         }
 
-        //this writes to the mobile pre req installer logfile
+        //this writes to the mobile pre req installer log file
         private void LogEntryWriter(string LogEntry)
         {
             using (StreamWriter file = new StreamWriter(("NWPSAPPLog.txt"), true))
