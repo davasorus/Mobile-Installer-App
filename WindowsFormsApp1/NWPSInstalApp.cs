@@ -3825,7 +3825,15 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                         try
                         {
-                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                            if (label33.Text != "Installed")
+                            {
+                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                            }
+                            else
+                            {
+                                string logentry1 = DateTime.Now + " 32 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                                LogEntryWriter(logentry1);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -3840,7 +3848,15 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                         try
                         {
-                            InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                            if (label34.Text != "Installed")
+                            {
+                                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                            }
+                            else
+                            {
+                                string logentry2 = DateTime.Now + " 64 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                                LogEntryWriter(logentry2);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -3855,7 +3871,15 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                         try
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                            if (label29.Text != "Installed")
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                            }
+                            else
+                            {
+                                string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. This step was skipped.";
+                                LogEntryWriter(logentry1);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -3870,7 +3894,15 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                         try
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                            if (label30.Text != "Installed")
+                            {
+                                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                            }
+                            else
+                            {
+                                string logentry2 = DateTime.Now + " 64 bit GIS Components is already installed. This step was skipped.";
+                                LogEntryWriter(logentry2);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -3885,7 +3917,15 @@ namespace Mobile_App
                         ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                         try
                         {
-                            InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                            if (label27.Text != "Installed")
+                            {
+                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                            }
+                            else
+                            {
+                                string logentry1 = DateTime.Now + " New World Updater is already installed. This step was skipped.";
+                                LogEntryWriter(logentry1);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -3989,11 +4029,22 @@ namespace Mobile_App
                                 ts.ForeColor = System.Drawing.Color.ForestGreen;
                             }
 
-                            ts.Text = "Running 64 bit SQL Runtime";
+                            ts.Text = "Running 64 bit 4.0 SQL Runtime";
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                                if (label28.Text != "Installed")
+                                {
+                                    RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+
+                                    ts.Text = "SQL Compact 4.0 Installed";
+                                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                }
+                                else
+                                {
+                                    string logentry2 = DateTime.Now + " 64bit SQL Compact 4.0 is already installed. This step was skipped";
+                                    LogEntryWriter(logentry2);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4008,7 +4059,15 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                if (label33.Text != "Installed")
+                                {
+                                    InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry1 = DateTime.Now + " 32 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry1);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4023,7 +4082,15 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                                if (label34.Text != "Installed")
+                                {
+                                    InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry2 = DateTime.Now + " 64 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry2);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4083,7 +4150,15 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                if (label27.Text != "Installed")
+                                {
+                                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry1 = DateTime.Now + " New World Updater is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry1);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4113,8 +4188,25 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
-                                InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
+                                if (label31.Text != "Installed")
+                                {
+                                    InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry1 = DateTime.Now + " 32 bit SQL Server CLR Types is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry1);
+                                }
+
+                                if (label32.Text != "")
+                                {
+                                    InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry2 = DateTime.Now + " 64 bit SQL Server CLR Types is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry2);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4220,11 +4312,22 @@ namespace Mobile_App
                                 ts.ForeColor = System.Drawing.Color.ForestGreen;
                             }
 
-                            ts.Text = "Running 64 bit SQL Runtime";
+                            ts.Text = "Running 64 bit 4.0 SQL Runtime";
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                                if (label28.Text != "Installed")
+                                {
+                                    RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+
+                                    ts.Text = "SQL Compact 4.0 Installed";
+                                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                }
+                                else
+                                {
+                                    string logentry2 = DateTime.Now + " 64bit SQL Compact 4.0 is already installed. This step was skipped";
+                                    LogEntryWriter(logentry2);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4239,7 +4342,15 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                if (label29.Text != "Installed")
+                                {
+                                    InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry1 = DateTime.Now + " 32 bit GIS Components is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry1);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4254,7 +4365,15 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                                if (label30.Text != "Installed")
+                                {
+                                    InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry2 = DateTime.Now + " 64 bit GIS Components is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry2);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4314,7 +4433,15 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                if (label27.Text != "Installed")
+                                {
+                                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry1 = DateTime.Now + " New World Updater is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry1);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -4344,8 +4471,25 @@ namespace Mobile_App
                             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
-                                InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
+                                if (label31.Text != "Installed")
+                                {
+                                    InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry1 = DateTime.Now + " 32 bit SQL Server CLR Types is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry1);
+                                }
+
+                                if (label32.Text != "")
+                                {
+                                    InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
+                                }
+                                else
+                                {
+                                    string logentry2 = DateTime.Now + " 64 bit SQL Server CLR Types is already installed. This step was skipped.";
+                                    LogEntryWriter(logentry2);
+                                }
                             }
                             catch (Exception ex)
                             {
