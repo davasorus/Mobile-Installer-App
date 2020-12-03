@@ -630,7 +630,7 @@ namespace Mobile_App
             ProgressBar.Visible = false;
             ProgressBar.Enabled = false;
 
-            PreInstallChcker();
+            PreStatusChecker();
 
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             ts.Text = "Running Pre Req Checker";
@@ -2930,7 +2930,7 @@ namespace Mobile_App
                 }
                 else
                 {
-                    string Logentry1 = DateTime.Now + "64 bit SQL Compact 4.5 is already uninstalled. This step was skipped.";
+                    string Logentry1 = DateTime.Now + "64 bit SQL Compact 3.5 is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry1);
                 }
 
@@ -2940,7 +2940,7 @@ namespace Mobile_App
                 }
                 else
                 {
-                    string Logentry2 = DateTime.Now + "32bit SQL Compact 3.5 is already uninstalled. This step was skipped.";
+                    string Logentry2 = DateTime.Now + " 32bit SQL Compact 3.5 is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry2);
                 }
 
@@ -2960,7 +2960,7 @@ namespace Mobile_App
                 }
                 else
                 {
-                    string Logentry1 = DateTime.Now + "New World Automatic Updater is already uninstalled. This step was skipped.";
+                    string Logentry1 = DateTime.Now + " New World Automatic Updater is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry1);
                 }
 
@@ -3209,7 +3209,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string Logentry1 = DateTime.Now + "64bit SQL Compact 4.0 is already uninstalled. This step was skipped.";
+                        string Logentry1 = DateTime.Now + " 64 bit SQL Compact 4.0 is already uninstalled. This step was skipped.";
                         LogEntryWriter(Logentry1);
                     }
 
@@ -3281,7 +3281,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        string Logentry1 = DateTime.Now + "64bit SQL CLR Types is already uninstalled. This step was skipped.";
+                        string Logentry1 = DateTime.Now + " 64 bit SQL CLR Types is already uninstalled. This step was skipped.";
                         LogEntryWriter(Logentry1);
                     }
 
@@ -3289,7 +3289,7 @@ namespace Mobile_App
                     {
                         UninstallProgram("Microsoft SQL Server System CLR Types");
                     }
-                    string Logentry2 = DateTime.Now + "32bit SQL CLR Types is already uninstalled. This step was skipped.";
+                    string Logentry2 = DateTime.Now + " 32 bit SQL CLR Types is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry2);
 
                     ts.Text = "SQL CLR Types has been Uninstalled";
@@ -3301,7 +3301,7 @@ namespace Mobile_App
                     {
                         UninstallProgram("Microsoft SQL Server System CLR Types");
                     }
-                    string Logentry2 = DateTime.Now + "32bit SQL CLR Types is already uninstalled. This step was skipped.";
+                    string Logentry2 = DateTime.Now + " 32 bit SQL CLR Types is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry2);
 
                     ts.Text = "SQL CLR Types has been Uninstalled";
@@ -5163,7 +5163,7 @@ namespace Mobile_App
                         }
 
                         string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
-                        string LogEntry2 = DateTime.Now + @"ScenePD ActiveX Installed";
+                        string LogEntry2 = DateTime.Now + @" ScenePD ActiveX Installed";
 
                         LogEntryWriter(LogEntry1);
                         LogEntryWriter(LogEntry2);
@@ -6704,7 +6704,9 @@ namespace Mobile_App
             }
         }
 
-        private void PreInstallChcker()
+        //this will check the text on the pre req checker tab to make sure it is either default or uninstalled. If the text is not either of those it is installed and does not need to be checked.
+        //I may change this in the future to account for uninstalled as a known status like installed technically is.
+        private void PreStatusChecker()
         {
             //hidden until finding clients is needed
             /*
