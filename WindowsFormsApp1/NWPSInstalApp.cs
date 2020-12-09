@@ -2413,16 +2413,6 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry1);
                     }
 
-                    if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\10 SQL Compact Edition 3.5 SP2"))
-                    {
-                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\10 SQL Compact Edition 3.5 SP2");
-                    }
-                    else
-                    {
-                        string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 3.5 SP2 was not Found - Could not be Downloaded.";
-                        LogEntryWriter(LogEntry1);
-                    }
-
                     if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 4.0"))
                     {
                         MobileCopy(MSPServerPath.Text + @"\_Client-Installation\3 SQL Compact Edition 4.0");
@@ -2464,6 +2454,16 @@ namespace Mobile_App
                     else
                     {
                         string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 4.0 was not Found - Could not be Downloaded.";
+                        LogEntryWriter(LogEntry1);
+                    }
+
+                    if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\10 SQL Compact Edition 3.5 SP2"))
+                    {
+                        MobileCopy(MSPServerPath.Text + @"\_Client-Installation\10 SQL Compact Edition 3.5 SP2");
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + " COPY ERROR: SQL Compact 3.5 SP2 was not Found - Could not be Downloaded.";
                         LogEntryWriter(LogEntry1);
                     }
 
@@ -2646,6 +2646,7 @@ namespace Mobile_App
                     else
                     {
                         string LogEntry1 = DateTime.Now + " COPY ERROR: New World Updater was not Found - Could Not Download";
+                        LogEntryWriter(LogEntry1);
                     }
 
                     if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation\\8 MSP Client"))
