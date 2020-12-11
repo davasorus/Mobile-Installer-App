@@ -116,9 +116,9 @@ namespace Mobile_App
             this.UninstallMobile.AutoSize = true;
             this.UninstallMobile.Location = new System.Drawing.Point(6, 60);
             this.UninstallMobile.Name = "UninstallMobile";
-            this.UninstallMobile.Size = new System.Drawing.Size(129, 17);
+            this.UninstallMobile.Size = new System.Drawing.Size(197, 17);
             this.UninstallMobile.TabIndex = 1;
-            this.UninstallMobile.Text = "Uninstall Mobile Client";
+            this.UninstallMobile.Text = "Uninstall Mobile Client and Pre Reqs";
             this.UninstallMobile.UseVisualStyleBackColor = true;
             // 
             // InstallMobile
@@ -126,9 +126,9 @@ namespace Mobile_App
             this.InstallMobile.AutoSize = true;
             this.InstallMobile.Location = new System.Drawing.Point(6, 83);
             this.InstallMobile.Name = "InstallMobile";
-            this.InstallMobile.Size = new System.Drawing.Size(116, 17);
+            this.InstallMobile.Size = new System.Drawing.Size(163, 17);
             this.InstallMobile.TabIndex = 3;
-            this.InstallMobile.Text = "Install Mobile Client";
+            this.InstallMobile.Text = "Install Mobile Client Pre Reqs";
             this.InstallMobile.UseVisualStyleBackColor = true;
             // 
             // Run
@@ -241,9 +241,9 @@ namespace Mobile_App
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(3, 185);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(272, 13);
+            this.label5.Size = new System.Drawing.Size(290, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "File Path to Pre Req or Network Path to the MSP Server";
+            this.label5.Text = "File Path to Pre Req or Network Path to IMS Pre Req Folder";
             // 
             // MSPServerPath
             // 
