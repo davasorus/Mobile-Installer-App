@@ -6744,9 +6744,8 @@ namespace Mobile_App
             }
             else if (label27.Text == "Uninstalled")
             {
-                label27.Text = "Pending";
-                label27.ForeColor = Color.DarkSlateBlue;
-                label27.Refresh();
+                string logentry1 = DateTime.Now + " New World Automatic Updater is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6763,9 +6762,8 @@ namespace Mobile_App
             }
             else if (label28.Text == "Uninstalled")
             {
-                label28.Text = "Pending";
-                label28.ForeColor = Color.DarkSlateBlue;
-                label28.Refresh();
+                string logentry1 = DateTime.Now + " SQL Compact 4.0 is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6782,9 +6780,8 @@ namespace Mobile_App
             }
             else if (label29.Text == "Uninstalled")
             {
-                label29.Text = "Pending";
-                label29.ForeColor = Color.DarkSlateBlue;
-                label29.Refresh();
+                string logentry1 = DateTime.Now + " 32 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6801,9 +6798,8 @@ namespace Mobile_App
             }
             else if (label30.Text == "Uninstalled")
             {
-                label30.Text = "Pending";
-                label30.ForeColor = Color.DarkSlateBlue;
-                label30.Refresh();
+                string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6820,9 +6816,8 @@ namespace Mobile_App
             }
             else if (label31.Text == "Uninstalled")
             {
-                label31.Text = "Pending";
-                label31.ForeColor = Color.DarkSlateBlue;
-                label31.Refresh();
+                string logentry1 = DateTime.Now + " 32 bit SQL CLR Types is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6839,9 +6834,8 @@ namespace Mobile_App
             }
             else if (label32.Text == "Uninstalled")
             {
-                label32.Text = "Pending";
-                label32.ForeColor = Color.DarkSlateBlue;
-                label32.Refresh();
+                string logentry1 = DateTime.Now + " 64 bit SQL CLR Types is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6858,9 +6852,8 @@ namespace Mobile_App
             }
             else if (label33.Text == "Uninstalled")
             {
-                label33.Text = "Pending";
-                label33.ForeColor = Color.DarkSlateBlue;
-                label33.Refresh();
+                string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6877,9 +6870,8 @@ namespace Mobile_App
             }
             else if (label34.Text == "Uninstalled")
             {
-                label34.Text = "Pending";
-                label34.ForeColor = Color.DarkSlateBlue;
-                label34.Refresh();
+                string logentry1 = DateTime.Now + " 64 bit SQL Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
@@ -6896,9 +6888,8 @@ namespace Mobile_App
             }
             else if (label35.Text == "Uninstalled")
             {
-                label35.Text = "Pending";
-                label35.ForeColor = Color.DarkSlateBlue;
-                label35.Refresh();
+                string logentry1 = DateTime.Now + " ScenePD is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
             }
             else
             {
