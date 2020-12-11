@@ -809,7 +809,7 @@ namespace Mobile_App
             this.Controls.Add(this.label3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NWPSPreReqInstaller";
-            this.Text = "Mobile Installer App";
+            this.Text = "NWPS Installer App";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
