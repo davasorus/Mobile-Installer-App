@@ -44,6 +44,7 @@ namespace Mobile_App
         public string ClientPath1 { get => TargetPath; set => TargetPath = value; }
         public string SourcePath1 { get => SourcePath; set => SourcePath = value; }
         public object AddonCopyText { get; private set; }
+
         private NWPSADDONDOWNLOAD secondForm = new NWPSADDONDOWNLOAD();
 
         private ToolStripLabel ts = new ToolStripLabel();
@@ -1190,6 +1191,7 @@ namespace Mobile_App
             UninstallProgram("New World GIS Components");
 
             ts.Text = "Uninstalling GIS - New";
+
             if (label29.Text != "Uninstalled")
             {
                 UninstallProgram("New World GIS Components x64");
@@ -1220,8 +1222,8 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "64bit GIS Components already Uninstalled";
-                string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                ts.Text = "64 bit SQL Server Compact 3.5 SP2 is already Uninstalled";
+                string logentry1 = DateTime.Now + " 64 bit SQL Server Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -1232,8 +1234,8 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "64bit GIS Components already Uninstalled";
-                string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                ts.Text = "32bit SQL Server Compact 3.5 SP2 is already Uninstalled";
+                string logentry1 = DateTime.Now + " 32bit SQL Server Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
@@ -1533,11 +1535,30 @@ namespace Mobile_App
             UninstallProgram("New World GIS Components");
 
             ts.Text = "Uninstalling GIS - New";
-            UninstallProgram("New World GIS Components x86");
-            ts.Text = "GIS is Uninstalled";
+            if (label28.Text != "Uninstalled")
+            {
+                UninstallProgram("New World GIS Components x86");
+                ts.Text = "GIS is Uninstalled";
+            }
+            else
+            {
+                ts.Text = "32bit GIS Components already Uninstalled";
+                string logentry1 = DateTime.Now + " 32 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
 
-            UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
-            ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+            ts.Text = "Uninstalling SQL Serer Compact 3.5 SP2";
+            if (label33.Text != "Uninstalled")
+            {
+                UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
+                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+            }
+            else
+            {
+                ts.Text = "32bit SQL Server Compact 3.5 SP2 is already Uninstalled";
+                string logentry1 = DateTime.Now + " 32bit SQL Server Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
+                LogEntryWriter(logentry1);
+            }
 
             ts.Text = "Uninstalling Nova PDF";
 
@@ -1600,7 +1621,20 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                if (label33.Text != "Installed")
+                {
+                    InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                else
+                {
+                    ts.Text = "32 bit SQL Compact 3.5 SP2 was already installed";
+
+                    string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
+                    LogEntryWriter(logentry1);
+                }
             }
             catch (Exception ex)
             {
@@ -1615,7 +1649,13 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                if (label29.Text != "Installed")
+                {
+                    InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "32 bit GIS has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
             }
             catch (Exception ex)
             {
@@ -1675,7 +1715,13 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                if (label27.Text != "Installed")
+                {
+                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+
+                    ts.Text = "Installer has been installed.";
+                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                }
             }
             catch (Exception ex)
             {
@@ -1690,7 +1736,15 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
             try
             {
-                RunProgram(@"Configure Updater for mobile V2.exe", @"C:\Temp\MobileInstaller");
+                if (GenerateNumber.Text == "0")
+                {
+                    ts.Text = "Please Verify the Updater portion is configured and attempt again.";
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else
+                {
+                    UpdaterAppend_Click(new object(), new EventArgs());
+                }
             }
             catch (Exception ex)
             {
