@@ -430,6 +430,8 @@ namespace Mobile_App
             ProgressBar.Enabled = false;
 
             Tab2bg.RunWorkerAsync();
+
+            //MobileTriageRun();
         }
 
         //work done when the append button is pressed
@@ -5576,8 +5578,6 @@ namespace Mobile_App
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.StackTrace.ToString());
-
                         string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
@@ -5603,8 +5603,6 @@ namespace Mobile_App
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.StackTrace.ToString());
-
                         string LogEntry = DateTime.Now + " " + ex.ToString();
 
                         LogEntryWriter(LogEntry);
@@ -5835,7 +5833,7 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    secondForm.Show();
+                    BeginInvoke((Action)(() => secondForm.Show()));
                 }
             }
 
@@ -5868,7 +5866,7 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    secondForm.Show();
+                    BeginInvoke((Action)(() => secondForm.Show()));
                 }
             }
 
@@ -5912,7 +5910,7 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    secondForm.Show();
+                    BeginInvoke((Action)(() => secondForm.Show()));
                 }
             }
 
@@ -5982,7 +5980,7 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    secondForm.Show();
+                    BeginInvoke((Action)(() => secondForm.Show()));
                 }
             }
         }
