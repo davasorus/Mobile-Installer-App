@@ -27,7 +27,9 @@ namespace Mobile_App
         private XmlDocument UpdaterConfig = new XmlDocument();
         private XmlDocument StartupSettings = new XmlDocument();
         private string SourcePath = @"";
-        private BackgroundWorker bg;
+        private BackgroundWorker Tab1bg;
+        private BackgroundWorker Tab2bg;
+
         public string MSPServerName { get; private set; }
         private bool PoliceClientExists = false;
         private bool FireClientExists = false;
@@ -73,8 +75,8 @@ namespace Mobile_App
             InitialLoadofXML();
 
             statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
-            ts.Text = "Ready";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Ready"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
             //checks if a directory exists to determine a 64 or 32 bit machine and configures the check boxes accordingly.
             if (Directory.Exists("C:\\Program files (x86)"))
@@ -122,11 +124,15 @@ namespace Mobile_App
         {
             InitializeComponent();
 
-            bg = new BackgroundWorker();
-            bg.DoWork += Bg_DoWork;
-            bg.ProgressChanged += Bg_ProgressChanged;
-            bg.RunWorkerCompleted += Bg_RunWorkerCompleted;
-            bg.WorkerReportsProgress = true;
+            //copy background worker
+            Tab1bg = new BackgroundWorker();
+            Tab1bg.DoWork += Tab1bg_DoWork;
+            Tab1bg.ProgressChanged += Tab1bg_ProgressChanged;
+            Tab1bg.RunWorkerCompleted += Tab1bg_RunWorkerCompleted;
+            Tab1bg.WorkerReportsProgress = true;
+
+            Tab2bg = new BackgroundWorker();
+            Tab2bg.DoWork += Tab2bg_DoWork;
         }
 
         //Button Click events
@@ -145,21 +151,21 @@ namespace Mobile_App
                 //exceptions also thrown for null and non-null/not numerical entries
                 if (GenerateNumber.Text == "0")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == " ")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == "")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
 
-                ts.Text = "Modifying Mobile Updater Entries";
+                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
                 FileWork64Bit();
                 UpdaterWork64Bit();
 
@@ -171,7 +177,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry2);
 
-                ts.Text = "Uninstalling Mobile";
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
                 Mobile64Uninstall();
 
                 string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
@@ -182,7 +188,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry4);
 
-                ts.Text = "Installing Mobile";
+                BeginInvoke((Action)(() => ts.Text = "Installing Mobile"));
                 Mobile64install();
 
                 string LogEntry5 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
@@ -191,7 +197,7 @@ namespace Mobile_App
 
                 MessageBox.Show("Mobile Pre Reqs have been Installed");
 
-                ts.Text = "Restarting PC";
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
 
@@ -201,17 +207,17 @@ namespace Mobile_App
                 //this accounts for the GenerateNumber Text box being blank/Null
                 if (GenerateNumber.Text == "0")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == " ")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == "")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
 
@@ -219,21 +225,21 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                ts.Text = "Going to Install mobile";
+                BeginInvoke((Action)(() => ts.Text = "Going to Install mobile"));
                 Mobile64install();
 
                 string LogEntry2 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
 
                 LogEntryWriter(LogEntry2);
 
-                ts.Text = "Restarting PC";
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
 
             //Run 64bit uninstaller
             if (Is64Bit.Checked && UninstallMobile.Checked == true)
             {
-                ts.Text = "Modifying Mobile Updater Entries";
+                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
                 FileWork64Bit();
                 UpdaterWork64Bit();
 
@@ -245,14 +251,14 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry2);
 
-                ts.Text = "Going to Uninstall mobile";
+                BeginInvoke((Action)(() => ts.Text = "Going to Uninstall mobile"));
                 Mobile64Uninstall();
 
                 string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
 
                 LogEntryWriter(LogEntry3);
 
-                ts.Text = "Restarting PC";
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
 
@@ -261,21 +267,21 @@ namespace Mobile_App
             {
                 if (GenerateNumber.Text == "0")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == " ")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == "")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
 
-                ts.Text = "Modifying Mobile Updater Entries";
+                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
                 FileWork32Bit();
                 UpdaterWork32Bit();
 
@@ -287,7 +293,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry2);
 
-                ts.Text = "Uninstalling Mobile";
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
                 Mobile32Uninstaller();
 
                 string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
@@ -298,14 +304,14 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry4);
 
-                ts.Text = "Going to Install mobile";
+                BeginInvoke((Action)(() => ts.Text = "Going to Install mobile"));
                 Mobile32install();
 
                 string LogEntry5 = DateTime.Now + " 32Bit Mobile Successfully Installed";
 
                 LogEntryWriter(LogEntry5);
 
-                ts.Text = "Restarting PC";
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
 
@@ -314,17 +320,17 @@ namespace Mobile_App
             {
                 if (GenerateNumber.Text == "0")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == " ")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else if (GenerateNumber.Text == "")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
 
@@ -332,21 +338,21 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry2);
 
-                ts.Text = "installing Mobile";
+                BeginInvoke((Action)(() => ts.Text = "installing Mobile"));
                 Mobile32install();
 
                 string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully Installed";
 
                 LogEntryWriter(LogEntry3);
 
-                ts.Text = "Restarting PC";
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
 
             //Run 32bit uninstaller
             if (Is32bit.Checked && UninstallMobile.Checked == true)
             {
-                ts.Text = "Modifying Updater Files";
+                BeginInvoke((Action)(() => ts.Text = "Modifying Updater Files"));
                 FileWork32Bit();
                 UpdaterWork32Bit();
 
@@ -358,14 +364,14 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry2);
 
-                ts.Text = "Uninstalling Mobile";
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
                 Mobile32Uninstaller();
 
                 string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
 
                 LogEntryWriter(LogEntry3);
 
-                ts.Text = "Restarting PC";
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
         }
@@ -376,13 +382,13 @@ namespace Mobile_App
             ProgressBar.Visible = true;
             ProgressBar.Enabled = true;
 
-            ts.Text = "prepping Temp Folder";
+            BeginInvoke((Action)(() => ts.Text = "prepping Temp Folder"));
             Temp();
 
             SaveStartupSettings();
 
-            ts.ForeColor = Color.DarkSlateBlue;
-            ts.Text = "Copying required files locally";
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            BeginInvoke((Action)(() => ts.Text = "Copying required files locally"));
 
             string LogEntry1 = DateTime.Now + " File Copy Initiated";
 
@@ -390,7 +396,7 @@ namespace Mobile_App
 
             ProgressBar.Value = 0;
             ProgressBar.Maximum = 29;
-            bg.RunWorkerAsync();
+            Tab1bg.RunWorkerAsync();
         }
 
         //Help button logic on button click - WIP
@@ -423,11 +429,7 @@ namespace Mobile_App
             ProgressBar.Visible = false;
             ProgressBar.Enabled = false;
 
-            CustomUninstallRun();
-
-            CustomInstallRun();
-
-            MobileTriageRun();
+            Tab2bg.RunWorkerAsync();
         }
 
         //work done when the append button is pressed
@@ -458,7 +460,7 @@ namespace Mobile_App
                 {
                     if (c.Text != "")
                     {
-                        ts.Text = "ORIs Added";
+                        BeginInvoke((Action)(() => ts.Text = "ORIs Added"));
                         string ORI = c.Text;
                         string Name = c.Name;
 
@@ -477,7 +479,7 @@ namespace Mobile_App
                 {
                     if (c.Text != "")
                     {
-                        ts.Text = "FDIDs Added";
+                        BeginInvoke((Action)(() => ts.Text = "FDIDs Added"));
                         string FDID = c.Text;
                         string Name = c.Name;
 
@@ -633,8 +635,8 @@ namespace Mobile_App
 
             PreStatusChecker();
 
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
-            ts.Text = "Running Pre Req Checker";
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+            BeginInvoke((Action)(() => ts.Text = "Running Pre Req Checker"));
 
             //
             //The below code block does the actual checking and updating of the status on button click
@@ -645,8 +647,8 @@ namespace Mobile_App
             {
                 if (label27.Text == "Pending")
                 {
-                    ts.Text = "Checking for Updater";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
@@ -661,8 +663,8 @@ namespace Mobile_App
                 }
                 else if (label27.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for Updater";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
@@ -677,8 +679,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Updater is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Updater is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -695,8 +697,8 @@ namespace Mobile_App
             {
                 if (label28.Text == "Pending")
                 {
-                    ts.Text = "Checking for SQL Server Compact 4.0";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for SQL Server Compact 4.0"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (Is64Bit.Checked == true)
                     {
@@ -756,8 +758,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "SQL Compact 4.0 already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -774,8 +776,8 @@ namespace Mobile_App
             {
                 if (label29.Text == "Pending")
                 {
-                    ts.Text = "Checking for 32bit GIS Components";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 32bit GIS Components"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("New World GIS Components x86") == true)
                     {
@@ -790,8 +792,8 @@ namespace Mobile_App
                 }
                 else if (label29.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for Updater";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
@@ -806,8 +808,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "32bit GIS is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32bit GIS is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -824,8 +826,8 @@ namespace Mobile_App
             {
                 if (label30.Text == "Pending")
                 {
-                    ts.Text = "Checking for 32bit GIS Components";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 32bit GIS Components"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("New World GIS Components x64") == true)
                     {
@@ -840,8 +842,8 @@ namespace Mobile_App
                 }
                 else if (label30.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for Updater";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("New World Automatic Updater") == true)
                     {
@@ -856,8 +858,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "64bit GIS is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "64bit GIS is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -874,8 +876,8 @@ namespace Mobile_App
             {
                 if (label31.Text == "Pending")
                 {
-                    ts.Text = "Checking for 32bit  SQL Server CLR Types";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 32bit  SQL Server CLR Types"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
                     {
@@ -890,8 +892,8 @@ namespace Mobile_App
                 }
                 else if (label31.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for 32bit  SQL Server CLR Types";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 32bit  SQL Server CLR Types"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
                     {
@@ -906,8 +908,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "32bit SQL CLR Types is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32bit SQL CLR Types is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -924,8 +926,8 @@ namespace Mobile_App
             {
                 if (label32.Text == "Pending")
                 {
-                    ts.Text = "Checking for 64bit  SQL Server CLR Types";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 64bit  SQL Server CLR Types"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
                     {
@@ -940,7 +942,7 @@ namespace Mobile_App
                 }
                 else if (label32.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for 64bit  SQL Server CLR Types";
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 64bit  SQL Server CLR Types"));
 
                     if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
                     {
@@ -955,8 +957,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "64 bit SQL CLR Types is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "64 bit SQL CLR Types is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -973,8 +975,8 @@ namespace Mobile_App
             {
                 if (label33.Text == "Pending")
                 {
-                    ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
                     {
@@ -989,8 +991,8 @@ namespace Mobile_App
                 }
                 else if (label33.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
                     {
@@ -1005,8 +1007,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "32 bit SQL Server 3.5 SP2 is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32 bit SQL Server 3.5 SP2 is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1023,8 +1025,8 @@ namespace Mobile_App
             {
                 if (label34.Text == "Pending")
                 {
-                    ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
                     {
@@ -1039,8 +1041,8 @@ namespace Mobile_App
                 }
                 else if (label34.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
                     {
@@ -1055,8 +1057,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "64 bit SQL Server 3.5 SP2 is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "64 bit SQL Server 3.5 SP2 is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1073,8 +1075,8 @@ namespace Mobile_App
             {
                 if (label35.Text == "Pending")
                 {
-                    ts.Text = "Checking for ScenePD";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for ScenePD"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
                     {
@@ -1105,8 +1107,8 @@ namespace Mobile_App
                 }
                 else if (label35.Text == "Uninstalled")
                 {
-                    ts.Text = "Checking for ScenePD";
-                    ts.ForeColor = Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Checking for ScenePD"));
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
                     if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
                     {
@@ -1137,8 +1139,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "ScenePD is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "ScenePD is already installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1150,8 +1152,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Pre Req Checker is Complete";
-            ts.ForeColor = System.Drawing.Color.ForestGreen;
+            BeginInvoke((Action)(() => ts.Text = "Pre Req Checker is Complete"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
         }
 
         //pre req install/uninstall methods
@@ -1160,37 +1162,37 @@ namespace Mobile_App
         //this will uninstall NWPS Mobile, NWS Mobile, Pre Reqs for 64bit mobile
         private void Mobile64Uninstall()
         {
-            ts.Text = "Checking to uninstall Police Mobile";
+            BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Police Mobile"));
             UninstallProgram("Aegis Mobile");
 
             UninstallProgram("Law Enforcement Mobile");
-            ts.Text = "Police Mobile is Uninstalled";
+            BeginInvoke((Action)(() => ts.Text = "Police Mobile is Uninstalled"));
 
-            ts.Text = "Checking to uninstall Fire Mobile";
+            BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Fire Mobile"));
             UninstallProgram("Aegis Fire Mobile");
 
             UninstallProgram("Fire Mobile");
-            ts.Text = "Fire Mobile is Uninstalled";
+            BeginInvoke((Action)(() => ts.Text = "Fire Mobile is Uninstalled"));
 
-            ts.Text = "Checking to uninstall Mobile Merge";
+            BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Mobile Merge"));
             UninstallProgram("Aegis Mobile Merge");
 
             UninstallProgram("Mobile Merge");
-            ts.Text = "Mobile Merge is Uninstalled";
+            BeginInvoke((Action)(() => ts.Text = "Mobile Merge is Uninstalled"));
 
-            ts.Text = "Uninstalling DB Providers";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling DB Providers"));
             UninstallProgram("Microsoft Sync Framework 3.1 Database Providers (x64) ENU");
 
-            ts.Text = "Uninstalling Provider Services";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling Provider Services"));
             UninstallProgram("Microsoft Sync Framework 2.1 Provider Services (x64) ENU");
 
-            ts.Text = "Uninstalling Core Components";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling Core Components"));
             UninstallProgram("Microsoft Sync Framework 2.1 Core Components (x64) ENU");
 
-            ts.Text = "Uninstalling GIS - Old";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling GIS - Old"));
             UninstallProgram("New World GIS Components");
 
-            ts.Text = "Uninstalling GIS - New";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling GIS - New"));
 
             if (label29.Text != "Uninstalled")
             {
@@ -1198,7 +1200,7 @@ namespace Mobile_App
             }
             else
             {
-                ts.Text = "64bit GIS Components already Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "64bit GIS Components already Uninstalled"));
                 string logentry1 = DateTime.Now + " 64 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
@@ -1206,23 +1208,23 @@ namespace Mobile_App
             if (label28.Text != "Uninstalled")
             {
                 UninstallProgram("New World GIS Components x86");
-                ts.Text = "GIS is Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "GIS is Uninstalled"));
             }
             else
             {
-                ts.Text = "32bit GIS Components already Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "32bit GIS Components already Uninstalled"));
                 string logentry1 = DateTime.Now + " 32 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
-            ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling SQL Server Compact 3.5 SP2"));
             if (label34.Text != "Uninstalled")
             {
                 UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
             }
             else
             {
-                ts.Text = "64 bit SQL Server Compact 3.5 SP2 is already Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "64 bit SQL Server Compact 3.5 SP2 is already Uninstalled"));
                 string logentry1 = DateTime.Now + " 64 bit SQL Server Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
@@ -1230,16 +1232,16 @@ namespace Mobile_App
             if (label33.Text != "Uninstalled")
             {
                 UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
-                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled"));
             }
             else
             {
-                ts.Text = "32bit SQL Server Compact 3.5 SP2 is already Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "32bit SQL Server Compact 3.5 SP2 is already Uninstalled"));
                 string logentry1 = DateTime.Now + " 32bit SQL Server Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
-            ts.Text = "Uninstalling Nova PDF";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling Nova PDF"));
 
             UninstallProgram("NWPS Enterprise Mobile PDF Printer");
 
@@ -1256,8 +1258,8 @@ namespace Mobile_App
         {
             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
             {
-                ts.Text = "Running 4.7.1 .Net";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -1271,13 +1273,13 @@ namespace Mobile_App
                     LogEntryWriter(LogEntry);
                 }
 
-                ts.Text = ".Net 4.7.1 installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
             //installed .net 4.8 if 4.7.1 is not present
             else
             {
-                ts.Text = "Running 4.8 .Net";
+                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
                 try
                 {
                     InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -1291,24 +1293,24 @@ namespace Mobile_App
                     LogEntryWriter(LogEntry);
                 }
 
-                ts.Text = ".Net 4.8 installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
-            ts.Text = "Running 32bit SQL Runtime";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label33.Text != "Installed")
                 {
                     InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 else
                 {
-                    ts.Text = "32 bit SQL Compact 3.5 SP2 was already installed";
+                    BeginInvoke((Action)(() => ts.Text = "32 bit SQL Compact 3.5 SP2 was already installed"));
 
                     string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
                     LogEntryWriter(logentry1);
@@ -1323,16 +1325,16 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 64 bit SQL Runtime";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 64 bit SQL Runtime"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label34.Text != "Installed")
                 {
                     InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "64 bit SQL Compact 3.5 SP2 has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "64 bit SQL Compact 3.5 SP2 has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1344,16 +1346,16 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 32 bit GIS Components";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label29.Text != "Installed")
                 {
                     InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "32 bit GIS has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32 bit GIS has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1365,16 +1367,16 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 64 bit GIS Components";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 64 bit GIS Components"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label30.Text != "Installed")
                 {
                     InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "64 bit GIS has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "64 bit GIS has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1386,8 +1388,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 64 bit Synchronization";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Synchronization"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -1401,8 +1403,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 64 bit Provider Services";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Provider Services"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -1416,8 +1418,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 64 bit DB Providers";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 64 bit DB Providers"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -1431,16 +1433,16 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Installing Updater";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label27.Text != "Installed")
                 {
                     InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "Installer has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Installer has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1452,13 +1454,13 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running Mobile Updater Config form";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running Mobile Updater Config form"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (GenerateNumber.Text == "0")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured and attempt again.";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured and attempt again."));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else
@@ -1475,8 +1477,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Prepping folder permissions";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 SetAcl(@"C:\Program Files (x86)\New World Systems");
@@ -1504,63 +1506,63 @@ namespace Mobile_App
         //this will uninstall NWPS Mobile, NWS Mobile, Pre Reqs for 32bit mobile
         private void Mobile32Uninstaller()
         {
-            ts.Text = "Checking to uninstall Police Mobile";
+            BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Police Mobile"));
             UninstallProgram("Aegis Mobile");
 
             UninstallProgram("Law Enforcement Mobile");
-            ts.Text = "Police Mobile is Uninstalled";
+            BeginInvoke((Action)(() => ts.Text = "Police Mobile is Uninstalled"));
 
-            ts.Text = "Checking to uninstall Fire Mobile";
+            BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Fire Mobile"));
             UninstallProgram("Aegis Fire Mobile");
 
             UninstallProgram("Fire Mobile");
-            ts.Text = "Fire Mobile is Uninstalled";
+            BeginInvoke((Action)(() => ts.Text = "Fire Mobile is Uninstalled"));
 
-            ts.Text = "Checking to uninstall Mobile Merge";
+            BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Mobile Merge"));
             UninstallProgram("Aegis Mobile Merge");
 
             UninstallProgram("Mobile Merge");
-            ts.Text = "Mobile Merge is Uninstalled";
+            BeginInvoke((Action)(() => ts.Text = "Mobile Merge is Uninstalled"));
 
-            ts.Text = "Uninstalling DB Providers";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling DB Providers"));
             UninstallProgram("Microsoft Sync Framework 3.1 Database Providers (x86) ENU");
 
-            ts.Text = "Uninstalling Provider Services";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling Provider Services"));
             UninstallProgram("Microsoft Sync Framework 2.1 Provider Services (x86) ENU");
 
-            ts.Text = "Uninstalling Core Components";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling Core Components"));
             UninstallProgram("Microsoft Sync Framework 2.1 Core Components (x86) ENU");
 
-            ts.Text = "Uninstalling GIS - Old";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling GIS - Old"));
             UninstallProgram("New World GIS Components");
 
-            ts.Text = "Uninstalling GIS - New";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling GIS - New"));
             if (label28.Text != "Uninstalled")
             {
                 UninstallProgram("New World GIS Components x86");
-                ts.Text = "GIS is Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "GIS is Uninstalled"));
             }
             else
             {
-                ts.Text = "32bit GIS Components already Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "32bit GIS Components already Uninstalled"));
                 string logentry1 = DateTime.Now + " 32 bit GIS Components is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
-            ts.Text = "Uninstalling SQL Serer Compact 3.5 SP2";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling SQL Serer Compact 3.5 SP2"));
             if (label33.Text != "Uninstalled")
             {
                 UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 ENU");
-                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled"));
             }
             else
             {
-                ts.Text = "32bit SQL Server Compact 3.5 SP2 is already Uninstalled";
+                BeginInvoke((Action)(() => ts.Text = "32bit SQL Server Compact 3.5 SP2 is already Uninstalled"));
                 string logentry1 = DateTime.Now + " 32bit SQL Server Compact 3.5 SP2 is already uninstalled. Pre Req Checker not modified.";
                 LogEntryWriter(logentry1);
             }
 
-            ts.Text = "Uninstalling Nova PDF";
+            BeginInvoke((Action)(() => ts.Text = "Uninstalling Nova PDF"));
 
             UninstallProgram("NWPS Enterprise Mobile PDF Printer");
 
@@ -1577,8 +1579,8 @@ namespace Mobile_App
         {
             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
             {
-                ts.Text = "Running 4.7.1 .Net";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -1592,14 +1594,14 @@ namespace Mobile_App
                     LogEntryWriter(LogEntry);
                 }
 
-                ts.Text = ".Net 4.7.1 installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
             //installed .net 4.8 if 4.7.1 is not present
             else
             {
-                ts.Text = "Running 4.8 .Net";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -1613,24 +1615,24 @@ namespace Mobile_App
                     LogEntryWriter(LogEntry);
                 }
 
-                ts.Text = ".Net 4.8 installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
-            ts.Text = "Running 32bit SQL Runtime";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label33.Text != "Installed")
                 {
                     InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 else
                 {
-                    ts.Text = "32 bit SQL Compact 3.5 SP2 was already installed";
+                    BeginInvoke((Action)(() => ts.Text = "32 bit SQL Compact 3.5 SP2 was already installed"));
 
                     string logentry1 = DateTime.Now + " 32 bit SQL Compact 3.5 SP2 is already installed. Pre Req Checker not modified.";
                     LogEntryWriter(logentry1);
@@ -1645,16 +1647,16 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 32 bit GIS Components";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label29.Text != "Installed")
                 {
                     InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "32 bit GIS has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "32 bit GIS has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1666,8 +1668,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 32 bit Synchronization";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Synchronization"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -1681,8 +1683,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 32 bit Provider Services";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Provider Services"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -1696,8 +1698,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running 32 bit DB Providers";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running 32 bit DB Providers"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -1711,16 +1713,16 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Installing Updater";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (label27.Text != "Installed")
                 {
                     InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "Installer has been installed.";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Installer has been installed."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
             catch (Exception ex)
@@ -1732,13 +1734,13 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Running Mobile Updater Config form";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Running Mobile Updater Config form"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 if (GenerateNumber.Text == "0")
                 {
-                    ts.Text = "Please Verify the Updater portion is configured and attempt again.";
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured and attempt again."));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else
@@ -1755,8 +1757,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
-            ts.Text = "Prepping folder permissions";
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
                 SetAcl(@"C:\Program Files\New World Systems");
@@ -1851,7 +1853,7 @@ namespace Mobile_App
                     File.Copy(file, replace, true);
                     File.SetAttributes(TargetPath, FileAttributes.Normal);
 
-                    bg.ReportProgress(0);
+                    Tab1bg.ReportProgress(0);
 
                     string LogEntry = DateTime.Now + " " + file + " has been copied.";
 
@@ -1927,8 +1929,8 @@ namespace Mobile_App
             Thread.Sleep(5000);
             try
             {
-                ts.Text = "Deleting Programdata Updater";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Deleting Programdata Updater"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
             }
@@ -1943,8 +1945,8 @@ namespace Mobile_App
 
             try
             {
-                ts.Text = "Deleting Fire Mobile Folder";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Deleting Fire Mobile Folder"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 if (Is64Bit.Checked == true)
                 {
                     MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile");
@@ -1965,7 +1967,7 @@ namespace Mobile_App
 
             try
             {
-                ts.Text = "Deleting Police Mobile Folder";
+                BeginInvoke((Action)(() => ts.Text = "Deleting Police Mobile Folder"));
                 if (Is64Bit.Checked == true)
                 {
                     MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Mobile");
@@ -1986,8 +1988,8 @@ namespace Mobile_App
 
             try
             {
-                ts.Text = "Deleting Pre Req Folder";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Deleting Pre Req Folder"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 MobileDelete(@"C:\Temp\MobileInstaller");
             }
@@ -2002,7 +2004,7 @@ namespace Mobile_App
 
             StartService("NewWorldUpdaterService");
 
-            ts.Text = "Shutting Down PC";
+            BeginInvoke((Action)(() => ts.Text = "Shutting Down PC"));
 
             Process.Start("Shutdown", "/r");
 
@@ -2422,10 +2424,10 @@ namespace Mobile_App
         //Background Worker code
 
         //What to do when the Background worker is completed
-        private void Bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Tab1bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ts.Text = "Files Copied Locally";
-            ts.ForeColor = System.Drawing.Color.ForestGreen;
+            BeginInvoke((Action)(() => ts.Text = "Files Copied Locally"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
             string LogEntry1 = DateTime.Now + " File Copy Finished";
 
@@ -2433,13 +2435,15 @@ namespace Mobile_App
         }
 
         //What to do when progress is made
-        private void Bg_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Tab1bg_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             ProgressBar.Value += 1;
         }
 
         //The actual work done
-        private void Bg_DoWork(object sender, DoWorkEventArgs e)
+
+        //Download background worker
+        private void Tab1bg_DoWork(object sender, DoWorkEventArgs e)
         {
             //pre req download logic
             if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
@@ -2775,7 +2779,17 @@ namespace Mobile_App
                 MobileCopy(MSPServerPath.Text);
             }
 
-            bg.ReportProgress(0);
+            Tab1bg.ReportProgress(0);
+        }
+
+        //Itemized Install/Uninstall/Triage Background worker
+        private void Tab2bg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CustomUninstallRun();
+
+            CustomInstallRun();
+
+            MobileTriageRun();
         }
 
         //Local service work
@@ -2795,13 +2809,13 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    ts.Text = name + "Service Stopped";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = name + "Service Stopped"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 else
                 {
-                    ts.Text = name + " Service had an issue stopping";
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => ts.Text = name + " Service had an issue stopping"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string LogEntry = DateTime.Now + " " + name + " Service is not currently Started. Cannot stop a stopped Service";
 
@@ -2810,16 +2824,11 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry1 = DateTime.Now + ex.ToString();
-
-                LogEntryWriter(LogEntry1);
-
-                ts.Text = name + " Service had an issue stopping";
+                BeginInvoke((Action)(() => ts.Text = name + " Service had an issue stopping"));
 
                 string LogEntry = DateTime.Now + " " + name + " Could not be stopped. It likely is not installed, " +
-                    "or could not be stopped since the Program was not run as an admin OR under an admin account.";
+                    "or could not be stopped since the Program was not run as an admin OR under an admin account. Exception: "
+                    + ex.StackTrace.ToString();
 
                 LogEntryWriter(LogEntry);
             }
@@ -2840,13 +2849,13 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    ts.Text = name + " Service Started";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = name + " Service Started"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 else
                 {
-                    ts.Text = name + " Service had an issue starting";
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => ts.Text = name + " Service had an issue starting"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string LogEntry = DateTime.Now + " " + name + " Service is not currently stopped. Cannot Start a started Service";
 
@@ -2855,16 +2864,15 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace.ToString());
-
                 string LogEntry1 = DateTime.Now + ex.ToString();
 
                 LogEntryWriter(LogEntry1);
 
-                ts.Text = name + " Service had an issue starting";
+                BeginInvoke((Action)(() => ts.Text = name + " Service had an issue starting"));
 
                 string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
-                    "or could not be stopped since the Program was not run as an admin OR under an admin account.";
+                    "or could not be stopped since the Program was not run as an admin OR under an admin account. Exception: "
+                    + ex.StackTrace.ToString(); ;
 
                 LogEntryWriter(LogEntry);
             }
@@ -2879,55 +2887,55 @@ namespace Mobile_App
             //will uninstall fire mobile for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(0) == CheckState.Checked)
             {
-                ts.Text = "Checking to uninstall Fire Mobile";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Fire Mobile"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 UninstallProgram("Aegis Fire Mobile");
 
                 UninstallProgram("Fire Mobile");
-                ts.Text = "Fire Mobile is Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Fire Mobile is Uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
-                ts.Text = "Fire Mobile was Uninstalled/Check Complete.";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Fire Mobile was Uninstalled/Check Complete."));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //uninstall police mobile
             //will uninstall police mobile for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(1) == CheckState.Checked)
             {
-                ts.Text = "Checking to uninstall Police Mobile";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Police Mobile"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 UninstallProgram("Aegis Mobile");
 
                 UninstallProgram("Law Enforcement Mobile");
-                ts.Text = "Police Mobile is Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Police Mobile is Uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
-                ts.Text = "Police Mobile was Uninstalled/Check Complete";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Police Mobile was Uninstalled/Check Complete"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //uninstall merge
             //will uninstall the merge client for NWPS and NWS
             if (CustomUninstallOptions.GetItemCheckState(2) == CheckState.Checked)
             {
-                ts.Text = "Checking to uninstall Mobile Merge";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Checking to uninstall Mobile Merge"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 UninstallProgram("Aegis Mobile Merge");
 
                 UninstallProgram("Mobile Merge");
-                ts.Text = "Mobile Merge is Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Mobile Merge is Uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
-                ts.Text = "Merge Client was Uninstalled/Check Complete";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Merge Client was Uninstalled/Check Complete"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //uninstall novaPDF
             if (CustomUninstallOptions.GetItemCheckState(3) == CheckState.Checked)
             {
-                ts.Text = "Uninstalling Nova PDF";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Nova PDF"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 UninstallProgram("NWPS Enterprise Mobile PDF Printer");
 
@@ -2937,19 +2945,19 @@ namespace Mobile_App
 
                 UninstallProgram("novaPDF 8 SDK COM (x64)");
 
-                ts.Text = "NOVA PDF was Uninstalled/Check Completed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "NOVA PDF was Uninstalled/Check Completed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //uninstall GIS
             if (CustomUninstallOptions.GetItemCheckState(4) == CheckState.Checked)
             {
-                ts.Text = "Uninstalling GIS - Old";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling GIS - Old"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 UninstallProgram("New World GIS Components");
 
-                ts.Text = "Uninstalling GIS - New";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling GIS - New"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 if (label30.Text != "Uninstalled")
                 {
                     UninstallProgram("New World GIS Components x64");
@@ -2970,15 +2978,15 @@ namespace Mobile_App
                     LogEntryWriter(Logentry2);
                 }
 
-                ts.Text = "GIS Components are Uninstalled/Check Complete";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "GIS Components are Uninstalled/Check Complete"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Uninstall SQL Compact
             if (CustomUninstallOptions.GetItemCheckState(5) == CheckState.Checked)
             {
-                ts.Text = "Uninstalling SQL Server Compact 3.5 SP2";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling SQL Server Compact 3.5 SP2"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 if (label34.Text != "Uninstalled")
                 {
                     UninstallProgram("Microsoft SQL Server Compact 3.5 SP2 x64 ENU");
@@ -2999,15 +3007,15 @@ namespace Mobile_App
                     LogEntryWriter(Logentry2);
                 }
 
-                ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "SQL Server Compact 3.5 SP2 is Uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Uninstall Updater client
             if (CustomUninstallOptions.GetItemCheckState(6) == CheckState.Checked)
             {
-                ts.Text = "Uninstalling New World Automatic Updater";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling New World Automatic Updater"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 if (label27.Text != "Uninstalled")
                 {
@@ -3019,8 +3027,8 @@ namespace Mobile_App
                     LogEntryWriter(Logentry1);
                 }
 
-                ts.Text = "Updater was Uninstalled/Check Complete";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Updater was Uninstalled/Check Complete"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //delete client folders
@@ -3033,8 +3041,8 @@ namespace Mobile_App
                 //delete programdata updater
                 try
                 {
-                    ts.Text = "Deleting Programdata Updater";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Programdata Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                     MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
                 }
@@ -3050,8 +3058,8 @@ namespace Mobile_App
                 //delete fire mobile folder
                 try
                 {
-                    ts.Text = "Deleting Fire Mobile Folder";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Fire Mobile Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     if (Is64Bit.Checked == true)
                     {
                         MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Fire Mobile");
@@ -3073,8 +3081,8 @@ namespace Mobile_App
                 //delete police mobile folder
                 try
                 {
-                    ts.Text = "Deleting Police Mobile Folder";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Police Mobile Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     if (Is64Bit.Checked == true)
                     {
                         MobileDelete(@"C:\Program Files (x86)\New World Systems\Aegis Mobile");
@@ -3094,8 +3102,6 @@ namespace Mobile_App
                 }
 
                 StartService("NewWorldUpdaterService");
-
-                ts.Text = "Uninstall Complete";
             }
 
             //remove mobile related updater entries
@@ -3103,24 +3109,24 @@ namespace Mobile_App
             {
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Modifying Mobile Updater Entries";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     FileWork64Bit();
                     UpdaterWork64Bit();
-                    ts.Text = "Mobile Updater Entries are removed";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile Updater Entries are removed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 }
                 else
                 {
-                    ts.Text = "Modifying Mobile Updater Entries";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     FileWork32Bit();
                     UpdaterWork32Bit();
-                    ts.Text = "Mobile Updater Entries are removed";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile Updater Entries are removed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 }
 
-                ts.Text = "Uninstall Complete";
+                BeginInvoke((Action)(() => ts.Text = "Uninstall Complete"));
             }
 
             //Uninstall MSP or CAD for NWPS and NWS
@@ -3137,8 +3143,8 @@ namespace Mobile_App
                     //if some wants to uninstall MSP first
                     if (result == DialogResult.Yes)
                     {
-                        ts.Text = "uninstalling MSP";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "uninstalling MSP"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                         UninstallProgram("New World MSP Client");
 
@@ -3146,8 +3152,8 @@ namespace Mobile_App
 
                         UninstallProgram("New World Aegis MSP Client");
 
-                        ts.Text = "MSP has been uninstalled";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "MSP has been uninstalled"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                         //if someone wants to uninstall CAD second
                         string title1 = "Cad uninstall Dialog";
@@ -3156,13 +3162,13 @@ namespace Mobile_App
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
                         if (result1 == DialogResult.Yes)
                         {
-                            ts.Text = "uninstalling CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                             UninstallProgram("New World Enterprise CAD Client");
 
-                            ts.Text = "CAD has been uninstalled";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                     }
 
@@ -3175,13 +3181,13 @@ namespace Mobile_App
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
                         if (result1 == DialogResult.Yes)
                         {
-                            ts.Text = "uninstalling CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                             UninstallProgram("New World  Enterprise CAD Client");
 
-                            ts.Text = "CAD has been uninstalled";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                     }
                 }
@@ -3196,8 +3202,8 @@ namespace Mobile_App
                     DialogResult result = MessageBox.Show(message, title, buttons);
                     if (result == DialogResult.Yes)
                     {
-                        ts.Text = "uninstalling MSP";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "uninstalling MSP"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                         UninstallProgram("New World MSP Client");
 
@@ -3205,8 +3211,8 @@ namespace Mobile_App
 
                         UninstallProgram("New World Aegis MSP Client");
 
-                        ts.Text = "MSP has been uninstalled";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "MSP has been uninstalled"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                         //if someone wants to uninstall CAD second
                         string title1 = "Cad uninstall Dialog";
@@ -3215,13 +3221,13 @@ namespace Mobile_App
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
                         if (result1 == DialogResult.Yes)
                         {
-                            ts.Text = "uninstalling CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                             UninstallProgram("New World Enterprise CAD Client");
 
-                            ts.Text = "CAD has been uninstalled";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                     }
 
@@ -3234,19 +3240,19 @@ namespace Mobile_App
                         DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
                         if (result1 == DialogResult.Yes)
                         {
-                            ts.Text = "uninstalling CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                             UninstallProgram("New World  Enterprise CAD Client");
 
-                            ts.Text = "CAD has been uninstalled";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                     }
                 }
 
-                ts.Text = "MSP and/or CAD has been Uninstalled/Check Complete";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "MSP and/or CAD has been Uninstalled/Check Complete"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //remove SQL compact 4.0
@@ -3255,8 +3261,8 @@ namespace Mobile_App
                 //64 bit
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "uninstalling SQL Server Compact 4.0 x64";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "uninstalling SQL Server Compact 4.0 x64"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                     if (label28.Text != "Uninstalled")
                     {
@@ -3268,15 +3274,15 @@ namespace Mobile_App
                         LogEntryWriter(Logentry1);
                     }
 
-                    ts.Text = "SQL Compact 4.0 was Uninstalled";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 was Uninstalled"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
 
                 //32 bit
                 else
                 {
-                    ts.Text = "uninstalling SQL Server Compact 4.0 x86";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "uninstalling SQL Server Compact 4.0 x86"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                     if (label28.Text != "Uninstalled")
                     {
@@ -3288,16 +3294,16 @@ namespace Mobile_App
                         LogEntryWriter(Logentry1);
                     }
 
-                    ts.Text = "SQL Compact 4.0 was Uninstalled";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 was Uninstalled"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
 
             //uninstall scene pd and active x controller
             if (CustomUninstallOptions.GetItemCheckState(11) == CheckState.Checked)
             {
-                ts.Text = "uninstalling ScenePD";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "uninstalling ScenePD"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 if (label35.Text != "Uninstalled")
                 {
@@ -3305,27 +3311,27 @@ namespace Mobile_App
                     UninstallProgram("ScenePD 6 Desktop Edition");
                 }
 
-                ts.Text = "ScenePD has been Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "ScenePD has been Uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Uninstall CAD Incident Observer
             if (CustomUninstallOptions.GetItemCheckState(12) == CheckState.Checked)
             {
-                ts.Text = "uninstalling CAD Incident Observer Client";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "uninstalling CAD Incident Observer Client"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 UninstallProgram("New World Enterprise CAD Incident Observer Client");
 
-                ts.Text = "CAD Incident Observer has been Uninstalled";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "CAD Incident Observer has been Uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Uninstall SQL CLR Types
             if (CustomUninstallOptions.GetItemCheckState(13) == CheckState.Checked)
             {
-                ts.Text = "uninstalling SQL CLR Types";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "uninstalling SQL CLR Types"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 //64 bit
                 if (Is64Bit.Checked == true)
@@ -3347,8 +3353,8 @@ namespace Mobile_App
                     string Logentry2 = DateTime.Now + " 32 bit SQL CLR Types is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry2);
 
-                    ts.Text = "SQL CLR Types has been Uninstalled";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "SQL CLR Types has been Uninstalled"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 else
                 {
@@ -3359,16 +3365,16 @@ namespace Mobile_App
                     string Logentry2 = DateTime.Now + " 32 bit SQL CLR Types is already uninstalled. This step was skipped.";
                     LogEntryWriter(Logentry2);
 
-                    ts.Text = "SQL CLR Types has been Uninstalled";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "SQL CLR Types has been Uninstalled"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
 
             //Restart Machine
             if (CustomUninstallOptions.GetItemCheckState(14) == CheckState.Checked)
             {
-                ts.Text = "Shutting Down PC";
-                ts.ForeColor = System.Drawing.Color.OrangeRed;
+                BeginInvoke((Action)(() => ts.Text = "Shutting Down PC"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                 Process.Start("Shutdown", "/r");
 
@@ -3386,8 +3392,8 @@ namespace Mobile_App
             {
                 if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                 {
-                    ts.Text = "Running 4.7.1 .Net";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -3401,14 +3407,14 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = ".Net 4.7.1 installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 //installed .net 4.8 if 4.7.1 is not present
                 else
                 {
-                    ts.Text = "Running 4.8 .Net";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -3422,8 +3428,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = ".Net 4.8 installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
             }
 
@@ -3432,8 +3438,8 @@ namespace Mobile_App
             {
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Running 32bit SQL Runtime";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         if (label33.Text != "Installed")
@@ -3455,8 +3461,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = "Running 64 bit SQL Runtime";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 64 bit SQL Runtime"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         if (label34.Text != "Installed")
@@ -3480,7 +3486,7 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Running 32bit SQL Runtime";
+                    BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
                     try
                     {
                         if (label33.Text != "Installed")
@@ -3503,8 +3509,8 @@ namespace Mobile_App
                     }
                 }
 
-                ts.Text = "SQL Runtime installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "SQL Runtime installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //install GIS components
@@ -3512,8 +3518,8 @@ namespace Mobile_App
             {
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Running 32 bit GIS Components";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         if (label29.Text != "Installed")
@@ -3535,8 +3541,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = "Running 64 bit GIS Components";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 64 bit GIS Components"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         if (label30.Text != "Installed")
@@ -3560,7 +3566,7 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Running 32 bit GIS Components";
+                    BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
                     try
                     {
                         if (label29.Text != "Installed")
@@ -3583,8 +3589,8 @@ namespace Mobile_App
                     }
                 }
 
-                ts.Text = "GIS Components Installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "GIS Components Installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //install DB Provider services
@@ -3592,8 +3598,8 @@ namespace Mobile_App
             {
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Running 64 bit Synchronization";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 64 bit Synchronization"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -3607,8 +3613,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = "Running 64 bit Provider Services";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 64 bit Provider Services"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -3622,8 +3628,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = "Running 64 bit DB Providers";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 64 bit DB Providers"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -3639,8 +3645,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Running 32 bit Synchronization";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 32 bit Synchronization"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -3654,8 +3660,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = "Running 32 bit Provider Services";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 32 bit Provider Services"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -3669,8 +3675,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry);
                     }
 
-                    ts.Text = "Running 32 bit DB Providers";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 32 bit DB Providers"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -3685,15 +3691,15 @@ namespace Mobile_App
                     }
                 }
 
-                ts.Text = "DB Provider Services Installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "DB Provider Services Installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //install Updater
             if (CustomInstallOption.GetItemCheckState(4) == CheckState.Checked)
             {
-                ts.Text = "Installing Updater";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     if (label27.Text != "Installed")
@@ -3715,37 +3721,37 @@ namespace Mobile_App
                     LogEntryWriter(LogEntry);
                 }
 
-                ts.Text = "Updater Installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Updater Installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Running Updater Config form
             if (CustomInstallOption.GetItemCheckState(5) == CheckState.Checked)
             {
-                ts.Text = "Running Mobile Updater Config form";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Running Mobile Updater Config form"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     if (GenerateNumber.Text == "0")
                     {
-                        ts.Text = "Please Verify the Updater portion is configured";
+                        BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                         throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                     }
                     else if (GenerateNumber.Text == " ")
                     {
-                        ts.Text = "Please Verify the Updater portion is configured";
+                        BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                         throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                     }
                     else if (GenerateNumber.Text == "")
                     {
-                        ts.Text = "Please Verify the Updater portion is configured";
+                        BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
                         throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                     }
                     else
                     {
                         UpdaterAppend_Click(new object(), new EventArgs());
-                        ts.Text = "ORI/FDID Update Complete";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "ORI/FDID Update Complete"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                 }
                 catch (Exception ex)
@@ -3763,8 +3769,8 @@ namespace Mobile_App
             {
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Prepping folder permissions";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         SetAcl(@"C:\Program Files (x86)\New World Systems");
@@ -3790,8 +3796,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Prepping folder permissions";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         SetAcl(@"C:\Program Files\New World Systems");
@@ -3816,8 +3822,8 @@ namespace Mobile_App
                     }
                 }
 
-                ts.Text = "Folder Permissions are Set";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Folder Permissions are Set"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //install MSP/CAD
@@ -3836,8 +3842,8 @@ namespace Mobile_App
                     {
                         if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                         {
-                            ts.Text = "Running 4.7.1 .Net";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -3851,14 +3857,14 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = ".Net 4.7.1 installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                         //installed .net 4.8 if 4.7.1 is not present
                         else
                         {
-                            ts.Text = "Running 4.8 .Net";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -3872,12 +3878,12 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = ".Net installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = ".Net installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
 
-                        ts.Text = "Running 32bit SQL Runtime";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             if (label33.Text != "Installed")
@@ -3899,8 +3905,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Running 64 bit SQL Runtime";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Running 64 bit SQL Runtime"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             if (label34.Text != "Installed")
@@ -3922,8 +3928,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Running 32 bit GIS Components";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             if (label29.Text != "Installed")
@@ -3945,8 +3951,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Running 64 bit GIS Components";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Running 64 bit GIS Components"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             if (label30.Text != "Installed")
@@ -3968,8 +3974,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Installing Updater";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             if (label27.Text != "Installed")
@@ -3991,8 +3997,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Installing MSP";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing MSP"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             RunProgram("NewWorldMSPClient.msi", @"C:\Temp\MobileInstaller");
@@ -4005,12 +4011,12 @@ namespace Mobile_App
 
                             LogEntryWriter(LogEntry);
 
-                            ts.Text = "MSP is Installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "MSP is Installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
 
-                        ts.Text = "Prepping folder permissions";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             SetAcl(@"C:\Program Files (x86)\New World Systems");
@@ -4044,8 +4050,8 @@ namespace Mobile_App
                         {
                             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                             {
-                                ts.Text = "Running 4.7.1 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -4059,14 +4065,14 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.7.1 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
                             //installed .net 4.8 if 4.7.1 is not present
                             else
                             {
-                                ts.Text = "Running 4.8 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -4080,20 +4086,20 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.8 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
 
-                            ts.Text = "Running 64 bit 4.0 SQL Runtime";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit 4.0 SQL Runtime"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label28.Text != "Installed")
                                 {
                                     RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
 
-                                    ts.Text = "SQL Compact 4.0 Installed";
-                                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                    BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
+                                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                                 }
                                 else
                                 {
@@ -4110,8 +4116,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit GIS Components";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label33.Text != "Installed")
@@ -4133,8 +4139,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit GIS Components";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit GIS Components"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label34.Text != "Installed")
@@ -4156,8 +4162,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit Synchronization";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Synchronization"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4171,8 +4177,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit Provider Services";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Provider Services"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4186,8 +4192,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit DB Providers";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit DB Providers"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4201,8 +4207,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing Updater";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label27.Text != "Installed")
@@ -4224,8 +4230,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running Primary Interop Assemblies for Office";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
@@ -4239,8 +4245,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "SQL Server CLR Types 2008";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label31.Text != "Installed")
@@ -4272,8 +4278,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", @"C:\Temp\MobileInstaller");
@@ -4286,12 +4292,12 @@ namespace Mobile_App
 
                                 LogEntryWriter(LogEntry);
 
-                                ts.Text = "Enterprise CAD Installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = "Enterprise CAD Installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
 
-                            ts.Text = "Prepping folder permissions";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
@@ -4328,8 +4334,8 @@ namespace Mobile_App
                         {
                             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                             {
-                                ts.Text = "Running 4.7.1 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -4343,13 +4349,13 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.7.1 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
                             //installed .net 4.8 if 4.7.1 is not present
                             else
                             {
-                                ts.Text = "Running 4.8 .Net";
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
                                 try
                                 {
                                     InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -4363,20 +4369,20 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.8 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
 
-                            ts.Text = "Running 64 bit 4.0 SQL Runtime";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit 4.0 SQL Runtime"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label28.Text != "Installed")
                                 {
                                     RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
 
-                                    ts.Text = "SQL Compact 4.0 Installed";
-                                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                    BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
+                                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                                 }
                                 else
                                 {
@@ -4393,8 +4399,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit GIS Components";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label29.Text != "Installed")
@@ -4416,8 +4422,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit GIS Components";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit GIS Components"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label30.Text != "Installed")
@@ -4439,8 +4445,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit Synchronization";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Synchronization"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4454,8 +4460,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit Provider Services";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Provider Services"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4469,8 +4475,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 64 bit DB Providers";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit DB Providers"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4484,8 +4490,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing Updater";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label27.Text != "Installed")
@@ -4507,8 +4513,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running Primary Interop Assemblies for Office";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
@@ -4522,8 +4528,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "SQL Server CLR Types 2008";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 if (label31.Text != "Installed")
@@ -4555,8 +4561,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", @"C:\Temp\MobileInstaller");
@@ -4570,8 +4576,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Prepping folder permissions";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 SetAcl(@"C:\Program Files (x86)\New World Systems");
@@ -4611,8 +4617,8 @@ namespace Mobile_App
                     {
                         if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                         {
-                            ts.Text = "Running 4.7.1 .Net";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -4626,33 +4632,31 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = ".Net 4.7.1 installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                         //installed .net 4.8 if 4.7.1 is not present
                         else
                         {
-                            ts.Text = "Running 4.8 .Net";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
                                 string LogEntry = DateTime.Now + " " + ex.ToString();
 
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = ".Net 4.8 installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
 
-                        ts.Text = "Running 32bit SQL Runtime";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4666,8 +4670,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Running 32 bit GIS Components";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
@@ -4681,8 +4685,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Installing Updater";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
@@ -4696,8 +4700,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Installing MSP";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing MSP"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             RunProgram("NewWorldMSPClient.msi", @"C:\Temp\MobileInstaller");
@@ -4711,8 +4715,8 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                         }
 
-                        ts.Text = "Prepping folder permissions";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
                             SetAcl(@"C:\Program Files\New World Systems");
@@ -4745,8 +4749,8 @@ namespace Mobile_App
                         {
                             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                             {
-                                ts.Text = "Running 4.7.1 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -4760,14 +4764,14 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.7.1 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
                             //installed .net 4.8 if 4.7.1 is not present
                             else
                             {
-                                ts.Text = "Running 4.8 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -4781,12 +4785,12 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.8 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
 
-                            ts.Text = "Running 32bit SQL Runtime";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
@@ -4800,8 +4804,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit GIS Components";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
@@ -4815,8 +4819,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit Synchronization";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Synchronization"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4830,8 +4834,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit Provider Services";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Provider Services"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4845,8 +4849,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit DB Providers";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit DB Providers"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -4860,8 +4864,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing Updater";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
@@ -4875,8 +4879,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running Primary Interop Assemblies for Office";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
@@ -4890,8 +4894,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "SQL Server CLR Types 2008";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
@@ -4905,8 +4909,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", @"C:\Temp\MobileInstaller");
@@ -4920,8 +4924,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Prepping folder permissions";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
@@ -4957,8 +4961,8 @@ namespace Mobile_App
                         {
                             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
                             {
-                                ts.Text = "Running 4.7.1 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
@@ -4972,14 +4976,14 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.7.1 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
                             //installed .net 4.8 if 4.7.1 is not present
                             else
                             {
-                                ts.Text = "Running 4.8 .Net";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
                                     InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
@@ -4993,12 +4997,12 @@ namespace Mobile_App
                                     LogEntryWriter(LogEntry);
                                 }
 
-                                ts.Text = ".Net 4.8 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
 
-                            ts.Text = "Running 32bit SQL Runtime";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
@@ -5012,8 +5016,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit GIS Components";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
@@ -5027,8 +5031,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit Synchronization";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Synchronization"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -5042,8 +5046,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit Provider Services";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Provider Services"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -5057,8 +5061,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running 32 bit DB Providers";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit DB Providers"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
@@ -5072,8 +5076,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing Updater";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
@@ -5087,8 +5091,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Running Primary Interop Assemblies for Office";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
@@ -5102,8 +5106,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "SQL Server CLR Types 2008";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
@@ -5117,8 +5121,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Installing CAD";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", @"C:\Temp\MobileInstaller");
@@ -5132,8 +5136,8 @@ namespace Mobile_App
                                 LogEntryWriter(LogEntry);
                             }
 
-                            ts.Text = "Prepping folder permissions";
-                            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                            BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
                                 SetAcl(@"C:\Program Files\New World Systems");
@@ -5158,15 +5162,15 @@ namespace Mobile_App
                         }
                     }
                 }
-                ts.Text = "MSP and/OR CAD is installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "MSP and/OR CAD is installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Install Incident Observer
             if (CustomInstallOption.GetItemCheckState(8) == CheckState.Checked)
             {
-                ts.Text = "Installing Incident Observer";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Installing Incident Observer"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                 string LogEntry = DateTime.Now + @" Attempting to install Incident Observer";
 
@@ -5178,8 +5182,8 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                ts.Text = "Incident Observer is installed";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Incident Observer is installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //Install ScenePD
@@ -5191,7 +5195,7 @@ namespace Mobile_App
                 //if scene pd 4 is not located and that is the desired scene pd version a message is displayed with paths to move folders
                 if (File.Exists(@"C:\Temp\MobileInstaller\SPD6-4-8993.exe"))
                 {
-                    ts.Text = "ScenePD Install Prompt";
+                    BeginInvoke((Action)(() => ts.Text = "ScenePD Install Prompt"));
                     string title = "ScenePD Install Prompt";
                     string message = "would you like to Install ScenePD 6?";
                     MessageBoxButtons buttons = MessageBoxButtons.YesNo;
@@ -5200,8 +5204,8 @@ namespace Mobile_App
                     //scene pd 6 install
                     if (result == DialogResult.Yes)
                     {
-                        ts.Text = "Installing ScenePD 6";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 6"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         string LogEntry = DateTime.Now + @" Attempting to install ScenePD 6";
 
                         LogEntryWriter(LogEntry);
@@ -5223,8 +5227,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry1);
                         LogEntryWriter(LogEntry2);
 
-                        ts.Text = "ScenePD 6 Installed";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "ScenePD 6 Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
 
                     //scene pd 4 install
@@ -5238,8 +5242,8 @@ namespace Mobile_App
                             DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
                             if (result1 == DialogResult.Yes)
                             {
-                                ts.Text = "Installing ScenePD 4";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                                 string LogEntry = DateTime.Now + @" Attempting to install ScenePD 4";
 
@@ -5259,8 +5263,8 @@ namespace Mobile_App
 
                                 LogEntryWriter(LogEntry1);
 
-                                ts.Text = "ScenePD 4 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = "ScenePD 4 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
                         }
                         else
@@ -5281,8 +5285,8 @@ namespace Mobile_App
                     //ScenePD 6 install
                     if (result1 == DialogResult.Yes)
                     {
-                        ts.Text = "Installing ScenePD 4";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                         string LogEntry = DateTime.Now + @" Attempting to install ScenePD 4";
 
@@ -5302,15 +5306,15 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry1);
 
-                        ts.Text = "ScenePD 4 installed";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "ScenePD 4 installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                 }
 
                 //this will check in the NWS Addons folder for scene pd 6
                 else if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\SPD6-4-8993.exe"))
                 {
-                    ts.Text = "ScenePD Install Prompt";
+                    BeginInvoke((Action)(() => ts.Text = "ScenePD Install Prompt"));
                     string title = "ScenePD Install Prompt";
                     string message = "would you like to Install ScenePD 6?";
                     MessageBoxButtons buttons = MessageBoxButtons.YesNo;
@@ -5319,8 +5323,8 @@ namespace Mobile_App
                     //scene pd 6 install
                     if (result == DialogResult.Yes)
                     {
-                        ts.Text = "Installing ScenePD 6";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 6"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         string LogEntry = DateTime.Now + @" Attempting to install ScenePD 6";
 
                         LogEntryWriter(LogEntry);
@@ -5342,8 +5346,8 @@ namespace Mobile_App
                         LogEntryWriter(LogEntry1);
                         LogEntryWriter(LogEntry2);
 
-                        ts.Text = "ScenePD 6 Installed";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "ScenePD 6 Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
 
                     //scene pd 4 install
@@ -5357,8 +5361,8 @@ namespace Mobile_App
                             DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
                             if (result1 == DialogResult.Yes)
                             {
-                                ts.Text = "Installing ScenePD 4";
-                                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                                BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                                 string LogEntry = DateTime.Now + @" Attempting to install ScenePD 4";
 
@@ -5378,8 +5382,8 @@ namespace Mobile_App
 
                                 LogEntryWriter(LogEntry1);
 
-                                ts.Text = "ScenePD 4 installed";
-                                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                                BeginInvoke((Action)(() => ts.Text = "ScenePD 4 installed"));
+                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                             }
                         }
                         else
@@ -5399,8 +5403,8 @@ namespace Mobile_App
                     //ScenePD 6 install
                     if (result1 == DialogResult.Yes)
                     {
-                        ts.Text = "Installing ScenePD 4";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                         string LogEntry = DateTime.Now + @" Attempting to install ScenePD 4";
 
@@ -5420,8 +5424,8 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry1);
 
-                        ts.Text = "ScenePD 4 installed";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "ScenePD 4 installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                 }
 
@@ -5432,8 +5436,8 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
-                    ts.Text = "Scene PD could not be found. Please Enter Path to the ScenePD folder.";
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
+                    BeginInvoke((Action)(() => ts.Text = "Scene PD could not be found. Please Enter Path to the ScenePD folder."));
 
                     string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
 
@@ -5449,16 +5453,16 @@ namespace Mobile_App
             {
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Running 64 bit SQL Runtime";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 64 bit SQL Runtime"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         if (label28.Text != "Installed")
                         {
                             RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
 
-                            ts.Text = "SQL Compact 4.0 Installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                         else
                         {
@@ -5477,16 +5481,16 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Running 32bit SQL Runtime";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         if (label28.Text != "Installed")
                         {
                             RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
 
-                            ts.Text = "SQL Compact 4.0 Installed";
-                            ts.ForeColor = System.Drawing.Color.ForestGreen;
+                            BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                         }
                         else
                         {
@@ -5494,8 +5498,8 @@ namespace Mobile_App
                             LogEntryWriter(logentry2);
                         }
 
-                        ts.Text = "ScenePD 6 Installed";
-                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                        BeginInvoke((Action)(() => ts.Text = "ScenePD 6 Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                     catch (Exception ex)
                     {
@@ -5512,14 +5516,14 @@ namespace Mobile_App
             //this will install VS 2010 tools
             if (CustomInstallOption.GetItemCheckState(11) == CheckState.Checked)
             {
-                ts.Text = "Running Primary Interop Assemblies for Office";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
 
-                    ts.Text = "VS 2010 Tools Installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "VS 2010 Tools Installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 catch (Exception ex)
                 {
@@ -5534,8 +5538,8 @@ namespace Mobile_App
             //Restart Machine
             if (CustomInstallOption.GetItemCheckState(12) == CheckState.Checked)
             {
-                ts.Text = "Shutting Down PC";
-                ts.ForeColor = System.Drawing.Color.OrangeRed;
+                BeginInvoke((Action)(() => ts.Text = "Shutting Down PC"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                 Process.Start("Shutdown", "/r");
 
@@ -5554,8 +5558,8 @@ namespace Mobile_App
                 //this will set the correct folder permissions for 64 bit or 32 bit depending on the OS version
                 if (Is64Bit.Checked == true)
                 {
-                    ts.Text = "Prepping folder permissions";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         SetAcl(@"C:\Program Files (x86)\New World Systems");
@@ -5581,8 +5585,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Prepping folder permissions";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
                         SetAcl(@"C:\Program Files\New World Systems");
@@ -5607,8 +5611,8 @@ namespace Mobile_App
                     }
                 }
 
-                ts.Text = "User Permissions are set";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "User Permissions are set"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //stop and restart the updater service
@@ -5624,8 +5628,8 @@ namespace Mobile_App
                 //this will start the new world service
                 StartService("NewWorldUpdaterService");
 
-                ts.Text = "Updated Service Bounced";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Updated Service Bounced"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //reset the updater folder under programdata
@@ -5639,8 +5643,8 @@ namespace Mobile_App
 
                 try
                 {
-                    ts.Text = "Deleting Programdata Updater";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Programdata Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     if (Directory.Exists(@"C:\Programdata\New World Systems\New World Updater"))
                     {
                         //this will delete the new world updater folder under programdata
@@ -5699,8 +5703,8 @@ namespace Mobile_App
                 //this will start the new world updater service
                 StartService("NewWorldUpdaterService");
 
-                ts.Text = "Programdata updater folder and service bounced";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Programdata updater folder and service bounced"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //deletes the fire mobile, police mobile, and updater folder under programdata
@@ -5714,8 +5718,8 @@ namespace Mobile_App
 
                 try
                 {
-                    ts.Text = "Deleting Programdata Updater";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Programdata Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                     //this will attempt to delete the new world updater folder under programdata
                     MobileDelete(@"C:\Programdata\New World Systems\New World Updater");
@@ -5731,8 +5735,8 @@ namespace Mobile_App
 
                 try
                 {
-                    ts.Text = "Deleting Programdata Aegis Mobile";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Programdata Aegis Mobile"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                     //this will attempt to delete the new world updater folder under programdata
                     MobileDelete(@"C:\Programdata\New World Systems\Aegis Mobile");
@@ -5748,8 +5752,8 @@ namespace Mobile_App
 
                 try
                 {
-                    ts.Text = "Deleting Fire Mobile Folder";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Fire Mobile Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     if (Is64Bit.Checked == true)
                     {
                         //this will delete the aegis fire mobile folder for 64 bit OS
@@ -5772,8 +5776,8 @@ namespace Mobile_App
 
                 try
                 {
-                    ts.Text = "Deleting Police Mobile Folder";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Deleting Police Mobile Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     if (Is64Bit.Checked == true)
                     {
                         //this will try to delete the aegis mobile folder for 64 bit OS
@@ -5796,8 +5800,8 @@ namespace Mobile_App
 
                 StartService("NewWorldUpdaterService");
 
-                ts.Text = "Fire Mobile/Police Mobile & ProgramData-Updater/Mobile Folder Deleted";
-                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke((Action)(() => ts.Text = "Fire Mobile/Police Mobile & ProgramData-Updater/Mobile Folder Deleted"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
             //will check to see if the Mobile Client Interface tester is in the MobileInstaller/NWS Addons folder
@@ -5805,12 +5809,12 @@ namespace Mobile_App
             if (MobileTriage.GetItemCheckState(4) == CheckState.Checked)
             {
                 //this will run the Mobile Client Interface Tester utility if it is present, and prompt a new window to download if not.
-                ts.Text = "Checking to see if Utility is in the proper location";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Checking to see if Utility is in the proper location"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)\AegisMobileClientInterfaceTester.exe"))
                 {
-                    ts.Text = "Running Mobile Client Interface tester Utility";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Running Mobile Client Interface tester Utility"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string LogEntry = DateTime.Now + @" Mobile Client Interface Tester Started";
 
@@ -5820,8 +5824,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Mobile Client Interface tester was not found - File Path to NWS Addon Folder";
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile Client Interface tester was not found - File Path to NWS Addon Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE MOBILE CLIENT INTERFACE UTILITY. Attempting to download.";
 
@@ -5840,12 +5844,12 @@ namespace Mobile_App
             if (MobileTriage.GetItemCheckState(5) == CheckState.Checked)
             {
                 //this will run the Mobile Client Device Tester utility if it is present, and if not display a custom error message
-                ts.Text = "Checking to see if Mobile Client Device Tester is in the proper location";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Checking to see if Mobile Client Device Tester is in the proper location"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\DeviceTester\DeviceTester.exe"))
                 {
-                    ts.Text = "Running Device tester Utility";
-                    ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                    BeginInvoke((Action)(() => ts.Text = "Running Device tester Utility"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                     string LogEntry = DateTime.Now + " Device Tester Utility Started";
 
@@ -5855,8 +5859,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "Mobile Client Device tester was not found - File Path to NWS Addon Folder";
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile Client Device tester was not found - File Path to NWS Addon Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Attempting to download.";
 
@@ -5874,8 +5878,8 @@ namespace Mobile_App
             {
                 if (File.Exists(@"C:\Program Files (x86)\Mobile GPS Tester\MobileTools.GpsTester.exe"))
                 {
-                    ts.Text = "Running Mobile GPS Tester";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Running Mobile GPS Tester"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string LogEntry = DateTime.Now + " Device Tester Utility Started";
 
@@ -5887,18 +5891,18 @@ namespace Mobile_App
                 {
                     InstallProgram("MobileGpsTesterSetup.msi", @"C:\Temp\MobileInstaller\NWS Addons\");
 
-                    ts.Text = "Mobile GPS Tester has been installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile GPS Tester has been installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
-                    ts.Text = "Mobile GPS Tester is being Run";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile GPS Tester is being Run"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                     RunProgram("MobileTools.GpsTester.exe", @"C:\Program Files (x86)\Mobile GPS Tester\");
                 }
                 else
                 {
-                    ts.Text = "Mobile Client GPS Test Utility was not found - FIle Path to NWS Addon Folder.";
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => ts.Text = "Mobile Client GPS Test Utility was not found - FIle Path to NWS Addon Folder."));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE GPS TESTER UTILITY. Attempting to Download";
 
@@ -5916,14 +5920,14 @@ namespace Mobile_App
             //If the files are not present and are not already downloaded, then a download prompt will appear.
             if (MobileTriage.GetItemCheckState(7) == CheckState.Checked)
             {
-                ts.Text = "Checking to see if Utility is in the proper location";
-                ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                BeginInvoke((Action)(() => ts.Text = "Checking to see if Utility is in the proper location"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Remove\install.exe"))
                 {
                     if (!File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\UBloxRemoveCompleted.txt"))
                     {
-                        ts.Text = "Removing UBlox Configuration";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Removing UBlox Configuration"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                         string LogEntry = DateTime.Now + " UBlox Configuration Removal Started";
 
@@ -5951,8 +5955,8 @@ namespace Mobile_App
                     }
                     else
                     {
-                        ts.Text = "Setting UBlox Configuration";
-                        ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+                        BeginInvoke((Action)(() => ts.Text = "Setting UBlox Configuration"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
                         string LogEntry = DateTime.Now + " UBlox Configuration Setting Started";
 
@@ -5967,8 +5971,8 @@ namespace Mobile_App
                 }
                 else
                 {
-                    ts.Text = "U-BLOX Work around was not found - File Path to NWS Addon Folder";
-                    ts.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => ts.Text = "U-BLOX Work around was not found - File Path to NWS Addon Folder"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE UBLOX WORK AROUND FILES. ATTEMPTING TO DOWNLOAD";
 
@@ -6367,8 +6371,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label27.Text = "Uninstalled";
-                    label27.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label27.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label27.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for Automatic Updater - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6384,8 +6388,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label28.Text = "Uninstalled";
-                    label28.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label28.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label28.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for SQL Compact 4.0 64bit - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6401,8 +6405,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label28.Text = "Uninstalled";
-                    label28.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label28.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label28.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for SQL Compact 4.0 32bit - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6418,8 +6422,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label29.Text = "Uninstalled";
-                    label29.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label29.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label29.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit GIS Components - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6435,8 +6439,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label30.Text = "Uninstalled";
-                    label30.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label30.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label30.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit GIS Components - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6452,8 +6456,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label31.Text = "Uninstalled";
-                    label31.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label31.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label31.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Server CLR Types - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6469,8 +6473,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label32.Text = "Uninstalled";
-                    label32.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label32.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label32.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Server CLR Types - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6486,8 +6490,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label33.Text = "Uninstalled";
-                    label33.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label33.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label33.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Server Compact 3.5 SP2 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6503,8 +6507,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label34.Text = "Uninstalled";
-                    label34.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label34.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label34.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Server Compact 3.5 SP2 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6520,8 +6524,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label35.Text = "Uninstalled";
-                    label35.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label35.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label35.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6537,8 +6541,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label35.Text = "Uninstalled";
-                    label35.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label35.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label35.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 ActiveX Control - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6554,8 +6558,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label35.Text = "Uninstalled";
-                    label35.ForeColor = System.Drawing.Color.OrangeRed;
+                    BeginInvoke((Action)(() => label35.Text = "Uninstalled"));
+                    BeginInvoke((Action)(() => label35.ForeColor = System.Drawing.Color.OrangeRed));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 4 - UNINSTALLED";
                     LogEntryWriter(logentry1);
@@ -6575,8 +6579,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label27.Text = "Installed";
-                    label27.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label27.Text = "Installed"));
+                    BeginInvoke((Action)(() => label27.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for Automatic Updater - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6592,8 +6596,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label28.Text = "Installed";
-                    label28.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label28.Text = "Installed"));
+                    BeginInvoke((Action)(() => label28.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Compact 4.0 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6609,8 +6613,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label28.Text = "Installed";
-                    label28.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label28.Text = "Installed"));
+                    BeginInvoke((Action)(() => label28.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Compact 4.0 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6626,8 +6630,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label29.Text = "Installed";
-                    label29.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label29.Text = "Installed"));
+                    BeginInvoke((Action)(() => label29.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit GIS Components - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6643,8 +6647,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label30.Text = "Installed";
-                    label30.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label30.Text = "Installed"));
+                    BeginInvoke((Action)(() => label30.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit GIS Components - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6660,8 +6664,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label31.Text = "Installed";
-                    label31.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label31.Text = "Installed"));
+                    BeginInvoke((Action)(() => label31.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL CLR Types - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6677,8 +6681,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label32.Text = "Installed";
-                    label32.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label32.Text = "Installed"));
+                    BeginInvoke((Action)(() => label32.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL CLR Types - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6694,8 +6698,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label33.Text = "Installed";
-                    label33.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label33.Text = "Installed"));
+                    BeginInvoke((Action)(() => label33.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 32 bit SQL Compact 3.5 SP2 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6711,8 +6715,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label34.Text = "Installed";
-                    label34.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label34.Text = "Installed"));
+                    BeginInvoke((Action)(() => label34.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for 64 bit SQL Compact 3.5 SP2 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6728,8 +6732,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label35.Text = "Installed";
-                    label35.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label35.Text = "Installed"));
+                    BeginInvoke((Action)(() => label35.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 - INSTALLED";
                     LogEntryWriter(logentry1);
@@ -6745,8 +6749,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    label35.Text = "Installed";
-                    label35.ForeColor = System.Drawing.Color.ForestGreen;
+                    BeginInvoke((Action)(() => label35.Text = "Installed"));
+                    BeginInvoke((Action)(() => label35.ForeColor = System.Drawing.Color.ForestGreen));
 
                     string logentry1 = DateTime.Now + " Program Checker tab updated for ScenePD 6 AcetiveX Controller - INSTALLED";
                     LogEntryWriter(logentry1);
