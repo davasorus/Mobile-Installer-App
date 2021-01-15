@@ -6591,32 +6591,6 @@ namespace Mobile_App
         //I may change this in the future to account for uninstalled as a known status like installed technically is.
         private void PreStatusChecker()
         {
-            //hidden until finding clients is needed
-            /*
-            ts.Text = "Checking to uninstall Police Mobile";
-            PreReqChecker("Aegis Mobile");
-
-            PreReqChecker("Law Enforcement Mobile");
-            ts.Text = "Police Mobile is Uninstalled";
-
-            ts.Text = "Checking to uninstall Fire Mobile";
-            PreReqChecker("Aegis Fire Mobile");
-
-            PreReqChecker("Fire Mobile");
-            ts.Text = "Fire Mobile is Uninstalled";
-
-            ts.Text = "Checking to uninstall Mobile Merge";
-            PreReqChecker("Aegis Mobile Merge");
-
-            PreReqChecker("Mobile Merge");
-            ts.Text = "Mobile Merge is Uninstalled";
-            */
-            //
-            //the below code block checks if the current known status is either "Waiting Initialization" (which is default" or "Uninstalled"
-            //if the status is NOT either of these the check will not happen.
-            //NOTE: IF THE INSTALL ERRORS AND THE INSTALLED STATUS IS A FALSE POSITIVE THE ONLY WORK AROUND IS TO REINSTALL THE PRE REQ.
-            //
-
             //Updater Status Check
             if (label27.Text == "Waiting Initialization")
             {
