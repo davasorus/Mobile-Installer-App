@@ -26,15 +26,34 @@ namespace Mobile_App
     {
         private XmlDocument UpdaterConfig = new XmlDocument();
         private XmlDocument StartupSettings = new XmlDocument();
-        private string SourcePath = @"";
+
         private BackgroundWorker Tab1bg;
         private BackgroundWorker Tab2bg;
+
+        private string DotNet47 = "dotNetFx471_Full_setup_Offline.exe";
+        private string DotNet48 = "ndp48-x86-x64-allos-enu.exe";
+        private string SQLCE3532 = "SSCERuntime_x86-ENU.msi";
+        private string SQLCE3564 = "SSCERuntime_x64-ENU.msi";
+        private string SQLCE4032 = "SSCERuntime_x86-ENU-4.0.exe";
+        private string SQLCE4064 = "SSCERuntime_x64-ENU-4.0.exe";
+        private string NWPSGIS32 = "NewWorld.Gis.Components.x86.msi";
+        private string NWPSGIS64 = "NewWorld.Gis.Components.x64.msi";
+        private string MSSYNC64 = "Synchronization-v2.1-x64-ENU.msi";
+        private string MSPROSERV64 = "ProviderServices-v2.1-x64-ENU.msi";
+        private string MSDBPRO64 = "DatabaseProviders-v3.1-x64-ENU.msi";
+        private string MSSYNC32 = "Synchronization-v2.1-x86-ENU.msi";
+        private string MSPROSERV32 = "ProviderServices-v2.1-x86-ENU.msi";
+        private string MSDBPRO32 = "DatabaseProviders-v3.1-x86-ENU.msi";
+        private string NWPSUPDATE = "NewWorld.Management.Updater.msi";
+
+        private string LocalRun = @"C:\Temp\MobileInstaller";
 
         public string MSPServerName { get; private set; }
         private bool PoliceClientExists = false;
         private bool FireClientExists = false;
         private bool MergeClientExists = false;
         private int j;
+        private string SourcePath = @"";
         private string TargetPath = @"";
         private bool is64bit = false;
         private bool installmobile = false;
@@ -1090,7 +1109,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                    InstallProgram(DotNet47, @"C:\Temp\MobileInstaller");
                 }
                 catch (Exception ex)
                 {
@@ -1110,7 +1129,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
                 try
                 {
-                    InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                    InstallProgram(DotNet48, @"C:\Temp\MobileInstaller");
                 }
                 catch (Exception ex)
                 {
@@ -1131,7 +1150,7 @@ namespace Mobile_App
             {
                 if (label33.Text != "Installed")
                 {
-                    InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(SQLCE3532, @"C:\Temp\MobileInstaller");
 
                     BeginInvoke((Action)(() => ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1159,7 +1178,7 @@ namespace Mobile_App
             {
                 if (label34.Text != "Installed")
                 {
-                    InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(SQLCE3564, @"C:\Temp\MobileInstaller");
 
                     BeginInvoke((Action)(() => ts.Text = "64 bit SQL Compact 3.5 SP2 has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1180,7 +1199,7 @@ namespace Mobile_App
             {
                 if (label29.Text != "Installed")
                 {
-                    InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(NWPSGIS32, @"C:\Temp\MobileInstaller");
 
                     BeginInvoke((Action)(() => ts.Text = "32 bit GIS has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1201,7 +1220,7 @@ namespace Mobile_App
             {
                 if (label30.Text != "Installed")
                 {
-                    InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(NWPSGIS64, @"C:\Temp\MobileInstaller");
 
                     BeginInvoke((Action)(() => ts.Text = "64 bit GIS has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1220,7 +1239,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
-                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram(MSSYNC64, @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -1235,7 +1254,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
-                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram(MSPROSERV64, @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -1250,7 +1269,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
-                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram(MSDBPRO64, @"C:\Temp\MobileInstaller");
             }
             catch (Exception ex)
             {
@@ -1267,7 +1286,7 @@ namespace Mobile_App
             {
                 if (label27.Text != "Installed")
                 {
-                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(NWPSUPDATE, @"C:\Temp\MobileInstaller");
 
                     BeginInvoke((Action)(() => ts.Text = "Installer has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1411,7 +1430,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                    InstallProgram(DotNet47, LocalRun);
                 }
                 catch (Exception ex)
                 {
@@ -1432,7 +1451,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                    InstallProgram(DotNet48, LocalRun);
                 }
                 catch (Exception ex)
                 {
@@ -1453,7 +1472,7 @@ namespace Mobile_App
             {
                 if (label33.Text != "Installed")
                 {
-                    InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(SQLCE3532, LocalRun);
 
                     BeginInvoke((Action)(() => ts.Text = "32 bit SQL Compact 3.5 SP2 has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1481,7 +1500,7 @@ namespace Mobile_App
             {
                 if (label29.Text != "Installed")
                 {
-                    InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(NWPSGIS32, LocalRun);
 
                     BeginInvoke((Action)(() => ts.Text = "32 bit GIS has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -1500,7 +1519,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
-                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram(MSSYNC32, LocalRun);
             }
             catch (Exception ex)
             {
@@ -1515,7 +1534,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
-                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram(MSPROSERV32, LocalRun);
             }
             catch (Exception ex)
             {
@@ -1530,7 +1549,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
             try
             {
-                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram(MSDBPRO32, LocalRun);
             }
             catch (Exception ex)
             {
@@ -1547,7 +1566,7 @@ namespace Mobile_App
             {
                 if (label27.Text != "Installed")
                 {
-                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                    InstallProgram(NWPSUPDATE, LocalRun);
 
                     BeginInvoke((Action)(() => ts.Text = "Installer has been installed."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -3224,7 +3243,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                        InstallProgram(DotNet47, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3245,7 +3264,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                        InstallProgram(DotNet48, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3272,7 +3291,7 @@ namespace Mobile_App
                     {
                         if (label33.Text != "Installed")
                         {
-                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(SQLCE3532, LocalRun);
                         }
                         else
                         {
@@ -3295,7 +3314,7 @@ namespace Mobile_App
                     {
                         if (label34.Text != "Installed")
                         {
-                            InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(SQLCE3564, LocalRun);
                         }
                         else
                         {
@@ -3319,7 +3338,7 @@ namespace Mobile_App
                     {
                         if (label33.Text != "Installed")
                         {
-                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(SQLCE3532, LocalRun);
                         }
                         else
                         {
@@ -3352,7 +3371,7 @@ namespace Mobile_App
                     {
                         if (label29.Text != "Installed")
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(NWPSGIS32, LocalRun);
                         }
                         else
                         {
@@ -3375,7 +3394,7 @@ namespace Mobile_App
                     {
                         if (label30.Text != "Installed")
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(NWPSGIS64, LocalRun);
                         }
                         else
                         {
@@ -3399,7 +3418,7 @@ namespace Mobile_App
                     {
                         if (label29.Text != "Installed")
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(NWPSGIS32, LocalRun);
                         }
                         else
                         {
@@ -3430,7 +3449,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(MSSYNC64, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3445,7 +3464,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(MSPROSERV64, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3460,7 +3479,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(MSDBPRO64, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3477,7 +3496,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(MSSYNC32, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3492,7 +3511,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(MSPROSERV32, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3507,7 +3526,7 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                     try
                     {
-                        InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(MSDBPRO32, LocalRun);
                     }
                     catch (Exception ex)
                     {
@@ -3532,7 +3551,7 @@ namespace Mobile_App
                 {
                     if (label27.Text != "Installed")
                     {
-                        InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                        InstallProgram(NWPSUPDATE, LocalRun);
                     }
                     else
                     {
@@ -3674,7 +3693,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(DotNet47, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -3695,7 +3714,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(DotNet48, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -3716,7 +3735,7 @@ namespace Mobile_App
                         {
                             if (label33.Text != "Installed")
                             {
-                                InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(SQLCE3532, LocalRun);
                             }
                             else
                             {
@@ -3739,7 +3758,7 @@ namespace Mobile_App
                         {
                             if (label34.Text != "Installed")
                             {
-                                InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(SQLCE3564, LocalRun);
                             }
                             else
                             {
@@ -3762,7 +3781,7 @@ namespace Mobile_App
                         {
                             if (label29.Text != "Installed")
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSGIS32, LocalRun);
                             }
                             else
                             {
@@ -3785,7 +3804,7 @@ namespace Mobile_App
                         {
                             if (label30.Text != "Installed")
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSGIS64, LocalRun);
                             }
                             else
                             {
@@ -3808,7 +3827,7 @@ namespace Mobile_App
                         {
                             if (label27.Text != "Installed")
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSUPDATE, LocalRun);
                             }
                             else
                             {
@@ -3829,7 +3848,7 @@ namespace Mobile_App
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
-                            RunProgram("NewWorldMSPClient.msi", @"C:\Temp\MobileInstaller");
+                            RunProgram("NewWorldMSPClient.msi", LocalRun);
                         }
                         catch (Exception ex)
                         {
@@ -3882,7 +3901,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet47, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -3903,7 +3922,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet48, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -3924,7 +3943,7 @@ namespace Mobile_App
                             {
                                 if (label28.Text != "Installed")
                                 {
-                                    RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                                    RunProgram(SQLCE4064, LocalRun);
 
                                     BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
                                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -3950,7 +3969,7 @@ namespace Mobile_App
                             {
                                 if (label33.Text != "Installed")
                                 {
-                                    InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(NWPSGIS32, LocalRun);
                                 }
                                 else
                                 {
@@ -3973,7 +3992,7 @@ namespace Mobile_App
                             {
                                 if (label34.Text != "Installed")
                                 {
-                                    InstallProgram(@"SSCERuntime_x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(NWPSGIS64, LocalRun);
                                 }
                                 else
                                 {
@@ -3994,7 +4013,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSSYNC64, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4009,7 +4028,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSPROSERV64, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4024,7 +4043,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSDBPRO64, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4041,7 +4060,7 @@ namespace Mobile_App
                             {
                                 if (label27.Text != "Installed")
                                 {
-                                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(NWPSUPDATE, LocalRun);
                                 }
                                 else
                                 {
@@ -4062,7 +4081,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"vstor_redist.exe", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4079,7 +4098,7 @@ namespace Mobile_App
                             {
                                 if (label31.Text != "Installed")
                                 {
-                                    InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
                                 }
                                 else
                                 {
@@ -4089,7 +4108,7 @@ namespace Mobile_App
 
                                 if (label32.Text != "")
                                 {
-                                    InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(@"SQLSysClrTypesx64.msi", LocalRun);
                                 }
                                 else
                                 {
@@ -4110,7 +4129,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4166,7 +4185,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet47, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -4186,7 +4205,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
                                 try
                                 {
-                                    InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet48, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -4207,7 +4226,7 @@ namespace Mobile_App
                             {
                                 if (label28.Text != "Installed")
                                 {
-                                    RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                                    RunProgram(SQLCE4064, LocalRun);
 
                                     BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
                                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -4233,7 +4252,7 @@ namespace Mobile_App
                             {
                                 if (label29.Text != "Installed")
                                 {
-                                    InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(NWPSGIS32, LocalRun);
                                 }
                                 else
                                 {
@@ -4256,7 +4275,7 @@ namespace Mobile_App
                             {
                                 if (label30.Text != "Installed")
                                 {
-                                    InstallProgram(@"NewWorld.Gis.Components.x64.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(NWPSGIS64, LocalRun);
                                 }
                                 else
                                 {
@@ -4277,7 +4296,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSSYNC64, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4292,7 +4311,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSPROSERV64, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4307,7 +4326,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x64-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSDBPRO64, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4324,7 +4343,7 @@ namespace Mobile_App
                             {
                                 if (label27.Text != "Installed")
                                 {
-                                    InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(NWPSUPDATE, LocalRun);
                                 }
                                 else
                                 {
@@ -4345,7 +4364,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"vstor_redist.exe", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4362,7 +4381,7 @@ namespace Mobile_App
                             {
                                 if (label31.Text != "Installed")
                                 {
-                                    InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
                                 }
                                 else
                                 {
@@ -4372,7 +4391,7 @@ namespace Mobile_App
 
                                 if (label32.Text != "")
                                 {
-                                    InstallProgram(@"SQLSysClrTypesx64.msi", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(@"SQLSysClrTypesx64.msi", LocalRun);
                                 }
                                 else
                                 {
@@ -4393,7 +4412,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4449,7 +4468,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(DotNet47, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4470,7 +4489,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(DotNet48, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4487,7 +4506,7 @@ namespace Mobile_App
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
-                            InstallProgram(@"SSCERuntime_x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(SQLCE3532, LocalRun);
                         }
                         catch (Exception ex)
                         {
@@ -4502,7 +4521,7 @@ namespace Mobile_App
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
-                            InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(NWPSGIS32, LocalRun);
                         }
                         catch (Exception ex)
                         {
@@ -4517,7 +4536,7 @@ namespace Mobile_App
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
-                            InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                            InstallProgram(NWPSUPDATE, LocalRun);
                         }
                         catch (Exception ex)
                         {
@@ -4532,7 +4551,7 @@ namespace Mobile_App
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         try
                         {
-                            RunProgram("NewWorldMSPClient.msi", @"C:\Temp\MobileInstaller");
+                            RunProgram("NewWorldMSPClient.msi", LocalRun);
                         }
                         catch (Exception ex)
                         {
@@ -4581,7 +4600,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet47, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -4602,7 +4621,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet48, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -4621,7 +4640,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                                RunProgram(SQLCE4032, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4636,7 +4655,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSGIS32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4651,7 +4670,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSSYNC32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4666,7 +4685,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSPROSERV32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4681,7 +4700,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSDBPRO32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4696,7 +4715,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSUPDATE, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4711,7 +4730,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"vstor_redist.exe", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4726,7 +4745,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4741,7 +4760,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4793,7 +4812,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"dotNetFx471_Full_setup_Offline.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet47, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -4814,7 +4833,7 @@ namespace Mobile_App
                                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                                 try
                                 {
-                                    InstallProgram(@"ndp48-x86-x64-allos-enu.exe", @"C:\Temp\MobileInstaller");
+                                    InstallProgram(DotNet48, LocalRun);
                                 }
                                 catch (Exception ex)
                                 {
@@ -4833,7 +4852,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                                RunProgram(SQLCE4032, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4848,7 +4867,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"NewWorld.Gis.Components.x86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSGIS32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4863,7 +4882,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"Synchronization-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSSYNC32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4878,7 +4897,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"ProviderServices-v2.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSPROSERV32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4893,7 +4912,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"DatabaseProviders-v3.1-x86-ENU.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(MSDBPRO32, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4908,7 +4927,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"NewWorld.Management.Updater.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(NWPSUPDATE, LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4923,7 +4942,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"vstor_redist.exe", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4938,7 +4957,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                InstallProgram(@"SQLSysClrTypesx86.msi", @"C:\Temp\MobileInstaller");
+                                InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -4953,7 +4972,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             try
                             {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", @"C:\Temp\MobileInstaller");
+                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", LocalRun);
                             }
                             catch (Exception ex)
                             {
@@ -5004,7 +5023,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry);
 
-                InstallProgram("NewWorld.Enterprise.CAD.IncidentObserver.x64.msi", @"C:\Temp\MobileInstaller");
+                InstallProgram("NewWorld.Enterprise.CAD.IncidentObserver.x64.msi", LocalRun);
 
                 string LogEntry1 = DateTime.Now + @" Incident Observer installed";
 
@@ -5040,8 +5059,8 @@ namespace Mobile_App
 
                         if (label35.Text != "Installed")
                         {
-                            RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller");
-                            RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller");
+                            RunProgram("SPD6-4-8993.exe", LocalRun);
+                            RunProgram("SPDX6-4-3083.exe", LocalRun);
                         }
                         else
                         {
@@ -5079,7 +5098,7 @@ namespace Mobile_App
 
                                 if (label35.Text != "Installed")
                                 {
-                                    RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                                    RunProgram("SPD4-0-92.exe", LocalRun);
                                 }
                                 else
                                 {
@@ -5122,7 +5141,7 @@ namespace Mobile_App
 
                         if (label35.Text != "Installed")
                         {
-                            RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                            RunProgram("SPD4-0-92.exe", LocalRun);
                         }
                         else
                         {
@@ -5287,7 +5306,7 @@ namespace Mobile_App
                     {
                         if (label28.Text != "Installed")
                         {
-                            RunProgram(@"SSCERuntime_x64-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                            RunProgram(SQLCE4064, LocalRun);
 
                             BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -5315,7 +5334,7 @@ namespace Mobile_App
                     {
                         if (label28.Text != "Installed")
                         {
-                            RunProgram(@"SSCERuntime_x86-ENU-4.0.exe", @"C:\Temp\MobileInstaller");
+                            RunProgram(SQLCE4032, LocalRun);
 
                             BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -5348,7 +5367,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(@"vstor_redist.exe", @"C:\Temp\MobileInstaller");
+                    InstallProgram(@"vstor_redist.exe", LocalRun);
 
                     BeginInvoke((Action)(() => ts.Text = "VS 2010 Tools Installed"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
