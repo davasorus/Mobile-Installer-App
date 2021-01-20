@@ -29,6 +29,7 @@ namespace Mobile_App
 
         private BackgroundWorker Tab1bg;
         private BackgroundWorker Tab2bg;
+        private BackgroundWorker Tab3bg;
 
         private string DotNet47 = "dotNetFx471_Full_setup_Offline.exe";
         private string DotNet48 = "ndp48-x86-x64-allos-enu.exe";
@@ -150,6 +151,9 @@ namespace Mobile_App
             Tab1bg.RunWorkerCompleted += Tab1bg_RunWorkerCompleted;
             Tab1bg.WorkerReportsProgress = true;
 
+            Tab3bg = new BackgroundWorker();
+            Tab3bg.DoWork += Tab3bg_DoWork;
+
             Tab2bg = new BackgroundWorker();
             Tab2bg.DoWork += Tab2bg_DoWork;
         }
@@ -160,238 +164,13 @@ namespace Mobile_App
         //used when doing mobile client upgrade/removal/install
         private void Button2_Click(object sender, EventArgs e)
         {
-            ProgressBar.Visible = false;
-            ProgressBar.Enabled = false;
-
-            //run combination mobile uninstall an mobile install
-            if (Combo.Checked && Is64Bit.Checked == true)
+            if (!Tab3bg.IsBusy)
             {
-                //an exception thrown if the generate number text box is 0
-                //exceptions also thrown for null and non-null/not numerical entries
-                if (GenerateNumber.Text == "0")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == " ")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == "")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-
-                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
-                FileWork64Bit();
-                UpdaterWork64Bit();
-
-                string LogEntry1 = DateTime.Now + " 64Bit Mobile Updater Entry Removal Completed";
-
-                LogEntryWriter(LogEntry1);
-
-                string LogEntry2 = DateTime.Now + " 64Bit Mobile Uninstall Initiated";
-
-                LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
-                Mobile64Uninstall();
-
-                string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
-
-                LogEntryWriter(LogEntry3);
-
-                string LogEntry4 = DateTime.Now + " 64Bit Mobile Install Initiated";
-
-                LogEntryWriter(LogEntry4);
-
-                BeginInvoke((Action)(() => ts.Text = "Installing Mobile"));
-                Mobile64install();
-
-                string LogEntry5 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
-
-                LogEntryWriter(LogEntry5);
-
-                MessageBox.Show("Mobile Pre Reqs have been Installed");
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
+                Tab3bg.RunWorkerAsync();
             }
-
-            //run 64bit installer
-            if (Is64Bit.Checked && InstallMobile.Checked == true)
+            else
             {
-                //this accounts for the GenerateNumber Text box being blank/Null
-                if (GenerateNumber.Text == "0")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == " ")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == "")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-
-                string LogEntry1 = DateTime.Now + " 64Bit Mobile Install Initiated";
-
-                LogEntryWriter(LogEntry1);
-
-                BeginInvoke((Action)(() => ts.Text = "Going to Install mobile"));
-                Mobile64install();
-
-                string LogEntry2 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
-
-                LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
-            }
-
-            //Run 64bit uninstaller
-            if (Is64Bit.Checked && UninstallMobile.Checked == true)
-            {
-                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
-                FileWork64Bit();
-                UpdaterWork64Bit();
-
-                string LogEntry1 = DateTime.Now + " 64Bit Mobile Updater Entry Removal Completed";
-
-                LogEntryWriter(LogEntry1);
-
-                string LogEntry2 = DateTime.Now + " 64Bit Mobile Uninstall Initiated";
-
-                LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "Going to Uninstall mobile"));
-                Mobile64Uninstall();
-
-                string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
-
-                LogEntryWriter(LogEntry3);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
-            }
-
-            //Run combination mobile uninstall and mobile install
-            if (Combo.Checked && Is32bit.Checked == true)
-            {
-                if (GenerateNumber.Text == "0")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == " ")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == "")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-
-                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
-                FileWork32Bit();
-                UpdaterWork32Bit();
-
-                string LogEntry1 = DateTime.Now + " 32Bit Mobile Updater Entries removal completed";
-
-                LogEntryWriter(LogEntry1);
-
-                string LogEntry2 = DateTime.Now + " 32Bit Mobile Uninstall Initiated";
-
-                LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
-                Mobile32Uninstaller();
-
-                string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
-
-                LogEntryWriter(LogEntry3);
-
-                string LogEntry4 = DateTime.Now + " 32Bit Mobile Install Initiated";
-
-                LogEntryWriter(LogEntry4);
-
-                BeginInvoke((Action)(() => ts.Text = "Going to Install mobile"));
-                Mobile32install();
-
-                string LogEntry5 = DateTime.Now + " 32Bit Mobile Successfully Installed";
-
-                LogEntryWriter(LogEntry5);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
-            }
-
-            //Run 32bit installer
-            if (Is32bit.Checked && InstallMobile.Checked == true)
-            {
-                if (GenerateNumber.Text == "0")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == " ")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-                else if (GenerateNumber.Text == "")
-                {
-                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
-                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
-                }
-
-                string LogEntry2 = DateTime.Now + " 32Bit Mobile Install Initiated";
-
-                LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "installing Mobile"));
-                Mobile32install();
-
-                string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully Installed";
-
-                LogEntryWriter(LogEntry3);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
-            }
-
-            //Run 32bit uninstaller
-            if (Is32bit.Checked && UninstallMobile.Checked == true)
-            {
-                BeginInvoke((Action)(() => ts.Text = "Modifying Updater Files"));
-                FileWork32Bit();
-                UpdaterWork32Bit();
-
-                string LogEntry1 = DateTime.Now + " 32 Bit Mobile Updater Entries removal completed";
-
-                LogEntryWriter(LogEntry1);
-
-                string LogEntry2 = DateTime.Now + " 32Bit Mobile Uninstall Initiated";
-
-                LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
-                Mobile32Uninstaller();
-
-                string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
-
-                LogEntryWriter(LogEntry3);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
+                //I hate that this works...
             }
         }
 
@@ -2296,6 +2075,243 @@ namespace Mobile_App
             }
 
             Tab1bg.ReportProgress(0);
+        }
+
+        private void Tab3bg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BeginInvoke((Action)(() => ProgressBar.Visible = false));
+            BeginInvoke((Action)(() => ProgressBar.Enabled = false));
+
+            //run combination mobile uninstall an mobile install
+            if (Combo.Checked && Is64Bit.Checked == true)
+            {
+                //an exception thrown if the generate number text box is 0
+                //exceptions also thrown for null and non-null/not numerical entries
+                if (GenerateNumber.Text == "0")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
+                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
+                FileWork64Bit();
+                UpdaterWork64Bit();
+
+                string LogEntry1 = DateTime.Now + " 64Bit Mobile Updater Entry Removal Completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 64Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
+                Mobile64Uninstall();
+
+                string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
+
+                LogEntryWriter(LogEntry3);
+
+                string LogEntry4 = DateTime.Now + " 64Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry4);
+
+                BeginInvoke((Action)(() => ts.Text = "Installing Mobile"));
+                Mobile64install();
+
+                string LogEntry5 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
+
+                LogEntryWriter(LogEntry5);
+
+                MessageBox.Show("Mobile Pre Reqs have been Installed");
+
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+                MobileRestart();
+            }
+
+            //run 64bit installer
+            if (Is64Bit.Checked && InstallMobile.Checked == true)
+            {
+                //this accounts for the GenerateNumber Text box being blank/Null
+                if (GenerateNumber.Text == "0")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
+                string LogEntry1 = DateTime.Now + " 64Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry1);
+
+                BeginInvoke((Action)(() => ts.Text = "Going to Install mobile"));
+                Mobile64install();
+
+                string LogEntry2 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
+
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+                MobileRestart();
+            }
+
+            //Run 64bit uninstaller
+            if (Is64Bit.Checked && UninstallMobile.Checked == true)
+            {
+                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
+                FileWork64Bit();
+                UpdaterWork64Bit();
+
+                string LogEntry1 = DateTime.Now + " 64Bit Mobile Updater Entry Removal Completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 64Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.Text = "Going to Uninstall mobile"));
+                Mobile64Uninstall();
+
+                string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
+
+                LogEntryWriter(LogEntry3);
+
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+                MobileRestart();
+            }
+
+            //Run combination mobile uninstall and mobile install
+            if (Combo.Checked && Is32bit.Checked == true)
+            {
+                if (GenerateNumber.Text == "0")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
+                BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
+                FileWork32Bit();
+                UpdaterWork32Bit();
+
+                string LogEntry1 = DateTime.Now + " 32Bit Mobile Updater Entries removal completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 32Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
+                Mobile32Uninstaller();
+
+                string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
+
+                LogEntryWriter(LogEntry3);
+
+                string LogEntry4 = DateTime.Now + " 32Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry4);
+
+                BeginInvoke((Action)(() => ts.Text = "Going to Install mobile"));
+                Mobile32install();
+
+                string LogEntry5 = DateTime.Now + " 32Bit Mobile Successfully Installed";
+
+                LogEntryWriter(LogEntry5);
+
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+                MobileRestart();
+            }
+
+            //Run 32bit installer
+            if (Is32bit.Checked && InstallMobile.Checked == true)
+            {
+                if (GenerateNumber.Text == "0")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == " ")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+                else if (GenerateNumber.Text == "")
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured"));
+                    throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
+                }
+
+                string LogEntry2 = DateTime.Now + " 32Bit Mobile Install Initiated";
+
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.Text = "installing Mobile"));
+                Mobile32install();
+
+                string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully Installed";
+
+                LogEntryWriter(LogEntry3);
+
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+                MobileRestart();
+            }
+
+            //Run 32bit uninstaller
+            if (Is32bit.Checked && UninstallMobile.Checked == true)
+            {
+                BeginInvoke((Action)(() => ts.Text = "Modifying Updater Files"));
+                FileWork32Bit();
+                UpdaterWork32Bit();
+
+                string LogEntry1 = DateTime.Now + " 32 Bit Mobile Updater Entries removal completed";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " 32Bit Mobile Uninstall Initiated";
+
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.Text = "Uninstalling Mobile"));
+                Mobile32Uninstaller();
+
+                string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
+
+                LogEntryWriter(LogEntry3);
+
+                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+                MobileRestart();
+            }
         }
 
         //Itemized Install/Uninstall/Triage Background worker
@@ -5364,6 +5380,7 @@ namespace Mobile_App
         //Installation code functions
         //
 
+        //dotnet 4.7 or 4.8 installer
         private void DotNet()
         {
             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
@@ -5409,6 +5426,7 @@ namespace Mobile_App
             }
         }
 
+        //SQL Compact 3.5 installer
         private void SQLCE35()
         {
             if (Is64Bit.Checked == true)
@@ -5485,6 +5503,7 @@ namespace Mobile_App
             }
         }
 
+        //32bit and 64bit GIS installer
         private void GIS()
         {
             if (Is64Bit.Checked == true)
@@ -5561,6 +5580,7 @@ namespace Mobile_App
             }
         }
 
+        //MS Sync Service provider installer
         private void DBProviderService()
         {
             if (Is64Bit.Checked == true)
@@ -5659,6 +5679,7 @@ namespace Mobile_App
             }
         }
 
+        //NWPS Updater installer
         private void UpdaterInstaller()
         {
             try
@@ -5683,6 +5704,7 @@ namespace Mobile_App
             }
         }
 
+        //ScenePD installer
         private void ScenePD()
         {
             //will check for scene pd 6 before displaying install prompt
@@ -5942,6 +5964,7 @@ namespace Mobile_App
             }
         }
 
+        //SQL Compact 4.9 installer
         private void SQLCE40()
         {
             if (Is64Bit.Checked == true)
@@ -6005,6 +6028,7 @@ namespace Mobile_App
             }
         }
 
+        //visual studio 2010 installer
         private void VS2010()
         {
             try
