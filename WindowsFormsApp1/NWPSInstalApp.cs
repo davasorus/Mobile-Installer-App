@@ -158,7 +158,9 @@ namespace Mobile_App
             Tab2bg.DoWork += Tab2bg_DoWork;
         }
 
+        //
         //Button Click events
+        //
 
         //run button for TabPage1
         //used when doing mobile client upgrade/removal/install
@@ -786,7 +788,9 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.ForestGreen;
         }
 
+        //
         //pre req install/uninstall methods
+        //
 
         //Mobile 64bit uninstaller
         //this will uninstall NWPS Mobile, NWS Mobile, Pre Reqs for 64bit mobile
@@ -1136,8 +1140,9 @@ namespace Mobile_App
             LogEntryWriter(EntryLog);
         }
 
+        //
         //Folder Related work
-
+        //
         //Mobile copy
         //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
         private void MobileCopy(string SourcePath)
@@ -1351,7 +1356,9 @@ namespace Mobile_App
             return true;
         }
 
+        //
         //Program Interaction work
+        //
 
         //This is will run any/all programs that need user interaction by name
         private void RunProgram(string ProgramName, string Location)
@@ -1477,7 +1484,9 @@ namespace Mobile_App
             return false;
         }
 
+        //
         //XML related controls
+        //
 
         //XML Related information. Broken up between loading prior XML information OR creating a new XML with placeholder server location.
         private void InitialLoadofXML()
@@ -1720,8 +1729,9 @@ namespace Mobile_App
             LogEntryWriter(LogEntry);
         }
 
+        //
         //Background Worker code
-
+        //
         //What to do when the Background worker is completed
         private void Tab1bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1739,6 +1749,7 @@ namespace Mobile_App
             ProgressBar.Value += 1;
         }
 
+        //
         //The actual work done
 
         //Download background worker
@@ -2081,6 +2092,7 @@ namespace Mobile_App
             Tab1bg.ReportProgress(0);
         }
 
+        //install/uninstall/combo on tab 1 background worker
         private void Tab3bg_DoWork(object sender, DoWorkEventArgs e)
         {
             BeginInvoke((Action)(() => ProgressBar.Visible = false));
@@ -2328,7 +2340,9 @@ namespace Mobile_App
             MobileTriageRun();
         }
 
+        //
         //Local service work
+        //
 
         //will stop the service by name
         //currently only used for the Updater Service
@@ -2414,7 +2428,9 @@ namespace Mobile_App
             }
         }
 
+        //
         //Tab2 Code
+        //
 
         //itemized uninstall steps
         private void CustomUninstallRun()
