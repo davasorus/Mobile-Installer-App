@@ -5384,7 +5384,7 @@ namespace Mobile_App
         //Installation code functions
         //
 
-        //dotnet 4.7 or 4.8 installer
+        //dot net 4.7 or 4.8 installer
         private void DotNet()
         {
             if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
@@ -5968,7 +5968,7 @@ namespace Mobile_App
             }
         }
 
-        //SQL Compact 4.9 installer
+        //SQL Compact 4.0 installer
         private void SQLCE40()
         {
             if (Is64Bit.Checked == true)
