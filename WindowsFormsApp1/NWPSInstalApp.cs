@@ -171,6 +171,10 @@ namespace Mobile_App
             else
             {
                 //I hate that this works...
+                //so this empty else statement allows the above async worker to actually work as designed.
+                //I am unsure why THIS async button event needs to iterate twice before actually running the specified code.
+                //the IF background worker is not busy run to an empty else is the only way I was able to get this work "properly"
+                //any assistance would be appreciated
             }
         }
 
