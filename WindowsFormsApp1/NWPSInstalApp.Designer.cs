@@ -335,6 +335,7 @@ namespace Mobile_App
             "Restart Updater Service",
             "Force Re-download of Updater Files",
             "Wipe out mobile client/Updater Files/Client Folders",
+            "Update Host File",
             "Run Mobile Interface Tester Utility",
             "Run Mobile Device Tester Utility",
             "Run Mobile GPS Tester Utility",
@@ -343,6 +344,7 @@ namespace Mobile_App
             this.MobileTriage.Name = "MobileTriage";
             this.MobileTriage.Size = new System.Drawing.Size(290, 64);
             this.MobileTriage.TabIndex = 4;
+            
             // 
             // CustomInstallOption
             // 

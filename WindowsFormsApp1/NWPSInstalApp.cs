@@ -158,9 +158,7 @@ namespace Mobile_App
             Tab2bg.DoWork += Tab2bg_DoWork;
         }
 
-        //
-        //Button Click events
-        //
+        //---------------------------Button Click events----------------------
 
         //run button for TabPage1
         //used when doing mobile client upgrade/removal/install
@@ -788,9 +786,7 @@ namespace Mobile_App
             ts.ForeColor = System.Drawing.Color.ForestGreen;
         }
 
-        //
-        //pre req install/uninstall methods
-        //
+        //----------------------pre req install/uninstall methods---------------------
 
         //Mobile 64bit uninstaller
         //this will uninstall NWPS Mobile, NWS Mobile, Pre Reqs for 64bit mobile
@@ -1086,9 +1082,7 @@ namespace Mobile_App
             }
         }
 
-        //
-        //Installation code functions
-        //
+        //-------------------Installation code functions----------------------
 
         //dot net 4.7 or 4.8 installer
         private void DotNet()
@@ -1758,7 +1752,7 @@ namespace Mobile_App
             }
         }
 
-        //File related work
+        //-----------------File related work---------------
 
         //will look into the updater config file and will replace any text that contains MobileUpdates with DeleteMe
         private void FileWork64Bit()
@@ -1812,9 +1806,8 @@ namespace Mobile_App
             LogEntryWriter(EntryLog);
         }
 
-        //
-        //Folder Related work
-        //
+        //---------------------Folder Related work-------------------
+
         //Mobile copy
         //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
         private void MobileCopy(string SourcePath)
@@ -2028,9 +2021,7 @@ namespace Mobile_App
             return true;
         }
 
-        //
         //Program Interaction work
-        //
 
         //This is will run any/all programs that need user interaction by name
         private void RunProgram(string ProgramName, string Location)
@@ -2111,6 +2102,26 @@ namespace Mobile_App
             }
         }
 
+        //this will open files using whatever is the default program associated with the file type.
+        //IF there is not a default file processor associated it will display a windows prompt to open the file type
+        private void OpenProgram(string Location)
+        {
+            try
+            {
+                string LogEntry1 = DateTime.Now + " accessing file at " + Location; ;
+
+                LogEntryWriter(LogEntry1);
+
+                Process.Start(Location);
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
         //This is the method that will silently uninstall pre - reqs by name
         private bool UninstallProgram(string ProgramName)
         {
@@ -2156,9 +2167,7 @@ namespace Mobile_App
             return false;
         }
 
-        //
-        //XML related controls
-        //
+        //----------------------XML related controls------------------------
 
         //XML Related information. Broken up between loading prior XML information OR creating a new XML with placeholder server location.
         private void InitialLoadofXML()
@@ -2401,9 +2410,8 @@ namespace Mobile_App
             LogEntryWriter(LogEntry);
         }
 
-        //
-        //Background Worker code
-        //
+        //--------------------------Background Worker code------------------
+
         //What to do when the Background worker is completed
         private void Tab1bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -2421,8 +2429,7 @@ namespace Mobile_App
             ProgressBar.Value += 1;
         }
 
-        //
-        //The actual work done
+        //--------------------The actual work done----------------------
 
         //Download background worker
         private void Tab1bg_DoWork(object sender, DoWorkEventArgs e)
@@ -3012,9 +3019,7 @@ namespace Mobile_App
             MobileTriageRun();
         }
 
-        //
-        //Local service work
-        //
+        //-------------------Local service work--------------------------------
 
         //will stop the service by name
         //currently only used for the Updater Service
@@ -3100,9 +3105,7 @@ namespace Mobile_App
             }
         }
 
-        //
-        //Tab2 Code
-        //
+        //---------------------Tab2 Code------------------------
 
         //itemized uninstall steps
         private void CustomUninstallRun()
@@ -4874,9 +4877,21 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
 
+            //this will open the host file on the local machine
+            if (MobileTriage.GetItemCheckState(4) == CheckState.Checked)
+            {
+                BeginInvoke((Action)(() => ts.Text = "Opening Host File"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                OpenProgram(@"C:\Windows\System32\drivers\etc\hosts");
+
+                BeginInvoke((Action)(() => ts.Text = "Host File Modified/Opened"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+            }
+
             //will check to see if the Mobile Client Interface tester is in the MobileInstaller/NWS Addons folder
             //If the files are not present and are not already downloaded, then a download prompt will appear.
-            if (MobileTriage.GetItemCheckState(4) == CheckState.Checked)
+            if (MobileTriage.GetItemCheckState(5) == CheckState.Checked)
             {
                 //this will run the Mobile Client Interface Tester utility if it is present, and prompt a new window to download if not.
                 BeginInvoke((Action)(() => ts.Text = "Checking to see if Utility is in the proper location"));
@@ -4911,7 +4926,7 @@ namespace Mobile_App
 
             //will check to see if the Device tester is in the MobileInstaller/NWS Addons folder
             //If the files are not present and are not already downloaded, then a download prompt will appear.
-            if (MobileTriage.GetItemCheckState(5) == CheckState.Checked)
+            if (MobileTriage.GetItemCheckState(6) == CheckState.Checked)
             {
                 //this will run the Mobile Client Device Tester utility if it is present, and if not display a custom error message
                 BeginInvoke((Action)(() => ts.Text = "Checking to see if Mobile Client Device Tester is in the proper location"));
@@ -4944,7 +4959,7 @@ namespace Mobile_App
 
             //will check to see if the Mobile Client GPS Test Utility is in the MobileInstaller/NWS Addons folder
             //If the files are not present and are not already downloaded, then a download prompt will appear.
-            if (MobileTriage.GetItemCheckState(6) == CheckState.Checked)
+            if (MobileTriage.GetItemCheckState(7) == CheckState.Checked)
             {
                 if (File.Exists(@"C:\Program Files (x86)\Mobile GPS Tester\MobileTools.GpsTester.exe"))
                 {
@@ -4988,7 +5003,7 @@ namespace Mobile_App
 
             //this will run the U-Blox Work Around for mobile if present. This will also continue off where it ended if there is a shutdown
             //If the files are not present and are not already downloaded, then a download prompt will appear.
-            if (MobileTriage.GetItemCheckState(7) == CheckState.Checked)
+            if (MobileTriage.GetItemCheckState(8) == CheckState.Checked)
             {
                 BeginInvoke((Action)(() => ts.Text = "Checking to see if Utility is in the proper location"));
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -5057,9 +5072,7 @@ namespace Mobile_App
             }
         }
 
-        //
         //Updater utility code - Tab 3
-        //
 
         //work done to add the police client to the updater config file
         private void PoliceClientSub()
@@ -5401,9 +5414,7 @@ namespace Mobile_App
             }
         }
 
-        //
-        //pre checker code - tab 4
-        //
+        //-------------------------------pre checker code - tab 4----------------------------------------------------------------
 
         private bool PreReqChecker(string ProgramName)
         {
