@@ -434,6 +434,7 @@ namespace Mobile_App
         {
             ProgressBar.Visible = false;
             ProgressBar.Enabled = false;
+            PreReqCheck.Visible = false;
 
             PreStatusChecker();
 
@@ -784,6 +785,7 @@ namespace Mobile_App
 
             ts.Text = "Pre Req Checker is Complete";
             ts.ForeColor = System.Drawing.Color.ForestGreen;
+            PreReqCheck.Visible = true;
         }
 
         //----------------------pre req install/uninstall methods---------------------
@@ -2434,6 +2436,8 @@ namespace Mobile_App
         //Download background worker
         private void Tab1bg_DoWork(object sender, DoWorkEventArgs e)
         {
+            BeginInvoke((Action)(() => CopyButton.Visible = false));
+
             //pre req download logic
             if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
             {
@@ -2769,6 +2773,8 @@ namespace Mobile_App
             }
 
             Tab1bg.ReportProgress(0);
+
+            BeginInvoke((Action)(() => CopyButton.Visible = true));
         }
 
         //install/uninstall/combo on tab 1 background worker
@@ -2776,6 +2782,7 @@ namespace Mobile_App
         {
             BeginInvoke((Action)(() => ProgressBar.Visible = false));
             BeginInvoke((Action)(() => ProgressBar.Enabled = false));
+            BeginInvoke((Action)(() => Run.Visible = false));
 
             //run combination mobile uninstall an mobile install
             if (Combo.Checked && Is64Bit.Checked == true)
@@ -3007,16 +3014,22 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
                 MobileRestart();
             }
+
+            BeginInvoke((Action)(() => Run.Visible = true));
         }
 
         //Itemized Install/Uninstall/Triage Background worker
         private void Tab2bg_DoWork(object sender, DoWorkEventArgs e)
         {
+            BeginInvoke((Action)(() => CustomRun.Visible = false));
+
             CustomUninstallRun();
 
             CustomInstallRun();
 
             MobileTriageRun();
+
+            BeginInvoke((Action)(() => CustomRun.Visible = true));
         }
 
         //-------------------Local service work--------------------------------
