@@ -1810,6 +1810,7 @@ namespace Mobile_App
 
         //---------------------Folder Related work-------------------
 
+        //this searches through a user entered directory/subdirectories for pre reqs
         private void PreReqSearch(string sDir)
         {
             try
@@ -1833,7 +1834,7 @@ namespace Mobile_App
         }
 
         //Mobile copy
-        //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
+        //this will copy a file from one location to another location as sent by PreReqSearch above
         private void MobileCopy(string filename)
         {
             try
