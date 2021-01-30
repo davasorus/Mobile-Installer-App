@@ -1808,31 +1808,6 @@ namespace Mobile_App
             LogEntryWriter(EntryLog);
         }
 
-        //---------------------Folder Related work-------------------
-
-        //this searches through a user entered directory/subdirectories for pre reqs
-        private void PreReqSearch(string sDir)
-        {
-            try
-            {
-                foreach (var directory in Directory.GetDirectories(sDir))
-                {
-                    foreach (var filename in Directory.GetFiles(directory))
-                    {
-                        MobileCopy(filename);
-                    }
-
-                    PreReqSearch(directory);
-                }
-            }
-            catch (Exception ex)
-            {
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-        }
-
         //Mobile copy
         //this will copy a file from one location to another location as sent by PreReqSearch above
         private void MobileCopy(string filename)
@@ -1877,6 +1852,65 @@ namespace Mobile_App
             string LogEntry = DateTime.Now + "NWS Addon Folder Copied.";
 
             LogEntryWriter(LogEntry);
+        }
+
+        //this is designed to relabel the SQL compact 4.0 64bit and 32bit components.
+        //this is so that CAD and the other applications will be able to have the correct pre reqs
+        private void Rename(string FileName, string NewName, string SubFOlderSearch)
+        {
+            try
+            {
+                foreach (var directory in Directory.GetDirectories(MSPServerPath.Text + @"\\_Client-Installation\"))
+                {
+                    foreach (var filename in Directory.GetFiles(directory))
+                    {
+                        string sourcepath = Path.GetDirectoryName(filename);
+
+                        if (sourcepath.ToString().Contains(SubFOlderSearch))
+                        {
+                            File.Move(Path.Combine(sourcepath, FileName), Path.Combine(sourcepath, NewName));
+
+                            string LogEntry = DateTime.Now + " " + FileName + " has been renamed to" + NewName;
+
+                            LogEntryWriter(LogEntry);
+                        }
+                        else
+                        {
+                        }
+                    }  
+                }
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        //---------------------Folder Related work-------------------
+
+        //this searches through a user entered directory/subdirectories for pre reqs
+        private void PreReqSearch(string sDir)
+        {
+            try
+            {
+                foreach (var directory in Directory.GetDirectories(sDir))
+                {
+                    foreach (var filename in Directory.GetFiles(directory))
+                    {
+                        MobileCopy(filename);
+                    }
+
+                    PreReqSearch(directory);
+                }
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
         }
 
         //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
@@ -2467,6 +2501,9 @@ namespace Mobile_App
             //pre req download logic
             if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
             {
+                Rename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
+                Rename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+
                 PreReqSearch(MSPServerPath.Text + @"\_Client-Installation\");
             }
             //nwps addon download and check
