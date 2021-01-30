@@ -1877,7 +1877,7 @@ namespace Mobile_App
                         else
                         {
                         }
-                    }  
+                    }
                 }
             }
             catch (Exception ex)
@@ -2501,8 +2501,17 @@ namespace Mobile_App
             //pre req download logic
             if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
             {
-                Rename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
-                Rename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+                try
+                {
+                    Rename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
+                    Rename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+                }
+                catch (Exception ex)
+                {
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
 
                 PreReqSearch(MSPServerPath.Text + @"\_Client-Installation\");
             }
