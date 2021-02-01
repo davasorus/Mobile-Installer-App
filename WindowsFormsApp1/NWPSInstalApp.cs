@@ -46,8 +46,18 @@ namespace Mobile_App
         private string MSPROSERV32 = "ProviderServices-v2.1-x86-ENU.msi";
         private string MSDBPRO32 = "DatabaseProviders-v3.1-x86-ENU.msi";
         private string NWPSUPDATE = "NewWorld.Management.Updater.msi";
+        private string SQLCLR32 = "SQLSysClrTypesx86.msi";
+        private string SQLCLR64 = "SQLSysClrTypesx64.msi";
+        private string SCPD6 = "SPD6-4-8993.exe";
+        private string SCPD6AX = "SPDX6-4-3083.exe";
+        private string SCPD4 = "SPD4-0-92.exe";
+        private string MSPClient = "NewWorldMSPClient.msi";
+        private string CADClient64 = "NewWorld.Enterprise.CAD.Client.x64.msi";
+        private string CADClient32 = "NewWorld.Enterprise.CAD.Client.x86.msi";
+        private string CADIncObs64 = "NewWorld.Enterprise.CAD.IncidentObserver.x64.msi";
 
         private string LocalRun = @"C:\Temp\MobileInstaller";
+        private bool flag = false;
 
         public string MSPServerName { get; private set; }
         private bool PoliceClientExists = false;
@@ -197,7 +207,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry1);
 
             ProgressBar.Value = 0;
-            ProgressBar.Maximum = 36;
+            ProgressBar.Maximum = 37;
             Tab1bg.RunWorkerAsync();
         }
 
@@ -1089,46 +1099,72 @@ namespace Mobile_App
         //dot net 4.7 or 4.8 installer
         private void DotNet()
         {
-            if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
+            if (Directory.Exists(LocalRun))
             {
-                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                try
+                if (File.Exists(Path.Combine(LocalRun, DotNet47)))
                 {
-                    InstallProgram(DotNet47, LocalRun);
+                    BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                    try
+                    {
+                        InstallProgram(DotNet47, LocalRun);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
+
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                        LogEntryWriter(LogEntry);
+                    }
+
+                    BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
-                catch (Exception ex)
+                //installed .net 4.8 if 4.7.1 is not present
+                else
                 {
-                    Console.WriteLine(ex.StackTrace.ToString());
+                    BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                    try
+                    {
+                        InstallProgram(DotNet48, LocalRun);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace.ToString());
 
-                    string LogEntry = DateTime.Now + " " + ex.ToString();
+                        string LogEntry = DateTime.Now + " " + ex.ToString();
 
-                    LogEntryWriter(LogEntry);
+                        LogEntryWriter(LogEntry);
+                    }
+
+                    BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
-
-                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
-            //installed .net 4.8 if 4.7.1 is not present
             else
             {
-                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                try
+                if (PreReqSearch(MSPServerPath.Text + @"\\_Client-Installation\", DotNet48) == 1)
                 {
-                    InstallProgram(DotNet48, LocalRun);
+                    BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                    PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", DotNet48);
+
+                    BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine(ex.StackTrace.ToString());
+                    BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
-                    string LogEntry = DateTime.Now + " " + ex.ToString();
+                    PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", DotNet47);
 
-                    LogEntryWriter(LogEntry);
+                    BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
-
-                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
         }
 
@@ -1143,7 +1179,14 @@ namespace Mobile_App
                 {
                     if (label33.Text != "Installed")
                     {
-                        InstallProgram(SQLCE3532, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, SQLCE3532)))
+                        {
+                            InstallProgram(SQLCE3532, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE3532);
+                        }
                     }
                     else
                     {
@@ -1166,7 +1209,14 @@ namespace Mobile_App
                 {
                     if (label34.Text != "Installed")
                     {
-                        InstallProgram(SQLCE3564, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, SQLCE3532)))
+                        {
+                            InstallProgram(SQLCE3564, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE3564);
+                        }
                     }
                     else
                     {
@@ -1190,7 +1240,14 @@ namespace Mobile_App
                 {
                     if (label33.Text != "Installed")
                     {
-                        InstallProgram(SQLCE3532, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, SQLCE3532)))
+                        {
+                            InstallProgram(SQLCE3532, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE3532);
+                        }
                     }
                     else
                     {
@@ -1220,7 +1277,14 @@ namespace Mobile_App
                 {
                     if (label29.Text != "Installed")
                     {
-                        InstallProgram(NWPSGIS32, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, (NWPSGIS32))))
+                        {
+                            InstallProgram(NWPSGIS32, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", (NWPSGIS32));
+                        }
                     }
                     else
                     {
@@ -1243,7 +1307,14 @@ namespace Mobile_App
                 {
                     if (label30.Text != "Installed")
                     {
-                        InstallProgram(NWPSGIS64, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, NWPSGIS64)))
+                        {
+                            InstallProgram(NWPSGIS64, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", NWPSGIS64);
+                        }
                     }
                     else
                     {
@@ -1267,7 +1338,14 @@ namespace Mobile_App
                 {
                     if (label29.Text != "Installed")
                     {
-                        InstallProgram(NWPSGIS32, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, (NWPSGIS32))))
+                        {
+                            InstallProgram(NWPSGIS32, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", (NWPSGIS32));
+                        }
                     }
                     else
                     {
@@ -1295,7 +1373,14 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(MSSYNC64, LocalRun);
+                    if (File.Exists(Path.Combine(LocalRun, MSSYNC64)))
+                    {
+                        InstallProgram(MSSYNC64, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSSYNC64);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1310,7 +1395,14 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(MSPROSERV64, LocalRun);
+                    if (File.Exists(Path.Combine(LocalRun, MSPROSERV64)))
+                    {
+                        InstallProgram(MSPROSERV64, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSPROSERV64);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1325,7 +1417,14 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(MSDBPRO64, LocalRun);
+                    if (File.Exists(Path.Combine(LocalRun, MSDBPRO64)))
+                    {
+                        InstallProgram(MSDBPRO64, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSDBPRO64);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1342,7 +1441,14 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(MSSYNC32, LocalRun);
+                    if (File.Exists(Path.Combine(LocalRun, MSSYNC32)))
+                    {
+                        InstallProgram(MSSYNC32, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSSYNC32);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1357,7 +1463,14 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(MSPROSERV32, LocalRun);
+                    if (File.Exists(Path.Combine(LocalRun, MSPROSERV32)))
+                    {
+                        InstallProgram(MSPROSERV32, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSPROSERV32);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1372,7 +1485,14 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
-                    InstallProgram(MSDBPRO32, LocalRun);
+                    if (File.Exists(Path.Combine(LocalRun, MSPROSERV32)))
+                    {
+                        InstallProgram(MSDBPRO32, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSPROSERV32);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1392,7 +1512,17 @@ namespace Mobile_App
             {
                 if (label27.Text != "Installed")
                 {
-                    InstallProgram(NWPSUPDATE, LocalRun);
+                    BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                    if (File.Exists(Path.Combine(LocalRun, NWPSUPDATE)))
+                    {
+                        InstallProgram(NWPSUPDATE, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", NWPSUPDATE);
+                    }
                 }
                 else
                 {
@@ -1435,8 +1565,22 @@ namespace Mobile_App
 
                     if (label35.Text != "Installed")
                     {
-                        RunProgram("SPD6-4-8993.exe", LocalRun);
-                        RunProgram("SPDX6-4-3083.exe", LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, SCPD6)))
+                        {
+                            RunProgram(SCPD6, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SCPD6);
+                        }
+                        if (File.Exists(Path.Combine(LocalRun, SCPD6AX)))
+                        {
+                            RunProgram(SCPD6AX, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SCPD6AX);
+                        }
                     }
                     else
                     {
@@ -1474,7 +1618,14 @@ namespace Mobile_App
 
                             if (label35.Text != "Installed")
                             {
-                                RunProgram("SPD4-0-92.exe", LocalRun);
+                                if (File.Exists(Path.Combine(LocalRun, SCPD4)))
+                                {
+                                    RunProgram(SCPD4, LocalRun);
+                                }
+                                else
+                                {
+                                    PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SCPD4);
+                                }
                             }
                             else
                             {
@@ -1505,7 +1656,7 @@ namespace Mobile_App
                 string message1 = "would you like to ScenePD 4?";
                 MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
                 DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
-                //ScenePD 6 install
+                //ScenePD 4 install
                 if (result1 == DialogResult.Yes)
                 {
                     BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
@@ -1517,7 +1668,14 @@ namespace Mobile_App
 
                     if (label35.Text != "Installed")
                     {
-                        RunProgram("SPD4-0-92.exe", LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, SCPD4)))
+                        {
+                            RunProgram(SCPD4, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SCPD4);
+                        }
                     }
                     else
                     {
@@ -1554,8 +1712,8 @@ namespace Mobile_App
 
                     if (label35.Text != "Installed")
                     {
-                        RunProgram("SPD6-4-8993.exe", @"C:\Temp\MobileInstaller");
-                        RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller");
+                        RunProgram(SCPD6, @"C:\Temp\MobileInstaller\NWS Addons\");
+                        RunProgram(SCPD6AX, @"C:\Temp\MobileInstaller\NWS Addons\");
                     }
                     else
                     {
@@ -1592,8 +1750,7 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                             if (label35.Text != "Installed")
                             {
-                                RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
-                                RunProgram("SPDX6-4-3083.exe", @"C:\Temp\MobileInstaller\NWS Addons");
+                                RunProgram(SCPD4, @"C:\Temp\MobileInstaller\NWS Addons\");
                             }
                             else
                             {
@@ -1623,7 +1780,7 @@ namespace Mobile_App
                 string message1 = "would you like to ScenePD 4?";
                 MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
                 DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
-                //ScenePD 6 install
+                //ScenePD 4 install
                 if (result1 == DialogResult.Yes)
                 {
                     BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
@@ -1635,7 +1792,7 @@ namespace Mobile_App
 
                     if (label35.Text != "Installed")
                     {
-                        RunProgram("SPD4-0-92.exe", @"C:\Temp\MobileInstaller");
+                        RunProgram(SCPD4, @"C:\Temp\MobileInstaller\NWS Addons");
                     }
                     else
                     {
@@ -1681,14 +1838,29 @@ namespace Mobile_App
                 {
                     if (label28.Text != "Installed")
                     {
-                        RunProgram(SQLCE4064, LocalRun);
+                        try
+                        {
+                            PreReqRename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
+                            PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+                        }
+                        catch
+                        {
+                        }
+                        if (File.Exists(Path.Combine(LocalRun, SQLCE4064)))
+                        {
+                            RunProgram(SQLCE4064, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE4064);
+                        }
 
                         BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                     else
                     {
-                        string logentry2 = DateTime.Now + " 64bit SQL Compact 4.0 is already installed. This step was skipped";
+                        string logentry2 = DateTime.Now + " 64 bit SQL Compact 4.0 is already installed. This step was skipped";
                         LogEntryWriter(logentry2);
                     }
                 }
@@ -1703,25 +1875,31 @@ namespace Mobile_App
             }
             else
             {
-                BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
+                BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Compact 4.0 Runtime"));
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 try
                 {
                     if (label28.Text != "Installed")
                     {
-                        RunProgram(SQLCE4032, LocalRun);
+                        if (File.Exists(Path.Combine(LocalRun, SQLCE4032)))
+                        {
+                            RunProgram(SQLCE4032, LocalRun);
+                        }
+                        else
+                        {
+                            PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
 
-                        BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
+                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE4064);
+                        }
+
+                        BeginInvoke((Action)(() => ts.Text = "32bit SQL Compact 4.0 Runtime Installed"));
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                     else
                     {
-                        string logentry2 = DateTime.Now + " 32bit SQL Compact 4.0 is already installed. This step was skipped";
+                        string logentry2 = DateTime.Now + " 32 bit SQL Compact 4.0 is already installed. This step was skipped";
                         LogEntryWriter(logentry2);
                     }
-
-                    BeginInvoke((Action)(() => ts.Text = "ScenePD 6 Installed"));
-                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                 }
                 catch (Exception ex)
                 {
@@ -1739,10 +1917,26 @@ namespace Mobile_App
         {
             try
             {
-                InstallProgram(@"vstor_redist.exe", LocalRun);
+                if (File.Exists(Path.Combine(LocalRun, "vstor_redist.exe")))
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
-                BeginInvoke((Action)(() => ts.Text = "VS 2010 Tools Installed"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                    InstallProgram(@"vstor_redist.exe", LocalRun);
+
+                    BeginInvoke((Action)(() => ts.Text = "VS 2010 Tools Installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                }
+                else
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                    PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", "vstor_redist.exe");
+
+                    BeginInvoke((Action)(() => ts.Text = "VS 2010 Tools Installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                }
             }
             catch (Exception ex)
             {
@@ -1752,6 +1946,166 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry);
             }
+        }
+
+        //SQL Server CLR Types 2008 64bit and 32bit
+        private void SQLCLR2008()
+        {
+            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+            try
+            {
+                if (label31.Text != "Installed")
+                {
+                    if (File.Exists(Path.Combine(LocalRun, SQLCLR32)))
+                    {
+                        InstallProgram(SQLCLR32, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCLR32);
+                    }
+                }
+                else
+                {
+                    string logentry1 = DateTime.Now + " 32 bit SQL Server CLR Types is already installed. This step was skipped.";
+                    LogEntryWriter(logentry1);
+                }
+
+                if (label32.Text != "")
+                {
+                    if (File.Exists(Path.Combine(LocalRun, SQLCLR64)))
+                    {
+                        InstallProgram(SQLCLR64, LocalRun);
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCLR64);
+                    }
+                }
+                else
+                {
+                    string logentry2 = DateTime.Now + " 64 bit SQL Server CLR Types is already installed. This step was skipped.";
+                    LogEntryWriter(logentry2);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        //MSP Client Install
+        private void MSP()
+        {
+            BeginInvoke((Action)(() => ts.Text = "Installing MSP"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+            try
+            {
+                if (File.Exists(Path.Combine(LocalRun, MSPClient)))
+                {
+                    RunProgram(MSPClient, LocalRun);
+                }
+                else
+                {
+                    PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", MSPClient);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+
+                BeginInvoke((Action)(() => ts.Text = "MSP is Installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+            }
+        }
+
+        //CAD Client Install
+        private void CAD()
+        {
+            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+            try
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    if (File.Exists(Path.Combine(LocalRun, CADClient64)))
+                    {
+                        RunProgram(CADClient64, LocalRun);
+
+                        BeginInvoke((Action)(() => ts.Text = "Enterprise CAD Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", CADClient64);
+
+                        BeginInvoke((Action)(() => ts.Text = "Enterprise CAD Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                    }
+                }
+                else
+                {
+                    if (File.Exists(Path.Combine(LocalRun, CADClient32)))
+                    {
+                        RunProgram(CADClient32, LocalRun);
+
+                        BeginInvoke((Action)(() => ts.Text = "Enterprise CAD Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                    }
+                    else
+                    {
+                        PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", CADClient32);
+
+                        BeginInvoke((Action)(() => ts.Text = "Enterprise CAD Installed"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        //CAD Incident Observer Installer
+        //used to view/create AVL history packages
+        private void IncidentObserver()
+        {
+            BeginInvoke((Action)(() => ts.Text = "Installing Incident Observer"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+            string LogEntry = DateTime.Now + @" Attempting to install Incident Observer";
+
+            LogEntryWriter(LogEntry);
+
+            if (File.Exists(Path.Combine(LocalRun, CADIncObs64)))
+            {
+                InstallProgram(CADIncObs64, LocalRun);
+            }
+            else
+            {
+                PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", CADIncObs64);
+            }
+
+            string LogEntry1 = DateTime.Now + @" Incident Observer installed";
+
+            LogEntryWriter(LogEntry1);
+
+            BeginInvoke((Action)(() => ts.Text = "Incident Observer is installed"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
         }
 
         //-----------------File related work---------------
@@ -1856,7 +2210,7 @@ namespace Mobile_App
 
         //this is designed to relabel the SQL compact 4.0 64bit and 32bit components.
         //this is so that CAD and the other applications will be able to have the correct pre reqs
-        private void Rename(string FileName, string NewName, string SubFOlderSearch)
+        private void PreReqRename(string FileName, string NewName, string SubFOlderSearch)
         {
             try
             {
@@ -1882,16 +2236,116 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
+                if (ex.ToString().Contains("FileNotFound"))
+                {
+                    string LogEntry = DateTime.Now + " " + "could not find " + FileName + " to rename." + FileName + " likely is already renamed or is not present.";
+
+                    LogEntryWriter(LogEntry);
+                }
+                else
+                {
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+        }
+
+        //this will iterate through folders to find
+        private void PreReqRun(string sDir, string PreReqName)
+        {
+            try
+            {
+                foreach (var directory in Directory.GetDirectories(sDir))
+                {
+                    foreach (var filename in Directory.GetFiles(directory))
+                    {
+                        if (Path.GetFileName(filename) == PreReqName)
+                        {
+                            if (Path.GetFileName(filename) == SQLCE4064)
+                            {
+                                RunProgram(PreReqName, Path.GetDirectoryName(filename));
+                            }
+                            else if (Path.GetFileName(filename) == SQLCE4032)
+                            {
+                                RunProgram(PreReqName, Path.GetDirectoryName(filename));
+                            }
+                            else if (Path.GetFileName(filename) == MSPClient)
+                            {
+                                RunProgram(PreReqName, Path.GetDirectoryName(filename));
+                            }
+                            else if (Path.GetFileName(filename) == CADClient64)
+                            {
+                                RunProgram(PreReqName, Path.GetDirectoryName(filename));
+                            }
+                            else if (Path.GetFileName(filename) == CADClient32)
+                            {
+                                RunProgram(PreReqName, Path.GetDirectoryName(filename));
+                            }
+                            else
+                            {
+                                InstallProgram(PreReqName, Path.GetDirectoryName(filename));
+                            }
+                        }
+                    }
+                    PreReqRun(directory, PreReqName);
+                }
+            }
+            catch (Exception ex)
+            {
                 string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
         }
 
+        //will search for different versions of applications
+        //Primarily for .net
+        private int PreReqSearch(string sDir, string PreReqName)
+        {
+            try
+            {
+                foreach (var directory in Directory.GetDirectories(sDir))
+                {
+                    foreach (var filename in Directory.GetFiles(directory))
+                    {
+                        if (Path.GetFileName(filename) == PreReqName)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag == false)
+                    {
+                        PreReqSearch(directory, PreReqName);
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            if (flag == false)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         //---------------------Folder Related work-------------------
 
         //this searches through a user entered directory/subdirectories for pre reqs
-        private void PreReqSearch(string sDir)
+        private void PreReqSearchCopy(string sDir)
         {
             try
             {
@@ -1902,7 +2356,7 @@ namespace Mobile_App
                         MobileCopy(filename);
                     }
 
-                    PreReqSearch(directory);
+                    PreReqSearchCopy(directory);
                 }
             }
             catch (Exception ex)
@@ -2503,8 +2957,8 @@ namespace Mobile_App
             {
                 try
                 {
-                    Rename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
-                    Rename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+                    PreReqRename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
+                    PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
                 }
                 catch (Exception ex)
                 {
@@ -2513,7 +2967,7 @@ namespace Mobile_App
                     LogEntryWriter(LogEntry);
                 }
 
-                PreReqSearch(MSPServerPath.Text + @"\_Client-Installation\");
+                PreReqSearchCopy(MSPServerPath.Text + @"\_Client-Installation\");
             }
             //nwps addon download and check
             else if (Directory.Exists(MSPServerPath.Text + @"\\DeviceTester\"))
@@ -3547,27 +4001,9 @@ namespace Mobile_App
 
                         GIS();
 
-                        BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
-                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         UpdaterInstaller();
 
-                        BeginInvoke((Action)(() => ts.Text = "Installing MSP"));
-                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                        try
-                        {
-                            RunProgram("NewWorldMSPClient.msi", LocalRun);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.StackTrace.ToString());
-
-                            string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                            LogEntryWriter(LogEntry);
-
-                            BeginInvoke((Action)(() => ts.Text = "MSP is Installed"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-                        }
+                        MSP();
 
                         BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -3602,231 +4038,21 @@ namespace Mobile_App
                         //if install CAD second
                         if (result1 == DialogResult.Yes)
                         {
-                            if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
-                            {
-                                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                                try
-                                {
-                                    InstallProgram(DotNet47, LocalRun);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.StackTrace.ToString());
+                            DotNet();
 
-                                    string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                    LogEntryWriter(LogEntry);
-                                }
-
-                                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-                            }
-                            //installed .net 4.8 if 4.7.1 is not present
-                            else
-                            {
-                                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                                try
-                                {
-                                    InstallProgram(DotNet48, LocalRun);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.StackTrace.ToString());
-
-                                    string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                    LogEntryWriter(LogEntry);
-                                }
-
-                                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit 4.0 SQL Runtime"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             SQLCE40();
 
-                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                if (label33.Text != "Installed")
-                                {
-                                    InstallProgram(NWPSGIS32, LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry1 = DateTime.Now + " 32 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry1);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
+                            GIS();
 
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
+                            DBProviderService();
 
-                                LogEntryWriter(LogEntry);
-                            }
+                            UpdaterInstaller();
 
-                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit GIS Components"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                if (label34.Text != "Installed")
-                                {
-                                    InstallProgram(NWPSGIS64, LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry2 = DateTime.Now + " 64 bit SQL 3.5 SP2 Runtime is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry2);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
+                            VS2010();
 
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
+                            SQLCLR2008();
 
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Synchronization"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(MSSYNC64, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit Provider Services"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(MSPROSERV64, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit DB Providers"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(MSDBPRO64, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                if (label27.Text != "Installed")
-                                {
-                                    InstallProgram(NWPSUPDATE, LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry1 = DateTime.Now + " New World Updater is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry1);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(@"vstor_redist.exe", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                if (label31.Text != "Installed")
-                                {
-                                    InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry1 = DateTime.Now + " 32 bit SQL Server CLR Types is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry1);
-                                }
-
-                                if (label32.Text != "")
-                                {
-                                    InstallProgram(@"SQLSysClrTypesx64.msi", LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry2 = DateTime.Now + " 64 bit SQL Server CLR Types is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry2);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-
-                                BeginInvoke((Action)(() => ts.Text = "Enterprise CAD Installed"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-                            }
+                            CAD();
 
                             BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -3866,80 +4092,19 @@ namespace Mobile_App
                         {
                             DotNet();
 
-                            BeginInvoke((Action)(() => ts.Text = "Running 64 bit 4.0 SQL Runtime"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             SQLCE40();
 
                             GIS();
 
                             DBProviderService();
 
-                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             UpdaterInstaller();
 
-                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(@"vstor_redist.exe", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
+                            VS2010();
 
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
+                            SQLCLR2008();
 
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                if (label31.Text != "Installed")
-                                {
-                                    InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry1 = DateTime.Now + " 32 bit SQL Server CLR Types is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry1);
-                                }
-
-                                if (label32.Text != "")
-                                {
-                                    InstallProgram(@"SQLSysClrTypesx64.msi", LocalRun);
-                                }
-                                else
-                                {
-                                    string logentry2 = DateTime.Now + " 64 bit SQL Server CLR Types is already installed. This step was skipped.";
-                                    LogEntryWriter(logentry2);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x64.msi", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
+                            CAD();
 
                             BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -3986,24 +4151,9 @@ namespace Mobile_App
 
                         GIS();
 
-                        BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
-                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                         UpdaterInstaller();
 
-                        BeginInvoke((Action)(() => ts.Text = "Installing MSP"));
-                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                        try
-                        {
-                            RunProgram("NewWorldMSPClient.msi", LocalRun);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.StackTrace.ToString());
-
-                            string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                            LogEntryWriter(LogEntry);
-                        }
+                        MSP();
 
                         BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -4037,182 +4187,21 @@ namespace Mobile_App
                         //if install CAD second
                         if (result1 == DialogResult.Yes)
                         {
-                            if (File.Exists(@"C:\Temp\MobileInstaller\dotNetFx471_Full_setup_Offline.exe"))
-                            {
-                                BeginInvoke((Action)(() => ts.Text = "Running 4.7.1 .Net"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                                try
-                                {
-                                    InstallProgram(DotNet47, LocalRun);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.StackTrace.ToString());
+                            DotNet();
 
-                                    string LogEntry = DateTime.Now + " " + ex.ToString();
+                            SQLCE40();
 
-                                    LogEntryWriter(LogEntry);
-                                }
+                            GIS();
 
-                                BeginInvoke((Action)(() => ts.Text = ".Net 4.7.1 installed"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-                            }
-                            //installed .net 4.8 if 4.7.1 is not present
-                            else
-                            {
-                                BeginInvoke((Action)(() => ts.Text = "Running 4.8 .Net"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                                try
-                                {
-                                    InstallProgram(DotNet48, LocalRun);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(ex.StackTrace.ToString());
+                            DBProviderService();
 
-                                    string LogEntry = DateTime.Now + " " + ex.ToString();
+                            UpdaterInstaller();
 
-                                    LogEntryWriter(LogEntry);
-                                }
+                            VS2010();
 
-                                BeginInvoke((Action)(() => ts.Text = ".Net 4.8 installed"));
-                                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-                            }
+                            SQLCLR2008();
 
-                            BeginInvoke((Action)(() => ts.Text = "Running 32bit SQL Runtime"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                RunProgram(SQLCE4032, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit GIS Components"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(NWPSGIS32, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Synchronization"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(MSSYNC32, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit Provider Services"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(MSPROSERV32, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running 32 bit DB Providers"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(MSDBPRO32, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(NWPSUPDATE, LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(@"vstor_redist.exe", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
+                            CAD();
 
                             BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -4257,54 +4246,13 @@ namespace Mobile_App
 
                             DBProviderService();
 
-                            BeginInvoke((Action)(() => ts.Text = "Installing Updater"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                             UpdaterInstaller();
 
-                            BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(@"vstor_redist.exe", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
+                            VS2010();
 
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
+                            SQLCLR2008();
 
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "SQL Server CLR Types 2008"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                InstallProgram(@"SQLSysClrTypesx86.msi", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
-
-                            BeginInvoke((Action)(() => ts.Text = "Installing CAD"));
-                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                            try
-                            {
-                                RunProgram("NewWorld.Enterprise.CAD.Client.x86.msi", LocalRun);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace.ToString());
-
-                                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                                LogEntryWriter(LogEntry);
-                            }
+                            CAD();
 
                             BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -4339,21 +4287,7 @@ namespace Mobile_App
             //Install Incident Observer
             if (CustomInstallOption.GetItemCheckState(8) == CheckState.Checked)
             {
-                BeginInvoke((Action)(() => ts.Text = "Installing Incident Observer"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-
-                string LogEntry = DateTime.Now + @" Attempting to install Incident Observer";
-
-                LogEntryWriter(LogEntry);
-
-                InstallProgram("NewWorld.Enterprise.CAD.IncidentObserver.x64.msi", LocalRun);
-
-                string LogEntry1 = DateTime.Now + @" Incident Observer installed";
-
-                LogEntryWriter(LogEntry1);
-
-                BeginInvoke((Action)(() => ts.Text = "Incident Observer is installed"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                IncidentObserver();
             }
 
             //Install ScenePD
@@ -4374,8 +4308,6 @@ namespace Mobile_App
             //this will install VS 2010 tools
             if (CustomInstallOption.GetItemCheckState(11) == CheckState.Checked)
             {
-                BeginInvoke((Action)(() => ts.Text = "Running Primary Interop Assemblies for Office"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 VS2010();
             }
 
