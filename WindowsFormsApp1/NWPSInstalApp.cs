@@ -1823,7 +1823,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                secondForm.Show();
+                BeginInvoke((Action)(() => secondForm.Show()));
             }
         }
 
@@ -2342,8 +2342,6 @@ namespace Mobile_App
             }
         }
 
-        //---------------------Folder Related work-------------------
-
         //this searches through a user entered directory/subdirectories for pre reqs
         private void PreReqSearchCopy(string sDir)
         {
@@ -2366,6 +2364,8 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
         }
+
+        //---------------------Folder Related work-------------------
 
         //Temp file Creation, MobileInstaller Creation, Temp file cleaning on button click - Created on 02/01
         private void Temp()
