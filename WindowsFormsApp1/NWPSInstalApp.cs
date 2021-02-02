@@ -2220,6 +2220,8 @@ namespace Mobile_App
                     {
                         string sourcepath = Path.GetDirectoryName(filename);
 
+                        //if the directory of a found file contains the text of a searched term/s
+                        //then a specific file is renamed to a desired name.
                         if (sourcepath.ToString().Contains(SubFOlderSearch))
                         {
                             File.Move(Path.Combine(sourcepath, FileName), Path.Combine(sourcepath, NewName));
@@ -2236,6 +2238,8 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
+                //if the exception error contains the text file not found (system.IO.FileNotFound)
+                //then specific text is entered into the log file.
                 if (ex.ToString().Contains("FileNotFound"))
                 {
                     string LogEntry = DateTime.Now + " " + "could not find " + FileName + " to rename." + FileName + " likely is already renamed or is not present.";
@@ -2260,8 +2264,12 @@ namespace Mobile_App
                 {
                     foreach (var filename in Directory.GetFiles(directory))
                     {
+                        //if the file name of a found file matches what we are looking for code is run
                         if (Path.GetFileName(filename) == PreReqName)
                         {
+                            //if the file we found(that matches what we are looking for) matches specific pre reqs
+                            //then specific UI code is ran for the install
+                            //otherwise it is silently installed
                             if (Path.GetFileName(filename) == SQLCE4064)
                             {
                                 RunProgram(PreReqName, Path.GetDirectoryName(filename));
@@ -2311,10 +2319,15 @@ namespace Mobile_App
                     {
                         if (Path.GetFileName(filename) == PreReqName)
                         {
+                            //if the file name of the found file within the folders/subdirs matches the one file we are searching for
+                            /// the flag is set to true and we exit this level of recursion
                             flag = true;
                             break;
                         }
                     }
+                    //due to the multi leveled recursion we must check to see if the bool flag has the value of true (or doesn't have the value of false)
+                    //IF the flag is false then the recursion is called again to check the subdir that returned false
+                    //if the flag is set to not false then the recursion escapes to the next level
                     if (flag == false)
                     {
                         PreReqSearch(directory, PreReqName);
@@ -2332,6 +2345,9 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry);
             }
 
+            //this code block is so that a band aide escape of the multi leveled recursion
+            //if the bool has a value we want to maintain that value.
+            //   False = 0 and not false = 1
             if (flag == false)
             {
                 return 0;
@@ -2354,6 +2370,7 @@ namespace Mobile_App
                         MobileCopy(filename);
                     }
 
+                    //this is so that a folder that has a subdirectory will also be searched
                     PreReqSearchCopy(directory);
                 }
             }
