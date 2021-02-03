@@ -917,6 +917,7 @@ namespace Mobile_App
                 if (GenerateNumber.Text == "0")
                 {
                     BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured and attempt again."));
+                    BeginInvoke((Action)(() => Run.Visible = true));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else
@@ -1052,6 +1053,7 @@ namespace Mobile_App
                 if (GenerateNumber.Text == "0")
                 {
                     BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured and attempt again."));
+                    BeginInvoke((Action)(() => Run.Visible = true));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else
