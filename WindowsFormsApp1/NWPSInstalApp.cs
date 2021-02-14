@@ -63,7 +63,7 @@ namespace Mobile_App
         private bool PoliceClientExists = false;
         private bool FireClientExists = false;
         private bool MergeClientExists = false;
-        private int j;
+        private int j = 0;
         private string SourcePath = @"";
         private string TargetPath = @"";
         private bool is64bit = false;
@@ -206,8 +206,8 @@ namespace Mobile_App
 
             LogEntryWriter(LogEntry1);
 
-            ProgressBar.Value = 0;
-            ProgressBar.Maximum = 37;
+            ProgressBar.Minimum = 0;
+            ProgressBar.Maximum = 46;
             Tab1bg.RunWorkerAsync();
         }
 
@@ -1646,7 +1646,7 @@ namespace Mobile_App
                     else
                     {
                         MessageBox.Show(@"Scene PD 4 was not found, please go to the \\>MobileServerName\C$\NWS Hold\
-                            Client Initial Setup and Installation\7  Install Scene PD, and put your preferred version in C:\Temp\MobileInstaller.");
+							Client Initial Setup and Installation\7  Install Scene PD, and put your preferred version in C:\Temp\MobileInstaller.");
                     }
                 }
             }
@@ -2170,7 +2170,7 @@ namespace Mobile_App
         {
             try
             {
-                string targetPath = LocalRun;
+                string TargetPath = LocalRun;
                 string SourcePath = Path.GetDirectoryName(filename);
                 string replace = filename.Replace(SourcePath, TargetPath);
                 File.Copy(filename, replace, true);
@@ -2184,9 +2184,59 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
+                if (ex.ToString().Contains("used by another process"))
+                {
+                    CloseProcess(filename);
+                }
+                else
+                {
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+        }
+
+        //Mobile copy
+        //this will copy a file from one location to another location as sent by PreReqSearch above
+        //this uses file stream instead of file.copy
+        private void TestMobileCopy(string filename)
+        {
+            try
+            {
+                int bufferSize = 1024 * 1024;
+
+                string TargetPath = LocalRun;
+                string SourcePath = Path.GetDirectoryName(filename);
+                string replace = filename.Replace(SourcePath, TargetPath);
+
+                using (FileStream fileStream = new FileStream(replace, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+
+                {
+                    FileStream fs = new FileStream(Path.Combine(SourcePath, filename), FileMode.Open, FileAccess.ReadWrite);
+                    fileStream.SetLength(fs.Length);
+                    int bytesRead = -1;
+                    byte[] bytes = new byte[bufferSize];
+
+                    while ((bytesRead = fs.Read(bytes, 0, bufferSize)) > 0)
+                    {
+                        fileStream.Write(bytes, 0, bytesRead);
+                    }
+
+                    Tab1bg.ReportProgress(0);
+
+                    string LogEntry = DateTime.Now + " " + filename + " has been copied.";
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+            catch (Exception ex)
+            {
                 string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
+
+                MobileCopy(filename);
             }
         }
 
@@ -2369,7 +2419,7 @@ namespace Mobile_App
                 {
                     foreach (var filename in Directory.GetFiles(directory))
                     {
-                        MobileCopy(filename);
+                        TestMobileCopy(filename);
                     }
 
                     //this is so that a folder that has a subdirectory will also be searched
@@ -2647,7 +2697,7 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                Process.Start(Location);
+                Process.Start("notepad.exe", Location);
             }
             catch (Exception ex)
             {
@@ -2972,12 +3022,14 @@ namespace Mobile_App
             BeginInvoke((Action)(() => CopyButton.Visible = false));
 
             //pre req download logic
-            if (Directory.Exists(MSPServerPath.Text + @"\\_Client-Installation\"))
+            if (Directory.Exists(MSPServerPath.Text + @"\_Client-Installation"))
             {
                 try
                 {
                     PreReqRename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
                     PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+
+                    PreReqSearchCopy(MSPServerPath.Text + @"\_Client-Installation\");
                 }
                 catch (Exception ex)
                 {
@@ -2985,8 +3037,6 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
                 }
-
-                PreReqSearchCopy(MSPServerPath.Text + @"\_Client-Installation\");
             }
             //nwps addon download and check
             else if (Directory.Exists(MSPServerPath.Text + @"\\DeviceTester\"))
@@ -3010,6 +3060,12 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ProgressBar.Visible = false));
             BeginInvoke((Action)(() => ProgressBar.Enabled = false));
             BeginInvoke((Action)(() => Run.Visible = false));
+
+            SetAcl(MSPServerPath.Text + @"\\_Client-Installation\");
+
+            string LogEntry9 = DateTime.Now + " " + MSPServerPath.Text + @"\\_Client-Installation\";
+
+            LogEntryWriter(LogEntry9);
 
             //run combination mobile uninstall an mobile install
             if (Combo.Checked && Is64Bit.Checked == true)
@@ -3340,6 +3396,41 @@ namespace Mobile_App
                 string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
                     "or could not be stopped since the Program was not run as an admin OR under an admin account. Exception: "
                     + ex.StackTrace.ToString(); ;
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        //this is still very WIP. Currently returns a null array DESPITE the code being returned as 0
+        //this 0 code is the system idle process that should not hold up any programs for copy.
+        //unsure if this is a problem or is a test environment issue
+        //IN THEORY this will cancel any processes accessing files that cannot be copied since it is in use.
+        private void CloseProcess(string filename)
+        {
+            try
+            {
+                Process[] currentProcess = Process.GetProcessesByName(Path.GetFileName(filename));
+
+                string LogEntry1 = DateTime.Now + " " + currentProcess + " is currently utilizing " + Path.GetFileName(filename) + " attempting to close.";
+
+                LogEntryWriter(LogEntry1);
+
+                foreach (Process proc in currentProcess)
+                {
+                    string LogEntry2 = DateTime.Now + " " + currentProcess + " is currently utilizing " + Path.GetFileName(filename) + " attempting to close.";
+
+                    LogEntryWriter(LogEntry2);
+
+                    proc.Kill();
+
+                    string LogEntry6 = DateTime.Now + " " + currentProcess + " is now closed.";
+
+                    LogEntryWriter(LogEntry6);
+                }
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
