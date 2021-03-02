@@ -2186,7 +2186,7 @@ namespace Mobile_App
             {
                 if (ex.ToString().Contains("used by another process"))
                 {
-                    CloseProcess(filename);
+                    //CloseProcess(filename);
                 }
                 else
                 {
@@ -2228,6 +2228,7 @@ namespace Mobile_App
                     string LogEntry = DateTime.Now + " " + filename + " has been copied.";
 
                     LogEntryWriter(LogEntry);
+                    fs.Close();
                 }
             }
             catch (Exception ex)
@@ -2419,7 +2420,7 @@ namespace Mobile_App
                 {
                     foreach (var filename in Directory.GetFiles(directory))
                     {
-                        TestMobileCopy(filename);
+                        MobileCopy(filename);
                     }
 
                     //this is so that a folder that has a subdirectory will also be searched
