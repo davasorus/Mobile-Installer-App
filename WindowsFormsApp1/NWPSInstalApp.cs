@@ -2166,14 +2166,15 @@ namespace Mobile_App
 
         //Mobile copy
         //this will copy a file from one location to another location as sent by PreReqSearch above
-        private void MobileCopy(string filename)
+        private void MobileCopy(string FileNamePath)
         {
             try
             {
-                string TargetPath = LocalRun;
-                string SourcePath = Path.GetDirectoryName(filename);
-                string replace = filename.Replace(SourcePath, TargetPath);
-                File.Copy(filename, replace, true);
+                string filename = Path.GetFileName(FileNamePath);
+
+                string replace = Path.Combine(LocalRun, filename);
+
+                File.Copy(FileNamePath, replace, true);
                 File.SetAttributes(TargetPath, FileAttributes.Normal);
 
                 Tab1bg.ReportProgress(0);
@@ -2194,50 +2195,6 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
                 }
-            }
-        }
-
-        //Mobile copy
-        //this will copy a file from one location to another location as sent by PreReqSearch above
-        //this uses file stream instead of file.copy
-        private void TestMobileCopy(string filename)
-        {
-            try
-            {
-                int bufferSize = 1024 * 1024;
-
-                string TargetPath = LocalRun;
-                string SourcePath = Path.GetDirectoryName(filename);
-                string replace = filename.Replace(SourcePath, TargetPath);
-
-                using (FileStream fileStream = new FileStream(replace, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
-
-                {
-                    FileStream fs = new FileStream(Path.Combine(SourcePath, filename), FileMode.Open, FileAccess.ReadWrite);
-                    fileStream.SetLength(fs.Length);
-                    int bytesRead = -1;
-                    byte[] bytes = new byte[bufferSize];
-
-                    while ((bytesRead = fs.Read(bytes, 0, bufferSize)) > 0)
-                    {
-                        fileStream.Write(bytes, 0, bytesRead);
-                    }
-
-                    Tab1bg.ReportProgress(0);
-
-                    string LogEntry = DateTime.Now + " " + filename + " has been copied.";
-
-                    LogEntryWriter(LogEntry);
-                    fs.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-
-                MobileCopy(filename);
             }
         }
 
@@ -3029,7 +2986,16 @@ namespace Mobile_App
                 {
                     PreReqRename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
                     PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+                }
+                catch (Exception ex)
+                {
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
 
+                    LogEntryWriter(LogEntry);
+                }
+
+                try
+                {
                     PreReqSearchCopy(MSPServerPath.Text + @"\_Client-Installation\");
                 }
                 catch (Exception ex)
