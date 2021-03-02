@@ -207,7 +207,7 @@ namespace Mobile_App
             LogEntryWriter(LogEntry1);
 
             ProgressBar.Minimum = 0;
-            ProgressBar.Maximum = 46;
+            ProgressBar.Maximum = 50;
             Tab1bg.RunWorkerAsync();
         }
 
@@ -3363,41 +3363,6 @@ namespace Mobile_App
                 string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
                     "or could not be stopped since the Program was not run as an admin OR under an admin account. Exception: "
                     + ex.StackTrace.ToString(); ;
-
-                LogEntryWriter(LogEntry);
-            }
-        }
-
-        //this is still very WIP. Currently returns a null array DESPITE the code being returned as 0
-        //this 0 code is the system idle process that should not hold up any programs for copy.
-        //unsure if this is a problem or is a test environment issue
-        //IN THEORY this will cancel any processes accessing files that cannot be copied since it is in use.
-        private void CloseProcess(string filename)
-        {
-            try
-            {
-                Process[] currentProcess = Process.GetProcessesByName(Path.GetFileName(filename));
-
-                string LogEntry1 = DateTime.Now + " " + currentProcess + " is currently utilizing " + Path.GetFileName(filename) + " attempting to close.";
-
-                LogEntryWriter(LogEntry1);
-
-                foreach (Process proc in currentProcess)
-                {
-                    string LogEntry2 = DateTime.Now + " " + currentProcess + " is currently utilizing " + Path.GetFileName(filename) + " attempting to close.";
-
-                    LogEntryWriter(LogEntry2);
-
-                    proc.Kill();
-
-                    string LogEntry6 = DateTime.Now + " " + currentProcess + " is now closed.";
-
-                    LogEntryWriter(LogEntry6);
-                }
-            }
-            catch (Exception ex)
-            {
-                string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
