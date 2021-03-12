@@ -7,7 +7,7 @@
     <ProjectGuid>{17C442F6-A4FA-4E2C-B880-956DAAE716EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>NWPSInstallApp</RootNamespace>
-    <AssemblyName>NWPS Install App</AssemblyName>
+    <AssemblyName>NWPS Client Admin Tool</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
