@@ -87,16 +87,16 @@ namespace Mobile_App
             string LogEntry = @"----------- Start of log file" + " " + DateTime.Now + "-----------";
 
             //this will put the current date of application start per run. This allows for easier readability.
-            if (File.Exists("Log.txt"))
+            if (File.Exists("NWPSAdminLog.txt"))
             {
-                using (StreamWriter file = new StreamWriter(("NWPSAppLog.txt"), true))
+                using (StreamWriter file = new StreamWriter(("NWPSAdminLog.txt"), true))
                 {
                     file.WriteLine(LogEntry);
                 }
             }
             else
             {
-                using (StreamWriter file = new StreamWriter(("NWPSAPPLog.txt"), true))
+                using (StreamWriter file = new StreamWriter(("NWPSAdminLog.txt"), true))
                 {
                     file.WriteLine(LogEntry);
                 }
@@ -5149,7 +5149,7 @@ namespace Mobile_App
         //this writes to the mobile pre req installer log file
         private void LogEntryWriter(string LogEntry)
         {
-            using (StreamWriter file = new StreamWriter(("NWPSAppLog.txt"), true))
+            using (StreamWriter file = new StreamWriter(("NWPSAdminLog.txt"), true))
             {
                 file.WriteLine(LogEntry);
             }
