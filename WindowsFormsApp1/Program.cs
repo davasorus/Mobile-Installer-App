@@ -14,7 +14,7 @@ namespace Mobile
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new NWPSPreReqInstaller());
+            Application.Run(new NWPSClientAdminTool());
         }
     }
 }

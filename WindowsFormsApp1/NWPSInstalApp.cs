@@ -22,7 +22,7 @@ using System.Xml.Linq;
 
 namespace Mobile_App
 {
-    partial class NWPSPreReqInstaller : Form
+    partial class NWPSClientAdminTool : Form
     {
         private XmlDocument UpdaterConfig = new XmlDocument();
         private XmlDocument StartupSettings = new XmlDocument();
@@ -150,7 +150,7 @@ namespace Mobile_App
         }
 
         //background worker and component initialize
-        public NWPSPreReqInstaller()
+        public NWPSClientAdminTool()
         {
             InitializeComponent();
 

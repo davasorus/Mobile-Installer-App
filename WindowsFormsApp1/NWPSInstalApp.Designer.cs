@@ -2,7 +2,7 @@
 
 namespace Mobile_App
 {
-    partial class NWPSPreReqInstaller
+    partial class NWPSClientAdminTool
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace Mobile_App
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NWPSPreReqInstaller));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NWPSClientAdminTool));
             this.label3 = new System.Windows.Forms.Label();
             this.UninstallMobile = new System.Windows.Forms.CheckBox();
             this.InstallMobile = new System.Windows.Forms.CheckBox();
@@ -344,7 +344,6 @@ namespace Mobile_App
             this.MobileTriage.Name = "MobileTriage";
             this.MobileTriage.Size = new System.Drawing.Size(290, 64);
             this.MobileTriage.TabIndex = 4;
-            
             // 
             // CustomInstallOption
             // 
@@ -801,7 +800,7 @@ namespace Mobile_App
             this.PreReqCheck.UseVisualStyleBackColor = true;
             this.PreReqCheck.Click += new System.EventHandler(this.button2_Click_1);
             // 
-            // NWPSPreReqInstaller
+            // NWPSClientAdminTool
             // 
             this.AcceptButton = this.Run;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -810,8 +809,8 @@ namespace Mobile_App
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "NWPSPreReqInstaller";
-            this.Text = "NWPS Installer App";
+            this.Name = "NWPSClientAdminTool";
+            this.Text = "NWPS Client Admin Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -844,7 +843,7 @@ namespace Mobile_App
         private System.Windows.Forms.Label FilePath_lbl;
         private System.Windows.Forms.Label label4;
 
-        public NWPSPreReqInstaller(Label label2)
+        public NWPSClientAdminTool(Label label2)
         {
             this.label2 = label2 ?? throw new System.ArgumentNullException(nameof(label2));
         }
