@@ -214,24 +214,11 @@ namespace Mobile_App
         //Help button logic on button click - WIP
         private void Button3_Click(object sender, EventArgs e)
         {
-            var message = "Help Button \n\n";
-            message += "If you didn't run this as Administrator close and re-run as Admin (Right click run as admin.) \n\n";
-            message += "TAB 1: INSTALL/UNINSTALL OPTIONS \n\n";
-            message += "1. Fill in the network path from this computer to the mobile server C Drive. E.X." + @" \\NWPSMMSPROD\C$" + "\n";
-            message += "   1a. Fill in the network path from this computer to the msp server. E.X" + @" \\NWPSMSPPROD" + "\n";
-            message += "2. Select the specific operation you'd like to perform. \n";
-            message += "3. Uninstalling the mobile client will uninstall the mobile client AND all non-updater pre-reqs. \n";
-            message += "4. Installing the mobile client will install all pre regs necessary to run the mobile client. \n";
-            message += "5. Selecting the Both check box and hitting the run button will uninstall the mobile client -> install the mobile client. \n";
-            message += "6. The copy button MUST BE RUN FIRST. The copy button copies the files necessary to installer and/or uninstall the mobile client. \n\n";
-            message += "TAB 2: INSTALL/UNINSTALL CUSTOM OPTIONS  \n\n";
-            message += "1. Uninstall Options  \n\n";
-            message += "   1a. Broken up into customizable uninstalling: Uninstalling the clients you want, and pre reqs you want. Instead of the entire client/pre req suite. \n\n";
-            message += "2. Install Options \n\n";
-            message += "   2a. Broken up into customizable Installing: Installing the clients you want, and pre reqs you want. Instead of the entire client/pre req suite. \n\n";
-            message += "3. Triage Options \n\n";
-            message += "   3a. Typical Triage for the mobile client instead of having to do them by hand. \n\n";
-            MessageBox.Show(message);
+            byte[] resourceFile = NWPSInstallApp.Properties.Resources.NWPS_Installer_App_User_Guide;
+
+            string destination = Path.Combine(Path.GetTempPath(), "NWPS_Installer_App_User_Guide.docx");
+            System.IO.File.WriteAllBytes(destination, resourceFile);
+            Process.Start(destination);
         }
 
         //Customizable Install/Uninstall/Triage Run Button
