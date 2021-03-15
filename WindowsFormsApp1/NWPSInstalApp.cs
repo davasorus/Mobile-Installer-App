@@ -2703,9 +2703,9 @@ namespace Mobile_App
         private void InitialLoadofXML()
         {
             //Checking if the PreReqAppSettings.xml exists, and loading the data if it does.
-            if (File.Exists("NWPSInstallApp.xml"))
+            if (File.Exists("NWPSAdminApp.xml"))
             {
-                StartupSettings.Load("NWPSInstallApp.xml");
+                StartupSettings.Load("NWPSAdminApp.xml");
 
                 NwsHoldPath.Text = StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText;
 
@@ -2746,7 +2746,7 @@ namespace Mobile_App
                     CloseOutput = true,
                     OmitXmlDeclaration = true
                 };
-                using (XmlWriter writer = XmlWriter.Create("NWPSInstallApp.xml", settings))
+                using (XmlWriter writer = XmlWriter.Create("NWPSAdminApp.xml", settings))
                 {
                     writer.WriteStartElement("root");
                     writer.WriteElementString("SourcePath", @"\\MobileServerName\C$\");
@@ -2769,7 +2769,7 @@ namespace Mobile_App
         //When the XML is modified once it is changed for all other uses with that XML.
         private void SaveStartupSettings()
         {
-            StartupSettings.Load("NWPSInstallApp.xml");
+            StartupSettings.Load("NWPSAdminApp.xml");
 
             StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText = NwsHoldPath.Text;
 
@@ -2807,7 +2807,7 @@ namespace Mobile_App
             }
 
             //Save the start up settings
-            StartupSettings.Save("NWPSInstallApp.xml");
+            StartupSettings.Save("NWPSAdminApp.xml");
 
             string LogEntry = DateTime.Now + " App Setting XML Updated";
 
@@ -2817,7 +2817,7 @@ namespace Mobile_App
         //this will remove ORI entries from the Mobile Install App XML
         private void UpdateXMLORI()
         {
-            string text = "NWPSInstallApp.xml";
+            string text = "NWPSAdminApp.xml";
 
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"ORI"));
@@ -2831,7 +2831,7 @@ namespace Mobile_App
         //this will remove FDID entries from the Mobile Install App XML
         private void UpdateXMLFDID()
         {
-            string text = "NWPSInstallApp.xml";
+            string text = "NWPSAdminApp.xml";
 
             string[] Lines = File.ReadAllLines(text);
             IEnumerable<string> newLines = Lines.Where(line => !line.Contains(@"FDID"));
@@ -2845,32 +2845,32 @@ namespace Mobile_App
         //this saves ORI entries to the XML to be used again
         private void CreateXMLORI(string ORI, string name)
         {
-            XDocument xDocument = XDocument.Load("NWPSInstallApp.xml");
+            XDocument xDocument = XDocument.Load("NWPSAdminApp.xml");
 
             var doc = xDocument.Root.Element("root");
 
             xDocument.Root.Add(new XElement(name, ORI));
 
-            xDocument.Save("NWPSInstallApp.xml");
+            xDocument.Save("NWPSAdminApp.xml");
         }
 
         //this saves FDID entries to the XML to be used again
         private void CreateXMLFDID(string FDID, string name)
         {
-            XDocument xDocument = XDocument.Load("NWPSInstallApp.xml");
+            XDocument xDocument = XDocument.Load("NWPSAdminApp.xml");
 
             var doc = xDocument.Root.Element("root");
 
             xDocument.Root.Add(new XElement(name, FDID));
 
-            xDocument.Save("NWPSInstallApp.xml");
+            xDocument.Save("NWPSAdminApp.xml");
         }
 
         //will load old/prior ORI config in XML
         //this is will use the text from the XML file that corresponds to the ORI text fields in the application
         private void LoadORIXML()
         {
-            StartupSettings.Load("NWPSInstallApp.xml");
+            StartupSettings.Load("NWPSAdminApp.xml");
 
             foreach (Control c in tabPage3.Controls)
             {
@@ -2907,7 +2907,7 @@ namespace Mobile_App
         //this is will use the text from the XML file that corresponds to the FDID text fields in the application
         private void LoadFDIDXML()
         {
-            StartupSettings.Load("NWPSInstallApp.xml");
+            StartupSettings.Load("NWPSAdminApp.xml");
 
             foreach (Control c in tabPage3.Controls)
             {
