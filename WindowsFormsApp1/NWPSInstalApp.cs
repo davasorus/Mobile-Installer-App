@@ -3248,6 +3248,228 @@ namespace Mobile_App
                 MobileRestart();
             }
 
+            //Install MSP with 64bit pre reqs
+            if (Is64Bit.Checked && InstallMSP.Checked == true)
+            {
+                DotNet();
+
+                SQLCE35();
+
+                GIS();
+
+                UpdaterInstaller();
+
+                MSP();
+
+                BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                try
+                {
+                    SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                    string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry);
+
+                    SetAcl(@"C:\ProgramData\New World Systems");
+
+                    string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+
+            //uninstall MSP
+            if (Is64Bit.Checked && UninstallMSP.Checked == true)
+            {
+                BeginInvoke((Action)(() => ts.Text = "uninstalling MSP"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                UninstallProgram("New World MSP Client");
+
+                UninstallProgram("New World Aegis Client");
+
+                UninstallProgram("New World Aegis MSP Client");
+
+                BeginInvoke((Action)(() => ts.Text = "MSP has been uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+            }
+
+            //Install 64bit CAD with 64bit pre reqs
+            if (Is64Bit.Checked && InstallCAD.Checked == true)
+            {
+                DotNet();
+
+                SQLCE40();
+
+                GIS();
+
+                DBProviderService();
+
+                UpdaterInstaller();
+
+                VS2010();
+
+                SQLCLR2008();
+
+                CAD();
+
+                BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                try
+                {
+                    SetAcl(@"C:\Program Files (x86)\New World Systems");
+
+                    string LogEntry = DateTime.Now + @" C:\Program Files (x86)\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry);
+
+                    SetAcl(@"C:\ProgramData\New World Systems");
+
+                    string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+
+            //uninstall CAD
+            if (Is64Bit.Checked && UninstallCAD.Checked == true)
+            {
+                BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                UninstallProgram("New World  Enterprise CAD Client");
+
+                BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+            }
+
+            ///install MSP with 32bit pre reqs
+            if (Is32bit.Checked && InstallMSP.Checked == true)
+            {
+                DotNet();
+
+                SQLCE35();
+
+                GIS();
+
+                UpdaterInstaller();
+
+                MSP();
+
+                BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                try
+                {
+                    SetAcl(@"C:\Program Files\New World Systems");
+
+                    string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry);
+                    SetAcl(@"C:\ProgramData\New World Systems");
+
+                    string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+
+            //uninstall MSP
+            if (Is32bit.Checked && UninstallMSP.Checked == true)
+            {
+                BeginInvoke((Action)(() => ts.Text = "uninstalling MSP"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                UninstallProgram("New World MSP Client");
+
+                UninstallProgram("New World Aegis Client");
+
+                UninstallProgram("New World Aegis MSP Client");
+
+                BeginInvoke((Action)(() => ts.Text = "MSP has been uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+            }
+
+            //install 32 bit CAD with 32 bit pre reqs (will not work 20.1 and above
+            if (Is32bit.Checked && InstallCAD.Checked == true)
+            {
+                DotNet();
+
+                SQLCE40();
+
+                GIS();
+
+                DBProviderService();
+
+                UpdaterInstaller();
+
+                VS2010();
+
+                SQLCLR2008();
+
+                CAD();
+
+                BeginInvoke((Action)(() => ts.Text = "Prepping folder permissions"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                try
+                {
+                    SetAcl(@"C:\Program Files\New World Systems");
+
+                    string LogEntry = DateTime.Now + @" C:\Program Files\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry);
+                    SetAcl(@"C:\ProgramData\New World Systems");
+
+                    string LogEntry1 = DateTime.Now + @" C:\ProgramData\New World Systems has User permissions set.";
+
+                    LogEntryWriter(LogEntry1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+            }
+
+            //will uninstall CAD
+            if (Is32bit.Checked && UninstallCAD.Checked == true)
+            {
+                BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                UninstallProgram("New World Enterprise CAD Client");
+
+                BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+            }
+
             BeginInvoke((Action)(() => Run.Visible = true));
         }
 

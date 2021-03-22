@@ -47,6 +47,7 @@ namespace Mobile_App
             this.MSPServerPath = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
             this.InstallCAD = new System.Windows.Forms.CheckBox();
             this.InstallMSP = new System.Windows.Forms.CheckBox();
             this.UninstallCAD = new System.Windows.Forms.CheckBox();
@@ -97,7 +98,6 @@ namespace Mobile_App
             this.SQLCP4 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.PreReqCheck = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -277,10 +277,19 @@ namespace Mobile_App
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Install/Uninstall Options";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(89, 53);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(118, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Install/Uninstall Options";
+            // 
             // InstallCAD
             // 
             this.InstallCAD.AutoSize = true;
-            this.InstallCAD.Location = new System.Drawing.Point(319, 125);
+            this.InstallCAD.Location = new System.Drawing.Point(312, 102);
             this.InstallCAD.Name = "InstallCAD";
             this.InstallCAD.Size = new System.Drawing.Size(78, 17);
             this.InstallCAD.TabIndex = 20;
@@ -290,7 +299,7 @@ namespace Mobile_App
             // InstallMSP
             // 
             this.InstallMSP.AutoSize = true;
-            this.InstallMSP.Location = new System.Drawing.Point(214, 125);
+            this.InstallMSP.Location = new System.Drawing.Point(214, 102);
             this.InstallMSP.Name = "InstallMSP";
             this.InstallMSP.Size = new System.Drawing.Size(79, 17);
             this.InstallMSP.TabIndex = 19;
@@ -300,7 +309,7 @@ namespace Mobile_App
             // UninstallCAD
             // 
             this.UninstallCAD.AutoSize = true;
-            this.UninstallCAD.Location = new System.Drawing.Point(319, 102);
+            this.UninstallCAD.Location = new System.Drawing.Point(312, 79);
             this.UninstallCAD.Name = "UninstallCAD";
             this.UninstallCAD.Size = new System.Drawing.Size(91, 17);
             this.UninstallCAD.TabIndex = 18;
@@ -310,7 +319,7 @@ namespace Mobile_App
             // UninstallMSP
             // 
             this.UninstallMSP.AutoSize = true;
-            this.UninstallMSP.Location = new System.Drawing.Point(214, 102);
+            this.UninstallMSP.Location = new System.Drawing.Point(214, 79);
             this.UninstallMSP.Name = "UninstallMSP";
             this.UninstallMSP.Size = new System.Drawing.Size(92, 17);
             this.UninstallMSP.TabIndex = 17;
@@ -825,15 +834,6 @@ namespace Mobile_App
             this.PreReqCheck.Text = "Check";
             this.PreReqCheck.UseVisualStyleBackColor = true;
             this.PreReqCheck.Click += new System.EventHandler(this.button2_Click_1);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(89, 53);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(118, 13);
-            this.label12.TabIndex = 21;
-            this.label12.Text = "Install/Uninstall Options";
             // 
             // NWPSClientAdminTool
             // 
