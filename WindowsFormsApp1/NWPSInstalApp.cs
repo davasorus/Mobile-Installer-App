@@ -3017,7 +3017,7 @@ namespace Mobile_App
 
             LogEntryWriter(LogEntry9);
 
-            //run combination mobile uninstall an mobile install
+            //will uninstall mobile and then install mobile with 64bit pre reqs
             if (Combo.Checked && Is64Bit.Checked == true)
             {
                 //an exception thrown if the generate number text box is 0
@@ -3069,12 +3069,9 @@ namespace Mobile_App
                 LogEntryWriter(LogEntry5);
 
                 MessageBox.Show("Mobile Pre Reqs have been Installed");
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
             }
 
-            //run 64bit installer
+            //will install 64bit mobile pre reqs
             if (Is64Bit.Checked && InstallMobile.Checked == true)
             {
                 //this accounts for the GenerateNumber Text box being blank/Null
@@ -3104,12 +3101,9 @@ namespace Mobile_App
                 string LogEntry2 = DateTime.Now + " 64Bit Mobile Pre Req Install Completed";
 
                 LogEntryWriter(LogEntry2);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
             }
 
-            //Run 64bit uninstaller
+            //will uninstall mobile and 64 bit pre reqs
             if (Is64Bit.Checked && UninstallMobile.Checked == true)
             {
                 BeginInvoke((Action)(() => ts.Text = "Modifying Mobile Updater Entries"));
@@ -3130,12 +3124,9 @@ namespace Mobile_App
                 string LogEntry3 = DateTime.Now + " 64Bit Mobile Uninstall Completed";
 
                 LogEntryWriter(LogEntry3);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
             }
 
-            //Run combination mobile uninstall and mobile install
+            //will uninstall mobile and then install mobile with 32 bit pre reqs
             if (Combo.Checked && Is32bit.Checked == true)
             {
                 if (GenerateNumber.Text == "0")
@@ -3183,12 +3174,9 @@ namespace Mobile_App
                 string LogEntry5 = DateTime.Now + " 32Bit Mobile Successfully Installed";
 
                 LogEntryWriter(LogEntry5);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
             }
 
-            //Run 32bit installer
+            //will install 32bit mobile pre reqs
             if (Is32bit.Checked && InstallMobile.Checked == true)
             {
                 if (GenerateNumber.Text == "0")
@@ -3217,12 +3205,9 @@ namespace Mobile_App
                 string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully Installed";
 
                 LogEntryWriter(LogEntry3);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
             }
 
-            //Run 32bit uninstaller
+            //will uninstall mobile and 32 bit pre reqs
             if (Is32bit.Checked && UninstallMobile.Checked == true)
             {
                 BeginInvoke((Action)(() => ts.Text = "Modifying Updater Files"));
@@ -3243,9 +3228,6 @@ namespace Mobile_App
                 string LogEntry3 = DateTime.Now + " 32Bit Mobile Successfully uninstalled";
 
                 LogEntryWriter(LogEntry3);
-
-                BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-                MobileRestart();
             }
 
             //Install MSP with 64bit pre reqs
@@ -3469,6 +3451,9 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
             }
+
+            BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
+            MobileRestart();
 
             BeginInvoke((Action)(() => Run.Visible = true));
         }
