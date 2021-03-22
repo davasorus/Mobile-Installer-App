@@ -35,8 +35,6 @@ namespace Mobile_App
             this.UninstallMobile = new System.Windows.Forms.CheckBox();
             this.InstallMobile = new System.Windows.Forms.CheckBox();
             this.Run = new System.Windows.Forms.Button();
-            this.NwsHoldPath = new System.Windows.Forms.TextBox();
-            this.FilePath_lbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.Is64Bit = new System.Windows.Forms.CheckBox();
             this.Help_BTN = new System.Windows.Forms.Button();
@@ -49,6 +47,10 @@ namespace Mobile_App
             this.MSPServerPath = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.InstallCAD = new System.Windows.Forms.CheckBox();
+            this.InstallMSP = new System.Windows.Forms.CheckBox();
+            this.UninstallCAD = new System.Windows.Forms.CheckBox();
+            this.UninstallMSP = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CustomRun = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
@@ -95,6 +97,7 @@ namespace Mobile_App
             this.SQLCP4 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.PreReqCheck = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -114,7 +117,7 @@ namespace Mobile_App
             // UninstallMobile
             // 
             this.UninstallMobile.AutoSize = true;
-            this.UninstallMobile.Location = new System.Drawing.Point(6, 60);
+            this.UninstallMobile.Location = new System.Drawing.Point(5, 79);
             this.UninstallMobile.Name = "UninstallMobile";
             this.UninstallMobile.Size = new System.Drawing.Size(197, 17);
             this.UninstallMobile.TabIndex = 1;
@@ -124,7 +127,7 @@ namespace Mobile_App
             // InstallMobile
             // 
             this.InstallMobile.AutoSize = true;
-            this.InstallMobile.Location = new System.Drawing.Point(6, 83);
+            this.InstallMobile.Location = new System.Drawing.Point(5, 102);
             this.InstallMobile.Name = "InstallMobile";
             this.InstallMobile.Size = new System.Drawing.Size(163, 17);
             this.InstallMobile.TabIndex = 3;
@@ -142,39 +145,19 @@ namespace Mobile_App
             this.Run.Click += new System.EventHandler(this.Button2_Click);
             this.Run.MouseCaptureChanged += new System.EventHandler(this.Button2_Click);
             // 
-            // NwsHoldPath
-            // 
-            this.NwsHoldPath.AccessibleDescription = "File path to the mobile installer file";
-            this.NwsHoldPath.Location = new System.Drawing.Point(6, 162);
-            this.NwsHoldPath.Name = "NwsHoldPath";
-            this.NwsHoldPath.Size = new System.Drawing.Size(150, 20);
-            this.NwsHoldPath.TabIndex = 6;
-            this.NwsHoldPath.Text = "THIS HAS BEEN DEPRECIATED";
-            this.NwsHoldPath.Visible = false;
-            // 
-            // FilePath_lbl
-            // 
-            this.FilePath_lbl.AutoSize = true;
-            this.FilePath_lbl.Location = new System.Drawing.Point(3, 147);
-            this.FilePath_lbl.Name = "FilePath_lbl";
-            this.FilePath_lbl.Size = new System.Drawing.Size(164, 13);
-            this.FilePath_lbl.TabIndex = 7;
-            this.FilePath_lbl.Text = "Network Path to the MMS Server";
-            this.FilePath_lbl.Visible = false;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 6);
+            this.label4.Location = new System.Drawing.Point(86, 3);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 13);
+            this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Mobile Client Pre-Req Install App";
+            this.label4.Text = "OS Version";
             // 
             // Is64Bit
             // 
             this.Is64Bit.AutoSize = true;
-            this.Is64Bit.Location = new System.Drawing.Point(6, 29);
+            this.Is64Bit.Location = new System.Drawing.Point(6, 19);
             this.Is64Bit.Name = "Is64Bit";
             this.Is64Bit.Size = new System.Drawing.Size(97, 17);
             this.Is64Bit.TabIndex = 9;
@@ -194,7 +177,7 @@ namespace Mobile_App
             // Is32bit
             // 
             this.Is32bit.AutoSize = true;
-            this.Is32bit.Location = new System.Drawing.Point(126, 29);
+            this.Is32bit.Location = new System.Drawing.Point(126, 19);
             this.Is32bit.Name = "Is32bit";
             this.Is32bit.Size = new System.Drawing.Size(97, 17);
             this.Is32bit.TabIndex = 11;
@@ -214,7 +197,7 @@ namespace Mobile_App
             // Combo
             // 
             this.Combo.AutoSize = true;
-            this.Combo.Location = new System.Drawing.Point(6, 106);
+            this.Combo.Location = new System.Drawing.Point(6, 125);
             this.Combo.Name = "Combo";
             this.Combo.Size = new System.Drawing.Size(191, 17);
             this.Combo.TabIndex = 13;
@@ -270,14 +253,17 @@ namespace Mobile_App
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage1.Controls.Add(this.label12);
+            this.tabPage1.Controls.Add(this.InstallCAD);
+            this.tabPage1.Controls.Add(this.InstallMSP);
+            this.tabPage1.Controls.Add(this.UninstallCAD);
+            this.tabPage1.Controls.Add(this.UninstallMSP);
             this.tabPage1.Controls.Add(this.InstallMobile);
             this.tabPage1.Controls.Add(this.MSPServerPath);
             this.tabPage1.Controls.Add(this.UninstallMobile);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.Run);
-            this.tabPage1.Controls.Add(this.NwsHoldPath);
             this.tabPage1.Controls.Add(this.Combo);
-            this.tabPage1.Controls.Add(this.FilePath_lbl);
             this.tabPage1.Controls.Add(this.CopyButton);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.Is32bit);
@@ -290,6 +276,46 @@ namespace Mobile_App
             this.tabPage1.Size = new System.Drawing.Size(416, 244);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Install/Uninstall Options";
+            // 
+            // InstallCAD
+            // 
+            this.InstallCAD.AutoSize = true;
+            this.InstallCAD.Location = new System.Drawing.Point(319, 125);
+            this.InstallCAD.Name = "InstallCAD";
+            this.InstallCAD.Size = new System.Drawing.Size(78, 17);
+            this.InstallCAD.TabIndex = 20;
+            this.InstallCAD.Text = "Install CAD";
+            this.InstallCAD.UseVisualStyleBackColor = true;
+            // 
+            // InstallMSP
+            // 
+            this.InstallMSP.AutoSize = true;
+            this.InstallMSP.Location = new System.Drawing.Point(214, 125);
+            this.InstallMSP.Name = "InstallMSP";
+            this.InstallMSP.Size = new System.Drawing.Size(79, 17);
+            this.InstallMSP.TabIndex = 19;
+            this.InstallMSP.Text = "Install MSP";
+            this.InstallMSP.UseVisualStyleBackColor = true;
+            // 
+            // UninstallCAD
+            // 
+            this.UninstallCAD.AutoSize = true;
+            this.UninstallCAD.Location = new System.Drawing.Point(319, 102);
+            this.UninstallCAD.Name = "UninstallCAD";
+            this.UninstallCAD.Size = new System.Drawing.Size(91, 17);
+            this.UninstallCAD.TabIndex = 18;
+            this.UninstallCAD.Text = "Uninstall CAD";
+            this.UninstallCAD.UseVisualStyleBackColor = true;
+            // 
+            // UninstallMSP
+            // 
+            this.UninstallMSP.AutoSize = true;
+            this.UninstallMSP.Location = new System.Drawing.Point(214, 102);
+            this.UninstallMSP.Name = "UninstallMSP";
+            this.UninstallMSP.Size = new System.Drawing.Size(92, 17);
+            this.UninstallMSP.TabIndex = 17;
+            this.UninstallMSP.Text = "Uninstall MSP";
+            this.UninstallMSP.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -800,6 +826,15 @@ namespace Mobile_App
             this.PreReqCheck.UseVisualStyleBackColor = true;
             this.PreReqCheck.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(89, 53);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(118, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Install/Uninstall Options";
+            // 
             // NWPSClientAdminTool
             // 
             this.AcceptButton = this.Run;
@@ -839,8 +874,6 @@ namespace Mobile_App
         private System.Windows.Forms.CheckBox UninstallMobile;
         private System.Windows.Forms.CheckBox InstallMobile;
         private System.Windows.Forms.Button Run;
-        private System.Windows.Forms.TextBox NwsHoldPath;
-        private System.Windows.Forms.Label FilePath_lbl;
         private System.Windows.Forms.Label label4;
 
         public NWPSClientAdminTool(Label label2)
@@ -905,6 +938,11 @@ namespace Mobile_App
         private Label CLR64;
         private Label CLR32;
         private Label GIS64;
+        private CheckBox InstallCAD;
+        private CheckBox InstallMSP;
+        private CheckBox UninstallCAD;
+        private CheckBox UninstallMSP;
+        private Label label12;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }

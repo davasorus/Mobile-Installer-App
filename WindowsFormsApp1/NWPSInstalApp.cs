@@ -2707,8 +2707,6 @@ namespace Mobile_App
             {
                 StartupSettings.Load("NWPSAdminApp.xml");
 
-                NwsHoldPath.Text = StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText;
-
                 GenerateNumber.Text = StartupSettings.GetElementsByTagName("GenerateNumber")[0].InnerText;
 
                 MobileServer.Text = StartupSettings.GetElementsByTagName("MobileServerName")[0].InnerText;
@@ -2770,8 +2768,6 @@ namespace Mobile_App
         private void SaveStartupSettings()
         {
             StartupSettings.Load("NWPSAdminApp.xml");
-
-            StartupSettings.GetElementsByTagName("SourcePath")[0].InnerText = NwsHoldPath.Text;
 
             StartupSettings.GetElementsByTagName("MSPServerPath")[0].InnerText = MSPServerPath.Text;
 
