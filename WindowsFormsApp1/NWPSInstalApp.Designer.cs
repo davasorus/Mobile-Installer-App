@@ -208,7 +208,7 @@ namespace Mobile_App
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 274);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 264);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(427, 22);
             this.statusStrip1.TabIndex = 14;
@@ -289,21 +289,21 @@ namespace Mobile_App
             // InstallCAD
             // 
             this.InstallCAD.AutoSize = true;
-            this.InstallCAD.Location = new System.Drawing.Point(312, 102);
+            this.InstallCAD.Location = new System.Drawing.Point(289, 102);
             this.InstallCAD.Name = "InstallCAD";
-            this.InstallCAD.Size = new System.Drawing.Size(78, 17);
+            this.InstallCAD.Size = new System.Drawing.Size(127, 17);
             this.InstallCAD.TabIndex = 20;
-            this.InstallCAD.Text = "Install CAD";
+            this.InstallCAD.Text = "Install CAD/Pre Reqs";
             this.InstallCAD.UseVisualStyleBackColor = true;
             // 
             // InstallMSP
             // 
             this.InstallMSP.AutoSize = true;
-            this.InstallMSP.Location = new System.Drawing.Point(214, 102);
+            this.InstallMSP.Location = new System.Drawing.Point(165, 102);
             this.InstallMSP.Name = "InstallMSP";
-            this.InstallMSP.Size = new System.Drawing.Size(79, 17);
+            this.InstallMSP.Size = new System.Drawing.Size(128, 17);
             this.InstallMSP.TabIndex = 19;
-            this.InstallMSP.Text = "Install MSP";
+            this.InstallMSP.Text = "Install MSP/Pre Reqs";
             this.InstallMSP.UseVisualStyleBackColor = true;
             // 
             // UninstallCAD
@@ -839,7 +839,7 @@ namespace Mobile_App
             // 
             this.AcceptButton = this.Run;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(427, 296);
+            this.ClientSize = new System.Drawing.Size(427, 286);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
