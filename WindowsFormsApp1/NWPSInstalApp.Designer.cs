@@ -208,7 +208,7 @@ namespace Mobile_App
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 264);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 271);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(427, 22);
             this.statusStrip1.TabIndex = 14;
@@ -839,7 +839,7 @@ namespace Mobile_App
             // 
             this.AcceptButton = this.Run;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(427, 286);
+            this.ClientSize = new System.Drawing.Size(427, 293);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
