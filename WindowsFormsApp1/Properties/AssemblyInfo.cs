@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Tyler Technologies")]
 [assembly: AssemblyProduct("NWPSPreqReqInstaller")]
 [assembly: AssemblyCopyright("Copyright Sean Davitt ©  2018")]
-[assembly: AssemblyTrademark("Copyright Sean Davitt ©  2018")]
+[assembly: AssemblyTrademark("Sean Davitt ©  2018")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("8.0.0.0")]
-[assembly: AssemblyFileVersion("8.21.3.4")]
+[assembly: AssemblyFileVersion("8.21.3.5")]
