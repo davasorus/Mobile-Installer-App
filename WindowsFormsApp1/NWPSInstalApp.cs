@@ -214,9 +214,9 @@ namespace Mobile_App
         //Help button logic on button click - WIP
         private void Button3_Click(object sender, EventArgs e)
         {
-            byte[] resourceFile = NWPSAdminApp.Properties.Resources.NWPS_Installer_App_User_Guide;
+            byte[] resourceFile = NWPSAdminApp.Properties.Resources.NWPS_Client_Admin_Tool_User_Guide;
 
-            string destination = Path.Combine(Path.GetTempPath(), "NWPS_Installer_App_User_Guide.docx");
+            string destination = Path.Combine(Path.GetTempPath(), "NWPS_Client_Admin_Tool_User_Guide.docx");
             System.IO.File.WriteAllBytes(destination, resourceFile);
             Process.Start(destination);
         }

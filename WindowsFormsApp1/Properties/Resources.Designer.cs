@@ -63,9 +63,9 @@ namespace NWPSAdminApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] NWPS_Installer_App_User_Guide {
+        internal static byte[] NWPS_Client_Admin_Tool_User_Guide {
             get {
-                object obj = ResourceManager.GetObject("NWPS_Installer_App_User_Guide", resourceCulture);
+                object obj = ResourceManager.GetObject("NWPS_Client_Admin_Tool_User_Guide", resourceCulture);
                 return ((byte[])(obj));
             }
         }
