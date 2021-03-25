@@ -2162,7 +2162,7 @@ namespace Mobile_App
                 string replace = Path.Combine(LocalRun, filename);
 
                 File.Copy(FileNamePath, replace, true);
-                File.SetAttributes(TargetPath, FileAttributes.Normal);
+                //File.SetAttributes(TargetPath, FileAttributes.Normal);
 
                 Tab1bg.ReportProgress(0);
 
