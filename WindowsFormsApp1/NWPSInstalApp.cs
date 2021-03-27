@@ -328,7 +328,7 @@ namespace Mobile_App
         //PreReqChecker code
         //this is a dedicated tab to check for prior installed/uninstalled
         //if someone presses the button it will check, if people use the normal install/uninstall process it will update as they run.
-        private void button2_Click_1(object sender, EventArgs e)
+        private void PreReqCheck_Click(object sender, EventArgs e)
         {
             ProgressBar.Visible = false;
             ProgressBar.Enabled = false;

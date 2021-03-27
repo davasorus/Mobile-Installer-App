@@ -833,7 +833,7 @@ namespace Mobile_App
             this.PreReqCheck.TabIndex = 0;
             this.PreReqCheck.Text = "Check";
             this.PreReqCheck.UseVisualStyleBackColor = true;
-            this.PreReqCheck.Click += new System.EventHandler(this.button2_Click_1);
+            this.PreReqCheck.Click += new System.EventHandler(this.PreReqCheck_Click);
             // 
             // NWPSClientAdminTool
             // 
