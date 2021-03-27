@@ -30,6 +30,7 @@ namespace Mobile_App
         private BackgroundWorker Tab1bg;
         private BackgroundWorker Tab2bg;
         private BackgroundWorker Tab1Installbg;
+        private BackgroundWorker Tab3bg;
 
         private string DotNet47 = "dotNetFx471_Full_setup_Offline.exe";
         private string DotNet48 = "ndp48-x86-x64-allos-enu.exe";
@@ -166,6 +167,9 @@ namespace Mobile_App
 
             Tab2bg = new BackgroundWorker();
             Tab2bg.DoWork += Tab2bg_DoWork;
+
+            Tab3bg = new BackgroundWorker();
+            Tab3bg.DoWork += Tab3bg_DoWork;
         }
 
         //---------------------------Button Click events----------------------
@@ -236,110 +240,7 @@ namespace Mobile_App
         //this has been enhanced from the Updater Config tool V2 to account for dynamically changing run conditions
         private void UpdaterAppend_Click(object sender, EventArgs e)
         {
-            if (Is64Bit.Checked == true)
-            {
-                UpdaterConfig.Load(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-            if (Is32bit.Checked == true)
-            {
-                UpdaterConfig.Load(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-
-            SeeIfNodesExist();
-
-            UpdateXMLORI();
-
-            UpdateXMLFDID();
-
-            //this creates the ORI text boxes
-            //this also modifies the pre req installer config XML for each ORI
-            foreach (Control c in tabPage3.Controls)
-            {
-                if (c.Name.Contains("ORI"))
-                {
-                    if (c.Text != "")
-                    {
-                        BeginInvoke((Action)(() => ts.Text = "ORIs Added"));
-                        string ORI = c.Text;
-                        string Name = c.Name;
-
-                        CreateXMLORI(ORI, Name);
-
-                        ORISub(ORI);
-                    }
-                }
-            }
-
-            //this creates the ORI text boxes
-            //this also modifies the pre req installer config XML for each FDID
-            foreach (Control c in tabPage3.Controls)
-            {
-                if (c.Name.Contains("FDID"))
-                {
-                    if (c.Text != "")
-                    {
-                        BeginInvoke((Action)(() => ts.Text = "FDIDs Added"));
-                        string FDID = c.Text;
-                        string Name = c.Name;
-
-                        CreateXMLFDID(FDID, Name);
-
-                        FDIDSub(FDID);
-                    }
-                }
-            }
-
-            if (PoliceClient.Checked && PoliceClientExists == false)
-            {
-                PoliceClientSub();
-            }
-
-            if (FireClient.Checked && FireClientExists == false)
-            {
-                FireClientSub();
-            }
-
-            if (MergeClient.Checked && MergeClientExists == false)
-            {
-                MergeClientSub();
-            }
-
-            NewWorldUpdaterSub();
-
-            if (Is64Bit.Checked == true)
-            {
-                UpdaterConfig.Save(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-            if (Is32bit.Checked == true)
-            {
-                UpdaterConfig.Save(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
-            }
-
-            ServiceController myService = new ServiceController
-            {
-                ServiceName = "NewWorldUpdaterService"
-            };
-
-            string svcStatus = myService.Status.ToString();
-
-            if (svcStatus == "Running")
-            {
-                myService.Stop();
-                myService.WaitForStatus(ServiceControllerStatus.Stopped);
-                myService.Start();
-            }
-            else if (svcStatus == "Stopped")
-            {
-                myService.Start();
-            }
-            else
-            {
-                myService.Stop();
-                myService.WaitForStatus(ServiceControllerStatus.Stopped);
-                myService.Start();
-            }
-
-            SaveStartupSettings();
+            Tab3bg.RunWorkerAsync();
         }
 
         //work done when the generate button is pressed
@@ -435,7 +336,7 @@ namespace Mobile_App
 
             PreStatusChecker();
 
-            ts.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            ts.ForeColor = Color.DarkSlateBlue;
             ts.Text = "Running Pre Req Checker";
 
             //
@@ -3498,6 +3399,125 @@ namespace Mobile_App
             BeginInvoke((Action)(() => CustomRun.Visible = true));
         }
 
+        private void Tab3bg_DoWork(object send, DoWorkEventArgs e)
+        {
+            try
+            {
+                if (Is64Bit.Checked == true)
+                {
+                    UpdaterConfig.Load(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+                }
+                if (Is32bit.Checked == true)
+                {
+                    UpdaterConfig.Load(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+                }
+
+                SeeIfNodesExist();
+
+                UpdateXMLORI();
+
+                UpdateXMLFDID();
+
+                //this creates the ORI text boxes
+                //this also modifies the pre req installer config XML for each ORI
+                foreach (Control c in tabPage3.Controls)
+                {
+                    if (c.Name.Contains("ORI"))
+                    {
+                        if (c.Text != "")
+                        {
+                            BeginInvoke((Action)(() => ts.Text = "ORIs Added"));
+                            string ORI = c.Text;
+                            string Name = c.Name;
+
+                            CreateXMLORI(ORI, Name);
+
+                            ORISub(ORI);
+                        }
+                    }
+                }
+
+                //this creates the ORI text boxes
+                //this also modifies the pre req installer config XML for each FDID
+                foreach (Control c in tabPage3.Controls)
+                {
+                    if (c.Name.Contains("FDID"))
+                    {
+                        if (c.Text != "")
+                        {
+                            BeginInvoke((Action)(() => ts.Text = "FDIDs Added"));
+                            string FDID = c.Text;
+                            string Name = c.Name;
+
+                            CreateXMLFDID(FDID, Name);
+
+                            FDIDSub(FDID);
+                        }
+                    }
+                }
+
+                if (PoliceClient.Checked && PoliceClientExists == false)
+                {
+                    PoliceClientSub();
+                }
+
+                if (FireClient.Checked && FireClientExists == false)
+                {
+                    FireClientSub();
+                }
+
+                if (MergeClient.Checked && MergeClientExists == false)
+                {
+                    MergeClientSub();
+                }
+
+                NewWorldUpdaterSub();
+
+                if (Is64Bit.Checked == true)
+                {
+                    UpdaterConfig.Save(@"C:\Program Files (x86)\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+                }
+                if (Is32bit.Checked == true)
+                {
+                    UpdaterConfig.Save(@"C:\Program Files\New World Systems\New World Automatic Updater\NewWorld.Management.Updater.Service.exe.config");
+                }
+
+                ServiceController myService = new ServiceController
+                {
+                    ServiceName = "NewWorldUpdaterService"
+                };
+
+                string svcStatus = myService.Status.ToString();
+
+                if (svcStatus == "Running")
+                {
+                    myService.Stop();
+                    myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                    myService.Start();
+                }
+                else if (svcStatus == "Stopped")
+                {
+                    myService.Start();
+                }
+                else
+                {
+                    myService.Stop();
+                    myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                    myService.Start();
+                }
+
+                SaveStartupSettings();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
         //-------------------Local service work--------------------------------
 
         //will stop the service by name
@@ -4172,7 +4192,7 @@ namespace Mobile_App
                     {
                         UpdaterAppend_Click(new object(), new EventArgs());
                         BeginInvoke((Action)(() => ts.Text = "ORI/FDID Update Complete"));
-                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                        BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
                     }
                 }
                 catch (Exception ex)
