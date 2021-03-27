@@ -29,7 +29,7 @@ namespace Mobile_App
 
         private BackgroundWorker Tab1bg;
         private BackgroundWorker Tab2bg;
-        private BackgroundWorker Tab3bg;
+        private BackgroundWorker Tab1Installbg;
 
         private string DotNet47 = "dotNetFx471_Full_setup_Offline.exe";
         private string DotNet48 = "ndp48-x86-x64-allos-enu.exe";
@@ -161,8 +161,8 @@ namespace Mobile_App
             Tab1bg.RunWorkerCompleted += Tab1bg_RunWorkerCompleted;
             Tab1bg.WorkerReportsProgress = true;
 
-            Tab3bg = new BackgroundWorker();
-            Tab3bg.DoWork += Tab3bg_DoWork;
+            Tab1Installbg = new BackgroundWorker();
+            Tab1Installbg.DoWork += Tab1Installbg_DoWork;
 
             Tab2bg = new BackgroundWorker();
             Tab2bg.DoWork += Tab2bg_DoWork;
@@ -174,9 +174,9 @@ namespace Mobile_App
         //used when doing mobile client upgrade/removal/install
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (!Tab3bg.IsBusy)
+            if (!Tab1Installbg.IsBusy)
             {
-                Tab3bg.RunWorkerAsync();
+                Tab1Installbg.RunWorkerAsync();
             }
             else
             {
@@ -3031,7 +3031,7 @@ namespace Mobile_App
         }
 
         //install/uninstall/combo on tab 1 background worker
-        private void Tab3bg_DoWork(object sender, DoWorkEventArgs e)
+        private void Tab1Installbg_DoWork(object sender, DoWorkEventArgs e)
         {
             BeginInvoke((Action)(() => ProgressBar.Visible = false));
             BeginInvoke((Action)(() => ProgressBar.Enabled = false));
