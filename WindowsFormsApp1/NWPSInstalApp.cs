@@ -3179,8 +3179,8 @@ namespace Mobile_App
 
                 PreStatusChecker();
 
-                ts.ForeColor = Color.DarkSlateBlue;
-                ts.Text = "Running Pre Req Checker";
+                BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => ts.Text = "Running Pre Req Checker"));
 
                 //
                 //The below code block does the actual checking and updating of the status on button click
@@ -5841,9 +5841,9 @@ namespace Mobile_App
             //Updater Status Check
             if (label27.Text == "Waiting Initialization")
             {
-                label27.Text = "Pending";
-                label27.ForeColor = Color.DarkSlateBlue;
-                label27.Refresh();
+                BeginInvoke((Action)(() => label27.Text = "Pending"));
+                BeginInvoke((Action)(() => label27.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label27.Refresh()));
             }
             else if (label27.Text == "Uninstalled")
             {
@@ -5859,9 +5859,9 @@ namespace Mobile_App
             //SQL Compact 4.0 Status Check
             if (label28.Text == "Waiting Initialization")
             {
-                label28.Text = "Pending";
-                label28.ForeColor = Color.DarkSlateBlue;
-                label28.Refresh();
+                BeginInvoke((Action)(() => label28.Text = "Pending"));
+                BeginInvoke((Action)(() => label28.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label28.Refresh()));
             }
             else if (label28.Text == "Uninstalled")
             {
@@ -5877,9 +5877,9 @@ namespace Mobile_App
             //32 bit GIS Status Check
             if (label29.Text == "Waiting Initialization")
             {
-                label29.Text = "Pending";
-                label29.ForeColor = Color.DarkSlateBlue;
-                label29.Refresh();
+                BeginInvoke((Action)(() => label29.Text = "Pending"));
+                BeginInvoke((Action)(() => label29.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label29.Refresh()));
             }
             else if (label29.Text == "Uninstalled")
             {
@@ -5895,9 +5895,9 @@ namespace Mobile_App
             //64 bit GIS Status Check
             if (label30.Text == "Waiting Initialization")
             {
-                label30.Text = "Pending";
-                label30.ForeColor = Color.DarkSlateBlue;
-                label30.Refresh();
+                BeginInvoke((Action)(() => label30.Text = "Pending"));
+                BeginInvoke((Action)(() => label30.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label30.Refresh()));
             }
             else if (label30.Text == "Uninstalled")
             {
@@ -5913,9 +5913,9 @@ namespace Mobile_App
             //32 bit SQL CLR Status Check
             if (label31.Text == "Waiting Initialization")
             {
-                label31.Text = "Pending";
-                label31.ForeColor = Color.DarkSlateBlue;
-                label31.Refresh();
+                BeginInvoke((Action)(() => label31.Text = "Pending"));
+                BeginInvoke((Action)(() => label31.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label31.Refresh()));
             }
             else if (label31.Text == "Uninstalled")
             {
@@ -5931,9 +5931,9 @@ namespace Mobile_App
             //64 bit SQL CLR Status Check
             if (label32.Text == "Waiting Initialization")
             {
-                label32.Text = "Pending";
-                label32.ForeColor = Color.DarkSlateBlue;
-                label32.Refresh();
+                BeginInvoke((Action)(() => label32.Text = "Pending"));
+                BeginInvoke((Action)(() => label32.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label32.Refresh()));
             }
             else if (label32.Text == "Uninstalled")
             {
@@ -5949,9 +5949,9 @@ namespace Mobile_App
             //32 bit SQL Compact 3.5 Status Check
             if (label33.Text == "Waiting Initialization")
             {
-                label33.Text = "Pending";
-                label33.ForeColor = Color.DarkSlateBlue;
-                label33.Refresh();
+                BeginInvoke((Action)(() => label33.Text = "Pending"));
+                BeginInvoke((Action)(() => label33.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label33.Refresh()));
             }
             else if (label33.Text == "Uninstalled")
             {
@@ -5967,9 +5967,9 @@ namespace Mobile_App
             //64 bit SQL Compact 3.5 Status Check
             if (label34.Text == "Waiting Initialization")
             {
-                label34.Text = "Pending";
-                label34.ForeColor = Color.DarkSlateBlue;
-                label34.Refresh();
+                BeginInvoke((Action)(() => label34.Text = "Pending"));
+                BeginInvoke((Action)(() => label34.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label34.Refresh()));
             }
             else if (label34.Text == "Uninstalled")
             {
@@ -5985,9 +5985,9 @@ namespace Mobile_App
             //ScenePD Status Check
             if (label35.Text == "Waiting Initialization")
             {
-                label35.Text = "Pending";
-                label35.ForeColor = Color.DarkSlateBlue;
-                label35.Refresh();
+                BeginInvoke((Action)(() => label35.Text = "Pending"));
+                BeginInvoke((Action)(() => label35.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label35.Refresh()));
             }
             else if (label35.Text == "Uninstalled")
             {
@@ -6003,13 +6003,13 @@ namespace Mobile_App
             //Hidden
             if (label36.Text == "Waiting Initialization")
             {
-                label36.Text = "Pending";
-                label36.Refresh();
+                BeginInvoke((Action)(() => label36.Text = "Pending"));
+                BeginInvoke((Action)(() => label36.Refresh()));
             }
             else if (label36.Text == "Uninstalled")
             {
-                label36.Text = "Pending";
-                label36.Refresh();
+                BeginInvoke((Action)(() => label36.Text = "Pending"));
+                BeginInvoke((Action)(() => label36.Refresh()));
             }
             else
             {
@@ -6020,13 +6020,13 @@ namespace Mobile_App
             //Hidden
             if (label37.Text == "Waiting Initialization")
             {
-                label37.Text = "Pending";
-                label37.Refresh();
+                BeginInvoke((Action)(() => label37.Text = "Pending"));
+                BeginInvoke((Action)(() => label37.Refresh()));
             }
             else if (label37.Text == "Uninstalled")
             {
-                label37.Text = "Pending";
-                label37.Refresh();
+                BeginInvoke((Action)(() => label37.Text = "Pending"));
+                BeginInvoke((Action)(() => label37.Refresh()));
             }
             else
             {
@@ -6037,13 +6037,13 @@ namespace Mobile_App
             ////Hidden
             if (label38.Text == "Waiting Initialization")
             {
-                label38.Text = "Pending";
-                label38.Refresh();
+                BeginInvoke((Action)(() => label38.Text = "Pending"));
+                BeginInvoke((Action)(() => label38.Refresh()));
             }
             else if (label38.Text == "Uninstalled")
             {
-                label38.Text = "Pending";
-                label38.Refresh();
+                BeginInvoke((Action)(() => label38.Text = "Pending"));
+                BeginInvoke((Action)(() => label38.Refresh()));
             }
             else
             {
@@ -6054,13 +6054,13 @@ namespace Mobile_App
             ////Hidden
             if (label39.Text == "Waiting Initialization")
             {
-                label39.Text = "Pending";
-                label39.Refresh();
+                BeginInvoke((Action)(() => label39.Text = "Pending"));
+                BeginInvoke((Action)(() => label39.Refresh()));
             }
             else if (label39.Text == "Uninstalled")
             {
-                label39.Text = "Pending";
-                label39.Refresh();
+                BeginInvoke((Action)(() => label39.Text = "Pending"));
+                BeginInvoke((Action)(() => label39.Refresh()));
             }
             else
             {
