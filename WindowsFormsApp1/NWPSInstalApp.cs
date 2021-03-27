@@ -885,6 +885,14 @@ namespace Mobile_App
         //this will install the Pre Reqs required for 64bit mobile, ensure folder permissions are correct, and that the updater is configured for mobile.
         private void Mobile64install()
         {
+            BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+
+            CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
+
+            BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+
             DotNet();
 
             SQLCE35();
@@ -1021,6 +1029,14 @@ namespace Mobile_App
         //this will install the Pre Reqs required for 32bit mobile, ensure folder permissions are correct, and that the updater is configured for mobile.
         private void Mobile32install()
         {
+            BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+
+            CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
+
+            BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+
             DotNet();
 
             SQLCE35();
@@ -2562,7 +2578,6 @@ namespace Mobile_App
             proc = new Process();
             proc.StartInfo.WorkingDirectory = batdir;
             proc.StartInfo.FileName = ProgramName;
-            //proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             string LogEntry1 = DateTime.Now + " " + ProgramName + " has been run";
 
@@ -2697,6 +2712,18 @@ namespace Mobile_App
             return false;
         }
 
+        //this will run command prompt scripts within the application.
+        private void CMDScriptRun(string Command)
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = Command;
+            process.StartInfo = startInfo;
+            process.Start();
+        }
+
         //----------------------XML related controls------------------------
 
         //XML Related information. Broken up between loading prior XML information OR creating a new XML with placeholder server location.
@@ -2747,7 +2774,6 @@ namespace Mobile_App
                 using (XmlWriter writer = XmlWriter.Create("NWPSAdminApp.xml", settings))
                 {
                     writer.WriteStartElement("root");
-                    writer.WriteElementString("SourcePath", @"\\MobileServerName\C$\");
                     writer.WriteElementString("MobileServerName", "Mobile Server Name");
                     writer.WriteElementString("MSPServerPath", @"\\MSPServerName\ ");
                     writer.WriteElementString("GenerateNumber", "0");
@@ -4070,6 +4096,14 @@ namespace Mobile_App
             //install .net
             if (CustomInstallOption.GetItemCheckState(0) == CheckState.Checked)
             {
+                BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
+                BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+
+                CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
+
+                BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+
                 DotNet();
             }
 
