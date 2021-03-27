@@ -4116,13 +4116,7 @@ namespace Mobile_App
             //install .net
             if (CustomInstallOption.GetItemCheckState(0) == CheckState.Checked)
             {
-                BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
-                BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-
                 CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
-
-                BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
-                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
 
                 DotNet();
             }
