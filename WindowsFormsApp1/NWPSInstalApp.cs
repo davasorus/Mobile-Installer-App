@@ -31,6 +31,7 @@ namespace Mobile_App
         private BackgroundWorker Tab2bg;
         private BackgroundWorker Tab1Installbg;
         private BackgroundWorker Tab3bg;
+        private BackgroundWorker Tab4bg;
 
         private string DotNet47 = "dotNetFx471_Full_setup_Offline.exe";
         private string DotNet48 = "ndp48-x86-x64-allos-enu.exe";
@@ -170,6 +171,9 @@ namespace Mobile_App
 
             Tab3bg = new BackgroundWorker();
             Tab3bg.DoWork += Tab3bg_DoWork;
+
+            Tab4bg = new BackgroundWorker();
+            Tab4bg.DoWork += Tab4bg_DoWork;
         }
 
         //---------------------------Button Click events----------------------
@@ -330,360 +334,7 @@ namespace Mobile_App
         //if someone presses the button it will check, if people use the normal install/uninstall process it will update as they run.
         private void PreReqCheck_Click(object sender, EventArgs e)
         {
-            ProgressBar.Visible = false;
-            ProgressBar.Enabled = false;
-            PreReqCheck.Visible = false;
-
-            PreStatusChecker();
-
-            ts.ForeColor = Color.DarkSlateBlue;
-            ts.Text = "Running Pre Req Checker";
-
-            //
-            //The below code block does the actual checking and updating of the status on button click
-            //
-
-            //updater check
-            try
-            {
-                if (label27.Text == "Pending")
-                {
-                    ts.Text = "Checking for Updater";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("New World Automatic Updater") == true)
-                    {
-                        label27.Text = "Installed";
-                        label27.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label27.Text = "Uninstalled";
-                        label27.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "Updater is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //SQL Server Compact 4.0 Check
-            try
-            {
-                if (label28.Text == "Pending")
-                {
-                    ts.Text = "Checking for SQL Server Compact 4.0";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (Is64Bit.Checked == true)
-                    {
-                        if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
-                        {
-                            label28.Text = "Installed";
-                            label28.ForeColor = System.Drawing.Color.ForestGreen;
-                        }
-                        else
-                        {
-                            label28.Text = "Uninstalled";
-                            label28.ForeColor = System.Drawing.Color.OrangeRed;
-                        }
-                    }
-                    else
-                    {
-                        if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
-                        {
-                            label28.Text = "Installed";
-                            label28.ForeColor = System.Drawing.Color.ForestGreen;
-                        }
-                        else
-                        {
-                            label28.Text = "Uninstalled";
-                            label28.ForeColor = System.Drawing.Color.OrangeRed;
-                        }
-                    }
-                }
-                else
-                {
-                    ts.Text = "SQL Compact 4.0 already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //32 bit GIS check
-            try
-            {
-                if (label29.Text == "Pending")
-                {
-                    ts.Text = "Checking for 32bit GIS Components";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("New World GIS Components x86") == true)
-                    {
-                        label29.Text = "Installed";
-                        label29.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label29.Text = "Uninstalled";
-                        label29.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "32bit GIS is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //64bit GIS Check
-            try
-            {
-                if (label30.Text == "Pending")
-                {
-                    ts.Text = "Checking for 32bit GIS Components";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("New World GIS Components x64") == true)
-                    {
-                        label30.Text = "Installed";
-                        label30.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label30.Text = "Uninstalled";
-                        label30.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "64bit GIS is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //32bit SQL Server CLR Types check
-            try
-            {
-                if (label31.Text == "Pending")
-                {
-                    ts.Text = "Checking for 32bit  SQL Server CLR Types";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
-                    {
-                        label31.Text = "Installed";
-                        label31.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label31.Text = "Uninstalled";
-                        label31.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "32bit SQL CLR Types is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //64bit SQL ServerCLR Types check
-            try
-            {
-                if (label32.Text == "Pending")
-                {
-                    ts.Text = "Checking for 64bit  SQL Server CLR Types";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
-                    {
-                        label32.Text = "Installed";
-                        label32.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label32.Text = "Uninstalled";
-                        label32.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "64 bit SQL CLR Types is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //32bit SQL Server 3.5 SP2 check
-            try
-            {
-                if (label33.Text == "Pending")
-                {
-                    ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
-                    {
-                        label33.Text = "Installed";
-                        label33.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label33.Text = "Uninstalled";
-                        label33.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "32 bit SQL Server 3.5 SP2 is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //64 SQL server 3.5 SP2 check
-            try
-            {
-                if (label34.Text == "Pending")
-                {
-                    ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
-                    {
-                        label34.Text = "Installed";
-                        label34.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label34.Text = "Uninstalled";
-                        label34.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "64 bit SQL Server 3.5 SP2 is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            //scene PD check
-            try
-            {
-                if (label35.Text == "Pending")
-                {
-                    ts.Text = "Checking for ScenePD";
-                    ts.ForeColor = Color.DarkSlateBlue;
-
-                    if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
-                    {
-                        label35.Text = "Scene PD 6 Installed";
-                        label35.ForeColor = System.Drawing.Color.ForestGreen;
-
-                        if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
-                        {
-                            label35.Text = "Scene PD 6, ActiveX Installed";
-                            label35.ForeColor = System.Drawing.Color.ForestGreen;
-                        }
-                        else
-                        {
-                            label35.Text = "Scene PD 6 Installed, ActiveX not";
-                            label35.ForeColor = System.Drawing.Color.ForestGreen;
-                        }
-                    }
-                    else if (PreReqChecker("ScenePD 4") == true)
-                    {
-                        label35.Text = "ScenePD 4 Installed";
-                        label35.ForeColor = System.Drawing.Color.ForestGreen;
-                    }
-                    else
-                    {
-                        label35.Text = "Uninstalled";
-                        label35.ForeColor = System.Drawing.Color.OrangeRed;
-                    }
-                }
-                else
-                {
-                    ts.Text = "ScenePD is already installed";
-                    ts.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-
-                string LogEntry = DateTime.Now + " " + ex.ToString();
-
-                LogEntryWriter(LogEntry);
-            }
-
-            ts.Text = "Pre Req Checker is Complete";
-            ts.ForeColor = System.Drawing.Color.ForestGreen;
-            PreReqCheck.Visible = true;
+            Tab4bg.RunWorkerAsync();
         }
 
         //----------------------pre req install/uninstall methods---------------------
@@ -3515,6 +3166,375 @@ namespace Mobile_App
                 string LogEntry = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
+            }
+        }
+
+        private void Tab4bg_DoWork(object send, DoWorkEventArgs e)
+        {
+            try
+            {
+                ProgressBar.Visible = false;
+                ProgressBar.Enabled = false;
+                PreReqCheck.Visible = false;
+
+                PreStatusChecker();
+
+                ts.ForeColor = Color.DarkSlateBlue;
+                ts.Text = "Running Pre Req Checker";
+
+                //
+                //The below code block does the actual checking and updating of the status on button click
+                //
+
+                //updater check
+                try
+                {
+                    if (label27.Text == "Pending")
+                    {
+                        ts.Text = "Checking for Updater";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("New World Automatic Updater") == true)
+                        {
+                            label27.Text = "Installed";
+                            label27.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label27.Text = "Uninstalled";
+                            label27.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "Updater is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //SQL Server Compact 4.0 Check
+                try
+                {
+                    if (label28.Text == "Pending")
+                    {
+                        ts.Text = "Checking for SQL Server Compact 4.0";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (Is64Bit.Checked == true)
+                        {
+                            if (PreReqChecker("Microsoft SQL Server Compact 4.0 x64 ENU") == true)
+                            {
+                                label28.Text = "Installed";
+                                label28.ForeColor = System.Drawing.Color.ForestGreen;
+                            }
+                            else
+                            {
+                                label28.Text = "Uninstalled";
+                                label28.ForeColor = System.Drawing.Color.OrangeRed;
+                            }
+                        }
+                        else
+                        {
+                            if (PreReqChecker("Microsoft SQL Server Compact 4.0 x86 ENU") == true)
+                            {
+                                label28.Text = "Installed";
+                                label28.ForeColor = System.Drawing.Color.ForestGreen;
+                            }
+                            else
+                            {
+                                label28.Text = "Uninstalled";
+                                label28.ForeColor = System.Drawing.Color.OrangeRed;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "SQL Compact 4.0 already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //32 bit GIS check
+                try
+                {
+                    if (label29.Text == "Pending")
+                    {
+                        ts.Text = "Checking for 32bit GIS Components";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("New World GIS Components x86") == true)
+                        {
+                            label29.Text = "Installed";
+                            label29.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label29.Text = "Uninstalled";
+                            label29.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "32bit GIS is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //64bit GIS Check
+                try
+                {
+                    if (label30.Text == "Pending")
+                    {
+                        ts.Text = "Checking for 32bit GIS Components";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("New World GIS Components x64") == true)
+                        {
+                            label30.Text = "Installed";
+                            label30.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label30.Text = "Uninstalled";
+                            label30.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "64bit GIS is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //32bit SQL Server CLR Types check
+                try
+                {
+                    if (label31.Text == "Pending")
+                    {
+                        ts.Text = "Checking for 32bit  SQL Server CLR Types";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("Microsoft SQL Server System CLR Types") == true)
+                        {
+                            label31.Text = "Installed";
+                            label31.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label31.Text = "Uninstalled";
+                            label31.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "32bit SQL CLR Types is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //64bit SQL ServerCLR Types check
+                try
+                {
+                    if (label32.Text == "Pending")
+                    {
+                        ts.Text = "Checking for 64bit  SQL Server CLR Types";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("Microsoft SQL Server System CLR Types (x64)") == true)
+                        {
+                            label32.Text = "Installed";
+                            label32.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label32.Text = "Uninstalled";
+                            label32.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "64 bit SQL CLR Types is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //32bit SQL Server 3.5 SP2 check
+                try
+                {
+                    if (label33.Text == "Pending")
+                    {
+                        ts.Text = "Checking for 32bit SQL Server Compact 3.5 SP2";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 ENU") == true)
+                        {
+                            label33.Text = "Installed";
+                            label33.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label33.Text = "Uninstalled";
+                            label33.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "32 bit SQL Server 3.5 SP2 is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //64 SQL server 3.5 SP2 check
+                try
+                {
+                    if (label34.Text == "Pending")
+                    {
+                        ts.Text = "Checking for 64bit SQL Server Compact 3.5 SP2";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("Microsoft SQL Server Compact 3.5 SP2 x64 ENU") == true)
+                        {
+                            label34.Text = "Installed";
+                            label34.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label34.Text = "Uninstalled";
+                            label34.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "64 bit SQL Server 3.5 SP2 is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                //scene PD check
+                try
+                {
+                    if (label35.Text == "Pending")
+                    {
+                        ts.Text = "Checking for ScenePD";
+                        ts.ForeColor = Color.DarkSlateBlue;
+
+                        if (PreReqChecker("ScenePD 6 Desktop Edition") == true)
+                        {
+                            label35.Text = "Scene PD 6 Installed";
+                            label35.ForeColor = System.Drawing.Color.ForestGreen;
+
+                            if (PreReqChecker("ScenePD 6 ActiveX Control") == true)
+                            {
+                                label35.Text = "Scene PD 6, ActiveX Installed";
+                                label35.ForeColor = System.Drawing.Color.ForestGreen;
+                            }
+                            else
+                            {
+                                label35.Text = "Scene PD 6 Installed, ActiveX not";
+                                label35.ForeColor = System.Drawing.Color.ForestGreen;
+                            }
+                        }
+                        else if (PreReqChecker("ScenePD 4") == true)
+                        {
+                            label35.Text = "ScenePD 4 Installed";
+                            label35.ForeColor = System.Drawing.Color.ForestGreen;
+                        }
+                        else
+                        {
+                            label35.Text = "Uninstalled";
+                            label35.ForeColor = System.Drawing.Color.OrangeRed;
+                        }
+                    }
+                    else
+                    {
+                        ts.Text = "ScenePD is already installed";
+                        ts.ForeColor = System.Drawing.Color.ForestGreen;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace.ToString());
+
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                ts.Text = "Pre Req Checker is Complete";
+                ts.ForeColor = System.Drawing.Color.ForestGreen;
+                PreReqCheck.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+                string LogEntry2 = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry2);
             }
         }
 
