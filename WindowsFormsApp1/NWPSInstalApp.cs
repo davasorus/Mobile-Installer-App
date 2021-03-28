@@ -51,7 +51,7 @@ namespace Mobile_App
         private string SQLCLR32 = "SQLSysClrTypesx86.msi";
         private string SQLCLR64 = "SQLSysClrTypesx64.msi";
         private string SCPD6 = "SPD6-4-8993.exe";
-        private string SCPD6AX = "SPDX6-4-3083.exe";
+        private string SCPD6AX = "SPDX6-4-3091.exe";
         private string SCPD4 = "SPD4-0-92.exe";
         private string MSPClient = "NewWorldMSPClient.msi";
         private string CADClient64 = "NewWorld.Enterprise.CAD.Client.x64.msi";
@@ -1730,7 +1730,6 @@ namespace Mobile_App
                 string replace = Path.Combine(LocalRun, filename);
 
                 File.Copy(FileNamePath, replace, true);
-                //File.SetAttributes(TargetPath, FileAttributes.Normal);
 
                 Tab1bg.ReportProgress(0);
 
@@ -1740,16 +1739,9 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
-                if (ex.ToString().Contains("used by another process"))
-                {
-                    //CloseProcess(filename);
-                }
-                else
-                {
-                    string LogEntry = DateTime.Now + " " + ex.ToString();
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
-                    LogEntryWriter(LogEntry);
-                }
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -3050,6 +3042,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => CustomRun.Visible = true));
         }
 
+        //Background worker for the Updater Config tab
         private void Tab3bg_DoWork(object send, DoWorkEventArgs e)
         {
             try
@@ -3169,6 +3162,7 @@ namespace Mobile_App
             }
         }
 
+        //Background worker tab for the Pre Req Checker Tab
         private void Tab4bg_DoWork(object send, DoWorkEventArgs e)
         {
             try
