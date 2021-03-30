@@ -2525,8 +2525,6 @@ namespace Mobile_App
             ProgressBar.Value += 1;
         }
 
-        //--------------------The actual work done----------------------
-
         //Download background worker
         private void Tab1bg_DoWork(object sender, DoWorkEventArgs e)
         {
