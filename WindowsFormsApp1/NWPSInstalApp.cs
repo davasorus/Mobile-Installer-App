@@ -3843,8 +3843,6 @@ namespace Mobile_App
                     BeginInvoke((Action)(() => ts.Text = "Mobile Updater Entries are removed"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
                 }
-
-                BeginInvoke((Action)(() => ts.Text = "Uninstall Complete"));
             }
 
             //Uninstall MSP or CAD for NWPS and NWS
@@ -4176,7 +4174,7 @@ namespace Mobile_App
                     }
                     else
                     {
-                        UpdaterAppend_Click(new object(), new EventArgs());
+                        Tab3bg.RunWorkerAsync();
                         BeginInvoke((Action)(() => ts.Text = "ORI/FDID Update Complete"));
                         BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
                     }
