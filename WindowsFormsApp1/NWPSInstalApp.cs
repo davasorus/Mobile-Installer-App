@@ -244,7 +244,18 @@ namespace Mobile_App
         //this has been enhanced from the Updater Config tool V2 to account for dynamically changing run conditions
         private void UpdaterAppend_Click(object sender, EventArgs e)
         {
-            Tab3bg.RunWorkerAsync();
+            if (!Tab3bg.IsBusy)
+            {
+                Tab3bg.RunWorkerAsync();
+            }
+            else
+            {
+                //I hate that this works...
+                //so this empty else statement allows the above async worker to actually work as designed.
+                //I am unsure why THIS async button event needs to iterate twice before actually running the specified code.
+                //the IF background worker is not busy run to an empty else is the only way I was able to get this work "properly"
+                //any assistance would be appreciated
+            }
         }
 
         //work done when the generate button is pressed
@@ -469,7 +480,18 @@ namespace Mobile_App
                 }
                 else
                 {
-                    UpdaterAppend_Click(new object(), new EventArgs());
+                    if (!Tab3bg.IsBusy)
+                    {
+                        Tab3bg.RunWorkerAsync();
+                    }
+                    else
+                    {
+                        //I hate that this works...
+                        //so this empty else statement allows the above async worker to actually work as designed.
+                        //I am unsure why THIS async button event needs to iterate twice before actually running the specified code.
+                        //the IF background worker is not busy run to an empty else is the only way I was able to get this work "properly"
+                        //any assistance would be appreciated
+                    }
                 }
             }
             catch (Exception ex)
@@ -613,7 +635,18 @@ namespace Mobile_App
                 }
                 else
                 {
-                    UpdaterAppend_Click(new object(), new EventArgs());
+                    if (!Tab3bg.IsBusy)
+                    {
+                        Tab3bg.RunWorkerAsync();
+                    }
+                    else
+                    {
+                        //I hate that this works...
+                        //so this empty else statement allows the above async worker to actually work as designed.
+                        //I am unsure why THIS async button event needs to iterate twice before actually running the specified code.
+                        //the IF background worker is not busy run to an empty else is the only way I was able to get this work "properly"
+                        //any assistance would be appreciated
+                    }
                 }
             }
             catch (Exception ex)
@@ -4174,9 +4207,21 @@ namespace Mobile_App
                     }
                     else
                     {
-                        Tab3bg.RunWorkerAsync();
-                        BeginInvoke((Action)(() => ts.Text = "ORI/FDID Update Complete"));
-                        BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
+                        if (!Tab3bg.IsBusy)
+                        {
+                            Tab3bg.RunWorkerAsync();
+
+                            BeginInvoke((Action)(() => ts.Text = "ORI/FDID Update Complete"));
+                            BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
+                        }
+                        else
+                        {
+                            //I hate that this works...
+                            //so this empty else statement allows the above async worker to actually work as designed.
+                            //I am unsure why THIS async button event needs to iterate twice before actually running the specified code.
+                            //the IF background worker is not busy run to an empty else is the only way I was able to get this work "properly"
+                            //any assistance would be appreciated
+                        }
                     }
                 }
                 catch (Exception ex)
