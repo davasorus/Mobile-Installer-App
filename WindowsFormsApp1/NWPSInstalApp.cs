@@ -2616,11 +2616,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ProgressBar.Enabled = false));
             BeginInvoke((Action)(() => InstallRun.Visible = false));
 
-            SetAcl(MSPServerPath.Text + @"\\_Client-Installation\");
 
-            string LogEntry9 = DateTime.Now + " " + MSPServerPath.Text + @"\\_Client-Installation\";
-
-            LogEntryWriter(LogEntry9);
 
             //will uninstall mobile and then install mobile with 64bit pre reqs
             if (Combo.Checked && Is64Bit.Checked == true)
@@ -3058,7 +3054,7 @@ namespace Mobile_App
             }
 
             BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
-            MobileRestart();
+            //MobileRestart();
 
             BeginInvoke((Action)(() => InstallRun.Visible = true));
         }

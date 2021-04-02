@@ -52,9 +52,16 @@ namespace MobileInstallApp
         //this writes to the mobile pre req installer log file
         private void LogEntryWriter(string LogEntry)
         {
-            using (StreamWriter file = new StreamWriter(("NWPSAPPLog.txt"), true))
+            try
             {
-                file.WriteLine(LogEntry);
+                using (StreamWriter file = new StreamWriter(("NWPSAdminLog.txt"), true))
+                {
+                    file.WriteLine(LogEntry);
+                }
+            }
+            catch
+            {
+                LogEntryWriter(LogEntry);
             }
         }
     }
