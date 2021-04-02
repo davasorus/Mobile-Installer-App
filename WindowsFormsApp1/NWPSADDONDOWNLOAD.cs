@@ -31,7 +31,7 @@ namespace MobileInstallApp
 
         private void MobileCopy1(string SourcePath)
         {
-            string TargetPath = @"C:\Temp\MobileInstaller\NWS Addons";
+            string TargetPath = @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons";
             //Now Create all of the directories
             foreach (string dirPath in Directory.GetDirectories(SourcePath, "*",
                 SearchOption.AllDirectories))

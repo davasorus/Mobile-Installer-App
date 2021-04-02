@@ -34,7 +34,7 @@ namespace Mobile_App
             this.label3 = new System.Windows.Forms.Label();
             this.UninstallMobile = new System.Windows.Forms.CheckBox();
             this.InstallMobile = new System.Windows.Forms.CheckBox();
-            this.Run = new System.Windows.Forms.Button();
+            this.InstallRun = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.Is64Bit = new System.Windows.Forms.CheckBox();
             this.Help_BTN = new System.Windows.Forms.Button();
@@ -134,16 +134,16 @@ namespace Mobile_App
             this.InstallMobile.Text = "Install Mobile Client Pre Reqs";
             this.InstallMobile.UseVisualStyleBackColor = true;
             // 
-            // Run
+            // InstallRun
             // 
-            this.Run.Location = new System.Drawing.Point(324, 202);
-            this.Run.Name = "Run";
-            this.Run.Size = new System.Drawing.Size(75, 23);
-            this.Run.TabIndex = 4;
-            this.Run.Text = "Run";
-            this.Run.UseVisualStyleBackColor = true;
-            this.Run.Click += new System.EventHandler(this.Button2_Click);
-            this.Run.MouseCaptureChanged += new System.EventHandler(this.Button2_Click);
+            this.InstallRun.Location = new System.Drawing.Point(324, 202);
+            this.InstallRun.Name = "InstallRun";
+            this.InstallRun.Size = new System.Drawing.Size(75, 23);
+            this.InstallRun.TabIndex = 4;
+            this.InstallRun.Text = "Run";
+            this.InstallRun.UseVisualStyleBackColor = true;
+            this.InstallRun.Click += new System.EventHandler(this.InstallRun_Click);
+            this.InstallRun.MouseCaptureChanged += new System.EventHandler(this.InstallRun_Click);
             // 
             // label4
             // 
@@ -262,7 +262,7 @@ namespace Mobile_App
             this.tabPage1.Controls.Add(this.MSPServerPath);
             this.tabPage1.Controls.Add(this.UninstallMobile);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.Run);
+            this.tabPage1.Controls.Add(this.InstallRun);
             this.tabPage1.Controls.Add(this.Combo);
             this.tabPage1.Controls.Add(this.CopyButton);
             this.tabPage1.Controls.Add(this.label4);
@@ -837,7 +837,7 @@ namespace Mobile_App
             // 
             // NWPSClientAdminTool
             // 
-            this.AcceptButton = this.Run;
+            this.AcceptButton = this.InstallRun;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(427, 293);
             this.Controls.Add(this.tabControl1);
@@ -873,7 +873,7 @@ namespace Mobile_App
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox UninstallMobile;
         private System.Windows.Forms.CheckBox InstallMobile;
-        private System.Windows.Forms.Button Run;
+        private System.Windows.Forms.Button InstallRun;
         private System.Windows.Forms.Label label4;
 
         public NWPSClientAdminTool(Label label2)

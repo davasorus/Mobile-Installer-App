@@ -58,7 +58,7 @@ namespace Mobile_App
         private string CADClient32 = "NewWorld.Enterprise.CAD.Client.x86.msi";
         private string CADIncObs64 = "NewWorld.Enterprise.CAD.IncidentObserver.x64.msi";
 
-        private string LocalRun = @"C:\Temp\MobileInstaller";
+        private string LocalRun = @"C:\Temp\NWPS Client Admin Tool Working Storage";
         private bool flag = false;
 
         public string MSPServerName { get; private set; }
@@ -163,15 +163,19 @@ namespace Mobile_App
             Tab1bg.RunWorkerCompleted += Tab1bg_RunWorkerCompleted;
             Tab1bg.WorkerReportsProgress = true;
 
+            //Tab 1 Install Code
             Tab1Installbg = new BackgroundWorker();
             Tab1Installbg.DoWork += Tab1Installbg_DoWork;
 
+            //Itemized install/Uninstall background worker
             Tab2bg = new BackgroundWorker();
             Tab2bg.DoWork += Tab2bg_DoWork;
 
+            //updater tab background worker code
             Tab3bg = new BackgroundWorker();
             Tab3bg.DoWork += Tab3bg_DoWork;
 
+            //pre req checker background worker
             Tab4bg = new BackgroundWorker();
             Tab4bg.DoWork += Tab4bg_DoWork;
         }
@@ -180,7 +184,7 @@ namespace Mobile_App
 
         //run button for TabPage1
         //used when doing mobile client upgrade/removal/install
-        private void Button2_Click(object sender, EventArgs e)
+        private void InstallRun_Click(object sender, EventArgs e)
         {
             if (!Tab1Installbg.IsBusy)
             {
@@ -475,7 +479,7 @@ namespace Mobile_App
                 if (GenerateNumber.Text == "0")
                 {
                     BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured and attempt again."));
-                    BeginInvoke((Action)(() => Run.Visible = true));
+                    BeginInvoke((Action)(() => InstallRun.Visible = true));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else
@@ -630,7 +634,7 @@ namespace Mobile_App
                 if (GenerateNumber.Text == "0")
                 {
                     BeginInvoke((Action)(() => ts.Text = "Please Verify the Updater portion is configured and attempt again."));
-                    BeginInvoke((Action)(() => Run.Visible = true));
+                    BeginInvoke((Action)(() => InstallRun.Visible = true));
                     throw new ArgumentException(@"ERROR: Updater Configuration section of the utility is not configured, please fill out the tab and try again.");
                 }
                 else
@@ -2610,7 +2614,7 @@ namespace Mobile_App
         {
             BeginInvoke((Action)(() => ProgressBar.Visible = false));
             BeginInvoke((Action)(() => ProgressBar.Enabled = false));
-            BeginInvoke((Action)(() => Run.Visible = false));
+            BeginInvoke((Action)(() => InstallRun.Visible = false));
 
             SetAcl(MSPServerPath.Text + @"\\_Client-Installation\");
 
@@ -3056,7 +3060,7 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.Text = "Restarting PC"));
             MobileRestart();
 
-            BeginInvoke((Action)(() => Run.Visible = true));
+            BeginInvoke((Action)(() => InstallRun.Visible = true));
         }
 
         //Itemized Install/Uninstall/Triage Background worker
@@ -3575,13 +3579,21 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
-                BeginInvoke((Action)(() => ts.Text = name + " Service had an issue stopping"));
+                if (ex.ToString().Contains("InvalidOperationException"))
+                {
+                    string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
+                    "or could not be stopped since the Program was not run as an admin OR under an admin account.";
 
-                string LogEntry = DateTime.Now + " " + name + " Could not be stopped. It likely is not installed, " +
-                    "or could not be stopped since the Program was not run as an admin OR under an admin account. Exception: "
-                    + ex.StackTrace.ToString();
+                    LogEntryWriter(LogEntry);
+                }
+                else
+                {
+                    string LogEntry1 = DateTime.Now + " " + ex.ToString();
 
-                LogEntryWriter(LogEntry);
+                    LogEntryWriter(LogEntry1);
+
+                    BeginInvoke((Action)(() => ts.Text = name + " Service had an issue starting"));
+                }
             }
         }
 
@@ -3615,17 +3627,21 @@ namespace Mobile_App
             }
             catch (Exception ex)
             {
-                string LogEntry1 = DateTime.Now + ex.ToString();
+                if (ex.ToString().Contains("InvalidOperationException"))
+                {
+                    string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
+                    "or could not be stopped since the Program was not run as an admin OR under an admin account";
 
-                LogEntryWriter(LogEntry1);
+                    LogEntryWriter(LogEntry);
+                }
+                else
+                {
+                    string LogEntry1 = DateTime.Now + " " + ex.ToString();
 
-                BeginInvoke((Action)(() => ts.Text = name + " Service had an issue starting"));
+                    LogEntryWriter(LogEntry1);
 
-                string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
-                    "or could not be stopped since the Program was not run as an admin OR under an admin account. Exception: "
-                    + ex.StackTrace.ToString(); ;
-
-                LogEntryWriter(LogEntry);
+                    BeginInvoke((Action)(() => ts.Text = name + " Service had an issue starting"));
+                }
             }
         }
 
