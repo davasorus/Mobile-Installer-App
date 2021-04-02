@@ -1784,9 +1784,9 @@ namespace Mobile_App
 
         //Mobile copy
         //this will copy all files located at the NWSHoldPath.txt to the MobileInstaller folder within C:\Temp
-        private void MobileCopy1(string SourcePath)
+        private void MobileCopy1(string SourcePath, string TargetLocation)
         {
-            string TargetPath = @"C:\Temp\MobileInstaller\NWS Addons";
+            string TargetPath = TargetLocation;
             //Now Create all of the directories
             foreach (string dirPath in Directory.GetDirectories(SourcePath, "*",
                 SearchOption.AllDirectories))
@@ -2596,12 +2596,12 @@ namespace Mobile_App
             //nwps addon download and check
             else if (Directory.Exists(MSPServerPath.Text + @"\\DeviceTester\"))
             {
-                MobileCopy1(MSPServerPath.Text);
+                MobileCopy1(MSPServerPath.Text, Path.Combine(LocalRun, "NWS Addons"));
             }
             //flash drive download
             else
             {
-                MobileCopy(MSPServerPath.Text);
+                MobileCopy1(MSPServerPath.Text, LocalRun);
             }
 
             Tab1bg.ReportProgress(0);
