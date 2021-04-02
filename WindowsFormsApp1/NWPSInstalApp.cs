@@ -3581,8 +3581,7 @@ namespace Mobile_App
             {
                 if (ex.ToString().Contains("InvalidOperationException"))
                 {
-                    string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
-                    "or could not be stopped since the Program was not run as an admin OR under an admin account.";
+                    string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed";
 
                     LogEntryWriter(LogEntry);
                 }
@@ -3629,8 +3628,7 @@ namespace Mobile_App
             {
                 if (ex.ToString().Contains("InvalidOperationException"))
                 {
-                    string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed, " +
-                    "or could not be stopped since the Program was not run as an admin OR under an admin account";
+                    string LogEntry = DateTime.Now + " " + name + " Could not be started. It likely is not installed";
 
                     LogEntryWriter(LogEntry);
                 }
