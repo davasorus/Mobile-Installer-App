@@ -10,6 +10,7 @@ using System.Management;
 using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -32,6 +33,10 @@ namespace Mobile_App
         private BackgroundWorker Tab1Installbg;
         private BackgroundWorker Tab3bg;
         private BackgroundWorker Tab4bg;
+
+        private int ResetEvent = 999;
+
+        private static ManualResetEvent mre = new ManualResetEvent(false);
 
         private string DotNet47 = "dotNetFx471_Full_setup_Offline.exe";
         private string DotNet48 = "ndp48-x86-x64-allos-enu.exe";
@@ -170,6 +175,7 @@ namespace Mobile_App
             //Itemized install/Uninstall background worker
             Tab2bg = new BackgroundWorker();
             Tab2bg.DoWork += Tab2bg_DoWork;
+            Tab2bg.WorkerSupportsCancellation = true;
 
             //updater tab background worker code
             Tab3bg = new BackgroundWorker();
@@ -350,6 +356,13 @@ namespace Mobile_App
         private void PreReqCheck_Click(object sender, EventArgs e)
         {
             Tab4bg.RunWorkerAsync();
+        }
+
+        private void secondForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mre.Set();
+
+            return;
         }
 
         //----------------------pre req install/uninstall methods---------------------
@@ -2153,34 +2166,43 @@ namespace Mobile_App
         //This is will run any/all programs that need user interaction by name
         private void RunProgram(string ProgramName, string Location)
         {
-            Process proc = null;
-
-            string batdir = string.Format(Location);
-            proc = new Process();
-            proc.StartInfo.WorkingDirectory = batdir;
-            proc.StartInfo.FileName = ProgramName;
-
-            string LogEntry1 = DateTime.Now + " " + ProgramName + " has been run";
-
-            LogEntryWriter(LogEntry1);
-
-            proc.Start();
-            proc.WaitForExit();
-
-            InstallChecker(ProgramName);
-
-            if (proc.ExitCode == 0)
+            try
             {
-                string LogEntry2 = DateTime.Now + " " + ProgramName + " was ran successfully.";
+                Process proc = null;
 
-                LogEntryWriter(LogEntry2);
+                string batdir = string.Format(Location);
+                proc = new Process();
+                proc.StartInfo.WorkingDirectory = batdir;
+                proc.StartInfo.FileName = ProgramName;
+
+                string LogEntry1 = DateTime.Now + " attempting to start " + ProgramName + " in location " + batdir;
+
+                LogEntryWriter(LogEntry1);
+
+                proc.Start();
+                proc.WaitForExit();
+
+                InstallChecker(ProgramName);
+
+                if (proc.ExitCode == 0)
+                {
+                    string LogEntry2 = DateTime.Now + " " + ProgramName + " was ran successfully.";
+
+                    LogEntryWriter(LogEntry2);
+                }
+                else
+                {
+                    string errorcode = proc.ExitCode.ToString();
+                    string LogEntry2 = DateTime.Now + " " + ProgramName + " failed to run. Error code: " + errorcode;
+
+                    LogEntryWriter(LogEntry2);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                string errorcode = proc.ExitCode.ToString();
-                string LogEntry2 = DateTime.Now + " " + ProgramName + " failed to run. Error code: " + errorcode;
+                string LogEntry = DateTime.Now + " " + ex.ToString();
 
-                LogEntryWriter(LogEntry2);
+                LogEntryWriter(LogEntry);
             }
         }
 
@@ -3538,6 +3560,105 @@ namespace Mobile_App
                 string LogEntry2 = DateTime.Now + " " + ex.ToString();
 
                 LogEntryWriter(LogEntry2);
+            }
+        }
+
+        //"Thread" to kill Tab2bg worker thread and start the NWPSADDON download form
+        //this is done because the background worker will continue to run and cause a race condition
+        private void NWPSADDONThreadWorker()
+        {
+            try
+            {
+                if (Tab2bg.IsBusy)
+                {
+                    Tab2bg.CancelAsync();
+                }
+
+                NWPSADDONDOWNLOAD secondForm = new NWPSADDONDOWNLOAD();
+
+                secondForm.FormClosed += new FormClosedEventHandler(secondForm_FormClosed);
+
+                BeginInvoke((Action)(() => secondForm.ShowDialog(this)));
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        //this will run certain mobile triage code blocks if certain requirements are not met
+        //   this combats race conditions
+        private void SupportExes()
+        {
+            //this will race a manual reset event for the all UI instances until the reset event is set
+            mre.WaitOne();
+
+            //this will check to see if an int has certain values that are raised during exceptions during the mobile triage portion of Tab 2
+            //   these ideally help against race conditions unaccounted for when Tab Page 2 was modified to use a Background Worker.
+
+            //will run the Aegis Mobile Client Interface tester
+            if (ResetEvent.Equals(1))
+            {
+                RunProgram("AegisMobileClientInterfaceTester.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)");
+            }
+
+            //will run the Device Tester
+            else if (ResetEvent.Equals(2))
+            {
+                RunProgram("DeviceTester.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\DeviceTester");
+            }
+
+            //will install/run the GOS Tester Setup
+            else if (ResetEvent.Equals(3))
+            {
+                InstallProgram("MobileGpsTesterSetup.msi", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
+
+                BeginInvoke((Action)(() => ts.Text = "Mobile GPS Tester has been installed"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+
+                BeginInvoke((Action)(() => ts.Text = "Mobile GPS Tester is being Run"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+
+                RunProgram("MobileTools.GpsTester.exe", @"C:\Program Files (x86)\Mobile GPS Tester\");
+            }
+
+            //this will run the Remove Ublox workaround
+            else if (ResetEvent.Equals(4))
+            {
+                BeginInvoke((Action)(() => ts.Text = "Removing UBlox Configuration"));
+                BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                string LogEntry = DateTime.Now + " UBlox Configuration Removal Started";
+
+                LogEntryWriter(LogEntry);
+
+                RunProgram("install.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\U-BLOX WorkAround\gps_config - Remove");
+
+                string path = @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\UBloxRemoveCompleted.txt";
+
+#pragma warning disable CS0642 // Possible mistaken empty statement
+                using (StreamWriter sw = File.CreateText(path)) ;
+#pragma warning restore CS0642 // Possible mistaken empty statement
+
+                //Process.Start("Shutdown", "/s");
+
+                string LogEntry1 = DateTime.Now + " Machine Shut down as part of Work Around SOP";
+
+                LogEntryWriter(LogEntry1);
+
+                string LogEntry2 = DateTime.Now + " UBlox Configuration Removal Successfully Completed";
+
+                LogEntryWriter(LogEntry2);
+
+                MessageBox.Show("The machine must shut down during this process. Please turn machine back on and re run this process when you log back in.");
+            }
+
+            // nap time for UI thread
+            else
+            {
+                Thread.Sleep(5000);
             }
         }
 
@@ -4918,7 +5039,7 @@ namespace Mobile_App
                 //this will run the Mobile Client Interface Tester utility if it is present, and prompt a new window to download if not.
                 BeginInvoke((Action)(() => ts.Text = "Checking to see if Utility is in the proper location"));
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)\AegisMobileClientInterfaceTester.exe"))
+                if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)\AegisMobileClientInterfaceTester.exe"))
                 {
                     BeginInvoke((Action)(() => ts.Text = "Running Mobile Client Interface tester Utility"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -4927,10 +5048,12 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    RunProgram("AegisMobileClientInterfaceTester.exe", @"C:\Temp\MobileInstaller\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)");
+                    RunProgram("AegisMobileClientInterfaceTester.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\Mobile Interface Tester (Tickets, Dispatch, AVL)");
                 }
                 else
                 {
+                    ResetEvent = 0;
+
                     BeginInvoke((Action)(() => ts.Text = "Mobile Client Interface tester was not found - File Path to NWS Addon Folder"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
@@ -4938,11 +5061,18 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
+                    NWPSADDONThreadWorker();
+
                     string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
 
                     LogEntryWriter(LogEntry1);
 
-                    BeginInvoke((Action)(() => secondForm.Show()));
+                    if (Tab2bg.CancellationPending)
+                    {
+                        ResetEvent = 1;
+
+                        SupportExes();
+                    }
                 }
             }
 
@@ -4953,7 +5083,7 @@ namespace Mobile_App
                 //this will run the Mobile Client Device Tester utility if it is present, and if not display a custom error message
                 BeginInvoke((Action)(() => ts.Text = "Checking to see if Mobile Client Device Tester is in the proper location"));
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\DeviceTester\DeviceTester.exe"))
+                if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\DeviceTester\DeviceTester.exe"))
                 {
                     BeginInvoke((Action)(() => ts.Text = "Running Device tester Utility"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -4962,10 +5092,12 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    RunProgram("DeviceTester.exe", @"C:\Temp\MobileInstaller\NWS Addons\DeviceTester");
+                    RunProgram("DeviceTester.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\DeviceTester");
                 }
                 else
                 {
+                    ResetEvent = 0;
+
                     BeginInvoke((Action)(() => ts.Text = "Mobile Client Device tester was not found - File Path to NWS Addon Folder"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
@@ -4975,7 +5107,17 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    BeginInvoke((Action)(() => secondForm.Show()));
+                    NWPSADDONThreadWorker();
+
+                    string LogEntry2 = DateTime.Now + @" Addon Download Folder Displayed.";
+
+                    LogEntryWriter(LogEntry2);
+
+                    if (Tab2bg.CancellationPending)
+                    {
+                        ResetEvent = 2;
+                        SupportExes();
+                    }
                 }
             }
 
@@ -4994,9 +5136,9 @@ namespace Mobile_App
 
                     RunProgram("MobileTools.GpsTester.exe", @"C:\Program Files (x86)\Mobile GPS Tester\");
                 }
-                else if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\MobileGpsTesterSetup.msi"))
+                else if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\MobileGpsTesterSetup.msi"))
                 {
-                    InstallProgram("MobileGpsTesterSetup.msi", @"C:\Temp\MobileInstaller\NWS Addons\");
+                    InstallProgram("MobileGpsTesterSetup.msi", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
 
                     BeginInvoke((Action)(() => ts.Text = "Mobile GPS Tester has been installed"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -5008,6 +5150,8 @@ namespace Mobile_App
                 }
                 else
                 {
+                    ResetEvent = 0;
+
                     BeginInvoke((Action)(() => ts.Text = "Mobile Client GPS Test Utility was not found - FIle Path to NWS Addon Folder."));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
@@ -5019,7 +5163,18 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    BeginInvoke((Action)(() => secondForm.Show()));
+                    NWPSADDONThreadWorker();
+
+                    string LogEntry2 = DateTime.Now + @" Addon Download Folder Displayed.";
+
+                    LogEntryWriter(LogEntry2);
+
+                    if (Tab2bg.CancellationPending)
+                    {
+                        ResetEvent = 3;
+
+                        SupportExes();
+                    }
                 }
             }
 
@@ -5029,9 +5184,9 @@ namespace Mobile_App
             {
                 BeginInvoke((Action)(() => ts.Text = "Checking to see if Utility is in the proper location"));
                 BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
-                if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Remove\install.exe"))
+                if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\U-BLOX WorkAround\gps_config - Remove\install.exe"))
                 {
-                    if (!File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\UBloxRemoveCompleted.txt"))
+                    if (!File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\UBloxRemoveCompleted.txt"))
                     {
                         BeginInvoke((Action)(() => ts.Text = "Removing UBlox Configuration"));
                         BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
@@ -5040,9 +5195,9 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry);
 
-                        RunProgram("install.exe", @"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Remove");
+                        RunProgram("install.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\U-BLOX WorkAround\gps_config - Remove");
 
-                        string path = @"C:\Temp\MobileInstaller\NWS Addons\UBloxRemoveCompleted.txt";
+                        string path = @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\UBloxRemoveCompleted.txt";
 
 #pragma warning disable CS0642 // Possible mistaken empty statement
                         using (StreamWriter sw = File.CreateText(path)) ;
@@ -5069,15 +5224,20 @@ namespace Mobile_App
 
                         LogEntryWriter(LogEntry);
 
-                        RunProgram("install.exe", @"C:\Temp\MobileInstaller\NWS Addons\U-BLOX WorkAround\gps_config - Set");
+                        RunProgram("install.exe", @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\U-BLOX WorkAround\gps_config - set");
 
                         string LogEntry1 = DateTime.Now + " UBlox Configuration Setting Successfully Completed";
 
                         LogEntryWriter(LogEntry1);
+
+                        BeginInvoke((Action)(() => ts.Text = "UBlox Configuration Set"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
                     }
                 }
                 else
                 {
+                    ResetEvent = 0;
+
                     BeginInvoke((Action)(() => ts.Text = "U-BLOX Work around was not found - File Path to NWS Addon Folder"));
                     BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
 
@@ -5089,7 +5249,18 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry1);
 
-                    BeginInvoke((Action)(() => secondForm.Show()));
+                    NWPSADDONThreadWorker();
+
+                    string LogEntry2 = DateTime.Now + @" Addon Download Folder Displayed.";
+
+                    LogEntryWriter(LogEntry2);
+
+                    if (Tab2bg.CancellationPending)
+                    {
+                        ResetEvent = 4;
+
+                        SupportExes();
+                    }
                 }
             }
         }
