@@ -93,6 +93,10 @@ namespace Mobile_App
         {
             string LogEntry = @"----------- Start of log file" + " " + DateTime.Now + "-----------";
 
+            string version = Application.ProductVersion;
+
+            this.Text = "NWPS Client Admin Tool Version " + version;
+
             //this will put the current date of application start per run. This allows for easier readability.
             if (File.Exists("NWPSAdminLog.txt"))
             {
