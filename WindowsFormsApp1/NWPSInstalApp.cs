@@ -1423,6 +1423,8 @@ namespace Mobile_App
             //if scene pd is not found at all it must be moved by the user to a displayed location
             else
             {
+                ResetEvent = 0;
+
                 string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE SCENE PD 4 OR 6. Attempting to Download";
 
                 LogEntryWriter(LogEntry);
@@ -1434,7 +1436,18 @@ namespace Mobile_App
 
                 LogEntryWriter(LogEntry1);
 
-                BeginInvoke((Action)(() => secondForm.Show()));
+                NWPSADDONThreadWorker();
+
+                string LogEntry2 = DateTime.Now + @" Addon Download Folder Displayed.";
+
+                LogEntryWriter(LogEntry2);
+
+                if (Tab2bg.CancellationPending)
+                {
+                    ResetEvent = 5;
+
+                    SupportExes();
+                }
             }
         }
 
