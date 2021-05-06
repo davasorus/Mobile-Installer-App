@@ -10,7 +10,6 @@ using System.Management;
 using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
