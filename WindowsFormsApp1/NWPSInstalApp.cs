@@ -3671,12 +3671,88 @@ namespace Mobile_App
 
                 MessageBox.Show("The machine must shut down during this process. Please turn machine back on and re run this process when you log back in.");
             }
+
+            //this will install ScenePD
             else if (ResetEvent.Equals(5))
             {
+                BeginInvoke((Action)(() => ts.Text = "ScenePD Install Prompt Displayed"));
+                string title = "ScenePD Install Prompt";
+                string message = "ScenePD was not initially found, would you like to (re attempt) Install ScenePD 6?";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result = MessageBox.Show(message, title, buttons);
+
+                //scene pd 6 install
+                if (result == DialogResult.Yes)
+                {
+                    BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 6"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+                    string LogEntry = DateTime.Now + @" Attempting to install ScenePD 6";
+
+                    LogEntryWriter(LogEntry);
+
+                    if (label35.Text != "Installed")
+                    {
+                        RunProgram(SCPD6, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
+                        RunProgram(SCPD6AX, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
+                    }
+                    else
+                    {
+                        string logentry3 = DateTime.Now + " ScenePD6 is already installed. This step was skipped.";
+                        LogEntryWriter(logentry3);
+                    }
+
+                    string LogEntry1 = DateTime.Now + @" ScenePD 6 Installed";
+                    string LogEntry2 = DateTime.Now + @" ScenePD ActiveX installed";
+
+                    LogEntryWriter(LogEntry1);
+                    LogEntryWriter(LogEntry2);
+
+                    BeginInvoke((Action)(() => ts.Text = "ScenePD 6 Installed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                }
+
+                //scene pd 4 install
+                if (result == DialogResult.No)
+                {
+                    if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\SPD4-0-92.exe"))
+                    {
+                        string title1 = "ScenePD Install Prompt";
+                        string message1 = "ScenePD was not initially found, would you like to (re attempt) install ScenePD 4?";
+                        MessageBoxButtons buttons1 = MessageBoxButtons.YesNo;
+                        DialogResult result1 = MessageBox.Show(message1, title1, buttons1);
+                        if (result1 == DialogResult.Yes)
+                        {
+                            BeginInvoke((Action)(() => ts.Text = "Installing ScenePD 4"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+
+                            string LogEntry = DateTime.Now + @" Attempting to install ScenePD 4";
+
+                            LogEntryWriter(LogEntry);
+                            if (label35.Text != "Installed")
+                            {
+                                RunProgram(SCPD4, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
+                            }
+                            else
+                            {
+                                string logentry4 = DateTime.Now + " ScenePD4 is already installed. This Step was skipped.";
+                                LogEntryWriter(logentry4);
+                            }
+
+                            string LogEntry1 = DateTime.Now + @" ScenePD 4 Installed";
+
+                            LogEntryWriter(LogEntry1);
+
+                            BeginInvoke((Action)(() => ts.Text = "ScenePD 4 installed"));
+                            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(@"Please Select a Scene PD version to install.");
+                    }
+                }
             }
-            else if (ResetEvent.Equals(5.5))
-            {
-            }
+
             // nap time for UI thread
             else
             {
