@@ -5159,11 +5159,11 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    NWPSADDONThreadWorker();
-
-                    string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
+                    string LogEntry1 = DateTime.Now + @" Addon Download Form Displayed.";
 
                     LogEntryWriter(LogEntry1);
+
+                    NWPSADDONThreadWorker();
 
                     if (Tab2bg.CancellationPending)
                     {
@@ -5201,15 +5201,11 @@ namespace Mobile_App
 
                     string LogEntry = DateTime.Now + @" ERROR: COULD NOT LOCATE DEVICE TESTER UTILITY. Attempting to download.";
 
-                    string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
+                    string LogEntry1 = DateTime.Now + @" Addon Download Form Displayed.";
 
                     LogEntryWriter(LogEntry1);
 
                     NWPSADDONThreadWorker();
-
-                    string LogEntry2 = DateTime.Now + @" Addon Download Folder Displayed.";
-
-                    LogEntryWriter(LogEntry2);
 
                     if (Tab2bg.CancellationPending)
                     {
@@ -5257,15 +5253,11 @@ namespace Mobile_App
 
                     LogEntryWriter(LogEntry);
 
-                    string LogEntry1 = DateTime.Now + @" Addon Download Folder Displayed.";
+                    string LogEntry1 = DateTime.Now + @" Addon Download Form Displayed.";
 
                     LogEntryWriter(LogEntry1);
 
                     NWPSADDONThreadWorker();
-
-                    string LogEntry2 = DateTime.Now + @" Addon Download Folder Displayed.";
-
-                    LogEntryWriter(LogEntry2);
 
                     if (Tab2bg.CancellationPending)
                     {
