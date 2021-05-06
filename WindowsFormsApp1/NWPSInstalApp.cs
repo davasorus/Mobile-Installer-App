@@ -1157,7 +1157,7 @@ namespace Mobile_App
             //will check for scene pd 6 before displaying install prompt
             // If scenepd 6 install is denied this will check for scene pd 4 before displaying install prompt
             //if scene pd 4 is not located and that is the desired scene pd version a message is displayed with paths to move folders
-            if (File.Exists(@"C:\Temp\MobileInstaller\SPD6-4-8993.exe"))
+            if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\SPD6-4-8993.exe"))
             {
                 BeginInvoke((Action)(() => ts.Text = "ScenePD Install Prompt"));
                 string title = "ScenePD Install Prompt";
@@ -1212,7 +1212,7 @@ namespace Mobile_App
                 //scene pd 4 install
                 if (result == DialogResult.No)
                 {
-                    if (File.Exists(@"C:\Temp\MobileInstaller\SPD4-0-92.exe"))
+                    if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\SPD4-0-92.exe"))
                     {
                         string title1 = "ScenePD Install Prompt";
                         string message1 = "would you like to ScenePD 4?";
@@ -1261,7 +1261,7 @@ namespace Mobile_App
             }
 
             //will check for scene pd 4 before displaying install prompt
-            else if (File.Exists(@"C:\Temp\MobileInstaller\SPD4-0-92.exe"))
+            else if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\SPD4-0-92.exe"))
             {
                 string title1 = "ScenePD Install Prompt";
                 string message1 = "would you like to ScenePD 4?";
@@ -1304,7 +1304,7 @@ namespace Mobile_App
             }
 
             //this will check in the NWS Addons folder for scene pd 6
-            else if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\SPD6-4-8993.exe"))
+            else if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\SPD6-4-8993.exe"))
             {
                 BeginInvoke((Action)(() => ts.Text = "ScenePD Install Prompt"));
                 string title = "ScenePD Install Prompt";
@@ -1323,8 +1323,8 @@ namespace Mobile_App
 
                     if (label35.Text != "Installed")
                     {
-                        RunProgram(SCPD6, @"C:\Temp\MobileInstaller\NWS Addons\");
-                        RunProgram(SCPD6AX, @"C:\Temp\MobileInstaller\NWS Addons\");
+                        RunProgram(SCPD6, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
+                        RunProgram(SCPD6AX, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
                     }
                     else
                     {
@@ -1345,7 +1345,7 @@ namespace Mobile_App
                 //scene pd 4 install
                 if (result == DialogResult.No)
                 {
-                    if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\SPD4-0-92.exe"))
+                    if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\SPD4-0-92.exe"))
                     {
                         string title1 = "ScenePD Install Prompt";
                         string message1 = "would you like to ScenePD 4?";
@@ -1361,7 +1361,7 @@ namespace Mobile_App
                             LogEntryWriter(LogEntry);
                             if (label35.Text != "Installed")
                             {
-                                RunProgram(SCPD4, @"C:\Temp\MobileInstaller\NWS Addons\");
+                                RunProgram(SCPD4, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\");
                             }
                             else
                             {
@@ -1385,7 +1385,7 @@ namespace Mobile_App
             }
 
             //will check for scene pd 4 before displaying install prompt -- in the NWS addons folder
-            else if (File.Exists(@"C:\Temp\MobileInstaller\NWS Addons\SPD4-0-92.exe"))
+            else if (File.Exists(@"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons\SPD4-0-92.exe"))
             {
                 string title1 = "ScenePD Install Prompt";
                 string message1 = "would you like to ScenePD 4?";
@@ -1403,7 +1403,7 @@ namespace Mobile_App
 
                     if (label35.Text != "Installed")
                     {
-                        RunProgram(SCPD4, @"C:\Temp\MobileInstaller\NWS Addons");
+                        RunProgram(SCPD4, @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons");
                     }
                     else
                     {
@@ -3658,7 +3658,12 @@ namespace Mobile_App
 
                 MessageBox.Show("The machine must shut down during this process. Please turn machine back on and re run this process when you log back in.");
             }
-
+            else if (ResetEvent.Equals(5))
+            {
+            }
+            else if (ResetEvent.Equals(5.5))
+            {
+            }
             // nap time for UI thread
             else
             {
