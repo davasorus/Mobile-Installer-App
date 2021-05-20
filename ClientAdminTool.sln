@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientAdminToolcsproj", "WindowsFormsApp1\ClientAdminToolcsproj.csproj", "{17C442F6-A4FA-4E2C-B880-956DAAE716EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWPS Client Admin Tool", "WindowsFormsApp1\NWPS Client Admin Tool.csproj", "{17C442F6-A4FA-4E2C-B880-956DAAE716EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
