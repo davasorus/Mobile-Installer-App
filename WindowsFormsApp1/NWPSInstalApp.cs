@@ -176,7 +176,7 @@ namespace Mobile_App
                 try
                 {
                     Process.Start(proc);
-                    System.Windows.Forms.Application.Exit();
+                    Application.Exit();
                 }
                 catch (Exception ex)
                 {
