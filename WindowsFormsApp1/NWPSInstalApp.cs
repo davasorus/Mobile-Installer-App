@@ -1,4 +1,6 @@
-﻿using MobileInstallApp;
+﻿using AppPubDeployUtility;
+using Microsoft.Identity.Client;
+using MobileInstallApp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,11 +9,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.ServiceProcess;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -34,6 +39,7 @@ namespace Mobile_App
         private BackgroundWorker Tab1Installbg;
         private BackgroundWorker Tab3bg;
         private BackgroundWorker Tab4bg;
+        private BackgroundWorker GetByIDbg;
 
         private int ResetEvent = 999;
 
@@ -121,6 +127,8 @@ namespace Mobile_App
             BeginInvoke((Action)(() => ts.Text = "Ready"));
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
+            GetByIDbg.RunWorkerAsync();
+
             //checks if a directory exists to determine a 64 or 32 bit machine and configures the check boxes accordingly.
             if (Directory.Exists("C:\\Program files (x86)"))
             {
@@ -190,6 +198,9 @@ namespace Mobile_App
             //pre req checker background worker
             Tab4bg = new BackgroundWorker();
             Tab4bg.DoWork += Tab4bg_DoWork;
+
+            GetByIDbg = new BackgroundWorker();
+            GetByIDbg.DoWork += GetByIDbg_DoWork;
         }
 
         //---------------------------Button Click events----------------------
@@ -6374,6 +6385,86 @@ namespace Mobile_App
                 //string logentry1 = DateTime.Now + " already installed. Pre Req Checker not modified.";
                 //LogEntryWriter(logentry1);
             }
+        }
+
+        //will query the API
+        public async Task GetByID(string ID)
+        {
+            AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
+
+            IConfidentialClientApplication app;
+
+            app = ConfidentialClientApplicationBuilder.Create(config.ClientID)
+                .WithClientSecret(config.ClientSecret)
+                .WithAuthority(new Uri(config.Authority))
+                .Build();
+
+            string[] ResourceIDs = new string[] { config.ResourceID };
+
+            AuthenticationResult result = null;
+
+            try
+            {
+                result = await app.AcquireTokenForClient(ResourceIDs).ExecuteAsync();
+
+                string LogEntry1 = DateTime.Now + " Token Acquired";
+
+                LogEntryWriter(LogEntry1);
+
+                //LogTxtWriter(result.AccessToken);
+            }
+            catch (MsalClientException ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            if (!string.IsNullOrEmpty(result.AccessToken))
+            {
+                var httpClient = new HttpClient();
+                var defaultRequestHeaders = httpClient.DefaultRequestHeaders;
+
+                if (defaultRequestHeaders.Accept == null ||
+                   !defaultRequestHeaders.Accept.Any(m => m.MediaType == "application/json"))
+                {
+                    httpClient.DefaultRequestHeaders.Accept.Add(new
+                      MediaTypeWithQualityHeaderValue("application/json"));
+                }
+                defaultRequestHeaders.Authorization =
+                  new AuthenticationHeaderValue("bearer", result.AccessToken);
+
+                HttpResponseMessage response = await httpClient.GetAsync("https://davasoruswebapi.azurewebsites.net/api/webapi/" + ID);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    string LogEntry = DateTime.Now + " " + json;
+                    LogEntryWriter(LogEntry);
+
+                    BeginInvoke((Action)(() => ts.Text = "Application Grabbed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                }
+                else
+                {
+                    string LogEntry1 = DateTime.Now + $" Failed to call the Web Api: {response.StatusCode}";
+
+                    LogEntryWriter(LogEntry1);
+
+                    string content = await response.Content.ReadAsStringAsync();
+                    string LogEntry2 = DateTime.Now + $" Content: {content}";
+
+                    LogEntryWriter(LogEntry2);
+
+                    BeginInvoke((Action)(() => ts.Text = "Error Occurred"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
+                }
+            }
+        }
+
+        private void GetByIDbg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
         }
     }
 }
