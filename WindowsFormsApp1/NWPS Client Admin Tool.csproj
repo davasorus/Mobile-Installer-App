@@ -144,7 +144,6 @@
     </EmbeddedResource>
     <None Include="app.manifest" />
     <EmbeddedResource Include="NWPS_Client_Admin_Tool_User_Guide.docx" />
-    <None Include="appsettings.json" />
     <None Include="ClientAdminToolcsproj_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
