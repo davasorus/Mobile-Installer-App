@@ -1,6 +1,7 @@
-﻿using Microsoft.Identity.Client;
+﻿using AppPubDeployUtility;
+using Microsoft.Identity.Client;
 using MobileInstallApp;
-using NWPSAdminApp;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.AccessControl;
 using System.ServiceProcess;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -120,6 +122,8 @@ namespace Mobile_App
             }
 
             InitialLoadofXML();
+
+            ConvertToJson("NWPSAdminApp.xml");
 
             statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
             BeginInvoke((Action)(() => ts.Text = "Ready"));
@@ -2386,6 +2390,18 @@ namespace Mobile_App
                     MergeClient.Checked = true;
                 }
 
+                InstanceBX.Text = StartupSettings.GetElementsByTagName("Instance")[0].InnerText;
+
+                TenantIdBX.Text = StartupSettings.GetElementsByTagName("TenantId")[0].InnerText;
+
+                ClientIdBX.Text = StartupSettings.GetElementsByTagName("ClientId")[0].InnerText;
+
+                ClientSecretBX.Text = StartupSettings.GetElementsByTagName("ClientSecret")[0].InnerText;
+
+                BaseAddressBX.Text = StartupSettings.GetElementsByTagName("BaseAddress")[0].InnerText;
+
+                ResourceId.Text = StartupSettings.GetElementsByTagName("ResourceId")[0].InnerText;
+
                 TargetPath = @"C:\Temp\MobileInstaller";
 
                 string LogEntry = DateTime.Now + " Prior Settings Loaded";
@@ -2411,6 +2427,12 @@ namespace Mobile_App
                     writer.WriteElementString("PC", "false");
                     writer.WriteElementString("FC", "False");
                     writer.WriteElementString("MC", "False");
+                    writer.WriteElementString("Instance", "https://login.microsoftonline.com/{0}");
+                    writer.WriteElementString("TenantId", " PLACE HOLDER ");
+                    writer.WriteElementString("ClientId", " PLACE HOLDER ");
+                    writer.WriteElementString("ClientSecret", " PLACE HOLDER ");
+                    writer.WriteElementString("BaseAddress", "https://davasoruswebapi.azurewebsites.net/api/webapi");
+                    writer.WriteElementString("ResourceId", " PLACE HOLDER ");
                     writer.WriteEndElement();
                     writer.Flush();
                     writer.Close();
@@ -2458,6 +2480,18 @@ namespace Mobile_App
             {
                 StartupSettings.GetElementsByTagName("MC")[0].InnerText = "False";
             }
+
+            StartupSettings.GetElementsByTagName("Instance")[0].InnerText = InstanceBX.Text;
+
+            StartupSettings.GetElementsByTagName("TenantId")[0].InnerText = TenantIdBX.Text;
+
+            StartupSettings.GetElementsByTagName("ClientId")[0].InnerText = ClientIdBX.Text;
+
+            StartupSettings.GetElementsByTagName("ClientSecret")[0].InnerText = ClientSecretBX.Text;
+
+            StartupSettings.GetElementsByTagName("BaseAddress")[0].InnerText = BaseAddressBX.Text;
+
+            StartupSettings.GetElementsByTagName("ResourceId")[0].InnerText = ResourceId.Text;
 
             //Save the start up settings
             StartupSettings.Save("NWPSAdminApp.xml");
@@ -6388,13 +6422,11 @@ namespace Mobile_App
         //will query the API
         public async Task GetByID(string ID)
         {
-            AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
+            AppPubDeployUtility.AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
 
             IConfidentialClientApplication app;
 
-            app = ConfidentialClientApplicationBuilder.Create(config.ClientID)
-                .WithClientSecret(config.ClientSecret)
-                .WithAuthority(new Uri(config.Authority))
+            app = ConfidentialClientApplicationBuilder.Create(config.ClientID).WithClientSecret(config.ClientSecret).WithAuthority(new Uri(config.Authority))
                 .Build();
 
             string[] ResourceIDs = new string[] { config.ResourceID };
@@ -6463,6 +6495,36 @@ namespace Mobile_App
         private void GetByIDbg_DoWork(object sender, DoWorkEventArgs e)
         {
             Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
+        }
+
+        private void ConvertToJson(string document)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(document);
+
+                var json = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
+
+                File.WriteAllText("appsettings.json", json);
+
+                string LogEntry = DateTime.Now + " config file created.";
+
+                LogEntryWriter(LogEntry);
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        private void Config_Click(object sender, EventArgs e)
+        {
+            SaveStartupSettings();
+
+            ConvertToJson("NWPSAdminApp.xml");
         }
     }
 }

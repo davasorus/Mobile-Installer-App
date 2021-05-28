@@ -98,12 +98,27 @@ namespace Mobile_App
             this.SQLCP4 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.PreReqCheck = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.ResourceId = new System.Windows.Forms.TextBox();
+            this.BaseAddressBX = new System.Windows.Forms.TextBox();
+            this.ClientSecretBX = new System.Windows.Forms.TextBox();
+            this.ClientIdBX = new System.Windows.Forms.TextBox();
+            this.TenantIdBX = new System.Windows.Forms.TextBox();
+            this.InstanceBX = new System.Windows.Forms.TextBox();
+            this.Config = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // label3
@@ -244,6 +259,7 @@ namespace Mobile_App
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(3, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -835,6 +851,135 @@ namespace Mobile_App
             this.PreReqCheck.UseVisualStyleBackColor = true;
             this.PreReqCheck.Click += new System.EventHandler(this.PreReqCheck_Click);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage5.Controls.Add(this.Config);
+            this.tabPage5.Controls.Add(this.label18);
+            this.tabPage5.Controls.Add(this.label17);
+            this.tabPage5.Controls.Add(this.label16);
+            this.tabPage5.Controls.Add(this.label15);
+            this.tabPage5.Controls.Add(this.label14);
+            this.tabPage5.Controls.Add(this.label13);
+            this.tabPage5.Controls.Add(this.ResourceId);
+            this.tabPage5.Controls.Add(this.BaseAddressBX);
+            this.tabPage5.Controls.Add(this.ClientSecretBX);
+            this.tabPage5.Controls.Add(this.ClientIdBX);
+            this.tabPage5.Controls.Add(this.TenantIdBX);
+            this.tabPage5.Controls.Add(this.InstanceBX);
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(416, 244);
+            this.tabPage5.TabIndex = 4;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(2, 82);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(47, 13);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "Client ID";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(2, 119);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(67, 13);
+            this.label17.TabIndex = 10;
+            this.label17.Text = "Client Secret";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(2, 163);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(92, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "API Base Address";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(2, 205);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(67, 13);
+            this.label15.TabIndex = 8;
+            this.label15.Text = "Resource ID";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(2, 46);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(55, 13);
+            this.label14.TabIndex = 7;
+            this.label14.Text = "Tenant ID";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(2, 7);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(62, 13);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "Instance ID";
+            // 
+            // ResourceId
+            // 
+            this.ResourceId.Location = new System.Drawing.Point(5, 221);
+            this.ResourceId.Name = "ResourceId";
+            this.ResourceId.Size = new System.Drawing.Size(274, 20);
+            this.ResourceId.TabIndex = 5;
+            // 
+            // BaseAddressBX
+            // 
+            this.BaseAddressBX.Location = new System.Drawing.Point(5, 179);
+            this.BaseAddressBX.Name = "BaseAddressBX";
+            this.BaseAddressBX.Size = new System.Drawing.Size(274, 20);
+            this.BaseAddressBX.TabIndex = 4;
+            this.BaseAddressBX.Text = "https://davasoruswebapi.azurewebsites.net/api/webapi";
+            // 
+            // ClientSecretBX
+            // 
+            this.ClientSecretBX.Location = new System.Drawing.Point(5, 132);
+            this.ClientSecretBX.Name = "ClientSecretBX";
+            this.ClientSecretBX.Size = new System.Drawing.Size(222, 20);
+            this.ClientSecretBX.TabIndex = 3;
+            // 
+            // ClientIdBX
+            // 
+            this.ClientIdBX.Location = new System.Drawing.Point(5, 96);
+            this.ClientIdBX.Name = "ClientIdBX";
+            this.ClientIdBX.Size = new System.Drawing.Size(211, 20);
+            this.ClientIdBX.TabIndex = 2;
+            // 
+            // TenantIdBX
+            // 
+            this.TenantIdBX.Location = new System.Drawing.Point(5, 59);
+            this.TenantIdBX.Name = "TenantIdBX";
+            this.TenantIdBX.Size = new System.Drawing.Size(211, 20);
+            this.TenantIdBX.TabIndex = 1;
+            // 
+            // InstanceBX
+            // 
+            this.InstanceBX.Location = new System.Drawing.Point(5, 23);
+            this.InstanceBX.Name = "InstanceBX";
+            this.InstanceBX.Size = new System.Drawing.Size(182, 20);
+            this.InstanceBX.TabIndex = 0;
+            this.InstanceBX.Text = "https://login.microsoftonline.com/{0}";
+            // 
+            // Config
+            // 
+            this.Config.Location = new System.Drawing.Point(325, 221);
+            this.Config.Name = "Config";
+            this.Config.Size = new System.Drawing.Size(75, 23);
+            this.Config.TabIndex = 12;
+            this.Config.Text = "Config";
+            this.Config.UseVisualStyleBackColor = true;
+            this.Config.Click += new System.EventHandler(this.Config_Click);
+            // 
             // NWPSClientAdminTool
             // 
             this.AcceptButton = this.InstallRun;
@@ -857,6 +1002,8 @@ namespace Mobile_App
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -942,6 +1089,20 @@ namespace Mobile_App
         private CheckBox UninstallCAD;
         private CheckBox UninstallMSP;
         private Label label12;
+        private TabPage tabPage5;
+        private TextBox ResourceId;
+        private TextBox BaseAddressBX;
+        private TextBox ClientSecretBX;
+        private TextBox ClientIdBX;
+        private TextBox TenantIdBX;
+        private TextBox InstanceBX;
+        private Label label18;
+        private Label label17;
+        private Label label16;
+        private Label label15;
+        private Label label14;
+        private Label label13;
+        private Button Config;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }
