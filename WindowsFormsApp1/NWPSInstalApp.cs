@@ -1,5 +1,4 @@
-﻿using AppPubDeployUtility;
-using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 using MobileInstallApp;
 using System;
 using System.Collections.Generic;
@@ -11,9 +10,7 @@ using System.Linq;
 using System.Management;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Security.AccessControl;
-using System.Security.Principal;
 using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;

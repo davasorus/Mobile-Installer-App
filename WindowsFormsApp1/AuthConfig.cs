@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.IO;
 
-namespace AppPubDeployUtility
+namespace Mobile_App
 {
     public class AuthConfig
     {
