@@ -183,6 +183,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthConfig.cs" />
     <Compile Include="NWPSInstalApp.cs">
       <SubType>Form</SubType>
     </Compile>
