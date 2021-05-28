@@ -1,8 +1,0 @@
-{
-  "Instance": "https://login.microsoftonline.com/{0}",
-  "TenantId": "7cc5f0f9-ee5b-4106-a62d-1b9f7be46118",
-  "ClientId": "baafadcb-8a32-4790-883a-7455c8c09482",
-  "ClientSecret": "oQx6b6~9MNqph.mCh8OC-oTJ16739SD7S_",
-  "BaseAddress": "https://davasoruswebapi.azurewebsites.net/api/webapi",
-  "ResourceId": "api://609e92d0-48cf-41a2-bff8-a8c5f82fc170/.default"
-}
