@@ -6428,14 +6428,30 @@ namespace Mobile_App
         //will query the API
         public async Task GetByID(string ID)
         {
+            string LogEntry0 = DateTime.Now + " entered GetByID";
+
+            LogEntryWriter(LogEntry0);
+
             AppPubDeployUtility.AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
+
+            string LogEntry01 = DateTime.Now + " loaded Json";
+
+            LogEntryWriter(LogEntry01);
 
             IConfidentialClientApplication app;
 
             app = ConfidentialClientApplicationBuilder.Create(config.ClientID).WithClientSecret(config.ClientSecret).WithAuthority(new Uri(config.Authority))
                 .Build();
 
+            string LogEntry02 = DateTime.Now + " created app";
+
+            LogEntryWriter(LogEntry02);
+
             string[] ResourceIDs = new string[] { config.ResourceID };
+
+            string LogEntry03 = DateTime.Now + " loaded resourceIDs";
+
+            LogEntryWriter(LogEntry03);
 
             AuthenticationResult result = null;
 
@@ -6570,10 +6586,12 @@ namespace Mobile_App
                         }
                         else if (string.Compare(sub, A) > 0)
                         {
-                            string LogEntry = DateTime.Now + "current version is on older release";
+                            string LogEntry = DateTime.Now + " current version is on older release";
                             LogEntryWriter(LogEntry);
 
                             DownloadTask("NWPS.Client.Admin.Tool.exe", ExternalURL1, Directory.GetCurrentDirectory());
+
+                            return;
                         }
                     }
                 }
@@ -6629,25 +6647,35 @@ namespace Mobile_App
 
                 Task.WaitAll(Task1);
 
+                string LogEntry1 = DateTime.Now + " " + ProgramName + " downloaded";
+                LogEntryWriter(LogEntry1);
+
                 //this will attempt to copy the program from the downloads folder to a folder
                 //this then will run that application in the new location
                 try
                 {
-                    File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName("NWPS.Client.Admin.Tool.exe")));
+                    string GoodAppName = "NWPS Client Admin Tool.exe";
+                    string BadAppName = "NWPS.Client.Admin.Tool.exe";
 
-                    //RunProgram(ProgramName, location);
-                    Process.Start(ProgramName);
+                    File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName(BadAppName)), true);
+
+                    RelableandMove(location, GoodAppName, ProgramName, GoodAppName);
+
+                    Process.Start(GoodAppName);
+
+                    string LogEntry2 = DateTime.Now + " " + GoodAppName + " started in location " + location;
+                    LogEntryWriter(LogEntry2);
 
                     Application.Exit();
                 }
                 catch (Exception ex)
                 {
-                    string LogEntry1 = DateTime.Now + " " + ex.ToString();
+                    string LogEntry9 = DateTime.Now + " " + ex.ToString();
 
                     BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
                     BeginInvoke((Action)(() => ts.Text = "Error running" + ProgramName));
 
-                    LogEntryWriter(LogEntry1);
+                    LogEntryWriter(LogEntry9);
                 }
             }
             catch (Exception ex)
@@ -6656,6 +6684,46 @@ namespace Mobile_App
 
                 BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
                 BeginInvoke((Action)(() => ts.Text = "Error downloading" + ProgramName));
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        private void RelableandMove(string location, string app, string sourceFile, string destinationFile)
+        {
+            string appFolder = Path.GetDirectoryName(location);
+            string appName = Path.GetFileNameWithoutExtension(app);
+            string appExtension = Path.GetExtension(location);
+            string archivePath = Path.Combine(appFolder, appName + "_OldVersion" + appExtension);
+            try
+            {
+                if (File.Exists(archivePath))
+                {
+                    string Logentry = DateTime.Now + " old backup found. Will attempt to delete";
+                    LogEntryWriter(Logentry);
+
+                    File.Delete(archivePath);
+
+                    string logentry1 = DateTime.Now + " " + archivePath + " deleted";
+                    LogEntryWriter(logentry1);
+                }
+
+                File.Move(app, archivePath);
+
+                string LogEntry = DateTime.Now + " " + app + " renamed to " + appName + "_OldVersion" + appExtension;
+                LogEntryWriter(LogEntry);
+
+                File.Move(sourceFile, destinationFile);
+
+                string LogEntry1 = DateTime.Now + " " + sourceFile + " renamed to " + destinationFile;
+                LogEntryWriter(LogEntry1);
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
+                BeginInvoke((Action)(() => ts.Text = "Error renaming" + app));
 
                 LogEntryWriter(LogEntry);
             }
