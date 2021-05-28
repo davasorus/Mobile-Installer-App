@@ -2,6 +2,7 @@
 using Microsoft.Identity.Client;
 using MobileInstallApp;
 using Newtonsoft.Json;
+using Syroot.Windows.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +15,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.AccessControl;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,6 +33,8 @@ namespace Mobile_App
     {
         private XmlDocument UpdaterConfig = new XmlDocument();
         private XmlDocument StartupSettings = new XmlDocument();
+
+        private string ExternalURL1 = "https://github.com/davasorus/FileRepository/releases/download/1.5/NWPS.Client.Admin.Tool.exe";
 
         private BackgroundWorker Tab1bg;
         private BackgroundWorker Tab2bg;
@@ -6419,6 +6421,10 @@ namespace Mobile_App
             }
         }
 
+        //
+        //API related code
+        //
+
         //will query the API
         public async Task GetByID(string ID)
         {
@@ -6440,8 +6446,6 @@ namespace Mobile_App
                 string LogEntry1 = DateTime.Now + " Token Acquired";
 
                 LogEntryWriter(LogEntry1);
-
-                //LogTxtWriter(result.AccessToken);
             }
             catch (MsalClientException ex)
             {
@@ -6472,8 +6476,7 @@ namespace Mobile_App
                     string LogEntry = DateTime.Now + " " + json;
                     LogEntryWriter(LogEntry);
 
-                    BeginInvoke((Action)(() => ts.Text = "Application Grabbed"));
-                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                    Compare(json);
                 }
                 else
                 {
@@ -6525,6 +6528,137 @@ namespace Mobile_App
             SaveStartupSettings();
 
             ConvertToJson("NWPSAdminApp.xml");
+
+            GetByID("1");
+        }
+
+        private void Compare(string json)
+        {
+            string NUM1 = "1.";
+            string NUM2 = "2.";
+            string NUM3 = "3.";
+            string NUM4 = "4.";
+            string NUM5 = "5.";
+            string NUM6 = "6.";
+            string NUM7 = "7.";
+            string NUM8 = "8.";
+            string NUM9 = "9.";
+
+            string[] ScriptName = { NUM1, NUM2, NUM3, NUM4, NUM5, NUM6, NUM7, NUM8, NUM9 };
+            char[] separators = new char[] { '"' };
+            string[] subs = json.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var sub in subs)
+            {
+                foreach (var name in ScriptName)
+                {
+                    if (sub.Contains(name))
+                    {
+                        string A = Application.ProductVersion;
+
+                        string.Compare(sub, A);
+
+                        if (string.Compare(sub, A) < 0)
+                        {
+                            string LogEntry = DateTime.Now + " current Version is newer than published... Likely just Dev";
+                            LogEntryWriter(LogEntry);
+                        }
+                        else if (string.Compare(sub, A) == 0)
+                        {
+                            string LogEntry = DateTime.Now + " current version is up-to-date";
+                            LogEntryWriter(LogEntry);
+                        }
+                        else if (string.Compare(sub, A) > 0)
+                        {
+                            string LogEntry = DateTime.Now + "current version is on older release";
+                            LogEntryWriter(LogEntry);
+
+                            DownloadTask("NWPS.Client.Admin.Tool.exe", ExternalURL1, Directory.GetCurrentDirectory());
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DownloadTask(string ProgramName, string URL, string location)
+        {
+            if (Tab1bg.IsBusy || Tab2bg.IsBusy || Tab3bg.IsBusy || Tab4bg.IsBusy)
+            {
+                DownloadTask(ProgramName, URL, location);
+            }
+            else
+            {
+                string title = "Upgrade Dialog";
+                string message = "There is a new version of the client available. Would you like to download and use the new client?";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result = MessageBox.Show(message, title, buttons);
+                if (result == DialogResult.Yes)
+                {
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+                    BeginInvoke((Action)(() => ts.Text = "Upgrade Prompt"));
+
+                    string Logentry = DateTime.Now + " Upgrade prompt accepted";
+                    LogEntryWriter(Logentry);
+
+                    DownloadExternal(ProgramName, URL, location);
+                }
+                else
+                {
+                    string Logentry = DateTime.Now + " Upgrade prompt denied";
+                    LogEntryWriter(Logentry);
+                }
+            }
+        }
+
+        private void DownloadExternal(string ProgramName, string URL, string location)
+        {
+            try
+            {
+                string LogEntry = DateTime.Now + " " + "Attempting to Download" + ProgramName + " from " + URL;
+
+                BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => ts.Text = "Downloading " + ProgramName));
+
+                LogEntryWriter(LogEntry);
+
+                //this will grab the local user downloads folder
+                string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
+
+                //this will download the application from the passed URL
+                Task Task1 = Task.Factory.StartNew(() => Process.Start(URL));
+
+                Task.WaitAll(Task1);
+
+                //this will attempt to copy the program from the downloads folder to a folder
+                //this then will run that application in the new location
+                try
+                {
+                    File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName("NWPS.Client.Admin.Tool.exe")));
+
+                    //RunProgram(ProgramName, location);
+                    Process.Start(ProgramName);
+
+                    Application.Exit();
+                }
+                catch (Exception ex)
+                {
+                    string LogEntry1 = DateTime.Now + " " + ex.ToString();
+
+                    BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
+                    BeginInvoke((Action)(() => ts.Text = "Error running" + ProgramName));
+
+                    LogEntryWriter(LogEntry1);
+                }
+            }
+            catch (Exception ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
+                BeginInvoke((Action)(() => ts.Text = "Error downloading" + ProgramName));
+
+                LogEntryWriter(LogEntry);
+            }
         }
     }
 }
