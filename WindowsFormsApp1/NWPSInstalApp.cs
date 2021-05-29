@@ -6525,11 +6525,19 @@ namespace Mobile_App
 
         private void Config_Click(object sender, EventArgs e)
         {
+            ts.Text = "committing API information to xml";
+
             SaveStartupSettings();
+
+            ts.Text = " xml saved";
 
             ConvertToJson("NWPSAdminApp.xml");
 
+            ts.Text = " xml converted to json";
+
             GetByID("1");
+
+            ts.Text = " checking for new version";
         }
 
         private void Compare(string json)
