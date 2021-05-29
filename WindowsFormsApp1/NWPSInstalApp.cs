@@ -6428,30 +6428,14 @@ namespace Mobile_App
         //will query the API
         public async Task GetByID(string ID)
         {
-            string LogEntry0 = DateTime.Now + " entered GetByID";
-
-            LogEntryWriter(LogEntry0);
-
             AppPubDeployUtility.AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
-
-            string LogEntry01 = DateTime.Now + " loaded Json";
-
-            LogEntryWriter(LogEntry01);
 
             IConfidentialClientApplication app;
 
             app = ConfidentialClientApplicationBuilder.Create(config.ClientID).WithClientSecret(config.ClientSecret).WithAuthority(new Uri(config.Authority))
                 .Build();
 
-            string LogEntry02 = DateTime.Now + " created app";
-
-            LogEntryWriter(LogEntry02);
-
             string[] ResourceIDs = new string[] { config.ResourceID };
-
-            string LogEntry03 = DateTime.Now + " loaded resourceIDs";
-
-            LogEntryWriter(LogEntry03);
 
             AuthenticationResult result = null;
 
