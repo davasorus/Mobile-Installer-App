@@ -99,6 +99,7 @@ namespace Mobile_App
             this.label10 = new System.Windows.Forms.Label();
             this.PreReqCheck = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.Config = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -111,7 +112,6 @@ namespace Mobile_App
             this.ClientIdBX = new System.Windows.Forms.TextBox();
             this.TenantIdBX = new System.Windows.Forms.TextBox();
             this.InstanceBX = new System.Windows.Forms.TextBox();
-            this.Config = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -872,6 +872,16 @@ namespace Mobile_App
             this.tabPage5.Size = new System.Drawing.Size(416, 244);
             this.tabPage5.TabIndex = 4;
             // 
+            // Config
+            // 
+            this.Config.Location = new System.Drawing.Point(325, 221);
+            this.Config.Name = "Config";
+            this.Config.Size = new System.Drawing.Size(75, 23);
+            this.Config.TabIndex = 12;
+            this.Config.Text = "Config";
+            this.Config.UseVisualStyleBackColor = true;
+            this.Config.Click += new System.EventHandler(this.Config_Click);
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -970,19 +980,10 @@ namespace Mobile_App
             this.InstanceBX.TabIndex = 0;
             this.InstanceBX.Text = "https://login.microsoftonline.com/{0}";
             // 
-            // Config
-            // 
-            this.Config.Location = new System.Drawing.Point(325, 221);
-            this.Config.Name = "Config";
-            this.Config.Size = new System.Drawing.Size(75, 23);
-            this.Config.TabIndex = 12;
-            this.Config.Text = "Config";
-            this.Config.UseVisualStyleBackColor = true;
-            this.Config.Click += new System.EventHandler(this.Config_Click);
-            // 
             // NWPSClientAdminTool
             // 
             this.AcceptButton = this.InstallRun;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(427, 293);
             this.Controls.Add(this.tabControl1);
