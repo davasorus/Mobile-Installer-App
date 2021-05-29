@@ -106,12 +106,12 @@ namespace Mobile_App
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.ResourceId = new System.Windows.Forms.TextBox();
-            this.BaseAddressBX = new System.Windows.Forms.TextBox();
-            this.ClientSecretBX = new System.Windows.Forms.TextBox();
-            this.ClientIdBX = new System.Windows.Forms.TextBox();
-            this.TenantIdBX = new System.Windows.Forms.TextBox();
-            this.InstanceBX = new System.Windows.Forms.TextBox();
+            this.InstanceBX = new System.Windows.Forms.MaskedTextBox();
+            this.TenantIdBX = new System.Windows.Forms.MaskedTextBox();
+            this.ClientIdBX = new System.Windows.Forms.MaskedTextBox();
+            this.ClientSecretBX = new System.Windows.Forms.MaskedTextBox();
+            this.BaseAddressBX = new System.Windows.Forms.MaskedTextBox();
+            this.ResourceId = new System.Windows.Forms.MaskedTextBox();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -854,6 +854,12 @@ namespace Mobile_App
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage5.Controls.Add(this.ResourceId);
+            this.tabPage5.Controls.Add(this.BaseAddressBX);
+            this.tabPage5.Controls.Add(this.ClientSecretBX);
+            this.tabPage5.Controls.Add(this.ClientIdBX);
+            this.tabPage5.Controls.Add(this.TenantIdBX);
+            this.tabPage5.Controls.Add(this.InstanceBX);
             this.tabPage5.Controls.Add(this.Config);
             this.tabPage5.Controls.Add(this.label18);
             this.tabPage5.Controls.Add(this.label17);
@@ -861,12 +867,6 @@ namespace Mobile_App
             this.tabPage5.Controls.Add(this.label15);
             this.tabPage5.Controls.Add(this.label14);
             this.tabPage5.Controls.Add(this.label13);
-            this.tabPage5.Controls.Add(this.ResourceId);
-            this.tabPage5.Controls.Add(this.BaseAddressBX);
-            this.tabPage5.Controls.Add(this.ClientSecretBX);
-            this.tabPage5.Controls.Add(this.ClientIdBX);
-            this.tabPage5.Controls.Add(this.TenantIdBX);
-            this.tabPage5.Controls.Add(this.InstanceBX);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(416, 244);
@@ -936,49 +936,55 @@ namespace Mobile_App
             this.label13.TabIndex = 6;
             this.label13.Text = "Instance ID";
             // 
-            // ResourceId
+            // InstanceBX
             // 
-            this.ResourceId.Location = new System.Drawing.Point(5, 221);
-            this.ResourceId.Name = "ResourceId";
-            this.ResourceId.Size = new System.Drawing.Size(274, 20);
-            this.ResourceId.TabIndex = 5;
+            this.InstanceBX.Location = new System.Drawing.Point(5, 23);
+            this.InstanceBX.Name = "InstanceBX";
+            this.InstanceBX.Size = new System.Drawing.Size(222, 20);
+            this.InstanceBX.TabIndex = 13;
+            this.InstanceBX.Text = "https://login.microsoftonline.com/{0}";
+            this.InstanceBX.UseSystemPasswordChar = true;
+            // 
+            // TenantIdBX
+            // 
+            this.TenantIdBX.Location = new System.Drawing.Point(5, 62);
+            this.TenantIdBX.Name = "TenantIdBX";
+            this.TenantIdBX.Size = new System.Drawing.Size(222, 20);
+            this.TenantIdBX.TabIndex = 14;
+            this.TenantIdBX.UseSystemPasswordChar = true;
+            // 
+            // ClientIdBX
+            // 
+            this.ClientIdBX.Location = new System.Drawing.Point(5, 98);
+            this.ClientIdBX.Name = "ClientIdBX";
+            this.ClientIdBX.Size = new System.Drawing.Size(222, 20);
+            this.ClientIdBX.TabIndex = 15;
+            this.ClientIdBX.UseSystemPasswordChar = true;
+            // 
+            // ClientSecretBX
+            // 
+            this.ClientSecretBX.Location = new System.Drawing.Point(5, 135);
+            this.ClientSecretBX.Name = "ClientSecretBX";
+            this.ClientSecretBX.Size = new System.Drawing.Size(222, 20);
+            this.ClientSecretBX.TabIndex = 16;
+            this.ClientSecretBX.UseSystemPasswordChar = true;
             // 
             // BaseAddressBX
             // 
             this.BaseAddressBX.Location = new System.Drawing.Point(5, 179);
             this.BaseAddressBX.Name = "BaseAddressBX";
             this.BaseAddressBX.Size = new System.Drawing.Size(274, 20);
-            this.BaseAddressBX.TabIndex = 4;
+            this.BaseAddressBX.TabIndex = 17;
             this.BaseAddressBX.Text = "https://davasoruswebapi.azurewebsites.net/api/webapi";
+            this.BaseAddressBX.UseSystemPasswordChar = true;
             // 
-            // ClientSecretBX
+            // ResourceId
             // 
-            this.ClientSecretBX.Location = new System.Drawing.Point(5, 132);
-            this.ClientSecretBX.Name = "ClientSecretBX";
-            this.ClientSecretBX.Size = new System.Drawing.Size(222, 20);
-            this.ClientSecretBX.TabIndex = 3;
-            // 
-            // ClientIdBX
-            // 
-            this.ClientIdBX.Location = new System.Drawing.Point(5, 96);
-            this.ClientIdBX.Name = "ClientIdBX";
-            this.ClientIdBX.Size = new System.Drawing.Size(211, 20);
-            this.ClientIdBX.TabIndex = 2;
-            // 
-            // TenantIdBX
-            // 
-            this.TenantIdBX.Location = new System.Drawing.Point(5, 59);
-            this.TenantIdBX.Name = "TenantIdBX";
-            this.TenantIdBX.Size = new System.Drawing.Size(211, 20);
-            this.TenantIdBX.TabIndex = 1;
-            // 
-            // InstanceBX
-            // 
-            this.InstanceBX.Location = new System.Drawing.Point(5, 23);
-            this.InstanceBX.Name = "InstanceBX";
-            this.InstanceBX.Size = new System.Drawing.Size(182, 20);
-            this.InstanceBX.TabIndex = 0;
-            this.InstanceBX.Text = "https://login.microsoftonline.com/{0}";
+            this.ResourceId.Location = new System.Drawing.Point(5, 222);
+            this.ResourceId.Name = "ResourceId";
+            this.ResourceId.Size = new System.Drawing.Size(274, 20);
+            this.ResourceId.TabIndex = 18;
+            this.ResourceId.UseSystemPasswordChar = true;
             // 
             // NWPSClientAdminTool
             // 
@@ -1091,12 +1097,6 @@ namespace Mobile_App
         private CheckBox UninstallMSP;
         private Label label12;
         private TabPage tabPage5;
-        private TextBox ResourceId;
-        private TextBox BaseAddressBX;
-        private TextBox ClientSecretBX;
-        private TextBox ClientIdBX;
-        private TextBox TenantIdBX;
-        private TextBox InstanceBX;
         private Label label18;
         private Label label17;
         private Label label16;
@@ -1104,6 +1104,12 @@ namespace Mobile_App
         private Label label14;
         private Label label13;
         private Button Config;
+        private MaskedTextBox ResourceId;
+        private MaskedTextBox BaseAddressBX;
+        private MaskedTextBox ClientSecretBX;
+        private MaskedTextBox ClientIdBX;
+        private MaskedTextBox TenantIdBX;
+        private MaskedTextBox InstanceBX;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }
