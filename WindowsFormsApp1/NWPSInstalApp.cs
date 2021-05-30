@@ -6495,11 +6495,13 @@ namespace Mobile_App
             }
         }
 
+        //background worker code for API querying
         private void GetByIDbg_DoWork(object sender, DoWorkEventArgs e)
         {
             Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
         }
 
+        //converts XML to json
         private void ConvertToJson(string document)
         {
             try
@@ -6523,6 +6525,7 @@ namespace Mobile_App
             }
         }
 
+        //config button click event
         private void Config_Click(object sender, EventArgs e)
         {
             ts.Text = "committing API information to xml";
@@ -6541,6 +6544,7 @@ namespace Mobile_App
             ts.Text = " check finished";
         }
 
+        //compares application version number to API version number
         private void Compare(string json)
         {
             string NUM1 = "1.";
@@ -6571,11 +6575,15 @@ namespace Mobile_App
                         {
                             string LogEntry = DateTime.Now + " current Version is newer than published... Likely just Dev";
                             LogEntryWriter(LogEntry);
+
+                            return;
                         }
                         else if (string.Compare(sub, A) == 0)
                         {
                             string LogEntry = DateTime.Now + " current version is up-to-date";
                             LogEntryWriter(LogEntry);
+
+                            return;
                         }
                         else if (string.Compare(sub, A) > 0)
                         {
@@ -6591,6 +6599,7 @@ namespace Mobile_App
             }
         }
 
+        //prompts the user with a message to update or not
         private void DownloadTask(string ProgramName, string URL, string location)
         {
             if (Tab1bg.IsBusy || Tab2bg.IsBusy || Tab3bg.IsBusy || Tab4bg.IsBusy)
@@ -6621,6 +6630,7 @@ namespace Mobile_App
             }
         }
 
+        //does the actual downloading
         private void DownloadExternal(string ProgramName, string URL, string location)
         {
             try
@@ -6682,6 +6692,7 @@ namespace Mobile_App
             }
         }
 
+        //XML Related information. Broken up between loading prior XML information OR creating a new XML with placeholder server location.
         private void RelableandMove(string location, string app, string sourceFile, string destinationFile)
         {
             string appFolder = Path.GetDirectoryName(location);
