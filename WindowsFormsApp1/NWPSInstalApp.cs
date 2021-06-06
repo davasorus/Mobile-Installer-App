@@ -125,13 +125,11 @@ namespace Mobile_App
 
             InitialLoadofXML();
 
-            ConvertToJson("NWPSAdminApp.xml");
-
             statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
             BeginInvoke((Action)(() => ts.Text = "Ready"));
             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
-            GetByIDbg.RunWorkerAsync();
+            Task Task1 = Task.Factory.StartNew(() => UpdateAPICheck());
 
             //checks if a directory exists to determine a 64 or 32 bit machine and configures the check boxes accordingly.
             if (Directory.Exists("C:\\Program files (x86)"))
@@ -6425,73 +6423,98 @@ namespace Mobile_App
         //API related code
         //
 
+        //app start up API checker
+        private void UpdateAPICheck()
+        {
+            if (!File.Exists("appsettings.json"))
+            {
+                ConvertToJson("NWPSAdminApp.xml");
+            }
+
+            GetByIDbg.RunWorkerAsync();
+        }
+
         //will query the API
         public async Task GetByID(string ID)
         {
-            AppPubDeployUtility.AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
-
-            IConfidentialClientApplication app;
-
-            app = ConfidentialClientApplicationBuilder.Create(config.ClientID).WithClientSecret(config.ClientSecret).WithAuthority(new Uri(config.Authority))
-                .Build();
-
-            string[] ResourceIDs = new string[] { config.ResourceID };
-
-            AuthenticationResult result = null;
-
             try
             {
-                result = await app.AcquireTokenForClient(ResourceIDs).ExecuteAsync();
+                AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
 
-                string LogEntry1 = DateTime.Now + " Token Acquired";
+                IConfidentialClientApplication app;
 
-                LogEntryWriter(LogEntry1);
-            }
-            catch (MsalClientException ex)
-            {
-                string LogEntry = DateTime.Now + " " + ex.ToString();
+                app = ConfidentialClientApplicationBuilder.Create(config.ClientID).WithClientSecret(config.ClientSecret).WithAuthority(new Uri(config.Authority))
+                   .Build();
 
-                LogEntryWriter(LogEntry);
-            }
+                string[] ResourceIDs = new string[] { config.ResourceID };
 
-            if (!string.IsNullOrEmpty(result.AccessToken))
-            {
-                var httpClient = new HttpClient();
-                var defaultRequestHeaders = httpClient.DefaultRequestHeaders;
+                AuthenticationResult result = null;
 
-                if (defaultRequestHeaders.Accept == null ||
-                   !defaultRequestHeaders.Accept.Any(m => m.MediaType == "application/json"))
+                try
                 {
-                    httpClient.DefaultRequestHeaders.Accept.Add(new
-                      MediaTypeWithQualityHeaderValue("application/json"));
-                }
-                defaultRequestHeaders.Authorization =
-                  new AuthenticationHeaderValue("bearer", result.AccessToken);
+                    result = await app.AcquireTokenForClient(ResourceIDs).ExecuteAsync();
 
-                HttpResponseMessage response = await httpClient.GetAsync("https://davasoruswebapi.azurewebsites.net/api/webapi/" + ID);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = await response.Content.ReadAsStringAsync();
-                    string LogEntry = DateTime.Now + " " + json;
-                    LogEntryWriter(LogEntry);
-
-                    Compare(json);
-                }
-                else
-                {
-                    string LogEntry1 = DateTime.Now + $" Failed to call the Web Api: {response.StatusCode}";
+                    string LogEntry1 = DateTime.Now + " Token Acquired";
 
                     LogEntryWriter(LogEntry1);
-
-                    string content = await response.Content.ReadAsStringAsync();
-                    string LogEntry2 = DateTime.Now + $" Content: {content}";
-
-                    LogEntryWriter(LogEntry2);
-
-                    BeginInvoke((Action)(() => ts.Text = "Error Occurred"));
-                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
                 }
+                catch (MsalClientException ex)
+                {
+                    string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                    LogEntryWriter(LogEntry);
+                }
+
+                if (!string.IsNullOrEmpty(result.AccessToken))
+                {
+                    var httpClient = new HttpClient();
+                    var defaultRequestHeaders = httpClient.DefaultRequestHeaders;
+
+                    if (defaultRequestHeaders.Accept == null ||
+                       !defaultRequestHeaders.Accept.Any(m => m.MediaType == "application/json"))
+                    {
+                        httpClient.DefaultRequestHeaders.Accept.Add(new
+                          MediaTypeWithQualityHeaderValue("application/json"));
+                    }
+                    defaultRequestHeaders.Authorization =
+                      new AuthenticationHeaderValue("bearer", result.AccessToken);
+
+                    HttpResponseMessage response = await httpClient.GetAsync("https://davasoruswebapi.azurewebsites.net/api/webapi/" + ID);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        string LogEntry = DateTime.Now + " " + json;
+                        LogEntryWriter(LogEntry);
+
+                        Compare(json);
+                    }
+                    else
+                    {
+                        string LogEntry1 = DateTime.Now + $" Failed to call the Web Api: {response.StatusCode}";
+
+                        LogEntryWriter(LogEntry1);
+
+                        string content = await response.Content.ReadAsStringAsync();
+                        string LogEntry2 = DateTime.Now + $" Content: {content}";
+
+                        LogEntryWriter(LogEntry2);
+
+                        BeginInvoke((Action)(() => ts.Text = "Error Occurred"));
+                        BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string LogEntry1 = DateTime.Now + " " + ex.ToString();
+                string LogEntry2 = DateTime.Now + " please reach out to me (Sean Davitt) you need the correct configuration.";
+
+                LogEntryWriter(LogEntry1);
+                LogEntryWriter(LogEntry2);
+
+                BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
+                BeginInvoke((Action)(() => ts.Text = " there was an error when checking for an updated version"));
             }
         }
 
@@ -6544,6 +6567,15 @@ namespace Mobile_App
             ts.Text = " check finished";
         }
 
+        private void UpdateCheck_Click(object sender, EventArgs e)
+        {
+            ts.Text = " checking for new version";
+
+            Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
+
+            ts.Text = " check finished";
+        }
+
         //compares application version number to API version number
         private void Compare(string json)
         {
@@ -6576,12 +6608,18 @@ namespace Mobile_App
                             string LogEntry = DateTime.Now + " current Version is newer than published... Likely just Dev";
                             LogEntryWriter(LogEntry);
 
+                            BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
+                            BeginInvoke((Action)(() => ts.Text = "current Version is newer than published... Likely just Dev"));
+
                             return;
                         }
                         else if (string.Compare(sub, A) == 0)
                         {
                             string LogEntry = DateTime.Now + " current version is up-to-date";
                             LogEntryWriter(LogEntry);
+
+                            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+                            BeginInvoke((Action)(() => ts.Text = "current version is up-to-date"));
 
                             return;
                         }
@@ -6590,6 +6628,9 @@ namespace Mobile_App
                             string LogEntry = DateTime.Now + " current version is on older release";
                             LogEntryWriter(LogEntry);
 
+                            BeginInvoke((Action)(() => ts.Text = "current version is on older release"));
+
+                            BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
                             DownloadTask("NWPS.Client.Admin.Tool.exe", ExternalURL1, Directory.GetCurrentDirectory());
 
                             return;

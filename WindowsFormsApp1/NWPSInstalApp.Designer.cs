@@ -99,6 +99,12 @@ namespace Mobile_App
             this.label10 = new System.Windows.Forms.Label();
             this.PreReqCheck = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.ResourceId = new System.Windows.Forms.MaskedTextBox();
+            this.BaseAddressBX = new System.Windows.Forms.MaskedTextBox();
+            this.ClientSecretBX = new System.Windows.Forms.MaskedTextBox();
+            this.ClientIdBX = new System.Windows.Forms.MaskedTextBox();
+            this.TenantIdBX = new System.Windows.Forms.MaskedTextBox();
+            this.InstanceBX = new System.Windows.Forms.MaskedTextBox();
             this.Config = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -106,12 +112,8 @@ namespace Mobile_App
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.InstanceBX = new System.Windows.Forms.MaskedTextBox();
-            this.TenantIdBX = new System.Windows.Forms.MaskedTextBox();
-            this.ClientIdBX = new System.Windows.Forms.MaskedTextBox();
-            this.ClientSecretBX = new System.Windows.Forms.MaskedTextBox();
-            this.BaseAddressBX = new System.Windows.Forms.MaskedTextBox();
-            this.ResourceId = new System.Windows.Forms.MaskedTextBox();
+            this.UpdateCheck = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -589,6 +591,8 @@ namespace Mobile_App
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage4.Controls.Add(this.label19);
+            this.tabPage4.Controls.Add(this.UpdateCheck);
             this.tabPage4.Controls.Add(this.label39);
             this.tabPage4.Controls.Add(this.label38);
             this.tabPage4.Controls.Add(this.label37);
@@ -654,7 +658,7 @@ namespace Mobile_App
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(170, 185);
+            this.label36.Location = new System.Drawing.Point(170, 143);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(100, 13);
             this.label36.TabIndex = 25;
@@ -872,6 +876,56 @@ namespace Mobile_App
             this.tabPage5.Size = new System.Drawing.Size(416, 244);
             this.tabPage5.TabIndex = 4;
             // 
+            // ResourceId
+            // 
+            this.ResourceId.Location = new System.Drawing.Point(5, 222);
+            this.ResourceId.Name = "ResourceId";
+            this.ResourceId.Size = new System.Drawing.Size(274, 20);
+            this.ResourceId.TabIndex = 18;
+            this.ResourceId.UseSystemPasswordChar = true;
+            // 
+            // BaseAddressBX
+            // 
+            this.BaseAddressBX.Location = new System.Drawing.Point(5, 179);
+            this.BaseAddressBX.Name = "BaseAddressBX";
+            this.BaseAddressBX.Size = new System.Drawing.Size(274, 20);
+            this.BaseAddressBX.TabIndex = 17;
+            this.BaseAddressBX.Text = "https://davasoruswebapi.azurewebsites.net/api/webapi";
+            this.BaseAddressBX.UseSystemPasswordChar = true;
+            // 
+            // ClientSecretBX
+            // 
+            this.ClientSecretBX.Location = new System.Drawing.Point(5, 135);
+            this.ClientSecretBX.Name = "ClientSecretBX";
+            this.ClientSecretBX.Size = new System.Drawing.Size(222, 20);
+            this.ClientSecretBX.TabIndex = 16;
+            this.ClientSecretBX.UseSystemPasswordChar = true;
+            // 
+            // ClientIdBX
+            // 
+            this.ClientIdBX.Location = new System.Drawing.Point(5, 98);
+            this.ClientIdBX.Name = "ClientIdBX";
+            this.ClientIdBX.Size = new System.Drawing.Size(222, 20);
+            this.ClientIdBX.TabIndex = 15;
+            this.ClientIdBX.UseSystemPasswordChar = true;
+            // 
+            // TenantIdBX
+            // 
+            this.TenantIdBX.Location = new System.Drawing.Point(5, 62);
+            this.TenantIdBX.Name = "TenantIdBX";
+            this.TenantIdBX.Size = new System.Drawing.Size(222, 20);
+            this.TenantIdBX.TabIndex = 14;
+            this.TenantIdBX.UseSystemPasswordChar = true;
+            // 
+            // InstanceBX
+            // 
+            this.InstanceBX.Location = new System.Drawing.Point(5, 23);
+            this.InstanceBX.Name = "InstanceBX";
+            this.InstanceBX.Size = new System.Drawing.Size(222, 20);
+            this.InstanceBX.TabIndex = 13;
+            this.InstanceBX.Text = "https://login.microsoftonline.com/{0}";
+            this.InstanceBX.UseSystemPasswordChar = true;
+            // 
             // Config
             // 
             this.Config.Location = new System.Drawing.Point(325, 221);
@@ -936,55 +990,23 @@ namespace Mobile_App
             this.label13.TabIndex = 6;
             this.label13.Text = "Instance ID";
             // 
-            // InstanceBX
+            // UpdateCheck
             // 
-            this.InstanceBX.Location = new System.Drawing.Point(5, 23);
-            this.InstanceBX.Name = "InstanceBX";
-            this.InstanceBX.Size = new System.Drawing.Size(222, 20);
-            this.InstanceBX.TabIndex = 13;
-            this.InstanceBX.Text = "https://login.microsoftonline.com/{0}";
-            this.InstanceBX.UseSystemPasswordChar = true;
+            this.UpdateCheck.Location = new System.Drawing.Point(338, 188);
+            this.UpdateCheck.Name = "UpdateCheck";
+            this.UpdateCheck.Size = new System.Drawing.Size(75, 23);
+            this.UpdateCheck.TabIndex = 29;
+            this.UpdateCheck.Text = "Update";
+            this.UpdateCheck.UseVisualStyleBackColor = true;
             // 
-            // TenantIdBX
+            // label19
             // 
-            this.TenantIdBX.Location = new System.Drawing.Point(5, 62);
-            this.TenantIdBX.Name = "TenantIdBX";
-            this.TenantIdBX.Size = new System.Drawing.Size(222, 20);
-            this.TenantIdBX.TabIndex = 14;
-            this.TenantIdBX.UseSystemPasswordChar = true;
-            // 
-            // ClientIdBX
-            // 
-            this.ClientIdBX.Location = new System.Drawing.Point(5, 98);
-            this.ClientIdBX.Name = "ClientIdBX";
-            this.ClientIdBX.Size = new System.Drawing.Size(222, 20);
-            this.ClientIdBX.TabIndex = 15;
-            this.ClientIdBX.UseSystemPasswordChar = true;
-            // 
-            // ClientSecretBX
-            // 
-            this.ClientSecretBX.Location = new System.Drawing.Point(5, 135);
-            this.ClientSecretBX.Name = "ClientSecretBX";
-            this.ClientSecretBX.Size = new System.Drawing.Size(222, 20);
-            this.ClientSecretBX.TabIndex = 16;
-            this.ClientSecretBX.UseSystemPasswordChar = true;
-            // 
-            // BaseAddressBX
-            // 
-            this.BaseAddressBX.Location = new System.Drawing.Point(5, 179);
-            this.BaseAddressBX.Name = "BaseAddressBX";
-            this.BaseAddressBX.Size = new System.Drawing.Size(274, 20);
-            this.BaseAddressBX.TabIndex = 17;
-            this.BaseAddressBX.Text = "https://davasoruswebapi.azurewebsites.net/api/webapi";
-            this.BaseAddressBX.UseSystemPasswordChar = true;
-            // 
-            // ResourceId
-            // 
-            this.ResourceId.Location = new System.Drawing.Point(5, 222);
-            this.ResourceId.Name = "ResourceId";
-            this.ResourceId.Size = new System.Drawing.Size(274, 20);
-            this.ResourceId.TabIndex = 18;
-            this.ResourceId.UseSystemPasswordChar = true;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(8, 143);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(125, 13);
+            this.label19.TabIndex = 30;
+            this.label19.Text = "NWPS Client Admin Tool";
             // 
             // NWPSClientAdminTool
             // 
@@ -1110,6 +1132,8 @@ namespace Mobile_App
         private MaskedTextBox ClientIdBX;
         private MaskedTextBox TenantIdBX;
         private MaskedTextBox InstanceBX;
+        private Button UpdateCheck;
+        private Label label19;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }
