@@ -377,6 +377,7 @@ namespace Mobile_App
             Tab4bg.RunWorkerAsync();
         }
 
+        //work done when second form is closed
         private void secondForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             mre.Set();
@@ -3283,6 +3284,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ProgressBar.Visible = false));
                 BeginInvoke((Action)(() => ProgressBar.Enabled = false));
                 BeginInvoke((Action)(() => PreReqCheck.Visible = false));
+                BeginInvoke((Action)(() => UpdateCheck.Visible = false));
 
                 PreStatusChecker();
 
@@ -3616,6 +3618,7 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.Text = "Pre Req Checker is Complete"));
                 BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
                 BeginInvoke((Action)(() => PreReqCheck.Visible = true));
+                BeginInvoke((Action)(() => UpdateCheck.Visible = true));
             }
             catch (Exception ex)
             {
@@ -6431,6 +6434,11 @@ namespace Mobile_App
                 ConvertToJson("NWPSAdminApp.xml");
             }
 
+            string LogEntry = DateTime.Now + " Tab 5 hidden from user";
+            LogEntryWriter(LogEntry);
+
+            this.tabControl1.TabPages.Remove(tabPage5);
+
             GetByIDbg.RunWorkerAsync();
         }
 
@@ -6515,6 +6523,9 @@ namespace Mobile_App
 
                 BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
                 BeginInvoke((Action)(() => ts.Text = " there was an error when checking for an updated version"));
+
+                BeginInvoke((Action)(() => label36.ForeColor = Color.OrangeRed));
+                BeginInvoke((Action)(() => label36.Text = "ERROR: Check Log File"));
             }
         }
 
@@ -6551,29 +6562,52 @@ namespace Mobile_App
         //config button click event
         private void Config_Click(object sender, EventArgs e)
         {
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
             ts.Text = "committing API information to xml";
 
             SaveStartupSettings();
 
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
             ts.Text = " xml saved";
 
             ConvertToJson("NWPSAdminApp.xml");
 
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
             ts.Text = " xml converted to json";
-
-            GetByID("1");
-
-            ts.Text = " checking for new version";
-            ts.Text = " check finished";
-        }
-
-        private void UpdateCheck_Click(object sender, EventArgs e)
-        {
-            ts.Text = " checking for new version";
 
             Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
 
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " checking for new version";
+
+            Task.WaitAll(Task1);
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
             ts.Text = " check finished";
+        }
+
+        //allows the user check for a updated version of the client
+        private void UpdateCheck_Click(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)(() => ProgressBar.Visible = false));
+            BeginInvoke((Action)(() => ProgressBar.Enabled = false));
+            BeginInvoke((Action)(() => PreReqCheck.Visible = false));
+            BeginInvoke((Action)(() => UpdateCheck.Visible = false));
+
+            BeginInvoke((Action)(() => label36.ForeColor = Color.DarkSlateBlue));
+            BeginInvoke((Action)(() => label36.Text = "Pending"));
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " checking for new version";
+
+            Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
+            Task.WaitAll(Task1);
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " check finished";
+
+            BeginInvoke((Action)(() => PreReqCheck.Visible = true));
+            BeginInvoke((Action)(() => UpdateCheck.Visible = true));
         }
 
         //compares application version number to API version number
@@ -6621,6 +6655,9 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
                             BeginInvoke((Action)(() => ts.Text = "current version is up-to-date"));
 
+                            BeginInvoke((Action)(() => label36.ForeColor = Color.DarkSlateBlue));
+                            BeginInvoke((Action)(() => label36.Text = "Running Current Version"));
+
                             return;
                         }
                         else if (string.Compare(sub, A) > 0)
@@ -6628,9 +6665,12 @@ namespace Mobile_App
                             string LogEntry = DateTime.Now + " current version is on older release";
                             LogEntryWriter(LogEntry);
 
+                            BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
                             BeginInvoke((Action)(() => ts.Text = "current version is on older release"));
 
-                            BeginInvoke((Action)(() => ts.ForeColor = Color.ForestGreen));
+                            BeginInvoke((Action)(() => label36.ForeColor = Color.OrangeRed));
+                            BeginInvoke((Action)(() => label36.Text = "Newer Version Found"));
+
                             DownloadTask("NWPS.Client.Admin.Tool.exe", ExternalURL1, Directory.GetCurrentDirectory());
 
                             return;
@@ -6645,6 +6685,9 @@ namespace Mobile_App
         {
             if (Tab1bg.IsBusy || Tab2bg.IsBusy || Tab3bg.IsBusy || Tab4bg.IsBusy)
             {
+                BeginInvoke((Action)(() => label36.ForeColor = Color.DarkSlateBlue));
+                BeginInvoke((Action)(() => label36.Text = "Downloading New Version"));
+
                 DownloadTask(ProgramName, URL, location);
             }
             else
@@ -6733,7 +6776,9 @@ namespace Mobile_App
             }
         }
 
-        //XML Related information. Broken up between loading prior XML information OR creating a new XML with placeholder server location.
+        //this will look for the old client (currently running) and relabel it to appname_oldversion
+        //if an older version exists it is deleted.
+        //
         private void RelableandMove(string location, string app, string sourceFile, string destinationFile)
         {
             string appFolder = Path.GetDirectoryName(location);
