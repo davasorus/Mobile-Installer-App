@@ -6731,8 +6731,9 @@ namespace Mobile_App
 
                 //this will download the application from the passed URL
                 Task Task1 = Task.Factory.StartNew(() => Process.Start(URL));
+                Task Task2 = Task.Factory.StartNew(() => Thread.Sleep(5000));
 
-                Task.WaitAll(Task1);
+                Task.WaitAll(Task1, Task2);
 
                 string LogEntry1 = DateTime.Now + " " + ProgramName + " downloaded";
                 LogEntryWriter(LogEntry1);
