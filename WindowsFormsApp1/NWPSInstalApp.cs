@@ -6778,7 +6778,6 @@ namespace Mobile_App
 
         //this will look for the old client (currently running) and relabel it to appname_oldversion
         //if an older version exists it is deleted.
-        //
         private void RelableandMove(string location, string app, string sourceFile, string destinationFile)
         {
             string appFolder = Path.GetDirectoryName(location);
