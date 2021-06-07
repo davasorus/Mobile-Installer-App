@@ -73,6 +73,8 @@ namespace Mobile_App
             this.FieldGenerateButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label19 = new System.Windows.Forms.Label();
+            this.UpdateCheck = new System.Windows.Forms.Button();
             this.label39 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
@@ -112,8 +114,6 @@ namespace Mobile_App
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.UpdateCheck = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -625,6 +625,25 @@ namespace Mobile_App
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Pre Req Checker";
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(5, 139);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(125, 13);
+            this.label19.TabIndex = 30;
+            this.label19.Text = "NWPS Client Admin Tool";
+            // 
+            // UpdateCheck
+            // 
+            this.UpdateCheck.Location = new System.Drawing.Point(338, 188);
+            this.UpdateCheck.Name = "UpdateCheck";
+            this.UpdateCheck.Size = new System.Drawing.Size(75, 23);
+            this.UpdateCheck.TabIndex = 29;
+            this.UpdateCheck.Text = "Update";
+            this.UpdateCheck.UseVisualStyleBackColor = true;
+            this.UpdateCheck.Click += new System.EventHandler(this.UpdateCheck_Click);
+            // 
             // label39
             // 
             this.label39.AutoSize = true;
@@ -658,12 +677,11 @@ namespace Mobile_App
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(170, 143);
+            this.label36.Location = new System.Drawing.Point(170, 139);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(100, 13);
             this.label36.TabIndex = 25;
             this.label36.Text = "Waiting Initialization";
-            this.label36.Visible = false;
             // 
             // label35
             // 
@@ -989,24 +1007,6 @@ namespace Mobile_App
             this.label13.Size = new System.Drawing.Size(62, 13);
             this.label13.TabIndex = 6;
             this.label13.Text = "Instance ID";
-            // 
-            // UpdateCheck
-            // 
-            this.UpdateCheck.Location = new System.Drawing.Point(338, 188);
-            this.UpdateCheck.Name = "UpdateCheck";
-            this.UpdateCheck.Size = new System.Drawing.Size(75, 23);
-            this.UpdateCheck.TabIndex = 29;
-            this.UpdateCheck.Text = "Update";
-            this.UpdateCheck.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(8, 143);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(125, 13);
-            this.label19.TabIndex = 30;
-            this.label19.Text = "NWPS Client Admin Tool";
             // 
             // NWPSClientAdminTool
             // 
