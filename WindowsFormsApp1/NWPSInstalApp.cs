@@ -6437,7 +6437,7 @@ namespace Mobile_App
             string LogEntry = DateTime.Now + " Tab 5 hidden from user";
             LogEntryWriter(LogEntry);
 
-            this.tabControl1.TabPages.Remove(tabPage5);
+            BeginInvoke((Action)(() => this.tabControl1.TabPages.Remove(tabPage5)));
 
             GetByIDbg.RunWorkerAsync();
         }
