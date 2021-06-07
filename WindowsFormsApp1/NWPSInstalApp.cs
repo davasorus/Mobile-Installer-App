@@ -2368,40 +2368,76 @@ namespace Mobile_App
             //Checking if the PreReqAppSettings.xml exists, and loading the data if it does.
             if (File.Exists("NWPSAdminApp.xml"))
             {
-                StartupSettings.Load("NWPSAdminApp.xml");
-
-                GenerateNumber.Text = StartupSettings.GetElementsByTagName("GenerateNumber")[0].InnerText;
-
-                MobileServer.Text = StartupSettings.GetElementsByTagName("MobileServerName")[0].InnerText;
-
-                MSPServerPath.Text = StartupSettings.GetElementsByTagName("MSPServerPath")[0].InnerText;
-
-                if (StartupSettings.GetElementsByTagName("PC")[0].InnerText.Equals("True"))
+                try
                 {
-                    PoliceClient.Checked = true;
-                }
+                    StartupSettings.Load("NWPSAdminApp.xml");
 
-                if (StartupSettings.GetElementsByTagName("FC")[0].InnerText.Equals("True"))
+                    GenerateNumber.Text = StartupSettings.GetElementsByTagName("GenerateNumber")[0].InnerText;
+
+                    MobileServer.Text = StartupSettings.GetElementsByTagName("MobileServerName")[0].InnerText;
+
+                    MSPServerPath.Text = StartupSettings.GetElementsByTagName("MSPServerPath")[0].InnerText;
+
+                    if (StartupSettings.GetElementsByTagName("PC")[0].InnerText.Equals("True"))
+                    {
+                        PoliceClient.Checked = true;
+                    }
+
+                    if (StartupSettings.GetElementsByTagName("FC")[0].InnerText.Equals("True"))
+                    {
+                        FireClient.Checked = true;
+                    }
+
+                    if (StartupSettings.GetElementsByTagName("MC")[0].InnerText.Equals("True"))
+                    {
+                        MergeClient.Checked = true;
+                    }
+
+                    InstanceBX.Text = StartupSettings.GetElementsByTagName("Instance")[0].InnerText;
+
+                    TenantIdBX.Text = StartupSettings.GetElementsByTagName("TenantId")[0].InnerText;
+
+                    ClientIdBX.Text = StartupSettings.GetElementsByTagName("ClientId")[0].InnerText;
+
+                    ClientSecretBX.Text = StartupSettings.GetElementsByTagName("ClientSecret")[0].InnerText;
+
+                    BaseAddressBX.Text = StartupSettings.GetElementsByTagName("BaseAddress")[0].InnerText;
+
+                    ResourceId.Text = StartupSettings.GetElementsByTagName("ResourceId")[0].InnerText;
+                }
+                catch (Exception EX)
                 {
-                    FireClient.Checked = true;
+                    string LogEntry1 = DateTime.Now + " there was an error reading from xml. It will be reset to default. Error Message: " + EX.ToString();
+
+                    LogEntryWriter(LogEntry1);
+
+                    XmlWriterSettings settings = new XmlWriterSettings
+                    {
+                        Indent = true,
+                        IndentChars = ("   "),
+                        CloseOutput = true,
+                        OmitXmlDeclaration = true
+                    };
+                    using (XmlWriter writer = XmlWriter.Create("NWPSAdminApp.xml", settings))
+                    {
+                        writer.WriteStartElement("root");
+                        writer.WriteElementString("MobileServerName", "Mobile Server Name");
+                        writer.WriteElementString("MSPServerPath", @"\\MSPServerName\ ");
+                        writer.WriteElementString("GenerateNumber", "0");
+                        writer.WriteElementString("PC", "false");
+                        writer.WriteElementString("FC", "False");
+                        writer.WriteElementString("MC", "False");
+                        writer.WriteElementString("Instance", "https://login.microsoftonline.com/{0}");
+                        writer.WriteElementString("TenantId", " PLACE HOLDER ");
+                        writer.WriteElementString("ClientId", " PLACE HOLDER ");
+                        writer.WriteElementString("ClientSecret", " PLACE HOLDER ");
+                        writer.WriteElementString("BaseAddress", "https://davasoruswebapi.azurewebsites.net/api/webapi");
+                        writer.WriteElementString("ResourceId", " PLACE HOLDER ");
+                        writer.WriteEndElement();
+                        writer.Flush();
+                        writer.Close();
+                    }
                 }
-
-                if (StartupSettings.GetElementsByTagName("MC")[0].InnerText.Equals("True"))
-                {
-                    MergeClient.Checked = true;
-                }
-
-                InstanceBX.Text = StartupSettings.GetElementsByTagName("Instance")[0].InnerText;
-
-                TenantIdBX.Text = StartupSettings.GetElementsByTagName("TenantId")[0].InnerText;
-
-                ClientIdBX.Text = StartupSettings.GetElementsByTagName("ClientId")[0].InnerText;
-
-                ClientSecretBX.Text = StartupSettings.GetElementsByTagName("ClientSecret")[0].InnerText;
-
-                BaseAddressBX.Text = StartupSettings.GetElementsByTagName("BaseAddress")[0].InnerText;
-
-                ResourceId.Text = StartupSettings.GetElementsByTagName("ResourceId")[0].InnerText;
 
                 TargetPath = @"C:\Temp\MobileInstaller";
 
@@ -2422,12 +2458,6 @@ namespace Mobile_App
                 using (XmlWriter writer = XmlWriter.Create("NWPSAdminApp.xml", settings))
                 {
                     writer.WriteStartElement("root");
-                    writer.WriteElementString("MobileServerName", "Mobile Server Name");
-                    writer.WriteElementString("MSPServerPath", @"\\MSPServerName\ ");
-                    writer.WriteElementString("GenerateNumber", "0");
-                    writer.WriteElementString("PC", "false");
-                    writer.WriteElementString("FC", "False");
-                    writer.WriteElementString("MC", "False");
                     writer.WriteElementString("Instance", "https://login.microsoftonline.com/{0}");
                     writer.WriteElementString("TenantId", " PLACE HOLDER ");
                     writer.WriteElementString("ClientId", " PLACE HOLDER ");
