@@ -893,6 +893,7 @@ namespace Mobile_App
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(416, 244);
             this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Admin Page";
             // 
             // ResourceId
             // 

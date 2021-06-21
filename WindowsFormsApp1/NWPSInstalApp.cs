@@ -127,9 +127,14 @@ namespace Mobile_App
 
             statusStrip1.Items.AddRange(new ToolStripItem[] { ts });
             BeginInvoke((Action)(() => ts.Text = "Ready"));
-            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
 
             Task Task1 = Task.Factory.StartNew(() => UpdateAPICheck());
+
+            string LogEntry1 = DateTime.Now + " Tab 5 hidden from user";
+            LogEntryWriter(LogEntry1);
+
+            BeginInvoke((Action)(() => this.tabControl1.TabPages.Remove(tabPage5)));
 
             //checks if a directory exists to determine a 64 or 32 bit machine and configures the check boxes accordingly.
             if (Directory.Exists("C:\\Program files (x86)"))
@@ -166,9 +171,9 @@ namespace Mobile_App
             {
                 Console.WriteLine(ex.StackTrace.ToString());
 
-                string LogEntry1 = DateTime.Now + " " + ex.ToString();
+                string LogEntry2 = DateTime.Now + " " + ex.ToString();
 
-                LogEntryWriter(LogEntry1);
+                LogEntryWriter(LogEntry2);
             }
         }
 
@@ -203,6 +208,22 @@ namespace Mobile_App
 
             GetByIDbg = new BackgroundWorker();
             GetByIDbg.DoWork += GetByIDbg_DoWork;
+        }
+
+        //admin key code to display Tab 5
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                BeginInvoke((Action)(() => this.tabControl1.TabPages.Add(tabPage5)));
+
+                BeginInvoke((Action)(() => this.tabControl1.SelectedTab = tabControl1.TabPages["tabPage5"]));
+
+                string LogEntry1 = DateTime.Now + " Tab 5 displayed for Admin";
+                LogEntryWriter(LogEntry1);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         //---------------------------Button Click events----------------------
@@ -6463,11 +6484,6 @@ namespace Mobile_App
             {
                 ConvertToJson("NWPSAdminApp.xml");
             }
-
-            string LogEntry = DateTime.Now + " Tab 5 hidden from user";
-            LogEntryWriter(LogEntry);
-
-            BeginInvoke((Action)(() => this.tabControl1.TabPages.Remove(tabPage5)));
 
             GetByIDbg.RunWorkerAsync();
         }
