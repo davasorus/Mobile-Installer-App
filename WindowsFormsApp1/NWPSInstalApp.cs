@@ -219,6 +219,8 @@ namespace Mobile_App
 
                 BeginInvoke((Action)(() => this.tabControl1.SelectedTab = tabControl1.TabPages["tabPage5"]));
 
+                CheckAPIFields();
+
                 string LogEntry1 = DateTime.Now + " Tab 5 displayed for Admin";
                 LogEntryWriter(LogEntry1);
                 return true;
@@ -5835,7 +5837,7 @@ namespace Mobile_App
 
             LogEntryWriter(LogEntry3);
 
-            //no found
+            //none found
             return false;
         }
 
@@ -6608,6 +6610,8 @@ namespace Mobile_App
         //config button click event
         private void Config_Click(object sender, EventArgs e)
         {
+            CheckAPIFields();
+
             BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
             ts.Text = "committing API information to xml";
 
@@ -6818,6 +6822,51 @@ namespace Mobile_App
 
                 BeginInvoke((Action)(() => ts.ForeColor = Color.OrangeRed));
                 BeginInvoke((Action)(() => ts.Text = "Error downloading" + ProgramName));
+
+                LogEntryWriter(LogEntry);
+            }
+        }
+
+        //which check to make sure the related fields do not have PLACE HOLDER or NULL values.
+        //does not check to make sure configuration is actually correct
+        private void CheckAPIFields()
+        {
+            if (TenantIdBX.Text == " PLACE HOLDER " || TenantIdBX.Text == " " || TenantIdBX.Text == "")
+            {
+                BeginInvoke((Action)(() => label21.Text = "CONFIGURATION REQUIRED"));
+                BeginInvoke((Action)(() => label21.Visible = true));
+
+                string LogEntry = DateTime.Now + " Tenant ID is place holder or NULL";
+
+                LogEntryWriter(LogEntry);
+            }
+
+            if (ClientIdBX.Text == " PLACE HOLDER " || ClientIdBX.Text == " " || ClientIdBX.Text == "")
+            {
+                BeginInvoke((Action)(() => label22.Text = "CONFIGURATION REQUIRED"));
+                BeginInvoke((Action)(() => label22.Visible = true));
+
+                string LogEntry = DateTime.Now + " Client ID is place holder or NULL";
+
+                LogEntryWriter(LogEntry);
+            }
+
+            if (ClientSecretBX.Text == " PLACE HOLDER " || ClientSecretBX.Text == " " || ClientSecretBX.Text == "")
+            {
+                BeginInvoke((Action)(() => label23.Text = "CONFIGURATION REQUIRED"));
+                BeginInvoke((Action)(() => label23.Visible = true));
+
+                string LogEntry = DateTime.Now + " Client Secret is place holder or NULL";
+
+                LogEntryWriter(LogEntry);
+            }
+
+            if (ResourceId.Text == " PLACE HOLDER " || ResourceId.Text == " " || ResourceId.Text == "")
+            {
+                BeginInvoke((Action)(() => label24.Text = "CONFIGURATION REQUIRED"));
+                BeginInvoke((Action)(() => label24.Visible = true));
+
+                string LogEntry = DateTime.Now + " Resource ID is place holder or NULL";
 
                 LogEntryWriter(LogEntry);
             }

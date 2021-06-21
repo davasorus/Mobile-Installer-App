@@ -101,6 +101,10 @@ namespace Mobile_App
             this.label10 = new System.Windows.Forms.Label();
             this.PreReqCheck = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.ResourceId = new System.Windows.Forms.MaskedTextBox();
             this.BaseAddressBX = new System.Windows.Forms.MaskedTextBox();
             this.ClientSecretBX = new System.Windows.Forms.MaskedTextBox();
@@ -876,6 +880,10 @@ namespace Mobile_App
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage5.Controls.Add(this.label24);
+            this.tabPage5.Controls.Add(this.label23);
+            this.tabPage5.Controls.Add(this.label22);
+            this.tabPage5.Controls.Add(this.label21);
             this.tabPage5.Controls.Add(this.ResourceId);
             this.tabPage5.Controls.Add(this.BaseAddressBX);
             this.tabPage5.Controls.Add(this.ClientSecretBX);
@@ -894,6 +902,46 @@ namespace Mobile_App
             this.tabPage5.Size = new System.Drawing.Size(416, 244);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Admin Page";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(285, 227);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 22;
+            this.label24.Text = "label24";
+            this.label24.Visible = false;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(245, 142);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 13);
+            this.label23.TabIndex = 21;
+            this.label23.Text = "label23";
+            this.label23.Visible = false;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(245, 105);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(41, 13);
+            this.label22.TabIndex = 20;
+            this.label22.Text = "label22";
+            this.label22.Visible = false;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(245, 68);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(41, 13);
+            this.label21.TabIndex = 19;
+            this.label21.Text = "label21";
+            this.label21.Visible = false;
             // 
             // ResourceId
             // 
@@ -947,7 +995,7 @@ namespace Mobile_App
             // 
             // Config
             // 
-            this.Config.Location = new System.Drawing.Point(325, 221);
+            this.Config.Location = new System.Drawing.Point(338, 2);
             this.Config.Name = "Config";
             this.Config.Size = new System.Drawing.Size(75, 23);
             this.Config.TabIndex = 12;
@@ -1135,6 +1183,10 @@ namespace Mobile_App
         private MaskedTextBox InstanceBX;
         private Button UpdateCheck;
         private Label label19;
+        private Label label23;
+        private Label label22;
+        private Label label21;
+        private Label label24;
 
         public Label Label1 { get => label1; set => label1 = value; }
         public Button Button1 { get => button1; set => button1 = value; }
