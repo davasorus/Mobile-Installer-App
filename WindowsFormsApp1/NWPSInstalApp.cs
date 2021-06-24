@@ -6781,7 +6781,7 @@ namespace Mobile_App
 
                 //this will download the application from the passed URL
                 Task Task1 = Task.Factory.StartNew(() => Process.Start(URL));
-                Task Task2 = Task.Factory.StartNew(() => Thread.Sleep(5000));
+                Task Task2 = Task.Factory.StartNew(() => Thread.Sleep(10000));
 
                 Task.WaitAll(Task1, Task2);
 
@@ -6795,16 +6795,34 @@ namespace Mobile_App
                     string GoodAppName = "NWPS Client Admin Tool.exe";
                     string BadAppName = "NWPS.Client.Admin.Tool.exe";
 
-                    File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName(BadAppName)), true);
+                    if (File.Exists(Path.Combine(location, Path.GetFileName(BadAppName))))
+                    {
+                        File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName(BadAppName)), true);
 
-                    RelableandMove(location, GoodAppName, ProgramName, GoodAppName);
+                        RelableandMove(location, GoodAppName, ProgramName, GoodAppName);
 
-                    Process.Start(GoodAppName);
+                        Process.Start(GoodAppName);
 
-                    string LogEntry2 = DateTime.Now + " " + GoodAppName + " started in location " + location;
-                    LogEntryWriter(LogEntry2);
+                        string LogEntry2 = DateTime.Now + " " + GoodAppName + " started in location " + location;
+                        LogEntryWriter(LogEntry2);
 
-                    Application.Exit();
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        Thread.Sleep(10000);
+
+                        File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName(BadAppName)), true);
+
+                        RelableandMove(location, GoodAppName, ProgramName, GoodAppName);
+
+                        Process.Start(GoodAppName);
+
+                        string LogEntry2 = DateTime.Now + " " + GoodAppName + " started in location " + location;
+                        LogEntryWriter(LogEntry2);
+
+                        Application.Exit();
+                    }
                 }
                 catch (Exception ex)
                 {
