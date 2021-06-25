@@ -6810,7 +6810,9 @@ namespace Mobile_App
                     }
                     else
                     {
-                        Thread.Sleep(10000);
+                        Task Check = Task.Factory.StartNew(() => ExternalDownloadChecker(downloadsPath));
+
+                        Task.WaitAll(Check);
 
                         File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName(BadAppName)), true);
 
@@ -6842,6 +6844,28 @@ namespace Mobile_App
                 BeginInvoke((Action)(() => ts.Text = "Error downloading" + ProgramName));
 
                 LogEntryWriter(LogEntry);
+            }
+        }
+
+        private void ExternalDownloadChecker(string location)
+        {
+            string BadAppName = "NWPS.Client.Admin.Tool.exe";
+
+            for (int i = 1; i <= 10; i++)
+            {
+                if (!File.Exists(Path.Combine(location, Path.GetFileName(BadAppName))))
+                {
+                    BeginInvoke((Action)(() => ts.Text = " waiting to find downloaded application"));
+
+                    string Logentry = DateTime.Now + " waiting to find downloaded application for " + i.ToString() + "0 seconds";
+                    LogEntryWriter(Logentry);
+
+                    Thread.Sleep(10000);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 
