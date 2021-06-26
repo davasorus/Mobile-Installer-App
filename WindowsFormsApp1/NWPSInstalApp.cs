@@ -71,9 +71,11 @@ namespace Mobile_App
         private string CADClient64 = "NewWorld.Enterprise.CAD.Client.x64.msi";
         private string CADClient32 = "NewWorld.Enterprise.CAD.Client.x86.msi";
         private string CADIncObs64 = "NewWorld.Enterprise.CAD.IncidentObserver.x64.msi";
-
         private string LocalRun = @"C:\Temp\NWPS Client Admin Tool Working Storage";
         private string NWSAddonLocalRun = @"C:\Temp\NWPS Client Admin Tool Working Storage\NWS Addons";
+        private string BadAppName = "NWPS.Client.Admin.Tool.exe";
+        private string GoodAppName = "NWPS Client Admin Tool.exe";
+
         private bool flag = false;
 
         public string MSPServerName { get; private set; }
@@ -6721,7 +6723,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => label36.ForeColor = Color.OrangeRed));
                             BeginInvoke((Action)(() => label36.Text = "Newer Version Found"));
 
-                            DownloadTask("NWPS.Client.Admin.Tool.exe", ExternalURL1, Directory.GetCurrentDirectory());
+                            DownloadTask(BadAppName, ExternalURL1, Directory.GetCurrentDirectory());
 
                             return;
                         }
@@ -6792,9 +6794,6 @@ namespace Mobile_App
                 //this then will run that application in the new location
                 try
                 {
-                    string GoodAppName = "NWPS Client Admin Tool.exe";
-                    string BadAppName = "NWPS.Client.Admin.Tool.exe";
-
                     if (File.Exists(Path.Combine(location, Path.GetFileName(BadAppName))))
                     {
                         File.Copy(Path.Combine(downloadsPath, ProgramName), Path.Combine(location, Path.GetFileName(BadAppName)), true);
@@ -6849,8 +6848,6 @@ namespace Mobile_App
 
         private void ExternalDownloadChecker(string location)
         {
-            string BadAppName = "NWPS.Client.Admin.Tool.exe";
-
             for (int i = 1; i <= 10; i++)
             {
                 if (!File.Exists(Path.Combine(location, Path.GetFileName(BadAppName))))
