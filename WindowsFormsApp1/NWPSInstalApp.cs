@@ -1503,21 +1503,27 @@ namespace Mobile_App
                 {
                     if (label28.Text != "Installed")
                     {
-                        try
-                        {
-                            PreReqRename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
-                            PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
-                        }
-                        catch
-                        {
-                        }
                         if (File.Exists(Path.Combine(LocalRun, SQLCE4064)))
                         {
                             RunProgram(SQLCE4064, LocalRun);
                         }
                         else
                         {
-                            PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE4064);
+                            string LogEntry1 = DateTime.Now + " " + SQLCE4064 + " was not found.";
+                            LogEntryWriter(LogEntry1);
+
+                            try
+                            {
+                                PreReqRename("SSCERuntime_x64-ENU.exe", SQLCE4064, "SQL Compact Edition 4.0");
+                                PreReqRename("SSCERuntime_x86-ENU.exe", SQLCE4032, "SQL Compact Edition 4.0");
+
+                                PreReqRun(MSPServerPath.Text + @"\\_Client-Installation\", SQLCE4064);
+                            }
+                            catch (Exception EX)
+                            {
+                                string LogEntry = DateTime.Now + " " + EX.Message.ToString();
+                                LogEntryWriter(LogEntry);
+                            }
                         }
 
                         BeginInvoke((Action)(() => ts.Text = "SQL Compact 4.0 Installed"));
