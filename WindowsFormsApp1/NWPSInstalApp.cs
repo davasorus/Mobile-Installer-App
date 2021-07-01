@@ -6605,13 +6605,13 @@ namespace Mobile_App
 
                 File.WriteAllText("appsettings.json", json);
 
-                string LogEntry = DateTime.Now + " config file created.";
+                string LogEntry = DateTime.Now + " AppSettings JSON File Created.";
 
                 LogEntryWriter(LogEntry);
             }
             catch (Exception ex)
             {
-                string LogEntry = DateTime.Now + " " + ex.ToString();
+                string LogEntry = DateTime.Now + " Error Creating JSON file. ERROR: " + ex.ToString();
 
                 LogEntryWriter(LogEntry);
             }
