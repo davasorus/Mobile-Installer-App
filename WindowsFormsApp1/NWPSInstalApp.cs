@@ -4743,6 +4743,8 @@ namespace Mobile_App
                         {
                             DotNet();
 
+                            SQLCE35();
+
                             SQLCE40();
 
                             GIS();
