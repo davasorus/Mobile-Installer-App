@@ -510,14 +510,6 @@ namespace Mobile_App
         //this will install the Pre Reqs required for 64bit mobile, ensure folder permissions are correct, and that the updater is configured for mobile.
         private void Mobile64install()
         {
-            BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-
-            CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
-
-            BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
-            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-
             DotNet();
 
             SQLCE35();
@@ -665,14 +657,6 @@ namespace Mobile_App
         //this will install the Pre Reqs required for 32bit mobile, ensure folder permissions are correct, and that the updater is configured for mobile.
         private void Mobile32install()
         {
-            BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-
-            CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
-
-            BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
-            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
-
             DotNet();
 
             SQLCE35();
@@ -751,6 +735,14 @@ namespace Mobile_App
         //dot net 4.7 or 4.8 installer
         private void DotNet()
         {
+            BeginInvoke((Action)(() => ts.Text = "Checking for .Net 3.5"));
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+
+            CMDScriptRun(@"/C Dism /online /Enable-Feature /FeatureName:""NetFx3""");
+
+            BeginInvoke((Action)(() => ts.Text = ".Net 3.5 is installed"));
+            BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+
             if (Directory.Exists(LocalRun))
             {
                 if (File.Exists(Path.Combine(LocalRun, DotNet47)))
@@ -4269,7 +4261,7 @@ namespace Mobile_App
                             BeginInvoke((Action)(() => ts.Text = "uninstalling CAD"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.DarkSlateBlue));
 
-                            UninstallProgram("New World  Enterprise CAD Client");
+                            UninstallProgram("New World Enterprise CAD Client");
 
                             BeginInvoke((Action)(() => ts.Text = "CAD has been uninstalled"));
                             BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
@@ -6854,6 +6846,8 @@ namespace Mobile_App
             }
         }
 
+        //this will check to make sure the application that is being downloaded is actually present in the download folder.
+        //this will wait 6 - 10 Second increments after the initial 10 second window.
         private void ExternalDownloadChecker(string location)
         {
             for (int i = 1; i <= 10; i++)
