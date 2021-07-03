@@ -2381,6 +2381,7 @@ namespace Mobile_App
             startInfo.Arguments = Command;
             process.StartInfo = startInfo;
             process.Start();
+            process.WaitForExit();
         }
 
         //----------------------XML related controls------------------------
