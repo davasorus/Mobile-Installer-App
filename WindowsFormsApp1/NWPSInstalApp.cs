@@ -208,6 +208,7 @@ namespace Mobile_App
             Tab4bg = new BackgroundWorker();
             Tab4bg.DoWork += Tab4bg_DoWork;
 
+            //Background checker for interacting with and comparing against the API for version number
             GetByIDbg = new BackgroundWorker();
             GetByIDbg.DoWork += GetByIDbg_DoWork;
         }
