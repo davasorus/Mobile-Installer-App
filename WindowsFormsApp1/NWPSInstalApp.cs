@@ -6614,6 +6614,89 @@ namespace Mobile_App
             }
         }
 
+        //will query the file controller API
+        public async Task DonwloadByID(string ID)
+        {
+            AuthConfig config = AuthConfig.ReadJsonFromFile("appsettings.json");
+
+            IConfidentialClientApplication app;
+
+            app = ConfidentialClientApplicationBuilder.Create(config.ClientID)
+                .WithClientSecret(config.ClientSecret)
+                .WithAuthority(new Uri(config.Authority))
+                .Build();
+
+            string[] ResourceIDs = new string[] { config.ResourceID };
+
+            AuthenticationResult result = null;
+
+            try
+            {
+                result = await app.AcquireTokenForClient(ResourceIDs).ExecuteAsync();
+
+                string LogEntry1 = DateTime.Now + " Token Acquired";
+
+                LogEntryWriter(LogEntry1);
+            }
+            catch (MsalClientException ex)
+            {
+                string LogEntry = DateTime.Now + " " + ex.ToString();
+
+                LogEntryWriter(LogEntry);
+            }
+
+            if (!string.IsNullOrEmpty(result.AccessToken))
+            {
+                var httpClient = new HttpClient();
+                var defaultRequestHeaders = httpClient.DefaultRequestHeaders;
+
+                if (defaultRequestHeaders.Accept == null ||
+                   !defaultRequestHeaders.Accept.Any(m => m.MediaType == "application/json"))
+                {
+                    httpClient.DefaultRequestHeaders.Accept.Add(new
+                      MediaTypeWithQualityHeaderValue("application/json"));
+                }
+                defaultRequestHeaders.Authorization =
+                  new AuthenticationHeaderValue("bearer", result.AccessToken);
+
+                HttpResponseMessage response = await httpClient.GetAsync("https://davasoruswebapi.azurewebsites.net/api/webapi/filecontroller/" + ID);
+
+                string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
+
+                using (var stream = await response.Content.ReadAsStreamAsync())
+                {
+                    var fileInfo = new FileInfo(downloadsPath + "\\" + BadAppName);
+                    using (var fileStream = fileInfo.OpenWrite())
+                    {
+                        await stream.CopyToAsync(fileStream);
+                    }
+                }
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string LogEntry = DateTime.Now + " file downloaded";
+                    LogEntryWriter(LogEntry);
+
+                    BeginInvoke((Action)(() => ts.Text = "Application Grabbed"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.ForestGreen));
+                }
+                else
+                {
+                    string LogEntry1 = DateTime.Now + $" Failed to call the Web Api: {response.StatusCode}";
+
+                    LogEntryWriter(LogEntry1);
+
+                    string content = await response.Content.ReadAsStringAsync();
+                    string LogEntry2 = DateTime.Now + $" Content: {content}";
+
+                    LogEntryWriter(LogEntry2);
+
+                    BeginInvoke((Action)(() => ts.Text = "Error Occurred"));
+                    BeginInvoke((Action)(() => ts.ForeColor = System.Drawing.Color.OrangeRed));
+                }
+            }
+        }
+
         //background worker code for API querying
         private void GetByIDbg_DoWork(object sender, DoWorkEventArgs e)
         {
