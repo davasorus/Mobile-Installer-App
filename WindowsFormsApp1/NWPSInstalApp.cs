@@ -6877,7 +6877,7 @@ namespace Mobile_App
                 string downloadsPath = new KnownFolder(KnownFolderType.Downloads).Path;
 
                 //this will download the application from the passed URL
-                Task Task1 = Task.Factory.StartNew(() => Process.Start(URL));
+                Task Task1 = Task.Factory.StartNew(() => DonwloadByID("1"));
                 Task Task2 = Task.Factory.StartNew(() => Thread.Sleep(10000));
 
                 Task.WaitAll(Task1, Task2);
