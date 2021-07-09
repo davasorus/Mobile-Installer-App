@@ -42,6 +42,7 @@ namespace Mobile_App
         private BackgroundWorker Tab3bg;
         private BackgroundWorker Tab4bg;
         private BackgroundWorker GetByIDbg;
+        private BackgroundWorker Tab5bg;
 
         private int ResetEvent = 999;
 
@@ -211,6 +212,9 @@ namespace Mobile_App
             //Background checker for interacting with and comparing against the API for version number
             GetByIDbg = new BackgroundWorker();
             GetByIDbg.DoWork += GetByIDbg_DoWork;
+
+            Tab5bg = new BackgroundWorker();
+            Tab5bg.DoWork += Tab5bg_DoWork;
         }
 
         //admin key code to display Tab 5
@@ -3683,6 +3687,35 @@ namespace Mobile_App
             }
         }
 
+        //Background worker tab for the admin api tab
+        private void Tab5bg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CheckAPIFields();
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = "committing API information to xml";
+
+            SaveStartupSettings();
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " xml saved";
+
+            ConvertToJson("NWPSAdminApp.xml");
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " xml converted to json";
+
+            Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " checking for new version";
+
+            Task.WaitAll(Task1);
+
+            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
+            ts.Text = " check finished";
+        }
+
         //"Thread" to kill Tab2bg worker thread and start the NWPSADDON download form
         //this is done because the background worker will continue to run and cause a race condition
         private void NWPSADDONThreadWorker()
@@ -6614,30 +6647,7 @@ namespace Mobile_App
         //config button click event
         private void Config_Click(object sender, EventArgs e)
         {
-            CheckAPIFields();
-
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-            ts.Text = "committing API information to xml";
-
-            SaveStartupSettings();
-
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-            ts.Text = " xml saved";
-
-            ConvertToJson("NWPSAdminApp.xml");
-
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-            ts.Text = " xml converted to json";
-
-            Task Task1 = Task.Factory.StartNew(() => GetByID("1").GetAwaiter().GetResult());
-
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-            ts.Text = " checking for new version";
-
-            Task.WaitAll(Task1);
-
-            BeginInvoke((Action)(() => ts.ForeColor = Color.DarkSlateBlue));
-            ts.Text = " check finished";
+            Tab5bg.RunWorkerAsync();
         }
 
         //allows the user check for a updated version of the client
